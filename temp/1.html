@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Choropleth with auto-calculated color (Highmaps)</title>
+  <style>
+    #container1 { border:1px dotted blue; width: 900px; height: 675px; position: relative; }
+  </style>
+</head>
+<body>
+  <h1>whatsapp country codes</h1>
+  <div id="container1"></div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.8/datamaps.all.js"></script>
+  
+<script>
+    // example data from server
+    var series = [
+["IND",4071],["PAK",3652],["RUS",2926],["BRA",1955],["USA",1453],["COL",1073],["NGA",959],["ZAF",473],["PHL",393],["MYS",301],["GHA",249],["SAU",242],["ESP",231],["MEX",225],["ZWE",216],["KEN",213],["DEU",196],["ARE",191],["BGD",182],["YEM",171],["LKA",148],["IDN",130],["TZA",127],["CHL",126],["EGY",116],["UGA",90],["NPL",82],["MOZ",77],["OMN",59],["PER",59],["IRN",58],["AGO",56],["ISR",55],["SDN",53],["GBR",51],["QAT",44],["ZMB",43],["ARG",39],["BHR",32],["CHN",30],["SLE",30],["PAN",27],["KWT",26],["THA",24],["DZA",24],["CMR",23],["TUR",22],["UKR",21],["SGP",20],["BEN",20],["IRQ",19],["AFG",19],["ECU",19],["BWA",18],["NLD",17],["GTM",16],["RWA",16],["NAM",15],["TGO",15],["CCK",14],["ITA",13],["PRT",13],["HTI",11],["CRI",11],["AUT",11],["CHE",11],["FRA",10],["MWI",9],["SOM",9],["JOR",8],["PRY",8],["ETH",8],["LBY",8],["PNG",7],["SRB",6],["SWE",5],["MUS",5],["MMR",4],["NIC",4],["SLV",4],["GRC",4],["KGZ",3],["BLZ",3],["LBR",3],["LBN",2],["VNM",2],["BRN",2],["HND",2],["DNK",2],["MNE",2],["ALB",2],["BEL",2],["BDI",2],["NER",2],["BFA",2],["TUN",2],["GEO",1],["URY",1],["POL",1],["BIH",1],["ARM",1],["LVA",1],["BGR",1],["IRL",1],["TCD",1],["GIN",1],["MLI",1],["SEN",1],["MAR",58],["VEN",39],["BOL",23],["HKG",15],["TWN",9],["CIV",6],["SYR",5],["COG",4],["KOR",2],["MKD",2],["PSE",1],["MAC",1],["SJM",1],["CZE",1],["HRV",1],["CPV",1]
+];
+
+    // Datamaps expect data in format:
+    // { "USA": { "fillColor": "#42a844", numberOfWhatever: 75},
+    //   "FRA": { "fillColor": "#8dc386", numberOfWhatever: 43 } }
+    var dataset = {};
+
+    // We need to colorize every country based on "numberOfWhatever"
+    // colors should be uniq for every value.
+    // For this purpose we create palette(using min/max series-value)
+    var onlyValues = series.map(function(obj){ return obj[1]; });
+    var minValue = Math.min.apply(null, onlyValues),
+            maxValue = Math.max.apply(null, onlyValues);
+
+    // create color palette function
+    // color can be whatever you wish
+    var paletteScale = d3.scale.linear()
+            .domain([minValue,maxValue])
+            .range(["#EFEFFF","#02386F"]); // blue color
+
+    // fill dataset in appropriate format
+    series.forEach(function(item){ //
+        // item example value ["USA", 70]
+        var iso = item[0],
+                value = item[1];
+        dataset[iso] = { numberOfThings: value, fillColor: paletteScale(value) };
+    });
+
+    // render map
+    new Datamap({
+        element: document.getElementById('container1'),
+        projection: 'mercator', // big world map
+        // countries don't listed in dataset will be painted with this color
+        fills: { defaultFill: '#F5F5F5' },
+        data: dataset,
+        geographyConfig: {
+            borderColor: '#DEDEDE',
+            highlightBorderWidth: 2,
+            // don't change color on mouse hover
+            highlightFillColor: function(geo) {
+                return geo['fillColor'] || '#F5F5F5';
+            },
+            // only change border
+            highlightBorderColor: '#B7B7B7',
+            // show desired information in tooltip
+            popupTemplate: function(geo, data) {
+                // don't show tooltip if country don't present in dataset
+                if (!data) { return ; }
+                // tooltip content
+                return ['<div class="hoverinfo">',
+                    '<strong>', geo.properties.name, '</strong>',
+                    '<br>Count: <strong>', data.numberOfThings, '</strong>',
+                    '</div>'].join('');
+            }
+        }
+    });
+</script>
+  
+</body>
+</html>
+

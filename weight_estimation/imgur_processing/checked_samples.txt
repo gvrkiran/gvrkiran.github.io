@@ -1,0 +1,53 @@
+Correct:
+301tg8	302	266	70	TRUE	135	nRtqbax	0.59   https://myprogresspics.com/1020/female-302lbs-266lbs-137kg-121kg-5-foot-10-inches-178cm
+3lhxlf	202	172	67	TRUE	62	cyGVJJR	1 https://myprogresspics.com/1219/female-202lbs-172lbs-92kg-78kg-5-foot-7-inches-170cm
+22v5do	244	217	74	FALSE	420	"0yW3XIx,KACfGy2"	1.07 https://myprogresspics.com/1388/male-244lbs-217lbs-111kg-98kg-6-foot-2-inches-188cm
+peyy2	216	189	72	FALSE	25	"3hRsQdU,jG32rOd"	0.75 https://myprogresspics.com/3164/male-216lbs-189lbs-98kg-86kg-6-foot-0-inches-183cm
+sulpc	375	255	72	FALSE	434	HobYCCG	1.24 https://myprogresspics.com/3465/male-375lbs-255lbs-170kg-116kg-6-foot-0-inches-183cm
+wqh0g	225	160	69	FALSE	1123	6NqUt7g	1.37 https://imgur.com/r/progresspics/6NqUt7g
+287qnn	150	116	64	TRUE	1511	"ZvyMmUX,RqOVFrN"	1 https://myprogresspics.com/4670/female-150lbs-116lbs-68kg-53kg-5-foot-4-inches-163cm
+2okrmk	280	208	74	FALSE	57	"smmX6tL,KazpEmO"	1.77 https://myprogresspics.com/6217/male-280lbs-208lbs-127kg-94kg-6-foot-2-inches-188cm
+36c42f	192	171	71	TRUE	187	msFEFf6	1 https://myprogresspics.com/7586/female-192lbs-171lbs-87kg-78kg-5-foot-11-inches-180cm
+amlki	240	210	72	FALSE	188	3LMP2Ap	0.76 https://imgur.com/3LMP2Ap
+3eh1ou	116	109	61	TRUE	139	"pa289CJ,wD7V8DS"	1.33 https://myprogresspics.com/8335/female-116lbs-109lbs-53kg-49kg-5-foot-1-inches-155cm
+3hxmiz	196	180	65	FALSE	46	FcOmZgL	1 https://imgur.com/FcOmZgL
+3t4j91	267	216	69	FALSE	84	TacU4eD	1.03 https://imgur.com/TacU4eD
+3zsvya	151	125	63	TRUE	1576	34MqQuQ	0.6 https://imgur.com/34MqQuQ
+44y2n3	183	125	65	TRUE	1972	41k0DLf	1.71 https://imgur.com/41k0DLf
+1hl94v	149	175	72	FALSE	76	WMD4uy0	2.09 https://imgur.com/WMD4uy0
+3qooh5	171	198	76	FALSE	79	63TbTQn	1 https://myprogresspics.com/16812/male-171lbs-198lbs-78kg-90kg-6-foot-4-inches-193cm
+2jvdw7	327	200	70	FALSE	105	lYGRREB	1 https://www.reddit.com/r/progresspics/comments/2jvdw7/m29510_327lbs_200lbs_2_years_progress_upped_my/ 
+3vs0oe	170	147	67	TRUE	230	AsbepGp	0.8 http://redd.it/3vs0oe
+3vr92l	245	205	70	FALSE	78	f72jxfA	2 http://redd.it/3vr92l
+3vqhlg	225	170	72	FALSE	57	05RNDru	1 http://redd.it/3vqhlg
+3vq4g1	317	199	70	TRUE	430	K1uXnn5	1 http://redd.it/3vq4g1
+3fpc7r	273	235	80	FALSE	35	uGKJ38L	1 http://redd.it/3fpc7r
+3fp5pl	315	230	77	FALSE	151	zu9WrCd	1 http://redd.it/3fp5pl
+3fp03r	253	232	60	TRUE	153	YsVrxcf	1 http://redd.it/3fp03r
+2rzgmq	220	180	68	TRUE	312	XU1WUvh	1.33 http://redd.it/2rzgmq
+2rzd9e	320	210	67	TRUE	1077	SbRDOSe	1.12 http://redd.it/2rzd9e	
+2rz3k1	406	219	73	FALSE	132	oEihCD4	1 http://redd.it/2rz3k1
+26pyp9	293	243	72	FALSE	34	CqY0jT4	1 http://redd.it/26pyp9
+
+
+Wrong:
+1g8a1h	135	200	75	FALSE	41	YuOini0	1.03 https://i.imgur.com/YuOini0.jpg -> mistake! on pic: 136 -> 176
+
+Unsure:
+1rc14c	160	140	64	TRUE	127	D74k98v	1 https://imgur.com/D74k98v -> unsure, 20 pounds loss
+1hev9v	215	200	73	FALSE	47	jpUvsXL	1 https://imgur.com/jpUvsXL vs https://myprogresspics.com/2436/male-215lbs-200lbs-98kg-91kg-6-foot-1-inches-185cm
+
+
+
+
+"Weird examples"
+Left <-> after samples (images_ids .jpg)
+3kcvn86
+7JelZ9t
+b4hxTRZ
+
+Pilot for crowdsourcing now contains an example. The following sample for used and excluded from the data set:
+1skum9	205	166	69	FALSE	127	F	ANGWJ2i.jpg	06MljZp.jpg
+
+access posts by id!!!
+http://redd.it/1g8a1h

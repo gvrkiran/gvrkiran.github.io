@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dataset for 'Ad-blocking: A Study on Performance, Privacy and Counter-measures'</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.navbar{ background-color:#999; color:#ffffff;}
+	.navbar a{color:#fff;}
+	.navbar a:hover, .navbar a:focus{background-color:#ddd !important; color:#fffff; }
+	.navblank{height:0px; }
+	.navbar .navbar-toggle>.icon-bar{background-color:#ffffff; }
+	.navbar .navbar-toggle:hover>.icon-bar{background-color:#ffffff; }
+	.title_box{background-color:#000;}
+	.title_box h1{color: #fff; text-shadow: 1pt 1pt 1pt #000; font-size: 45px;}
+	.title_box .description{text-align:justify; color:white; text-shadow: 1px 1px 0px #000; font-size:13pt; }
+	h2{font-size: 25pt; color:#000; padding-top: 80px; margin-top: -80px; }
+	@media screen and (min-width: 768px)
+	.title_box.large_title h1, .title_box.large_title .h1 {
+	font-size: 50px;
+	}
+	body {
+		  font-family:      Arial, Geneva, sans-serif;
+		  font-size:        medium;
+		  font-weight:      normal;
+	}
+	#emp {font-weight: bold;}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-9hbo{font-weight:bold;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+</style>
+</head>
+<body>
+
+<a name="home"></a>
+
+<div class="navblank">
+</div>
+
+<div class="title_box large_title">
+	<div class="container">
+		<h2 style="color:white">Ad-blocking: A Study on Performance, Privacy and Counter-measures (WebSci'17 short)</h2>
+		<div class="description">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	
+	<div class="content_box">
+		<h2>Summary: </h2>
+		<p>Many internet ventures rely on advertising for their revenue. However, users feel discontent by the presence of ads on the websites they visit, as the data-size of ads is often comparable to that of the actual content. This has an impact not only on the loading time of webpages, but also on the internet bill of the user in some cases. In absence of a mutually-agreed procedure for opting out of advertisements, many users resort to ad-blocking browser-extensions.</p>
+
+		<p>In this work, we study the performance of popular ad-blockers on a large set of news websites.
+Moreover, we investigate the benefits of ad-blockers on user privacy as well as the mechanisms used by websites to counter them. Finally, we explore the traffic overhead due to the ad-blockers themselves.</p>
+
+		<ul>
+		</ul>
+		<br />
+		
+		<h2>Dataset:</h2>
+		<div>
+			<p>We collected two datasets for the project.</p>
+			<p><b>Top150</b> This is a list of the top 150 news websites, as ranked by Alexa. For each of them, we have a URL that points to the website homepage, for both its desktop and mobile version (unless the latter does not exist).</p>
+			<p><b>GDELT</b> A list of 30,000 URLs pointing to di erent news articles published on a single day (November 8, 2016). The list was obtained from <a href="http://gdeltproject.org/">GDELT</a>, a project that collects news stories from all around the world over the years.</p>
+			<p>
+			We load the webpage of each URL with a clean instance of Chrome browser (no cached content or extensions), using the Selenium Python library on a Macbook pro with 8 cores, with no other major processes running. On each load, we capture the HAR file for the load. The HAR (HTTP Archive File) file is a JSON-formatted file that captures the interactions between the browser and the website, including network requests, types and size of objects, and load times.
+			</p>
+			<p>
+			We load the same URL in six browser modes, all simultaneously: a vanilla mode (no ad-blocker), and one mode for each of five adblockers. The ad-blockers are AdBlock, AdblockPlus, Ghostery, uBlock and Privacy Badger - chosen as the most popular ad- blockers on the Chrome Store.
+			</p>
+			<p><b>Description of the data</b>: The data contains json HAR files for each domain/url. Depending on the dataset the size varies from a 40M (Top150) to 8G (GDELT,per setting). A sample HAR file for nytimes.com can be found <a href="nytimes.com.json">here</a> (or on the Github link below). We have 10 settings - desktop vs. mobile, 5 adblockers.</p>
+			<p>For access to the full dataset, please email Kiran, at kiran.garimella XatX aalto.fi</p>
+			</p>
+			<ul>
+			</ul>
+		</div>
+
+		<br/>
+		
+		<h2>Code:</h2>
+		The code used for data collection is on <a href="https://github.com/gvrkiran/adblock">Github</a>.
+		<br /><br />
+
+		<h2>Contact:</h2>
+		<ul>
+			<li> 
+				For any questions/comments, please contact Kiran Garimella, Orestis Kostakis or Michael Mathioudakis. (first.last@aalto.fi).
+			</li>
+		</ul>
+	</div>	
+
+</div>
+
+
+<div class="navblank">
+</div>
+<div class="navblank">
+</div>
+
+</body>
+</html>
+

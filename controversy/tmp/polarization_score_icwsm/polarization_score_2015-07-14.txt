@@ -1,0 +1,4 @@
+plannedparenthood	0.036229331741
+growingupblack	0.0267145655926
+irandeal	0.0433828129163
+ohnolouis	0.0217654645559

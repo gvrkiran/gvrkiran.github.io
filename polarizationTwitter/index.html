@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dataset for 'A Long-Term Analysis of Polarization on Twitter'</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.navbar{ background-color:#999; color:#ffffff;}
+	.navbar a{color:#fff;}
+	.navbar a:hover, .navbar a:focus{background-color:#ddd !important; color:#fffff; }
+	.navblank{height:0px; }
+	.navbar .navbar-toggle>.icon-bar{background-color:#ffffff; }
+	.navbar .navbar-toggle:hover>.icon-bar{background-color:#ffffff; }
+	.title_box{background-color:#000;}
+	.title_box h1{color: #fff; text-shadow: 1pt 1pt 1pt #000; font-size: 45px;}
+	.title_box .description{text-align:justify; color:white; text-shadow: 1px 1px 0px #000; font-size:13pt; }
+	h2{font-size: 25pt; color:#000; padding-top: 80px; margin-top: -80px; }
+	@media screen and (min-width: 768px)
+	.title_box.large_title h1, .title_box.large_title .h1 {
+	font-size: 50px;
+	}
+	body {
+		  font-family:      Arial, Geneva, sans-serif;
+		  font-size:        medium;
+		  font-weight:      normal;
+	}
+	#emp {font-weight: bold;}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-9hbo{font-weight:bold;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+</style>
+</head>
+<body>
+
+<a name="home"></a>
+
+<div class="navblank">
+</div>
+
+<div class="title_box large_title">
+	<div class="container">
+		<h1 style="color:white">A Long-Term Analysis of Polarization on Twitter</h1>
+		<div class="description">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	
+	<div class="content_box">
+		<h2>Summary: </h2>
+		<p>
+		Social media has played an important role in shaping political discourse over the last decade. It is often perceived to have increased political polarization, thanks to the scale of discussions and their public nature. Here, we try to answer whether political polarization in the US on Twitter has increased over the last eight years. We analyze a large longitudinal Twitter dataset of 679,000 users and look at signs of polarization in their (i) network - how people follow political and media accounts, (ii) tweeting behavior - whether they retweet content from both sides, and (iii) content - how partisan the hashtags they use are.
+		</p>
+
+
+		<ul>
+		</ul>
+		<br />
+		
+		<h2>Dataset:</h2>
+		<div>
+		<ul>
+			<li>Our data collection starts with a set of <i>seed</i> users.
+			This set consists of (i) presidential/vice presidential candidates and their parties over the 
+			last 8 years., (ii) popular partisan media accounts, from the Pew Research <a href="http://www.journalism.org/2014/10/21/political-polarization-media-habits/">report</a> on media consumption habits.
+			Based on these seed users, collected two datasets for the project:</li>
+			<li><b>Followers data:</b> 
+			For each seed user, we obtained all their followers. The com- bined set of all followers for all seed accounts gave us a total of 140M users. We estimated the time when a user fol- lowed a particular seed account using the method proposed by <a href="http://precog.iiitd.edu.in/teaching/psosm_summer_2012/PSOSM-Slides-WeKnow.pdf">Meeder et al.</a>. This data dates back to follow times estimated since 2009.</li>
+			<li><b>Retweeters data:</b> 
+			For the set of seed politicians, we obtained <a href="https://github.com/Jefferson-Henrique/GetOldTweets-python">all</a> their public, historic tweets.
+			The earliest tweets in this collection date back to 2006. For each collected tweet, we used the Twitter API to collect up to 100 retweets. This gave us a set of 1.3M unique users who retweeted a political entity since 2006. We randomly sampled 50% of these users (679,000), and used the Twitter API to get 3,200 of their most recent tweets in December 2016.
+			This gave us more than 2 billion tweets, dating back to 2007.
+			</li>
+			<li>
+			The raw dataset is a few hundred gigabytes compressed. If you want to access full/part of it, or have comments/ideas on what could be done, please get in touch with 
+			Kiran, at kiran.garimella XX aalto.fi</li>
+		</ul>
+		</div>
+
+		<br/>
+		
+		<h2>Findings:</h2>
+		<ul>
+			<li> 
+		Our analysis shows that online polarization has indeed increased over the past eight years and that, depending on the measure, the relative change is 10%-20%. Our study is one of very few with such a long-term perspective, encompassing two US presidential elections and two mid-term elections, providing a rare longitudinal analysis.
+
+			</li>
+			<li>More details <a href="https://arxiv.org/abs/1703.02769">here</a>.</li>
+		</ul>
+
+		<h2>Contact:</h2>
+		<ul>
+			<li> 
+				This work is part of research on polarization on social media, published at the 11th International AAAI Conference on Web and Social Media (ICWSM-17).			</li>
+			<li>Authors: <a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a> and <a href="https://ingmarweber.de/">Ingmar Weber</a>.
+			</li>
+			<li>
+				For any questions/comments, please contact Kiran Garimella (firstname.lastname@aalto.fi).
+			</li>
+		</ul>
+	</div>	
+
+</div>
+
+
+<div class="navblank">
+</div>
+<div class="navblank">
+</div>
+
+</body>
+</html>
+

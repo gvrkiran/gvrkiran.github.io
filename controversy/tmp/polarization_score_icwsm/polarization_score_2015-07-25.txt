@@ -1,0 +1,3 @@
+ufcchicago	0.0644400700852
+respectforcarter	0.0467189166053
+favpichayes	0.0213237909458

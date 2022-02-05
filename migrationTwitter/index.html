@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Code and Data for 'Understanding International Migration 
+Using Tensor Factorization'</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.navbar{ background-color:#999; color:#ffffff;}
+	.navbar a{color:#fff;}
+	.navbar a:hover, .navbar a:focus{background-color:#ddd !important; color:#fffff; }
+	.navblank{height:0px; }
+	.navbar .navbar-toggle>.icon-bar{background-color:#ffffff; }
+	.navbar .navbar-toggle:hover>.icon-bar{background-color:#ffffff; }
+	.title_box{background-color:#000;}
+	.title_box h1{color: #fff; text-shadow: 1pt 1pt 1pt #000; font-size: 45px;}
+	.title_box .description{text-align:justify; color:white; text-shadow: 1px 1px 0px #000; font-size:13pt; }
+	h2{font-size: 25pt; color:#000; padding-top: 80px; margin-top: -80px; }
+	@media screen and (min-width: 768px)
+	.title_box.large_title h1, .title_box.large_title .h1 {
+	font-size: 50px;
+	}
+	body {
+		  font-family:      Arial, Geneva, sans-serif;
+		  font-size:        medium;
+		  font-weight:      normal;
+	}
+	#emp {font-weight: bold;}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-9hbo{font-weight:bold;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+</style>
+</head>
+<body>
+
+<a name="home"></a>
+
+<div class="navblank">
+</div>
+
+<div class="title_box large_title">
+	<div class="container">
+		<h1>Understanding International Migration 
+		Using Tensor Factorization</h1>
+		<div class="description">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	
+	<div class="content_box">
+		<h2>Summary: </h2>
+		In this work, we explore the feasibility of using tensor decomposition, 
+		to understand trends in global human migration.
+		Understanding international migration patterns is of great interest to 
+		demographers, social scientists and governments. The availability of large scale geo-coded social media 
+		data has made studying these migration patterns in an un-obtrusive way possible.
+		However, getting insights from these typically large datasets is a time consuming process.
+
+		In this paper, we explore if tensor factorization can help in quickly gaining insights from such large scale social media data. 
+		Our experiments on over 100M geo tagged tweets reveal interesting patterns of migration.
+
+		<ul>
+		</ul>
+		<br />
+		
+		<h2>Dataset:</h2>
+		<div>
+			<p>Using the publicly available <a href="https://archive.org/details/twitterstream">1% twitter stream</a>, we first collected all geo tagged tweets.</p>
+			<p>We bootstrapped this data using tweets from individual users who posted at least two geo tagged tweets and collected more data.</p> 
+			Detailed description of the data collection can be found in our <a href="https://arxiv.org/abs/1702.04996">paper</a>.</p>
+			<p>Since the original dataset is huge (3G compressed), you can find a sample <a href="https://www.dropbox.com/s/il0wz7lsgcoa5hf/latitude_longitude_username_createdAt_tweetId.tsv.gz?dl=0">here</a>.
+			</p>
+			<p>For the full dataset, please email Kiran, at kiran.garimella XatX aalto.fi</p>
+			<p>Description of the data: Each geo tagged tweet has been mapped to a potential country using the latitude and longitude. The format of the file is latitude [tab] longitude [tab] username [tab] tweet_createdAt [tab] tweetId [tab] country_code.
+			</p>
+			<ul>
+			</ul>
+		</div>
+
+		<br/>
+		
+		<h2>Demo:</h2>
+		To visualise the biases in our data and give a sense of the migration patterns in our data, we modified the visualization by <a href="http://www.global-migration.info/" target="_blank">Abel et al</a>. You can find the demo <a href="http://193.166.24.158/globalmigration/" target="_blank">here</a>. The demo shows two tabs (2000-2005, representing data from Abel et al.) and (2005-2010, representing our data). We can clearly see that in our data, Africa is clearly under represented.
+		<br /><br />
+
+
+		<h2>Code:</h2>
+		The code used in the paper is on <a href="https://github.com/tofunth/twitter-migration">Github</a>.
+		<br /><br />
+
+		<h2>Contact:</h2>
+		<ul>
+			<li> 
+				For any questions/comments, please contact Kiran Garimella (kiran.garimella # aalto.fi).
+			</li>
+		</ul>
+	</div>	
+
+</div>
+
+
+<div class="navblank">
+</div>
+<div class="navblank">
+</div>
+
+</body>
+</html>
+

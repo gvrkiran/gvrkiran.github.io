@@ -1,0 +1,4 @@
+primedayfail	0.0149639667742
+growingupugly	0.0187797861474
+primeday	0.0381571320742
+growingupabelieber	0.067171221458

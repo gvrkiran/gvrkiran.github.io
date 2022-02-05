@@ -1,0 +1,291 @@
+<!-- HIT template: ImageTagging-v3.0 --><!-- Bootstrap v3.0.3 --><!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries -->
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" /><!-- The following snippet enables the 'responsive' behavior on smaller screens -->
+<meta content="width=device-width,initial-scale=1" name="viewport" /><!-- Instructions -->
+<section class="container" id="TaggingOfAnImage">
+<div class="row">
+<div class="col-xs-12 col-md-12"><!-- Instructions -->
+<div class="panel panel-primary"><!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+<div class="panel-body" id="instructionBody">
+<p>You will be given 7 photos of different people, one after another. Estimate each person&#39;s weight and height, type your guesses into the input form under each image and click &quot;Next&quot; to proceed to the next photo.</p>
+
+<p>Use the following input formats:</p>
+
+<ul>
+	<li>If you use &quot;kg&quot;, &quot;cm&quot; or &quot;lbs&quot; fields, type in only numbers (your guesses).</li>
+	<li>If you use &quot;feet/inches&quot; fields, use the common feet/inches format (for example, 5&#39;6&quot; or 5&#39;6 both mean &quot;5 feet, 6 inches tall&quot;).</li>
+</ul>
+
+<p>Example:</p>
+
+<div class="row" style="border:1px solid black;margin:10px;margin-bottom:20px;">
+<div class="column"><img alt="im_sample" class="img-vis" src="${image_url_sample}" style="max-height:300px;" />
+<div class="form-group-vis"><label>Weight:&nbsp;</label> <input disabled="disabled" size="5" value="93" /> kg &nbsp; <input disabled="disabled" size="5" value="205" /> lbs</div>
+
+<div class="form-group-vis"><label>Height:&nbsp;</label> <input disabled="disabled" size="5" value="175" /> cm <input disabled="disabled" size="5" value="5'9" /> feet/inches</div>
+
+<div class="form-group-vis"><button onclick="return false" style="margin:10px">Next</button></div>
+</div>
+</div>
+
+<p>You can double your reward with a bonus. To get the bonus, you must be among the 25% most accurate workers for this HIT.</p>
+
+<p>To begin the task, click &quot;Start&quot;.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- End Instructions --><!-- Main Layout -->
+
+<div class="row">
+<div class="column"><img alt="im_url0" class="img-invis" id="img0" src="${image_url0}" /> <img alt="im_url1" class="img-invis" id="img1" src="${image_url1}" /> <img alt="im_url2" class="img-invis" id="img2" src="${image_url2}" /> <img alt="im_url3" class="img-invis" id="img3" src="${image_url3}" /> <img alt="im_url4" class="img-invis" id="img4" src="${image_url4}" /> <img alt="im_url5" class="img-invis" id="img5" src="${image_url5}" /> <img alt="im_url6" class="img-invis" id="img6" src="${image_url6}" /> <img alt="im_url7" class="img-invis" id="img7" src="${image_url7}" /> <img alt="im_url8" class="img-invis" id="img8" src="${image_url8}" /> <img alt="im_url9" class="img-invis" id="img9" src="${image_url9}" />
+<div class="form-group"><label>Weight:&nbsp;</label> <input id="0" oninvalid="this.setCustomValidity('Enter a weight estimate between 30 kg (66 lbs) and 450 kg (990 lbs).');" /> kg &nbsp; <input id="1" oninvalid="this.setCustomValidity('Enter a weight estimate between 30 kg (66 lbs) and 450 kg (990 lbs). Follow the format described in the instructions.');" /> lbs</div>
+
+<div class="form-group"><label>Height:&nbsp;</label> <input id="2" oninvalid="this.setCustomValidity('Enter a height estimate between 60 cm (2 feet) and 275 cm (9 feet). Follow the format described in the instructions.');" /> cm &nbsp; <input id="3" oninvalid="this.setCustomValidity('Enter a height estimate between 60 cm (2 feet) and 275 cm (9 feet). Follow the format described in the instructions.');" /> feet/inches</div>
+
+<div class="form-group-vis"><button id="mainButton" onclick="storeResults()" style="">Start</button></div>
+</div>
+</div>
+<input id="f0" name="f0" type="hidden" /> <input id="f1" name="f1" type="hidden" /> <input id="f2" name="f2" type="hidden" /> <input id="f3" name="f3" type="hidden" /> <input id="timeseq" name="timeseq" type="hidden" /> <input id="formseq" name="formseq" type="hidden" /></section>
+<style type="text/css">#collapseTrigger{
+  color:#fff;
+  display: block;
+  text-decoration: none;
+}
+#submitButton{
+  display: none;
+  white-space: normal;
+}
+.caption {
+    /* Make the caption a block so it occupies its own line. */
+    display: block;
+}
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img-vis{
+    padding: 20px;
+    margin: 10px;
+    margin-bottom: 30px;
+    display: block;   
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 380px;
+    max-width: 90%;
+}
+.img-invis{
+    display: none;
+}
+.form-group{
+  text-align: center;
+  display: none;
+}
+.form-group-vis{
+  text-align: center;
+  display: block;
+}
+.column {
+    flex: 50%;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+</style>
+<!-- Close internal style sheet --><!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" integrity="sha384-s1ITto93iSMDxlp/79qhWHi+LsIi9Gx6yL+cOKDuymvihkfol83TYbLbOw+W/wv4" crossorigin="anonymous"></script><script>
+  $(document).ready(function() {
+    // Instructions expand/collapse
+    var content = $('#instructionBody');
+    var trigger = $('#collapseTrigger');
+    //content.hide();
+    $('.collapse-text').text('');
+    trigger.click(function(){
+      content.toggle();
+      var isVisible = content.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+    // end expand/collapse
+  });
+</script><script type="text/javascript">
+  //window.addEventListener('load', init);
+  
+  function skipFct() {
+    return false;
+  }
+
+  // if the user has just typed in a digit, we store the respective form_id
+  function checkKeyPressed(event, id)  {
+    var c = event.which || event.keyCode;
+    if (c >= "0".charCodeAt(0) && c <= "9".charCodeAt(0))
+      document.getElementById("formseq").value += id;
+  }
+  
+  function updateLbsFromKg(event)  {
+    checkKeyPressed(event, "0");
+    document.getElementById("1").value = Math.round(2.20462*document.getElementById("0").value); 
+  }
+  
+  function updateKgFromLbs(event)  {
+    checkKeyPressed(event, "1");
+    document.getElementById("0").value = Math.round(0.453592*document.getElementById("1").value); 
+  }
+  
+  function updateFeetFromCm(event)  {
+    checkKeyPressed(event, "2");
+    el = document.getElementById("2");
+    var feetval = Math.floor(0.0328084*el.value);
+    var inchval = Math.round((0.0328084*el.value - feetval) * 12.0);
+    if (inchval >= 12)
+    {
+      inchval = 0;
+      feetval += 1;
+    }
+    document.getElementById("3").value = feetval + "\'" + inchval + "\""; 
+  }
+  
+  function updateCmFromFeet(event)  {
+    checkKeyPressed(event, "3");
+    var numstr = document.getElementById("3").value;
+    numstr = numstr.replace(/ /g,"");
+    var inchval = 0, feetval = 0;
+    if (numstr.indexOf("'") > 0)
+      feetval = parseInt(numstr.split("'")[0]);
+    if (numstr.indexOf("'") < numstr.length-1)
+    {
+      numstr = numstr.split("'")[1];
+      if (numstr != null)
+      {
+        numstr = numstr.replace(/\D/g,'');
+        inchval = parseInt(numstr);  
+      }
+    }
+    if (isNaN(inchval))
+      inchval = 0
+    if (isNaN(feetval))
+      feetval = 0
+    document.getElementById("2").value = Math.round(30.48*feetval + 2.54*inchval); 
+  }
+    
+  function init(){
+
+    // show input forms    
+    var forms = document.getElementsByClassName("form-group");
+    for (var i = 0; i < forms.length; i++)  {
+      forms[i].style.display = "block";
+    }
+    
+    // change common properties of the input elements    
+    for (var i = 0; i < 4; i++) {
+      el = document.getElementById(i.toString());
+      el.setAttribute("size", "5");
+      el.setAttribute("autocomplete", "off"); 
+      el.setAttribute("required", "true");
+      el.setAttribute("onfocus", "skipFct()");
+    }
+    
+    wkg_form = document.getElementById('0');
+    wlbs_form = document.getElementById('1');
+    hcm_form = document.getElementById('2')
+    hfi_form = document.getElementById('3')
+    
+    wkg_form.setAttribute("type", "number");
+    wkg_form.setAttribute("min", "30");
+    wkg_form.setAttribute("max", "450");
+    wkg_form.setAttribute("onmouseup", "updateLbsFromKg(event)");
+    wkg_form.setAttribute("onkeyup", "updateLbsFromKg(event)");
+    
+    wlbs_form.setAttribute("type", "number");
+    wlbs_form.setAttribute("min", "60");
+    wlbs_form.setAttribute("max", "1000");
+    wlbs_form.setAttribute("onmouseup", "updateKgFromLbs(event)");
+    wlbs_form.setAttribute("onkeyup", "updateKgFromLbs(event)");  
+    
+    hcm_form.setAttribute("type", "number");
+    hcm_form.setAttribute("min", "60");
+    hcm_form.setAttribute("max", "300");
+    hcm_form.setAttribute("onmouseup", "updateFeetFromCm(event)");
+    hcm_form.setAttribute("onkeyup", "updateFeetFromCm(event)");
+    
+    hfi_form.setAttribute("type", "text");
+    hfi_form.setAttribute("pattern", "[2-9]'(([0-9]|10|11)(''|\")?)?");
+    hfi_form.setAttribute("onmouseup", "updateCmFromFeet(event)");
+    hfi_form.setAttribute("onkeyup", "updateCmFromFeet(event)");
+    
+    document.getElementById("img0").className = "img-vis";
+    document.getElementById("mainButton").innerHTML = "Next";
+    var content = $('#instructionBody');
+    content.hide();
+    $('.collapse-text').text('(Click to expand)');
+}
+
+  function addTimeMes()  {
+    var d = new Date();
+    var n = d.getTime();
+    document.getElementById("timeseq").value += (n+","); 
+}
+  
+  function storeResults() {
+    var batchsize = 10;
+    if (typeof cnt == 'undefined' )
+      cnt = 0;
+    // initialze
+    if (cnt == 0)
+    {
+      init();
+      addTimeMes();
+    }    
+    // process forms input
+    else 
+    {
+      // delete previous error status
+      for (var i = 0; i < 4; i++)
+        document.getElementById(i.toString()).setCustomValidity('');
+      
+      // check that inputs are valid
+      for (var i = 0; i < 4; i++)
+      {  
+        el = document.getElementById(i.toString());
+        if (el.checkValidity() == false)
+        {  
+          el.reportValidity();
+          return;
+        }
+      }
+      // store the input
+      for (var i = 0; i < 4; i++)
+      {
+        el_inp = document.getElementById(i.toString());
+        el_out = document.getElementById("f"+i.toString());
+        el_out.value += (el_inp.value+",");
+      }
+      addTimeMes();
+      // reload the images and clear forms
+      if (cnt < batchsize)
+      {
+        // reload the image if any left
+        document.getElementById("img"+(cnt-1)).className = "img-invis";
+        document.getElementById('img'+cnt).className = "img-vis";
+        document.getElementById("formseq").value += ",";
+        for (var i = 0; i < 4; i++)
+        {
+          el_inp = document.getElementById(i.toString());
+          el_inp.setCustomValidity('');
+          el_inp.value = "";
+        }
+      }
+    } 
+    // only one image remains -> change the title to "submit" button
+    if (cnt == batchsize-1)
+      document.getElementById("mainButton").innerHTML = "Submit";
+    else if (cnt == batchsize)
+      document.getElementById("submitButton").click();
+    cnt++;
+  }
+</script>

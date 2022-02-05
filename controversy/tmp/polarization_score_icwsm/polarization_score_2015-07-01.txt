@@ -1,0 +1,6 @@
+askpotus	0.0794722990675
+internationaljokeday	0.0598645202969
+cuba	0.057205008602
+hottestdayoftheyear	0.0245666490813
+canadaday	0.0577310580222
+buycoolforthesummeronitunes	-0.0247562749395

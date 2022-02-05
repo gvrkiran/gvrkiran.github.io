@@ -1,0 +1,10 @@
+c1	how are you?
+c2	im great
+c1	thanks
+c2	what the im awesome
+c1	thanks1
+c2	what the im awesome1
+c1	thanks2
+c2	what the im awesome2
+c1	thanks3
+c2	what the im awesome3

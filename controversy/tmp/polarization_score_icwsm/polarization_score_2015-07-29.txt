@@ -1,0 +1,6 @@
+mlsallstar	0.058041460931
+nationallipstickday	0.06322504475
+changetheworldin5words	0.0563828019706
+windows10	0.0516687087245
+snapchatcamerondallas	0.0423930663915
+realmusic	-0.00325352040013

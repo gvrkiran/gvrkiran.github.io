@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>PhD Thesis: Kiran Garimella</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="typeplate.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="grids-responsive-min.css">
+		<link rel="stylesheet" href="bib.css" type="text/css" media="screen">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	</head>
+<body>
+	<main role="main">
+	<h1>Polarization on Social Media</h1>
+	<h3>Advisor: <a href="https://users.ics.aalto.fi/gionis/">Aristides Gionis</a></h3>
+	<h3>External Reviewers: <a href="https://www.isi.edu/integration/people/lerman/">Kristina Lerman</a>, <a href="https://people.mpi-sws.org/~gummadi/">Krishna Gummadi</a></h3>
+	<h3>Opponent: <a href="http://kdd.isti.cnr.it/homes/pedreschi/">Dino Pedreschi</a></h3>
+	<h2>Abstract:</h2>
+	<p>
+	This thesis provides a broad overview of polarization on social media,
+along with algorithmic techniques to identify polarized topics,
+understanding their properties over time, and
+finally, to reduce polarization.
+	</p>
+
+	<p>
+	First, we provide methods to <b>identify polarized topics automatically</b>
+from social-media streams.
+Our methods are mainly based on interaction networks,
+i.e., networks of social media users, connected through certain types of interactions.
+We first show that polarized topics have a special bi-clustered structure in their retweet network
+and propose an algorithm to quantify the degree of polarization by using a random walk on this network.
+We then make use of subgraph patterns (motifs) in the reply network of users to show that we can
+easily identify polarized topics using such patterns.
+Since our analysis does not use content, our methods are able to generalize to any topic, domain and language.
+	</p>
+
+	<p>
+	Next, we study the <b>dynamic aspects of the process of polarization</b>.
+We understand what happens to the interaction networks defined above in case of
+a sudden increase in interest of users on the topic.
+We then address the question on whether polarization on Twitter has increased over the last 8 years
+and find evidence to support that it does.
+	</p>
+
+	<p>
+	Finally, given these findings, we <b>design algorithms to reduce polarization</b>. We propose two approaches.
+In the first approach, we propose connecting users with opposing viewpoints in order to reduce polarization.
+Our method takes into account the users' interests and their current level of polarization
+to help them get connected to the people they feel comfortable in doing so.
+In the second approach, we take an information-diffusion route. We pose the problem of reducing polarization
+as a task of spreading information that reaches both sides of the polarized topic.
+	</p>
+
+	<p>
+Given the ever-increasing polarization in the society, almost everywhere in the world, and the real-world
+impact of polarized discussions (e.g., brexit, trump, etc.), the advances made in this
+thesis are necessary, relevant and timely.
+	</p>
+
+
+	<h2>Publications:</h2>
+	<ul id="toc">
+
+		<li><a class="normal-text" href="#thesis18thumb">
+				<span align="right" class="bibtexnumber"> [1] </span>
+				<span class="bibtexitem">
+					Kiran Garimella
+					<span class="bibtitle">Polarization on Social Media</span>.
+					<em>PhD thesis</em>, Aalto University, 2018.
+					[<a href="../content/thesis.pdf">Thesis</a>]
+				</span>
+			</a>
+		</li>
+
+		<li>
+			<a class="normal-text" href="#wsdm16thumb">[2]
+				<span class="bibtexitem">
+					Kiran Garimella, Gianmarco De Francisci Morales, Aristides Gionis, Michael Mathioudakis
+					<span class="bibtitle">Quantifying Controversy on Social Media.</span>
+					<em>WSDM 2016, AND Transactions on Social Computing</em>
+					[<a href="https://arxiv.org/abs/1507.05224">Paper</a>]
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="normal-text" href="#mauro17thumb">[3]
+				<span class="bibtexitem">
+					Mauro Coletto, Kiran Garimella, Aristides Gionis, Claudio Lucchese
+					<span class="bibtitle">A Motif-based Approach for Identifying Controversy.</span>
+					<em>ICWSM 2017</em>
+					[<a href="https://users.ics.aalto.fi/kiran/content/A-Motif-based-Approach-for-Identifying-Controversy.pdf">Paper</a>]
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="normal-text" href="#websci17thumb">[4]
+				<span class="bibtexitem">
+					Kiran Garimella, Gianmarco De Francisci Morales, Aristides Gionis, Michael Mathioudakis
+					<span class="bibtitle">The Effect of Collective Attention on Controversial Debates on Social Media.</span>
+					<em>WebScience 2017</em><b> (Best student paper award)</b>
+					[<a href="https://users.ics.aalto.fi/kiran/content/The-Effect-of-Collective-Attention-on-Controversial-Debates-on-Social-Media.pdf">Paper</a>]
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="normal-text" href="#ingmar17thumb">[5]
+				<span class="bibtexitem">
+					Kiran Garimella, Ingmar Weber
+					<span class="bibtitle">A Long-Term Analysis of Polarization on Twitter.</span>
+					<em>ICWSM 2017</em>
+					[<a href="https://users.ics.aalto.fi/kiran/content/A-Long-Term-Analysis-of-Polarization-on-Twitter.pdf">Paper</a>]
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="normal-text" href="#wsdm17thumb">[6]
+				<span class="bibtexitem">
+					Kiran Garimella, Gianmarco De Francisci Morales, Aristides Gionis, Michael Mathioudakis
+					<span class="bibtitle">Balancing Opposing Views to Reduce Controversy.</span>
+					<em>WSDM 2017</em> <b> (Best student paper award)</b>
+					[<a href="https://arxiv.org/abs/1611.00172">Paper</a>]
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="normal-text" href="#webscishort17thumb">[7]
+				<span class="bibtexitem">
+					Kiran Garimella, Gianmarco De Francisci Morales, Aristides Gionis, Michael Mathioudakis
+					<span class="bibtitle">Factors in Recommending Contrarian Content on Social Media.</span>
+					<em>WebScience 2017</em>
+					[<a href="https://users.ics.aalto.fi/kiran/content/Factors-in-Recommending-Contrarian-Content-on-Social-Media.pdf">Paper</a>]
+				</span>
+			</a>
+		</li>
+
+		<li>
+			<a class="normal-text" href="#nips17thumb">[8]
+				<span class="bibtexitem">
+					Kiran Garimella, Aristides Gionis, Nikos Parotsidis, Nikolaj Tatti
+					<span class="bibtitle">Balancing Information Exposure on Social Networks.</span>
+					<em>NIPS 2017</em>
+					[<a href="https://arxiv.org/abs/1709.01491">Paper</a>]
+				</span>
+			</a>
+		</li>
+
+		<li>
+			<a class="normal-text" href="#www18thumb">[9]
+				<span class="bibtexitem">
+					Kiran Garimella, Gianmarco De Francisci Morales, Aristides Gionis, Michael Mathioudakis
+					<span class="bibtitle">Political Discourse on Social Media: Echo Chambers, Gatekeepers, and the Price of Bipartisanship.</span>
+					<em>WWW 2018</em>
+					[<a href="https://arxiv.org/abs/1801.01665">Paper</a>]
+				</span>
+			</a>
+		</li>
+
+		</ul>
+
+		<h2>Organization:</h2>
+		<p>The rest of this page is organized into three parts, summarizing our main contributions: (i) Identifying Polarized topics on social media, (ii) Tracking polarized topics over time, and (iii) Algorithms to reduce polarization.</p>
+
+		<h2>Identifying Polarized topics</h2>
+
+		<div class="pure-g" id="wsdm16thumb">
+			<div class="pure-u-1 pure-u-lg-1-2">
+				<div class="card abstract-box">
+					<div class="info">
+						<h3><a href="https://arxiv.org/abs/1507.05224">
+								Quantifying Controversy on Social Media
+							</a></h3>
+							<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://gdfm.me">Gianmarco De Francisci Morales</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>, and
+								<a href="http://michalis.co">Michael Mathioudakis</a>
+							</div>
+							<div class="links">
+							</div>
+					</div>
+					<div class="abstract">
+						<a class="paperThumbnail" title="Quantifying Controversy on Social Media"
+																href="https://arxiv.org/abs/1507.05224">
+						</a>
+						<p>
+						Which topics spark the most heated debates on social media? Identifying those topics is not only interesting from a societal point of view, but also allows the filtering and aggregation of social media content for disseminating news stories. In this paper, we perform a systematic methodological study of controversy detection by using the content and the network structure of social media.
+						</p>
+						<p>
+Unlike previous work, rather than study controversy in a single hand-picked topic and use domain specific knowledge, we take a general approach to study topics in any domain. Our approach to quantifying controversy is based on a graph-based three-stage pipeline, which involves (i) building a conversation graph about a topic; (ii) partitioning the conversation graph to identify potential sides of the controversy; and (iii) measuring the amount of controversy from characteristics of the graph.
+						</p>
+						<p>
+We perform an extensive comparison of controversy measures, different graph-building approaches, and data sources. We use both controversial and non-controversial topics on Twitter, as well as other external datasets. We find that our new random-walk-based measure outperforms existing ones in capturing the intuitive notion of controversy, and show that content features are vastly less helpful in this task.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="pure-u-1 pure-u-lg-1-2">
+				<div class="card gallery">
+					<figure>
+						<img src="img/wsdm16_fig_full.png">
+						<figcaption>
+						<span class="lead">
+							Sample conversation graphs with retweet (top) and follow (bottom) features (visualized using the force-directed layout algorithm in Gephi). The left side is controversial, (a,e) #beefban, (b,f) #russia march, while the right side is non-controversial, (c,g) #sxsw, (d,h) #germanwings.
+						</span>
+						</figcaption>
+					</figure>
+				</div>
+			</div>
+
+		</div>
+
+
+			<div class="pure-g" id="mauro17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="../content/A-Motif-based-Approach-for-Identifying-Controversy.pdf">
+A Motif-based Approach for Identifying Controversy
+								</a></h3>
+								<div class="authors">
+								<a href="https://www.researchgate.net/profile/Mauro_Coletto">Mauro Coletto</a>,
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://hpc.isti.cnr.it/~claudio/web/home/index.html">Claudio Lucchese</a>, and
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>
+								</div>
+								<div class="links">
+
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="A Motif-based Approach for Identifying Controversy"
+				 href="../content/A-Motif-based-Approach-for-Identifying-Controversy.pdf">
+							</a>
+							<p>
+							Among the topics discussed in Social Media, some lead
+to controversy. A number of recent studies have focused
+on the problem of identifying controversy in social
+media mostly based on the analysis of textual content
+or rely on global network structure. Such approaches
+have strong limitations due to the difficulty
+of understanding natural language, and of investigating
+the global network structure.
+<p>
+</p>
+In this work we show that it is possible to detect controversy
+in social media by exploiting network motifs,
+i.e., local patterns of user interaction. The proposed
+approach allows for a language-independent and finegrained
+and efficient-to-compute analysis of user discussions
+and their evolution over time. The supervised
+model exploiting motif patterns can achieve 85% accuracy,
+with an improvement of 7% compared to baseline
+structural, propagation-based and temporal network
+features.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/mauro17_fig_full.png">
+							<figcaption>
+							<span class="lead">
+							Reply trees for controversial (left) and non-controversial (right) dicussions for a tweet by @RealDonaldTrump. We can see that there is a clear difference in the structure.
+							</span> 
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+                
+			</div>
+
+
+		<h2>Tracking over time</h2>
+
+			<div class="pure-g" id="websci17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://users.ics.aalto.fi/kiran/content/The-Effect-of-Collective-Attention-on-Controversial-Debates-on-Social-Media.pdf">
+									The Effect of Collective Attention on Controversial Debates on Social Media
+								</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://gdfm.me">Gianmarco De Francisci Morales</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>, and
+								<a href="http://michalis.co">Michael Mathioudakis</a>
+								</div>
+								<div class="links">
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="The Effect of Collective Attention on Controversial Debates on Social Media"
+								href="https://users.ics.aalto.fi/kiran/content/The-Effect-of-Collective-Attention-on-Controversial-Debates-on-Social-Media.pdf">
+							</a>
+							<p>
+							We study the evolution of long-lived controversial debates as manifested
+on Twitter from 2011 to 2016. Specifically, we explore how
+the structure of interactions and content of discussion varies with
+the level of collective attention, as evidenced by the number of
+users discussing a topic. Spikes in the volume of users typically
+correspond to external events that increase the public attention on
+the topic, for instance, discussions about 'gun control' often erupt
+after a mass shooting.
+<p>
+</p>
+This work is the first to study the dynamic evolution of polarized
+online debates at such scale. By employing a wide array of network
+and content analysis measures, we find consistent evidence that
+increased collective attention is associated with increased network
+polarization and network concentration within each side of the
+debate; and overall more uniform lexicon usage across all users.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/websci17_fig_full.png">
+							<figcaption>
+							<span class="lead">
+								Daily trends for number of active users for the four controversial topics under study. Clear spikes occur at several points in the timeline. Manually chosen labels describing related events reported in the news on the same day are shown in blue for some of the spikes.
+							</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="pure-g" id="ingmar17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://users.ics.aalto.fi/kiran/content/A-Long-Term-Analysis-of-Polarization-on-Twitter.pdf">
+									A Long-Term Analysis of Polarization on Twitter
+								</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="https://ingmarweber.de">Ingmar Weber</a>
+
+								</div>
+								<div class="links">
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="A Long-Term Analysis of Polarization on Twitter"
+								href="https://users.ics.aalto.fi/kiran/content/A-Long-Term-Analysis-of-Polarization-on-Twitter.pdf">
+							</a>
+							<p>
+							Social media has played an important role in shaping political
+discourse over the last decade. It is often perceived to have
+increased political polarization, thanks to the scale of discussions
+and their public nature. Here, we try to answer whether
+political polarization in the US on Twitter has increased over
+the last eight years. We analyze a large longitudinal Twitter
+dataset of 679,000 users and look at signs of polarization in
+their (i) network - how people follow political and media accounts,
+(ii) tweeting behavior - whether they retweet content
+from both sides, and (iii) content - how partisan the hashtags
+they use are. Our analysis shows that online polarization has
+indeed increased over the past eight years and that, depending
+on the measure, the relative change is 10%-20%. Our study
+is one of very few with such a long-term perspective, encompassing
+two US presidential elections and two mid-term elections,
+providing a rare longitudinal analysis
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/ingmar17_fig_full.png">
+							<figcaption>
+							<span class="lead">
+								Weekly hashtag polarization. The four vertical lines indicate the 2010 midterm, the 2012 presidential, the 2014 midterm, and the 2016 presidential elections.
+							</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+                
+		<h2>Reducing Polarization</h2>
+
+ 
+			<div class="pure-g" id="wsdm17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://arxiv.org/abs/1611.00172">
+									Balancing Opposing Views to Reduce Controversy
+</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://gdfm.me">Gianmarco De Francisci Morales</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>, and
+								<a href="http://michalis.co">Michael Mathioudakis</a>
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="Balancing Opposing Views to Reduce Controversy"
+								href="https://arxiv.org/abs/1611.00172">
+							</a>
+							<p>
+							Society is often polarized by controversial issues, that split the population into groups of opposing views. When such issues emerge on social media, we often observe the creation of 'echo chambers', i.e., situations where like-minded people reinforce each other's opinion, but do not get exposed to the views of the opposing side. In this paper we study algorithmic techniques for bridging these chambers, and thus, reducing controversy. Specifically, we represent the discussion on a controversial issue with an endorsement graph, and cast our problem as an edge-recommendation problem on this graph. The goal of the recommendation is to reduce the controversy score of the graph, which is measured by a recently-developed metric based on random walks. At the same time, we take into account the acceptance probability of the recommended edge, which represents how likely the edge is to materialize in the endorsement graph. We propose a simple model based on a recently-developed user-level controversy score, that is competitive with state-of- the-art link-prediction algorithms. We thus aim at finding the edges that produce the largest reduction in the controversy score, in expectation. To solve this problem, we propose an efficient algorithm, which considers only a fraction of all the combinations of possible edges. Experimental results show that our algorithm is more efficient than a simple greedy heuristic, while producing comparable score reduction. Finally, a comparison with other state-of-the-art edge-addition algorithms shows that this problem is fundamentally different from what has been studied in the literature.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/wsdm17_fig_full.png">
+							<figcaption>
+								<span class="lead">
+									Sample retweet graphs (visualized using the force-directed layout algorithm in Gephi) for #beefban (a,b) and #russia march (c,d) before (a,c) and after (b,d) the addition of 20 edges using our algorithm. We clearly
+see that the two clusters appear to come closer after the edge addition.
+								</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+
+			<div class="pure-g" id="webscishort17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://users.ics.aalto.fi/kiran/content/Factors-in-Recommending-Contrarian-Content-on-Social-Media.pdf">
+									Factors in Recommending Contrarian Content on Social Media</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://gdfm.me">Gianmarco De Francisci Morales</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>, and
+								<a href="http://michalis.co">Michael Mathioudakis</a>
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="Factors in Recommending Contrarian Content on Social Media"
+								href="https://users.ics.aalto.fi/kiran/content/Factors-in-Recommending-Contrarian-Content-on-Social-Media.pdf">
+							</a>
+							<p>
+							Polarization is a troubling phenomenon that can lead to societal
+divisions and hurt the democratic process. It is therefore important
+to develop methods to reduce it.
+We propose an algorithmic solution to the problem of reducing
+polarization. The core idea is to expose users to content that
+challenges their point of view, with the hope broadening their perspective,
+and thus reduce their polarity. Our method takes into
+account several aspects of the problem, such as the estimated polarity
+of the user, the probability of accepting the recommendation,
+the polarity of the content, and popularity of the content being
+recommended.
+</p>
+<p>
+We evaluate our recommendations via a large-scale user study
+on Twitter users that were actively involved in the discussion of
+the US elections results. Results shows that, in most cases, the
+factors taken into account in the recommendation affect the users
+as expected, and thus capture the essential features of the problem.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/webscishort17_fig_full.png">
+							<figcaption>
+								<span class="lead">
+									A screenshot of our survey questionnaire.
+								</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+
+			<div class="pure-g" id="nips17thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://arxiv.org/abs/1709.01491">
+									Balancing Information Exposure on Social Networks</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>,
+								<a href="http://michalis.co">Nikos Parotsidis</a>, and
+								<a href="http://gdfm.me">Nikolaj Tatti</a>
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="Balancing Information Exposure on Social Networks"
+								href="https://arxiv.org/abs/1709.01491">
+							</a>
+							<p>
+							Social media has brought a revolution on how people are consuming news. Beyond the undoubtedly large number of advantages brought by social-media platforms, a point of criticism has been the creation of echo chambers and filter bubbles, caused by social homophily and algorithmic personalization.
+In this paper we address the problem of balancing the information exposure in a social network. We assume that two opposing campaigns (or viewpoints) are present in the network, and that network nodes have different preferences towards these campaigns. Our goal is to find two sets of nodes to employ in the respective campaigns, so that the overall information exposure for the two campaigns is balanced. We formally define the problem, characterize its hardness, develop approximation algorithms, and present experimental evaluation results.
+</p>
+<p>
+Our model is inspired by the literature on influence maximization, but we offer significant novelties. First, balance of information exposure is modeled by a symmetric difference function, which is neither monotone nor submodular, and thus, not amenable to existing approaches. Second, while previous papers consider a setting with selfish agents and provide bounds on best response strategies (i.e., move of the last player), we consider a setting with a centralized agent and provide bounds for a global objective function.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/nips17_fig_full.png">
+							<figcaption>
+								<span class="lead">
+									Word clouds of the profiles for the initial seeds, and profiles selected by our algorithm.
+								</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+
+
+			<div class="pure-g" id="www18thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="https://arxiv.org/abs/1801.01665">
+									Political Discourse on Social Media: Echo Chambers, Gatekeepers, and the Price of Bipartisanship</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								<a href="http://gdfm.me">Gianmarco De Francisci Morales</a>,
+								<a href="http://users.ics.aalto.fi/gionis">Aristides Gionis</a>, and
+								<a href="http://michalis.co">Michael Mathioudakis</a>
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="Political Discourse on Social Media: Echo Chambers, Gatekeepers, and the Price of Bipartisanship"
+								href="https://arxiv.org/abs/1801.01665">
+							</a>
+							<p>
+							Echo chambers, i.e., situations where one is exposed only to opinions that agree with their own, are an increasing concern for the political discourse in many democratic countries. This paper studies the phenomenon of political echo chambers on social media. We identify the two components in the phenomenon: the opinion that is shared ('echo'), and the place that allows its exposure ('chamber' --- the social network), and examine closely at how these two components interact. We define a production and consumption measure for social-media users, which captures the political leaning of the content shared and received by them. By comparing the two, we find that Twitter users are, to a large degree, exposed to political opinions that agree with their own. We also find that users who try to bridge the echo chambers, by sharing content with diverse leaning, have to pay a 'price of bipartisanship' in terms of their network centrality and content appreciation. In addition, we study the role of 'gatekeepers', users who consume content with diverse leaning but produce partisan content (with a single-sided leaning), in the formation of echo chambers. Finally, we apply these findings to the task of predicting partisans and gatekeepers from social and content features. While partisan users turn out relatively easy to identify, gatekeepers prove to be more challenging.
+
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/www18_fig_full.png">
+							<figcaption>
+								<span class="lead">
+Distribution of production and consumption polarity, for Political (first row) and Non-Political (second row) datasets. The scatter plots display the production (x-axis) and consumption (y-axis) polarities of each user in a dataset. Colors indicate user polarity sign, following [6] (grey = democrat, yellow = republican). The one-dimensional plots along the axes show the distributions of the production and consumption polarities for democrats and republicans.
+								</span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+
+
+		<h3>Thesis</h3>
+
+
+		<div class="pure-g" id="thesis18thumb">
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card abstract-box">
+						<div class="info">
+							<h3><a href="../content/thesis.pdf">
+									Polarization on Social Media</a></h3>
+								<div class="authors">
+								<a href="https://users.ics.aalto.fi/kiran/">Kiran Garimella</a>,
+								</div>
+						</div>
+						<div class="abstract">
+							<a class="paperThumbnail" title="Polarization on Social Media"
+								href="../content/thesis.pdf">
+							</a>
+	<p>
+	First, we provide methods to identify polarized topics automatically
+from social-media streams.
+Our methods are mainly based on interaction networks,
+i.e., networks of social media users, connected through certain types of interactions.
+We first show that polarized topics have a special bi-clustered structure in their retweet network
+and propose an algorithm to quantify the degree of polarization by using a random walk on this network.
+We then make use of subgraph patterns (motifs) in the reply network of users to show that we can
+easily identify polarized topics using such patterns.
+Since our analysis does not use content, our methods are able to generalize to any topic, domain and language.
+	</p>
+
+	<p>
+	Next, we study the dynamic aspects of the process of polarization.
+We understand what happens to the interaction networks defined above in case of
+a sudden increase in interest of users on the topic.
+We then address the question on whether polarization on Twitter has increased over the last 8 years
+and find evidence to support that it does.
+	</p>
+
+	<p>
+	Finally, given these findings, we design algorithms to reduce polarization. We propose two approaches.
+In the first approach, we propose connecting users with opposing viewpoints in order to reduce polarization.
+Our method takes into account the users' interests and their current level of polarization
+to help them get connected to the people they feel comfortable in doing so.
+In the second approach, we take an information-diffusion route. We pose the problem of reducing polarization
+as a task of spreading information that reaches both sides of the polarized topic.
+	</p>
+
+	<p>
+Given the ever-increasing polarization in the society, almost everywhere in the world, and the real-world
+impact of polarized discussions (e.g., brexit, trump, etc.), the advances made in this
+thesis are necessary, relevant and timely.
+	</p>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="pure-u-1 pure-u-lg-1-2">
+					<div class="card gallery">
+						<figure>
+							<img src="img/thesis_fig_full.png">
+							<figcaption>
+								<span class="lead">
+									Cover art by me. </span>
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+			</div>
+
+	</main>
+</body>
+</html>

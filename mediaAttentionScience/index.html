@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Code and Data for 'Media Attention to Science'</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.navbar{ background-color:#999; color:#ffffff;}
+	.navbar a{color:#fff; }
+	.navbar a:hover, .navbar a:focus{background-color:#ddd !important; color:#fffff; }
+	.navblank{height:0px; }
+	.navbar .navbar-toggle>.icon-bar{background-color:#ffffff; }
+	.navbar .navbar-toggle:hover>.icon-bar{background-color:#ffffff; }
+	.title_box{background-color:#000;}
+	.title_box h1{color: #fff; text-shadow: 1pt 1pt 1pt #000; font-size: 45px;}
+	.title_box .description{text-align:justify; color:white; text-shadow: 1px 1px 0px #000; font-size:13pt; }
+	h2{font-size: 25pt; color:#000; padding-top: 80px; margin-top: -80px; }
+	@media screen and (min-width: 768px)
+	.title_box.large_title h1, .title_box.large_title .h1 {
+	font-size: 50px;
+	}
+	body {
+		  font-family:      Arial, Geneva, sans-serif;
+		  font-size:        medium;
+		  font-weight:      normal;
+	}
+	#emp {font-weight: bold;}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-9hbo{font-weight:bold;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+</style>
+</head>
+<body>
+
+<a name="home"></a>
+
+<div class="navblank">
+</div>
+
+<div class="title_box large_title">
+	<div class="container">
+		<h1>Media Attention to Science</h1>
+		<div class="description">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	
+	<div class="content_box">
+		<h2>Summary: </h2>
+		In this work, we try to answer three main questions: 
+		(i) has media attention to science increased over the years?
+		, (ii) Does media attention mean scientific attention? and,
+		(iii) Can we predict media attention based on simple properties of a paper, like number of downloads, title, abstract, authors, affiliations, etc.
+		<ul>
+		</ul>
+		<br />
+		
+		<h2>Dataset:</h2>
+		<div>
+			<p>We collected data for 44,000 papers from the last 13 years from PNAS journal.</p>
+			<p>Aggregate and processed stats from the dataset are available on <a href="https://www.dropbox.com/sh/lt5go5ee6777kz6/AABfztsSRJROgJXgLNk_XGuEa?dl=0">Dropbox</a>. Complete raw html files (containing the paper text, and other metadata) are also available on request (couple of gigs compressed).</p>
+			<p>Description of the files: Each paper has a unique identifier, indicating the year and week in which it was published. 101:2004, 102:2005, ... 113:2016 and 1 = week1, ... 52 = week 52.</p>
+			<ul>
+			<li>paperid_media_metrics.txt contains all the media metrics, including mentions in news, and social media.</li>
+			<li>paperid_metadata.txt contains the metadata information such as title, authors, author affiliation, abstract, and field</li>
+			<li>paperid_num_citations.txt contains the number of citations.</li>
+			</ul>
+		</div>
+
+
+		<br/>
+
+		<h2>Code:</h2>
+		The code used in the paper is on <a href="https://github.com/xiaohan2012/media_analysis_science">Github</a>.
+		<br /><br />
+
+		<h2>Contact:</h2>
+		<ul>
+			<li> 
+				For any questions/comments, please contact Kiran Garimella (kiran.garimella@aalto.fi).
+			</li>
+		</ul>
+	</div>	
+
+</div>
+
+
+<div class="navblank">
+</div>
+<div class="navblank">
+</div>
+
+<script type="text/javascript" src="resources/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+</body>
+</html>
+

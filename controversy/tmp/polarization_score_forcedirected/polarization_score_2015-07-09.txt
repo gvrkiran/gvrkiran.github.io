@@ -1,0 +1,7 @@
+bayarealingochallenge	0.113284417361
+soneworleans	0.0632243145999
+marrymecam	0.0370735811296
+doctorwho	0.0205275516775
+otrasandiego	0.0280356011697
+ayemamusicvideo	0.00353470861072
+fanarmyfaceoff	0.0295540282179

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Code and Data for 'Balancing information exposure in social networks'</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+	.navbar{ background-color:#999; color:#ffffff;}
+	.navbar a{color:#fff; }
+	.navbar a:hover, .navbar a:focus{background-color:#ddd !important; color:#fffff; }
+	.navblank{height:0px; }
+	.navbar .navbar-toggle>.icon-bar{background-color:#ffffff; }
+	.navbar .navbar-toggle:hover>.icon-bar{background-color:#ffffff; }
+	.title_box{background-color:#000;}
+	.title_box h1{color: #fff; text-shadow: 1pt 1pt 1pt #000; font-size: 45px;}
+	.title_box .description{text-align:justify; color:white; text-shadow: 1px 1px 0px #000; font-size:13pt; }
+	h2{font-size: 25pt; color:#000; padding-top: 80px; margin-top: -80px; }
+	@media screen and (min-width: 768px)
+	.title_box.large_title h1, .title_box.large_title .h1 {
+	font-size: 50px;
+	}
+	body {
+		  font-family:      Arial, Geneva, sans-serif;
+		  font-size:        medium;
+		  font-weight:      normal;
+	}
+	#emp {font-weight: bold;}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-9hbo{font-weight:bold;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+
+</style>
+</head>
+<body>
+
+<a name="home"></a>
+
+<div class="navblank">
+</div>
+
+<div class="title_box large_title">
+	<div class="container">
+		<h1>Balancing Information Exposure in Social Networks</h1>
+		<div class="description">
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	
+	<div class="content_box">
+		<h2>Summary: </h2>
+		In this work, we address the problem of balancing the information exposure in a social network. 
+		We assume that two opposing campaigns (or viewpoints) are present in the network, and network nodes have different preferences towards these campaigns. 
+		Our goal is to find two sets of nodes to employ in the respective campaigns, so that the overall information-exposure balance in the network is maximized.
+		The camera ready version, along with the supplementary materials can be found <a href="../content/Balancing_information_exposure_in_social_networks.pdf">here</a>.
+		A poster of our paper can be found <a href="../content/nips_2017_poster.pdf">here</a>.
+		<ul>
+		</ul>
+		<br />
+		
+		<h2>Datasets:</h2>
+		<div>
+			<p>We collected 6 datasets from Twitter.</p>
+			<ul>
+			<table class="tg">
+			<caption>Dataset description and keywords used to identify the sides. The datasets are available on <a href="https://github.com/gvrkiran/BalancedExposure">Github</a>.</caption>
+  <tr>
+    <th class="tg-e3zv">Dataset</th>
+    <th class="tg-9hbo">Side1</th>
+    <th class="tg-9hbo">Side2</th>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">USElections</td>
+    <td class="tg-9hbo">Pro-Hillary</td>
+    <td class="tg-9hbo">Pro-Trump<br></td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags and keywords identifying the USElections, such as <br/> #uselections, #trump2016, #hillary2016, etc. Collected using Twitter 1% sample for 2 weeks in September 2016</td>
+    <td class="tg-yw4l">RT @hillaryclinton, #hillary2016, #clintonkaine2016, #imwithher</td>
+    <td class="tg-yw4l">RT @realdonaldtrump, #makeamericagreatagain, #trumppence16, #trump2016</td>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">Brexit</td>
+    <td class="tg-9hbo">Pro-Remain</td>
+    <td class="tg-9hbo">Pro-Leave</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags #brexit, #voteremain, #voteleave, #eureferendum for all of June 2016, from the 1% Twitter sample. </td>
+    <td class="tg-yw4l">#voteremain, #strongerin, #remain, #remaineu, #votein</td>
+    <td class="tg-yw4l">#voteleave, #strongerout, #leaveeu, #takecontrol, #leave, #voteout</td>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">Abortion</td>
+    <td class="tg-9hbo">Pro-Abortion</td>
+    <td class="tg-9hbo">Anti-Abortion</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags #abortion, #prolife, #prochoice, #anti-abortion, #pro-abortion, #plannedparenthood from Oct 2011 to Aug 2016.</td>
+    <td class="tg-yw4l">RT @thinkprogress, RT @komenforthecure, RT @mentalabortions, #waronwomen, #nbprochoice, #prochoice, #standwithpp, #reprorights</td>
+    <td class="tg-yw4l">RT @stevenertelt, RT @lifenewshq, #praytoendabortion, #prolifeyouth, #prolife, #defundplannedparenthood, #defundpp, #unbornlivesmatter</td>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">Obamacare<br></td>
+    <td class="tg-9hbo">Pro-Obamacare</td>
+    <td class="tg-9hbo">Anti-Obamacare</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags #obamacare, and #aca from Oct 2011 to Aug 2016.</td>
+    <td class="tg-yw4l">RT @barackobama, RT @lolgop, RT @charlespgarcia, RT @defendobamacare, RT @thinkprogress, #obamacares, #enoughalready, #uniteblue</td>
+    <td class="tg-yw4l">RT @sentedcruz, RT @realdonaldtrump, RT @mittromney, RT @breitbartnews, RT @tedcruz, #defundobamacare, #makedclisten, #fullrepeal, #dontfundit</td>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">Fracking<br></td>
+    <td class="tg-9hbo">Pro-Fracking<br></td>
+    <td class="tg-9hbo">Anti-Fracking</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags and keywords #fracking, 'hydraulic fracturing', 'shale', 'horizontal drilling', from Oct 2011 to Aug 2016.</td>
+    <td class="tg-yw4l">RT @shalemarkets, RT @energyindepth, RT @shalefacts, #fracknation, #frackingez, #oilandgas, #greatgasgala, #shalegas</td>
+    <td class="tg-yw4l">RT @greenpeaceuk, RT @greenpeace, RT @ecowatch, #environment, #banfracking, #keepitintheground, #dontfrack, #globalfrackdown, #stopthefrackattack</td>
+  </tr>
+  <tr>
+    <td class="tg-9hbo">iPhone vs. Samsung<br></td>
+    <td class="tg-9hbo">Pro-iPhone</td>
+    <td class="tg-9hbo">Pro-Samsung</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">Description: Tweets containing hashtags #iphone, and #samsung from April (release of Samsung Galaxy S7), and September 2015 (release of iPhone 7).</td>
+    <td class="tg-yw4l">#iphone</td>
+    <td class="tg-yw4l">#samsung</td>
+  </tr>
+</table>
+	</ul>
+		</div>
+
+
+		<br/>
+
+		<h2>Code:</h2>
+		The code used in the paper is on <a href="https://github.com/gvrkiran/BalancedExposure">Github</a>.
+		<br /><br />
+
+		<h2>Word Clouds:</h2>
+		To evaluate the results qualitatively, we developed word clouds from the profiles of the seeds initially considered, and the seeds we obtain using our algorithm. The results can be found <a href="wordclouds.html">here</a>.
+		<br /><br />
+
+		<h2>Contact:</h2>
+		<ul>
+			<li> 
+				Nikos Parotsidis (nikos.parotsidis@uniroma2.it), Nikolaj Tatti (nikolaj.tatti@aalto.fi), Aristides Gionis (aristides.gionis@aalto.fi), Kiran Garimella (kiran.garimella@aalto.fi).
+			</li>
+		</ul>
+	</div>	
+
+</div>
+
+
+<div class="navblank">
+</div>
+<div class="navblank">
+</div>
+
+<script type="text/javascript" src="resources/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+</body>
+</html>
+

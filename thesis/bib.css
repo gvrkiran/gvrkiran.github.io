@@ -1,0 +1,111 @@
+main {
+  margin: 0 3%;
+}
+body {
+  font-family: serif;
+  color: #222;
+  background-color: #fcfefc;
+  max-width: 90%;
+  width: 80em;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+p {
+  margin-top: 1rem;
+}
+figure {
+margin: 0!important;
+}
+
+ul {
+  list-style:none;
+}
+#toc a.normal-text {
+  text-decoration: none;
+  color: inherit;
+}
+.bibtitle {
+  font-weight: bold;
+}
+
+.paperThumbnail {
+  display: inline-block;
+  width: 175px;
+  height: 225px;
+  margin-right: .8rem;
+  /* margin-right: .8rem; */
+  float: left;
+  clear: left;
+  -webkit-background-size: contain !important;
+  -moz-background-size: contain !important;
+  -o-background-size: contain !important;
+  background-size: contain !important;
+}
+
+#wsdm16thumb .paperThumbnail:hover { background: url(img/wsdm16_first.png) no-repeat; }
+#wsdm16thumb .paperThumbnail { background: url(img/wsdm16_first.png) no-repeat; }
+#mauro17thumb .paperThumbnail:hover { background: url(img/mauro17_first.png) no-repeat; }
+#mauro17thumb .paperThumbnail { background: url(img/mauro17_first.png) no-repeat; }
+#websci17thumb .paperThumbnail:hover { background: url(img/websci17_first.png) no-repeat; }
+#websci17thumb .paperThumbnail { background: url(img/websci17_first.png) no-repeat; }
+#ingmar17thumb .paperThumbnail:hover { background: url(img/ingmar17_first.png) no-repeat; }
+#ingmar17thumb .paperThumbnail { background: url(img/ingmar17_first.png) no-repeat; }
+#wsdm17thumb .paperThumbnail:hover { background: url(img/wsdm17_first.png) no-repeat; }
+#wsdm17thumb .paperThumbnail { background: url(img/wsdm17_first.png) no-repeat; }
+#webscishort17thumb .paperThumbnail:hover { background: url(img/webscishort17_first.png) no-repeat; }
+#webscishort17thumb .paperThumbnail { background: url(img/webscishort17_first.png) no-repeat; }
+#nips17thumb .paperThumbnail:hover { background: url(img/nips17_first.png) no-repeat; }
+#nips17thumb .paperThumbnail { background: url(img/nips17_first.png) no-repeat; }
+#www18thumb .paperThumbnail:hover { background: url(img/www18_first.png) no-repeat; }
+#www18thumb .paperThumbnail { background: url(img/www18_first.png) no-repeat; }
+#thesis18thumb .paperThumbnail:hover { background: url(img/thesis18_first.png) no-repeat; }
+#thesis18thumb .paperThumbnail { background: url(img/thesis18_first.png) no-repeat; }
+
+.card {
+  transition: box-shadow .25s;
+  padding: 0.9rem;
+  margin: 1rem;
+  margin-bottom: 5.4rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  border: rgba(200, 200, 200, .9) thin solid;
+}
+.abstract-box {
+  background-color: #fef5ea;
+}
+.info {
+  text-align: center;
+}
+.info h3, .info h3 a {
+  color: DodgerBlue;
+  /* text-decoration: none; */
+  margin: 1ex auto;
+  font-weight: normal;
+  font-size: x-large;
+  text-shadow: rgba(255, 255, 255, 0.746094) 0 1px 0;
+}
+.gallery img {
+  width: 100%;
+}
+.gallery .lead {
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+  .info h3, .info h3 a {
+    font-size: 18px;
+  }
+  .paperThumbnail {
+    width: 87px;
+    height: 112px;
+  }
+.card {
+  margin-bottom: 1rem;
+}
+.gallery {
+  margin-bottom: 3rem;
+}
+}
