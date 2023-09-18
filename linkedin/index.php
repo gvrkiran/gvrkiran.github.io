@@ -44,8 +44,8 @@
     ]
     
     // Fusion Table variables
-	var apiKey = 'AIzaSyAfxBvY5qj-qUV1C8WEiavPHL_SwHdsm7Y'; // kirans gmail account
-	var tableID = '1I0hOVHyQaLFFW4-fNY5u7d0fNJ5pjqS-GrKDtmYz';
+	var apiKey = 'AIzaSyAfxBvY5qc-qUV1C8WEiavPHL_SwHdsm7Y'; // kirans gmail account
+	var tableID = '1I0hOVHyQaLFdW4-fNY5u7d0fNJ5pjqS-GrKDtmYz';
 
     function initialize() {
       fetchData();
