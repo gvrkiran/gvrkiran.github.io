@@ -52,25 +52,48 @@
 	<p style="color:red">The idea behind this page is to make the tools we develop in my research publicly available. 
 My general focus is on developing data collection tools which work on mobiles, because much of my research is focused on the global south.
 	I'll try to maintain this page actively. If any link is broken, please feel free to reach out.</p>
-	<h3>Data donation tools</h3>
+	<h3>WhatsApp Explorer</h3>
 	<ul>
 		<li>
-			WhatsApp apps:
-			1. WhatsViral
+			<a href="https://whatsapp.whats-viral.me/" target="_blank">WhatsApp Explorer</a>, a tool for collecting WhatsApp data at scale. The tool allows users to easily scan a QR code and select the groups they want to donate for research. The tool is currently availabe upon request but we are working on open sourcing the code.
 		</li>
 	</ul>
 
-	<h3>YouTube</h3>
+	<h3>WhatsViral</h3>
 	<ul>
-		<li>data donation tool for youtube</li>
+		<li><a href="https://play.google.com/store/apps/details?id=com.rutgers.whatsviral" target="_blank">WhatsViral</a> is an Android app for identifying viral content on WhatsApp. The app allows for privacy preserving data collection by hashing content on the device of the user and only exporting the hashes. By comparing hashes on the server side, we can estimate virality of content on WhatsApp. The app also has features that enable push notifications which can be used to run interventions.</li>
+	</ul>
+
+
+	<h3>YouTube data donation</h3>
+	<ul>
+		<li>A <a href="https://data-donation.vercel.app/donate" target="_blank">data donation tool for youtube</a>. The tool allows users to export and share their YouTube watch and search history for research. The tool makes use of Google's takeout service and creates an app which makes the process easy, allowing users to donate their data in less than 5 minutes.</li>
+	</ul>
+
+	<h3>Telegram</h3>
+	<ul>
+		<li><a href="https://telegram.whats-viral.me/" target="_blank">Telegram watch</a> is a tool that allows users to donate their Telegram data. The tool allows users to authenticate using the Telegram OAUTH API and choose the groups and channels they are a part of. We can then obtain the data from these groups and channels using the Telegram API. Since Telegram has a good API already, why do we need a data donation tool? The issue with Telegram (or Facebook) is discovery. We can easily get data from Telegram once we know where to look but it's not easy to know what people are actually consuming. Data donation solves this issue.</li>
+	</ul>
+
+	<h3>Facebook</h3>
+	<ul>
+		<li><a href="https://www.diaspora-watch.us/home/?next=/" target="_blank">Diaspora watch</a> is a tool that allows users to donate their Facebook data. The tool is a Facebook app (think Farmville) which allows users to authenticate using their Facebook account and choose the groups and pages they are a part of. We can then obtain the data from these groups and channels using CrowdTangle.</li>
 	</ul>
 
 	<h3>Instagram</h3>
 	<ul>
-		<li>Instagram</li>
+		<li><a href="https://play.google.com/store/apps/details?id=com.rutgers.smdr" target="_blank">Social Media Metadata research</a> (I know, horrible name) is an Android app that allows researchers to recruit participants to experiment with Instagram. Users install the app and login with their Instagram account and it replaces their Instagram app experience (they can just use the app as they use the official Instagram app). We collect the data that they are seeing on their Instagram feed. The app also has functionality to inject or remove content from users feeds to allow experimentation.</li>
 	</ul>
 
+	<h3>Social media data collection from mobiles</h3>
+	<ul>
+		<li><a href="" target="_blank">No name yet, no app public yet</a> is an Android app we've been working on for a long time now. The app uses Android's accessibility API (and a bunch of other) features to collect data that users see on social media. The app currently has functionality to scrape data from WhatsApp, Facebook, YouTube and browser and do some basic anonymization before being exported to the server. Even though the app in its current form may not be deployed, this is a project that explores the technical possibilities of how data can be obtained particularly from mobile phones. Many commercial data brokers already use similar technology to scrape and sell such data and I feel it might be better if academics take control and develop best practices in this space. </li>
+	</ul>
 
+	<h3>Uber auditing tools</h3>
+	<ul>
+		<li><a href="https://chromewebstore.google.com/detail/uber-data-export/hahfagalkekcadhmpmdpngalcpndlefm?hl=en" target="_blank">Uber data exporter</a> is a Chrome web browser extension which enables automated collection of metadata from Uber rides from users. The data can help answer research questions such as the share of a Uber ride that goes to the driver, looking at long term trends in such patterns.</a>
+	</ul>
         </div>
     </div>
     <div id="footer">
