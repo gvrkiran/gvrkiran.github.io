@@ -1,7 +1,7 @@
 ---
-date = '2024-11-11T22:57:07-05:00'
-draft = false
-title = 'My First Post'
+title: "My First Post"
+date: 2024-11-11
+draft: false
 ---
 
-ok sorry. first post
+Your content here.
