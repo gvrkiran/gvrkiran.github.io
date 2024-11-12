@@ -1,11 +1,7 @@
-+++
-date = '2024-11-11T23:30:42-05:00'
-draft = true
-title = ''
-+++
-
 ---
-title: "My Blog"
+date: 2024-11-11
+draft: false
+title: 'Welcome to my blog!'
 ---
 
-Welcome to my blog!
+This is my personal blog where I share my thoughts and experiences.
