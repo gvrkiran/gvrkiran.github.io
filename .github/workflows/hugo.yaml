@@ -1,0 +1,37 @@
+name: Deploy Hugo blog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'blog/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        working-directory: ./blog
+        run: hugo --minify
+
+      - name: Deploy to /blog
+        run: |
+          cp -r blog/public/* blog/
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add blog
+          git commit -m "Update blog" || echo "No changes to commit"
+          git push
