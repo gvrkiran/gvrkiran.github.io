@@ -1,0 +1,32 @@
+name: Deploy Hugo blog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'blog/**'  # Only trigger on changes in blog directory
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+
+      - name: Build
+        working-directory: ./blog  # Specify blog directory
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./blog/public
+          destination_dir: blog  # Deploy to /blog subdirectory
