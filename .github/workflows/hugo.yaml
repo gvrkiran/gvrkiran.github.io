@@ -14,25 +14,37 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4  # Updated from v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           submodules: 'recursive'
+          fetch-depth: 0
+
+      - name: List files
+        run: |
+          pwd
+          ls -la
+          ls -la blog/
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
-          extended: true    # Added this for better theme support
+          hugo-version: '0.123.0'  # Specifying exact version
+          extended: true
 
       - name: Build
         working-directory: ./blog
         run: |
-          hugo version
-          hugo --minify
-          
+          pwd
+          ls -la
+          echo "Starting Hugo build..."
+          hugo --debug --verbose --minify
+          echo "Build complete"
+          ls -la public/
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+        if: success()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./blog/public
