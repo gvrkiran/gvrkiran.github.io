@@ -1,20 +1,16 @@
-baseURL = 'https://gvrkiran.github.io/blog/'
-languageCode = 'en-us'
-title = 'My Blog'
-theme = 'PaperMod'
+baseURL = "https://gvrkiran.github.io/blog/"
+languageCode = "en-us"
+title = "My Blog"
+theme = "PaperMod"
+
+# Add these for proper asset handling
+publishDir = "public"
+relativeURLs = true
+canonifyURLs = true
+uglyURLs = false
 
 [params]
-    mainSections = ["posts"]
-    defaultTheme = "auto"
-    ShowReadingTime = true
-    ShowShareButtons = false
-    ShowPostNavLinks = true
-    ShowBreadCrumbs = true
-    ShowCodeCopyButtons = true
-    
-[menu]
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 10
+  # Basic PaperMod configs
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowBreadCrumbs = true
