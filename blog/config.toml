@@ -1,6 +1,6 @@
 baseURL = "https://gvrkiran.github.io/blog/"
 languageCode = "en-us"
-title = "My Blog"
+title = "Abstruse Idiot"
 theme = "PaperMod"
 
 [params]
