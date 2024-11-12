@@ -3,5 +3,8 @@ languageCode = 'en-us'
 title = 'My Blog'
 theme = 'PaperMod'
 # Add these lines
-publishDir = "public"
 canonifyURLs = true
+
+# Add a proper homepage
+[params]
+  mainSections = ["posts"]
