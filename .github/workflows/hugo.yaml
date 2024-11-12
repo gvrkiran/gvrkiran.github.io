@@ -6,14 +6,17 @@ on:
       - main
     paths:
       - 'blog/**'
+      - '.github/workflows/hugo.yaml'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'recursive'  # Changed this to handle submodules properly
+          submodules: 'recursive'
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2

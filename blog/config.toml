@@ -2,4 +2,6 @@ baseURL = 'https://gvrkiran.github.io/blog/'
 languageCode = 'en-us'
 title = 'My Blog'
 theme = 'PaperMod'
-relativeURLs = true
+# Add these lines
+publishDir = "public"
+canonifyURLs = true
