@@ -1,0 +1,8 @@
+baseURL = "https://gvrkiran.github.io/blog/"
+languageCode = "en-us"
+title = "My Blog"
+theme = "PaperMod"
+
+[params]
+  defaultTheme = "auto"
+  ShowReadingTime = true
