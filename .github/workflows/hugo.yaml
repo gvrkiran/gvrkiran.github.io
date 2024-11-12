@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'blog/**'
-      - '.github/workflows/hugo.yaml'
 
 jobs:
   deploy:
@@ -14,39 +11,21 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
-          fetch-depth: 0
-
-      - name: List files
-        run: |
-          pwd
-          ls -la
-          ls -la blog/
+          submodules: true
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.123.0'  # Specifying exact version
-          extended: true
+          hugo-version: 'latest'
 
       - name: Build
         working-directory: ./blog
-        run: |
-          pwd
-          ls -la
-          echo "Starting Hugo build..."
-          hugo --debug --verbose --minify
-          echo "Build complete"
-          ls -la public/
+        run: hugo
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: success()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./blog/public
-          destination_dir: blog
-          full_commit_message: ${{ github.event.head_commit.message }}
