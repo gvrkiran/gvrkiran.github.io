@@ -1,26 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Abstruse Idiot</title>
-    <link>https://gvrkiran.github.io/blog/</link>
-    <description>Recent content on Abstruse Idiot</description>
-    <generator>Hugo -- 0.138.0</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 11 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://gvrkiran.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>My First Post</title>
-      <link>https://gvrkiran.github.io/blog/posts/my-first-post/</link>
-      <pubDate>Mon, 11 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://gvrkiran.github.io/blog/posts/my-first-post/</guid>
-      <description>&lt;p&gt;OK, this is exciting. Finally, after years of just writing content for my blog privately, I am thinking of trying out something publicly. I guess its a `phase&amp;rsquo; and might die out soon.&lt;/p&gt;
-&lt;p&gt;Some ideas of what I want to write about in the future:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;About being an academic&lt;/li&gt;
-&lt;li&gt;Why I think we should research global south more&lt;/li&gt;
-&lt;li&gt;Being careful doing interdisciplinary work and why it sucks&lt;/li&gt;
-&lt;li&gt;Being a PhD student&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Abstruse Idiot</title><link>https://gvrkiran.github.io/blog/</link><description>Recent content on Abstruse Idiot</description><generator>Hugo -- 0.138.0</generator><language>en-us</language><lastBuildDate>Mon, 11 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://gvrkiran.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>My First Post</title><link>https://gvrkiran.github.io/blog/posts/my-first-post/</link><pubDate>Mon, 11 Nov 2024 00:00:00 +0000</pubDate><guid>https://gvrkiran.github.io/blog/posts/my-first-post/</guid><description>&lt;p>OK, this is exciting. Finally, after years of just writing content for my blog privately, I am thinking of trying out something publicly. I guess its a `phase&amp;rsquo; and might die out soon.&lt;/p>
+&lt;p>Some ideas of what I want to write about in the future:&lt;/p>
+&lt;ul>
+&lt;li>About being an academic&lt;/li>
+&lt;li>Why I think we should research global south more&lt;/li>
+&lt;li>Being careful doing interdisciplinary work and why it sucks&lt;/li>
+&lt;li>Being a PhD student&lt;/li>
+&lt;/ul></description></item></channel></rss>
