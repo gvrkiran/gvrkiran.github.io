@@ -4,11 +4,6 @@ draft = false
 title = 'My Second Post'
 +++
 
----
-title: "My Media Post"
-date: 2024-11-17
----
-
 ## Welcome to my podcast
 
 Here's the latest episode:
