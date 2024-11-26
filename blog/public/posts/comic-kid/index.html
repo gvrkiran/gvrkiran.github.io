@@ -162,6 +162,11 @@ Of course we still love them.">
             </div>
         </div>
         <ul id="menu">
+            <li>
+                <a href="https://gvrkiran.github.io/blog/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -169,7 +174,7 @@ Of course we still love them.">
 
 <article class="post-single">
   <header class="post-header">
-    
+    <div class="breadcrumbs"><a href="https://gvrkiran.github.io/blog/">Home</a>&nbsp;»&nbsp;<a href="https://gvrkiran.github.io/blog/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Having a kid
     </h1>
@@ -177,6 +182,7 @@ Of course we still love them.">
 
 </div>
   </header> 
+
   <div class="post-content"><p><img alt="They&rsquo;re amazing&hellip;. i guess" loading="lazy" src="/blog/images/comic1.jpg">
 Of course we still love them.</p>
 
@@ -186,6 +192,14 @@ Of course we still love them.</p>
   <footer class="post-footer">
     <ul class="post-tags">
     </ul>
+<nav class="paginav">
+  <a class="next" href="https://gvrkiran.github.io/blog/posts/my-second-post/">
+    <span class="title">Next »</span>
+    <br>
+    <span>My Second Post</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>
@@ -258,6 +272,53 @@ Of course we still love them.</p>
         }
     })
 
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
 </script>
 </body>
 

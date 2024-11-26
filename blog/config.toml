@@ -3,9 +3,23 @@ languageCode = "en-us"
 title = "Abstruse Idiot"
 theme = "PaperMod"
 
+# Add these sections
 [params]
   defaultTheme = "auto"
   ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowRssButtonInSectionTermList = true
+  ShowToc = true
+
+# Enable blog posts
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
 
 [markup]
   [markup.goldmark]
