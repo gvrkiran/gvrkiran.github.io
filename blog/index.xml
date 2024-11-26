@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Abstruse Idiot</title>
+    <link>http://localhost:1313/blog/</link>
+    <description>Recent content on Abstruse Idiot</description>
+    <generator>Hugo -- 0.138.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Having a kid</title>
+      <link>http://localhost:1313/blog/posts/comic-kid/</link>
+      <pubDate>Mon, 25 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/posts/comic-kid/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;They&amp;rsquo;re amazing&amp;hellip;. i guess&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/blog/blog/images/comic1.jpg&#34;&gt;
+Of course we still love them.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My Second Post</title>
+      <link>http://localhost:1313/blog/posts/my-second-post/</link>
+      <pubDate>Sun, 17 Nov 2024 22:12:27 -0500</pubDate>
+      <guid>http://localhost:1313/blog/posts/my-second-post/</guid>
+      <description>&lt;h2 id=&#34;welcome-to-my-podcast&#34;&gt;Welcome to my podcast&lt;/h2&gt;
+&lt;p&gt;Here&amp;rsquo;s the latest episode:&lt;/p&gt;
+&lt;audio controls&gt;
+  &lt;source src=&#34;http://localhost:1313/blog/audio/blog-post-1.m4a&#34; type=&#34;audio/mp4&#34;&gt;
+  Your browser does not support the audio element.
+&lt;/audio&gt;
+&lt;h2 id=&#34;youtube-version&#34;&gt;YouTube version&lt;/h2&gt;
+
+
+    
+    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/wiPad-yeNDQ?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
+      &gt;&lt;/iframe&gt;
+    &lt;/div&gt;</description>
+    </item>
+    <item>
+      <title>My First Post</title>
+      <link>http://localhost:1313/blog/posts/my-first-post/</link>
+      <pubDate>Mon, 11 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/posts/my-first-post/</guid>
+      <description>&lt;p&gt;OK, this is exciting. Finally, after years of just writing content for my blog privately, I am thinking of trying out something publicly. I guess its a `phase&amp;rsquo; and might die out soon.&lt;/p&gt;
+&lt;p&gt;Some ideas of what I want to write about in the future:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;About being an academic&lt;/li&gt;
+&lt;li&gt;Why I think we should research global south more&lt;/li&gt;
+&lt;li&gt;Being careful doing interdisciplinary work and why it sucks&lt;/li&gt;
+&lt;li&gt;Being a PhD student&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
