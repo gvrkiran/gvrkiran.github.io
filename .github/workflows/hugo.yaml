@@ -32,7 +32,9 @@ jobs:
       
       - name: Build
         working-directory: ./blog
-        run: hugo --minify
+        run: |
+          rm -rf public
+          hugo --minify --cleanDestinationDir
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
