@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Comic Gallery</title>
+    <style>
+        :root {
+            --primary-color: #2a2a2a;
+            --secondary-color: #f5f5f5;
+            --accent-color: #4a90e2;
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .comic-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .comic-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comic-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .comic-info {
+            padding: 1rem;
+        }
+
+        .comic-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .comic-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-image {
+            max-width: 100vw;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 1010;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background 0.3s ease;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1010;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .modal-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gallery">
+            <!-- Sample comic cards - Replace with your actual comic images -->
+            <div class="comic-card" data-index="0">
+                <img src="/api/placeholder/1920/1080" alt="Comic 1" class="comic-thumbnail">
+                <div class="comic-info">
+                    <h3 class="comic-title">Chapter 1: Beginning</h3>
+                    <p class="comic-description">The story begins with our hero discovering their powers...</p>
+                </div>
+            </div>
+            <div class="comic-card" data-index="1">
+                <img src="/api/placeholder/1920/1080" alt="Comic 2" class="comic-thumbnail">
+                <div class="comic-info">
+                    <h3 class="comic-title">Chapter 2: The Journey</h3>
+                    <p class="comic-description">Our hero sets out on an epic adventure...</p>
+                </div>
+            </div>
+            <div class="comic-card" data-index="2">
+                <img src="/api/placeholder/1920/1080" alt="Comic 3" class="comic-thumbnail">
+                <div class="comic-info">
+                    <h3 class="comic-title">Chapter 3: The Challenge</h3>
+                    <p class="comic-description">Facing the first major obstacle...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <button class="modal-close">&times;</button>
+        <div class="modal-content">
+            <img src="" alt="Full Comic" class="modal-image">
+            <button class="modal-nav modal-prev">&larr;</button>
+            <button class="modal-nav modal-next">&rarr;</button>
+        </div>
+    </div>
+
+    <script>
+        const gallery = document.querySelector('.gallery');
+        const modal = document.querySelector('.modal');
+        const modalImage = document.querySelector('.modal-image');
+        const closeBtn = document.querySelector('.modal-close');
+        const prevBtn = document.querySelector('.modal-prev');
+        const nextBtn = document.querySelector('.modal-next');
+        const comics = document.querySelectorAll('.comic-card');
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            const fullSizeImage = comics[index].querySelector('.comic-thumbnail').src;
+            modalImage.src = fullSizeImage;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        function navigateComic(direction) {
+            currentIndex = (currentIndex + direction + comics.length) % comics.length;
+            const fullSizeImage = comics[currentIndex].querySelector('.comic-thumbnail').src;
+            modalImage.src = fullSizeImage;
+        }
+
+        comics.forEach((comic, index) => {
+            comic.addEventListener('click', () => openModal(index));
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        prevBtn.addEventListener('click', () => navigateComic(-1));
+        nextBtn.addEventListener('click', () => navigateComic(1));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    navigateComic(-1);
+                    break;
+                case 'ArrowRight':
+                    navigateComic(1);
+                    break;
+                case 'Escape':
+                    closeModal();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
