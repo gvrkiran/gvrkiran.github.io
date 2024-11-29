@@ -1,47 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Comic Gallery</title>
+    <title>Kiran Garimella: Comics</title>
+    <meta name="description" content="PhD Comics and Experiences" />
+    <meta name="keywords" content="PhD comics, academic life, research comics" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-94094621-1', 'auto');
+        ga('send', 'pageview');
+    </script>
     <style>
-        :root {
-            --primary-color: #2a2a2a;
-            --secondary-color: #f5f5f5;
-            --accent-color: #4a90e2;
-            --spacing: 1rem;
-        }
-
-        * {
+        .content-wrapper {
+            width: 100%;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            padding: 20px;
+            background: white;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing);
+        .intro-section {
+            margin: 0 0 2rem 0;
         }
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem 0;
+            margin: 0;
+            padding: 0;
         }
 
         .comic-card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             cursor: pointer;
             overflow: hidden;
@@ -49,12 +45,14 @@
 
         .comic-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .comic-thumbnail {
             width: 100%;
-            height: 200px;
+            height: 300px;
             object-fit: cover;
+            display: block;
         }
 
         .comic-info {
@@ -65,11 +63,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-        }
-
-        .comic-description {
-            font-size: 0.9rem;
-            color: #666;
+            color: #333;
         }
 
         .modal {
@@ -89,6 +83,7 @@
             display: flex;
         }
 
+        /* Update modal content positioning */
         .modal-content {
             position: relative;
             width: 100%;
@@ -96,203 +91,246 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 0; /* Remove padding that was causing cutoff */
         }
 
         .modal-image {
-            max-width: 100vw;
-            max-height: 100vh;
-            width: auto;
-            height: auto;
+            max-width: 95vw;
+            max-height: 95vh;
             object-fit: contain;
+            display: block;
         }
 
+        /* Updated caption styles to overlay on image */
+        .modal-caption {
+            position: absolute; /* Changed to absolute to overlay on image */
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            z-index: 1005;
+        }
+        
         .modal-close {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
             font-size: 2rem;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
             z-index: 1010;
+            transition: background-color 0.3s ease;
         }
 
         .modal-close:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .modal-nav {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             cursor: pointer;
-            font-size: 1.5rem;
-            transition: background 0.3s ease;
+            font-size: 2rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1010;
+            transition: background-color 0.3s ease;
         }
 
         .modal-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .modal-prev {
-            left: 20px;
-        }
-
-        .modal-next {
-            right: 20px;
-        }
+        .modal-prev { left: 20px; }
+        .modal-next { right: 20px; }
 
         @media (max-width: 768px) {
             .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 1rem;
+            }
+
+            .comic-thumbnail {
+                height: 250px;
             }
 
             .modal-nav {
                 width: 40px;
                 height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .modal-close {
-                width: 35px;
-                height: 35px;
                 font-size: 1.5rem;
             }
         }
+
+        .modal.active .modal-caption {
+            transform: translateY(0);
+        }
+
+        /* Adjust modal content to make room for caption */
+        .modal-content {
+            padding-bottom: 60px;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="gallery">
-	    <div class="comic-card" data-index="0">
-                <img src="comic/img/comic4.jpg" alt="Comic 7" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Everything is already solved</h3>
-                    <!--p class="comic-description">The story begins with our hero discovering their powers...</p-->
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1><a href="index.html">Kiran<span class="logo_colour">Garimella</span></a></h1>
+                    <h2>Rutgers SCI.</h2>
                 </div>
             </div>
-            <div class="comic-card" data-index="1">
-                <img src="comic/img/comic5.jpg" alt="Comic 8" class="comic-thumbnail">
-                <div class="comic-info">
-			<h3 class="comic-title">Meeting a friend from industry</h3>
-                    <!--p class="comic-description">Our hero sets out on an epic adventure...</p-->
-                </div>
+            <div id="menubar">
+                <ul id="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="tools.html">Tools</a></li>
+                    <li><a href="advice.html">Advice</a></li>
+                </ul>
             </div>
-            <div class="comic-card" data-index="2">
-                <img src="comic/img/comic6.jpg" alt="Comic 9" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Love/hate relationship with the PhD</h3>
-                    <!--p class="comic-description">Facing the first major obstacle...</p-->
+        </div>
+        <div id="site_content">
+            <div class="content-wrapper">
+                <div class="intro-section">
+                    <h2>PhD Comics</h2>
+                    <p>[Your introduction text goes here]</p>
                 </div>
-            </div>
-            <div class="comic-card" data-index="0">
-                <img src="comic/img/comic7.jpg" alt="Comic 10" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Everything is already solved (try 2)</h3>
-                    <!--p class="comic-description">The story begins with our hero discovering their powers...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="1">
-                <img src="comic/img/comic8.jpg" alt="Comic 11" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Keep digging deeper</h3>
-                    <!--p class="comic-description">Our hero sets out on an epic adventure...</p-->
-                </div>
-            </div>
-            <!-- Sample comic cards - Replace with your actual comic images -->
-            <div class="comic-card" data-index="0">
-                <img src="comic/img/comic11.jpg" alt="Comic 1" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">PhD is a path to insanity</h3>
-                    <!--p class="comic-description">The story begins with our hero discovering their powers...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="1">
-                <img src="comic/img/comic12.jpg" alt="Comic 2" class="comic-thumbnail">
-                <div class="comic-info">
-			<h3 class="comic-title">Deadline</h3>
-			<p class="comic-description">You ALWAYS submit a subpar paper (according to Reviewer 2)</p>
-                </div>
-            </div>
-            <div class="comic-card" data-index="2">
-                <img src="comic/img/comic13.jpg" alt="Comic 3" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Grad student fashion show</h3>
-                    <!--p class="comic-description">Facing the first major obstacle...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="0">
-                <img src="comic/img/comic1.jpg" alt="Comic 4" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Having a kid</h3>
-                    <!--p class="comic-description">The story begins with our hero discovering their powers...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="1">
-                <img src="comic/img/comic2.jpg" alt="Comic 5" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Focusing on the deadline</h3>
-                    <!--p class="comic-description">Our hero sets out on an epic adventure...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="2">
-                <img src="comic/img/comic3.jpg" alt="Comic 6" class="comic-thumbnail">
-                <div class="comic-info">
-			<h3 class="comic-title">Things to not say to a grad student </h3>
-                    <!--p class="comic-description">Facing the first major obstacle...</p-->
-                </div>
-            </div>
 
-            <div class="comic-card" data-index="2">
-                <img src="comic/img/comic9.jpg" alt="Comic 12" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Cold emails</h3>
-                    <!--p class="comic-description">Facing the first major obstacle...</p-->
-                </div>
-            </div>
-            <div class="comic-card" data-index="2">
-                <img src="comic/img/comic10.jpg" alt="Comic 13" class="comic-thumbnail">
-                <div class="comic-info">
-                    <h3 class="comic-title">Technical problems</h3>
-                    <p class="comic-description">We've all been through at least one such Cuda.</p>
-                </div>
-            </div>
+                <div class="gallery">
+                    <div class="comic-card" index="0">
+                        <img src="comic/img/comic4.jpg" alt="Comic 7" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Everything is already solved</h3>
+                        </div>
+                    </div>
 
+                    <div class="comic-card" index="1">
+                        <img src="comic/img/comic5.jpg" alt="Comic 8" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Meeting a friend from industry</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="2">
+                        <img src="comic/img/comic6.jpg" alt="Comic 9" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Love/hate relationship with the PhD</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="3">
+                        <img src="comic/img/comic7.jpg" alt="Comic 10" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Everything is already solved (try 2)</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="4">
+                        <img src="comic/img/comic8.jpg" alt="Comic 11" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Keep digging deeper</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="5">
+                        <img src="comic/img/comic11.jpg" alt="Comic 1" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">PhD is a path to insanity</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="6">
+                        <img src="comic/img/comic12.jpg" alt="Comic 2" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Deadline</h3>
+                            <p>You ALWAYS submit a subpar paper (according to Reviewer 2)</p>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="7">
+                        <img src="comic/img/comic13.jpg" alt="Comic 3" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Grad student fashion show</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="8">
+                        <img src="comic/img/comic1.jpg" alt="Comic 4" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Having a kid</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="9">
+                        <img src="comic/img/comic2.jpg" alt="Comic 5" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Focusing on the deadline</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="10">
+                        <img src="comic/img/comic3.jpg" alt="Comic 6" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Things to not say to a grad student</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="11">
+                        <img src="comic/img/comic9.jpg" alt="Comic 12" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Cold emails</h3>
+                        </div>
+                    </div>
+
+                    <div class="comic-card" index="12">
+                        <img src="comic/img/comic10.jpg" alt="Comic 13" class="comic-thumbnail">
+                        <div class="comic-info">
+                            <h3 class="comic-title">Technical problems</h3>
+                            <p>We've all been through at least one such Cuda.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="modal">
         <button class="modal-close">&times;</button>
         <div class="modal-content">
+            <div class="modal-caption"></div>
             <img src="" alt="Full Comic" class="modal-image">
             <button class="modal-nav modal-prev">&larr;</button>
             <button class="modal-nav modal-next">&rarr;</button>
         </div>
     </div>
-
+   
     <script>
-        const gallery = document.querySelector('.gallery');
+
         const modal = document.querySelector('.modal');
         const modalImage = document.querySelector('.modal-image');
+        const modalCaption = document.querySelector('.modal-caption');
         const closeBtn = document.querySelector('.modal-close');
         const prevBtn = document.querySelector('.modal-prev');
         const nextBtn = document.querySelector('.modal-next');
@@ -301,21 +339,28 @@
 
         function openModal(index) {
             currentIndex = index;
-            const fullSizeImage = comics[index].querySelector('.comic-thumbnail').src;
+            const comic = comics[index];
+            const fullSizeImage = comic.querySelector('.comic-thumbnail').src;
+            const title = comic.querySelector('.comic-title').textContent;
             modalImage.src = fullSizeImage;
+            modalCaption.textContent = title;
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+            document.body.style.overflow = 'hidden';
         }
 
         function navigateComic(direction) {
             currentIndex = (currentIndex + direction + comics.length) % comics.length;
-            const fullSizeImage = comics[currentIndex].querySelector('.comic-thumbnail').src;
+            const comic = comics[currentIndex];
+            const fullSizeImage = comic.querySelector('.comic-thumbnail').src;
+            const title = comic.querySelector('.comic-title').textContent;
             modalImage.src = fullSizeImage;
+            modalCaption.textContent = title;
+        }
+
+        // Rest of the JavaScript remains the same
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         comics.forEach((comic, index) => {
