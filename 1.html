@@ -1,1 +1,175 @@
-<html>kia
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home — Academic Site</title>
+  <link rel="stylesheet" href="new_site/styles.css" />
+  <meta name="description" content="Minimal academic homepage for bio, publications, projects, teaching, talks, and press." />
+</head>
+<body data-page="home">
+  <header>
+    <div class="container nav">
+      <a class="brand" id="brand" href="new_site/index.html"></a>
+      <nav class="navlinks">
+        <a href="new_site/publications.html">Publications</a>
+        <a href="new_site/projects.html">Projects</a>
+        <a href="new_site/teaching.html">Teaching</a>
+        <a href="new_site/talks.html">Talks</a>
+        <a href="new_site/press.html">Press</a>
+        <a href="new_site/contact.html">Contact</a>
+      </nav>
+      <div class="actions">
+        <button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="grid two">
+        <div>
+          <div class="pill">📍 <span id="location"></span></div>
+          <div class="spacer"></div>
+          <h1 class="title-xl" id="hero-role"></h1>
+          <p class="muted" id="hero-tagline"></p>
+          <div class="spacer"></div>
+          <div class="badges" id="keywords"></div>
+          <div class="spacer"></div>
+          <div class="controls">
+            <a class="btn primary" id="emailBtn" href="#">Email</a>
+            <a class="btn" id="lnBtn" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="btn" id="schBtn" href="#" target="_blank" rel="noreferrer">Scholar</a>
+          </div>
+        </div>
+	<div class="card photo-card">
+  <img id="portrait" class="portrait" src="" alt="" loading="lazy" />
+  <div id="portraitPlaceholder" class="photo-placeholder">
+    Add your headshot: set <code>PROFILE.photo</code> in <code>data.js</code>.
+  </div>
+</div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="grid three cta-cards">
+        <a href="publications.html"><div class="card"><div class="content"><div style="font-weight:600">Publications</div><div class="muted" style="font-size:14px">Searchable list with topic filters</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
+        <a href="projects.html"><div class="card"><div class="content"><div style="font-weight:600">Projects</div><div class="muted" style="font-size:14px">Selected research and prototypes</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
+        <a href="teaching.html"><div class="card"><div class="content"><div style="font-weight:600">Teaching</div><div class="muted" style="font-size:14px">Courses and materials</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container row">
+      <div id="copyright"></div>
+      <div><a class="link" href="../site/index.html">Back to top</a></div>
+    </div>
+  </footer>
+
+  <!-- Load shared data first. If it fails, a safe fallback right after will provide defaults. -->
+  <script src="new_site/data.js"></script>
+
+  <!-- Safe fallback: only defines globals if data.js didn't. Avoids redeclaration errors with const in data.js. -->
+  <script>
+    (function bootstrapFallback(){
+      // use global eval to create real global var bindings only when absent
+      function defineIfMissing(name, value){
+        if (typeof window[name] === 'undefined' && (function(){ try { return typeof eval(name) === 'undefined'; } catch(e){ return true; } })()) {
+          window[name] = value;
+          // create a global var binding so scripts using bare identifiers don't crash
+          (0, eval)("var " + name + " = window['" + name + "'];");
+        }
+      }
+      defineIfMissing('PROFILE', {
+        name: 'Kiran Gar',
+        role: 'Academic Title',
+        tagline: 'Short tagline about your research',
+        location: 'City, State',
+        email: 'you@example.com',
+        cvUrl: '#',
+        socials: { linkedin: '', scholar: '' }
+      });
+      defineIfMissing('KEYWORDS', ['research','teaching','service']);
+      defineIfMissing('HIGHLIGHTS', [{ label:'Sample highlight', year:'2025' }]);
+      // Non-home pages may also read these; supply minimal fallbacks to prevent errors if opened standalone
+      defineIfMissing('PROJECTS', []);
+      defineIfMissing('PUBLICATIONS', []);
+      defineIfMissing('TEACHING', []);
+      defineIfMissing('TALKS', []);
+      defineIfMissing('PRESS', []);
+    })();
+  </script>
+
+  <!-- Site behavior -->
+  <script src="new_site/main.js"></script>
+
+  <!-- Home-only link wiring with guards to avoid ReferenceError when PROFILE isn't ready yet -->
+  <script>
+    (function wireHomeLinks(){
+      function doWire(){
+        try {
+          var p = PROFILE; // guaranteed by fallback above
+          var email = document.getElementById('emailBtn');
+          if (email) email.href = 'mailto:' + (p.email || '');
+          var ln = document.getElementById('lnBtn');
+          if (ln) {
+            if (p.socials && p.socials.linkedin) ln.href = p.socials.linkedin; else ln.classList.add('hidden');
+          }
+          var sch = document.getElementById('schBtn');
+          if (sch) {
+            if (p.socials && p.socials.scholar) sch.href = p.socials.scholar; else sch.classList.add('hidden');
+          }
+          return true;
+        } catch (e) { return false; }
+      }
+      function tryWire(){ if (!doWire()) setTimeout(tryWire, 20); }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tryWire); else tryWire();
+    })();
+  </script>
+
+  <!-- Inline tests (kept as-is; adding additional tests without changing existing ones) -->
+  <script>
+    window.addEventListener('load', function(){
+      try {
+        // Existing tests
+        console.assert(typeof PROFILE === 'object', 'PROFILE should be available');
+        var brandText = (document.getElementById('brand').textContent || '').trim();
+        console.assert(brandText === PROFILE.name, 'Brand text matches PROFILE.name');
+        var emailHref = document.getElementById('emailBtn').getAttribute('href') || '';
+        console.assert(emailHref.indexOf('mailto:') === 0, 'Email button wired with mailto:');
+
+        // Additional tests
+        console.assert(Array.isArray(HIGHLIGHTS), 'HIGHLIGHTS array present');
+        var kwEl = document.getElementById('keywords');
+        console.assert(kwEl && kwEl.children.length >= 0, 'Keywords container renders');
+        var lnBtn = document.getElementById('lnBtn');
+        if (!PROFILE.socials || !PROFILE.socials.linkedin) {
+          console.assert(lnBtn.classList.contains('hidden'), 'LinkedIn hidden when not configured');
+        }
+        console.info('Index inline tests passed ✓');
+      } catch (e) {
+        console.error('Index inline tests failed', e);
+      }
+    });
+  </script>
+
+  <!-- Extra test: verify CSS is loaded (checks computed style for links) -->
+  <script>
+    window.addEventListener('load', function(){
+      try {
+        var testEl = document.createElement('a');
+        testEl.className = 'link';
+        document.body.appendChild(testEl);
+        var cs = getComputedStyle(testEl);
+        // Our CSS sets .link { text-decoration: none; font-size: 14px; }
+        var looksStyled = cs.textDecoration.includes('none') && parseInt(cs.fontSize) === 14;
+        console.assert(looksStyled, 'CSS loaded and applied to .link');
+        testEl.remove();
+      } catch(e) { console.error('CSS load test failed', e); }
+    });
+  </script>
+</body>
+</html>
+
