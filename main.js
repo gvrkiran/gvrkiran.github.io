@@ -22,7 +22,7 @@
       $('#brand').textContent = PROFILE.name;
       $('#brand').setAttribute('href', 'index.html');
     }
-    if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}`;
+    if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}. Thanks ChatGPT`;
 
     // theme toggle
     const btn = $('#themeBtn');

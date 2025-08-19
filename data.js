@@ -2,7 +2,7 @@
 const PROFILE = {
   name: "Kiran Garimella",
   role: "Assistant Professor, Rutgers University",
-  tagline: "I study information ecosystems, misinformation, and tech for the public good.",
+  tagline: "I study information ecosystems, misinformation, and AI for the public good.",
   location: "New Brunswick, NJ",
   email: "kg766@comminfo.rutgers.edu",
   cvUrl: "https://rutgers.box.com/s/ajtifcnfiumx7ofozr82wj0h7jcv6pkt",
