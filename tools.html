@@ -1,108 +1,95 @@
-<!DOCTYPE HTML>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Kiran Garimella: Tools</title>
-  <meta name="description" content="website description" />
-  <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-  <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-94094621-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tools — Kiran Garimella</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Public-facing tools and prototypes from our research." />
 </head>
-
-<body>
-  <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">Kiran<span class="logo_colour">Garimella</span></a></h1>
-	<!--img src="images/name.png" width=400 height=80-->
-          <h2>Rutgers SCI.</h2>
-        </div>
-      </div>
-      <div id="menubar">
-        <ul id="menu">
-          <li><a href="index.html">Home</a></li>
-          <!--li><a href="research.html">Research</a></li-->
-          <li><a href="publications.html">Publications</a></li>
-          <!--li><a href="experience.html">Experience</a></li-->
-          <li><a href="tools.html">Tools</a></li>
-          <li class="selected"><a href="media.html">Media</a></li>
-          <li><a href="advice.html">Advice</a></li>
-          <li><a href="comic.html">Comic</a></li>
-          <!--li><a href="misc.html">Misc</a></li-->
-        </ul>
-      </div>
+<body data-page="tools">
+  <header>
+    <div class="container nav">
+      <a class="brand" id="brand" href="index.html"></a>
+      <nav class="navlinks"><a href="other.html">Other</a></nav>
+      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
     </div>
-    <div id="site_content">
-      <div class="sidebar">
+  </header>
+
+  <main class="container">
+    <section>
+      <h1 style="margin:0 0 10px">Tools</h1>
+      <p class="muted" style="max-width:75ch">A few public tools and demos we’ve built—mostly around privacy‑preserving data donation and mobile data collection.</p>
+
+      <div class="stack">
+        <div class="card"><div class="content">
+          <h3>Data donation tools (overview paper)</h3>
+          <p>We describe our approach and datasets for data donation across platforms.</p>
+          <div class="controls"><a class="link" href="https://gvrkiran.github.io/content/data_donation_social_media.pdf" target="_blank" rel="noreferrer">Paper ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>WhatsApp Explorer</h3>
+          <p>Collects WhatsApp data at scale via a QR‑code onboarding flow; enables group selection for research studies.</p>
+          <div class="controls"><a class="link" href="https://whatsapp.whats-viral.me/" target="_blank" rel="noreferrer">Try it ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>WhatsViral (Android)</h3>
+          <p>Identifies viral content on WhatsApp via on‑device hashing; supports interventions via notifications.</p>
+          <div class="controls"><a class="link" href="https://play.google.com/store/apps/details?id=com.rutgers.whatsviral" target="_blank" rel="noreferrer">Play Store ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>YouTube data donation</h3>
+          <p>Uses Google Takeout to streamline donation of watch and search history for research.</p>
+          <div class="controls"><a class="link" href="https://data-donation.vercel.app/donate" target="_blank" rel="noreferrer">Donate ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>Telegram Watch</h3>
+          <p>Authenticates with Telegram and lets participants choose the groups/channels they wish to donate.</p>
+          <div class="controls"><a class="link" href="https://telegram.whats-viral.me/" target="_blank" rel="noreferrer">Open ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>Diaspora Watch (Facebook)</h3>
+          <p>Facebook app that collects group/page data with participant consent; enables CrowdTangle‑based analysis.</p>
+          <div class="controls"><a class="link" href="https://www.diaspora-watch.us/home/?next=/" target="_blank" rel="noreferrer">Open ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>Social Media Metadata Research (Android)</h3>
+          <p>Instrumentation for Instagram experiments—collect feed data and test interventions within a companion app.</p>
+          <div class="controls"><a class="link" href="https://play.google.com/store/apps/details?id=com.rutgers.smdr" target="_blank" rel="noreferrer">Play Store ↗</a></div>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>Mobile social‑media collection (R&D)</h3>
+          <p>Explores Android accessibility for privacy‑aware collection across WhatsApp, Facebook, YouTube, and the browser.</p>
+        </div></div>
+
+        <div class="card"><div class="content">
+          <h3>Uber auditing tools</h3>
+          <p>Browser extension to export Uber trip metadata for pricing and fairness analyses.</p>
+          <div class="controls"><a class="link" href="https://chromewebstore.google.com/detail/trip-data-export/colafoobngpmnekajlpglcollpccllko?pli=1" target="_blank" rel="noreferrer">Extension ↗</a></div>
+        </div></div>
       </div>
-      <div id="content">
-	<!--h1>Publications</h1-->
 
-	<p style="color:red">The idea behind this page is to make the tools we develop in my research publicly available. 
-My general focus is on developing data collection tools which work on mobiles, because much of my research is focused on the global south.
-	I'll try to maintain this page actively. If any link is broken, please feel free to reach out.</p>
+      <div class="spacer"></div>
+      <div class="row"><a class="link" href="other.html">← Back to Other</a></div>
+    </section>
+  </main>
 
-	<p>New (May 2025): We now have a paper describing the data donation tools we built and some datasets released (<a href="https://gvrkiran.github.io/content/data_donation_social_media.pdf">link</a>).</p>
-	<h3>WhatsApp Explorer</h3>
-	<ul>
-		<li>
-			<a href="https://whatsapp.whats-viral.me/" target="_blank">WhatsApp Explorer</a>, a tool for collecting WhatsApp data at scale. The tool allows users to easily scan a QR code and select the groups they want to donate for research. The tool is currently availabe upon request but we are working on open sourcing the code.
-		</li>
-	</ul>
-
-	<h3>WhatsViral</h3>
-	<ul>
-		<li><a href="https://play.google.com/store/apps/details?id=com.rutgers.whatsviral" target="_blank">WhatsViral</a> is an Android app for identifying viral content on WhatsApp. The app allows for privacy preserving data collection by hashing content on the device of the user and only exporting the hashes. By comparing hashes on the server side, we can estimate virality of content on WhatsApp. The app also has features that enable push notifications which can be used to run interventions.</li>
-	</ul>
-
-
-	<h3>YouTube data donation</h3>
-	<ul>
-		<li>A <a href="https://data-donation.vercel.app/donate" target="_blank">data donation tool for youtube</a>. The tool allows users to export and share their YouTube watch and search history for research. The tool makes use of Google's takeout service and creates an app which makes the process easy, allowing users to donate their data in less than 5 minutes.</li>
-	</ul>
-
-	<h3>Telegram</h3>
-	<ul>
-		<li><a href="https://telegram.whats-viral.me/" target="_blank">Telegram watch</a> is a tool that allows users to donate their Telegram data. The tool allows users to authenticate using the Telegram OAUTH API and choose the groups and channels they are a part of. We can then obtain the data from these groups and channels using the Telegram API. Since Telegram has a good API already, why do we need a data donation tool? The issue with Telegram (or Facebook) is discovery. We can easily get data from Telegram once we know where to look but it's not easy to know what people are actually consuming. Data donation solves this issue.</li>
-	</ul>
-
-	<h3>Facebook</h3>
-	<ul>
-		<li><a href="https://www.diaspora-watch.us/home/?next=/" target="_blank">Diaspora watch</a> is a tool that allows users to donate their Facebook data. The tool is a Facebook app (think Farmville) which allows users to authenticate using their Facebook account and choose the groups and pages they are a part of. We can then obtain the data from these groups and channels using CrowdTangle.</li>
-	</ul>
-
-	<h3>Instagram</h3>
-	<ul>
-		<li><a href="https://play.google.com/store/apps/details?id=com.rutgers.smdr" target="_blank">Social Media Metadata research</a> (I know, horrible name) is an Android app that allows researchers to recruit participants to experiment with Instagram. Users install the app and login with their Instagram account and it replaces their Instagram app experience (they can just use the app as they use the official Instagram app). We collect the data that they are seeing on their Instagram feed. The app also has functionality to inject or remove content from users feeds to allow experimentation.</li>
-	</ul>
-
-	<h3>Social media data collection from mobiles</h3>
-	<ul>
-		<li><a href="" target="_blank">No name yet, no app public yet</a> is an Android app we've been working on for a long time now. The app uses Android's accessibility API (and a bunch of other) features to collect data that users see on social media. The app currently has functionality to scrape data from WhatsApp, Facebook, YouTube and browser and do some basic anonymization before being exported to the server. Even though the app in its current form may not be deployed, this is a project that explores the technical possibilities of how data can be obtained particularly from mobile phones. Many commercial data brokers already use similar technology to scrape and sell such data and I feel it might be better if academics take control and develop best practices in this space. </li>
-	</ul>
-
-	<h3>Uber auditing tools</h3>
-	<ul>
-		<li><a href="https://chromewebstore.google.com/detail/trip-data-export/colafoobngpmnekajlpglcollpccllko?pli=1" target="_blank">Uber data exporter</a> is a Chrome web browser extension which enables automated collection of metadata from Uber rides from users. The data can help answer research questions such as the share of a Uber ride that goes to the driver, looking at long term trends in such patterns.</a>
-	</ul>
-        </div>
+  <footer class="footer">
+    <div class="container row">
+      <div id="copyright"></div>
+      <div><a class="link" href="index.html">Back to home</a></div>
     </div>
-    <div id="footer">
-	<p style="text-align:center;color:black;"> Last modified <script>var x = document.lastModified;document.write(x)</script> | Based on a template from <a href="http://www.html5webtemplates.co.uk" target="_blank">HTML5 Web Templates</a>
-    </div>
-  </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
+

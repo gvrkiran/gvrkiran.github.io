@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Other — Kiran Garimella</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Links to comics, tools, advice, and external writing." />
+  <style>
+    .quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .quick-card .content{display:flex;flex-direction:column;gap:6px}
+    .quick-card .muted{max-width:46ch}
+  </style>
+</head>
+<body data-page="other">
+  <header>
+    <div class="container nav">
+      <a class="brand" id="brand" href="index.html"></a>
+      <nav class="navlinks"><a href="other.html">Other</a></nav>
+      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1 style="margin:0 0 6px">Other</h1>
+      <p class="muted" style="margin:0 0 18px;max-width:70ch">Bookmarks for everything beyond the main pages like advice and mentoring notes, comics, tools I build, and my writing on Substack.</p>
+
+      <div class="quick-grid">
+        <div class="card quick-card">
+          <div class="content">
+            <div class="kicker">Notes & Mentoring</div>
+            <h3>Advice</h3>
+            <div class="muted">Collected notes for prospective PhD students and early‑career researchers.</div>
+            <div class="controls"><a class="link" href="advice.html">Open →</a></div>
+          </div>
+        </div>
+
+        <div class="card quick-card">
+          <div class="content">
+            <div class="kicker">Sketches</div>
+            <h3>Comics</h3>
+            <div class="muted">Lightweight comics about academic life, parenting, and AI.</div>
+            <div class="controls"><a class="link" href="comic.html">Open →</a></div>
+          </div>
+        </div>
+
+        <div class="card quick-card">
+          <div class="content">
+            <div class="kicker">Apps & Demos</div>
+            <h3>Tools</h3>
+            <div class="muted">Public-facing prototypes and utilities from our research.</div>
+            <div class="controls"><a class="link" href="tools.html">Open →</a></div>
+          </div>
+        </div>
+
+        <div class="card quick-card">
+          <div class="content">
+            <div class="kicker">Writing</div>
+            <h3>Blog (Substack)</h3>
+            <div class="muted">Longer‑form thoughts, work‑in‑progress ideas, and commentary.</div>
+            <div class="controls"><a id="substackLink" class="link" href="#">Open →</a></div>
+            <div id="substackNote" class="muted" style="font-size:12px">Set <code>PROFILE.socials.substack</code> (or <code>PROFILE.blog</code>) in <code>data.js</code>.</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container row">
+      <div id="copyright"></div>
+      <div><a class="link" href="index.html">Back to home</a></div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+

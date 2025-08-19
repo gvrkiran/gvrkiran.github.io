@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Publications — Academic Site</title>
+  <title>Projects — Academic Site</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-page="publications">
+<body data-page="projects">
   <header>
     <div class="container nav">
       <a class="brand" id="brand" href="index.html"></a>
@@ -24,22 +24,8 @@
 
   <main class="container">
     <section>
-      <div class="row">
-        <div>
-          <h1 style="margin:0">Publications</h1>
-          <div class="muted">Search by title, venue, or author. Filter by topic.</div>
-        </div>
-        <div class="controls">
-          <a class="btn" id="cvBtn" href="#" target="_blank" rel="noreferrer">CV</a>
-        </div>
-      </div>
-      <div class="spacer"></div>
-      <div class="controls">
-        <input type="search" id="pubSearch" placeholder="Search" />
-        <select id="pubTopic" class="select"></select>
-      </div>
-      <div class="spacer"></div>
-      <div id="pub-list" class="list"></div>
+      <h1 style="margin:0 0 12px">Projects</h1>
+      <div id="proj-list" class="grid two"></div>
     </section>
   </main>
 
@@ -52,10 +38,6 @@
 
   <script src="data.js"></script>
   <script src="main.js"></script>
-
-  <script>
-    document.getElementById('cvBtn').href = PROFILE.cvUrl || '#';
-  </script>
 </body>
 </html>
 

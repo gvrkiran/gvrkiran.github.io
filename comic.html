@@ -1,828 +1,197 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Kiran Garimella: Comics</title>
-    <meta name="description" content="PhD Comics and Experiences" />
-    <meta name="keywords" content="PhD comics, academic life, research comics" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-94094621-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-    <style>
-        .content-wrapper {
-            width: 100%;
-            margin: 0;
-            padding: 20px;
-            background: white;
-        }
-
-        .intro-section {
-            margin: 0 0 2rem 0;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-        }
-
-        .comic-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-        .comic-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .comic-thumbnail {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .comic-info {
-            padding: 1rem;
-        }
-
-        .comic-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            position: relative;
-            padding: 20px;
-            max-width: 90vw;
-            max-height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-image {
-            max-width: 90vw;
-            max-height: 90vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .modal-caption {
-            position: fixed;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 1.2rem;
-            z-index: 1011;
-            white-space: nowrap;
-            pointer-events: none;
-            text-align: center;
-        }
-
-        .modal-close {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1010;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-nav {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-            font-size: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1010;
-            transition: background-color 0.3s ease;
-        }
-
-        .modal-nav:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .modal-prev {
-            left: 20px;
-        }
-
-        .modal-next {
-            right: 20px;
-        }
-        @media (max-width: 768px) {
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem;
-            }
-
-            .comic-thumbnail {
-                height: 250px;
-            }
-
-            .modal-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1.5rem;
-            }
-        }
-
-        .modal.active .modal-caption {
-            transform: translateY(0);
-        }
-
-        /* Adjust modal content to make room for caption */
-        .modal-content {
-            padding-bottom: 60px;
-        }
-
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comics — Academic Site</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="A gallery of comics about academic life, research, parenting, and more." />
+  <style>
+    /* Page-specific styles kept minimal to match the site's look */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .comic-card img.comic-thumbnail { display: block; width: 100%; height: 260px; object-fit: cover; border-radius: 18px 18px 0 0; }
+    .comic-card .content { padding: 12px 18px 16px; }
+    .comic-card { overflow: hidden; }
+.comic-card h3 { margin: 0; font-size: 16px; line-height: 1.35; }
+/* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.94); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal.active { display: flex; }
+    .modal-image { max-width: 92vw; max-height: 88vh; border-radius: 12px; }
+    .modal-caption { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(0,0,0,.6); color: #fff; padding: 8px 12px; border-radius: 10px; font-size: 14px; }
+    .modal-btn { position: fixed; top: 16px; width: 44px; height: 44px; border: 0; border-radius: 999px; backdrop-filter: blur(3px); background: rgba(255,255,255,.16); color: #fff; font-size: 24px; cursor: pointer; display:flex; align-items:center; justify-content:center; }
+    .modal-close { right: 16px; }
+    .modal-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+    .modal-next { right: 16px; top: 50%; transform: translateY(-50%); }
+    @media (max-width: 640px){ .comic-card img.comic-thumbnail { height: 200px; } }
+  </style>
 </head>
-<body>
-    <div id="main">
-        <div id="header">
-            <div id="logo">
-                <div id="logo_text">
-                    <h1><a href="index.html">Kiran<span class="logo_colour">Garimella</span></a></h1>
-                    <h2>Rutgers SCI.</h2>
-                </div>
-            </div>
-            <div id="menubar">
-                <ul id="menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="publications.html">Publications</a></li>
-                    <li><a href="media.html">Media</a></li>
-                    <li><a href="tools.html">Tools</a></li>
-                    <li><a href="advice.html">Advice</a></li>
-          <li class="selected"><a href="comic.html">Comic</a></li>
-                </ul>
-            </div>
-        </div>
-        <div id="site_content">
-            <div class="content-wrapper">
-                <div class="intro-section">
-                    <h2>PhD Comics</h2>
-                    <p>Always wanted to learn how to doodle during my PhD. I tried a lot but I was/am horrible at it. Now trying it with AI. They're not perfect but somewhat capture my thoughts. I could get them to be much better but it requires a lot more effort to get that one last step. Not all ideas are original and they're not necessarily about one coherent topic. Usually they range from academic life, parenting, being an immigrant, etc.</p>
-                </div>
-
-                <div class="gallery">
-                    <div class="comic-card" index="0">
-                        <img src="comic/img/comic1.png" alt="Comic 7" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Coffee</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="0">
-                        <img src="comic/img/comic24.png" alt="Comic 7" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Parenting is hard</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="0">
-                        <img src="comic/img/comic3.png" alt="Comic 7" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Misinformation</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="0">
-                        <img src="comic/img/comic4.png" alt="Comic 7" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">University Rankings</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="1">
-                        <img src="comic/img/comic5.png" alt="Comic 8" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Deepfakes</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="2">
-                        <img src="comic/img/comic6.png" alt="Comic 9" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Travel planning with a shit passport</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="3">
-                        <img src="comic/img/comic7.png" alt="Comic 10" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Travel reimbursement is fun</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="4">
-                        <img src="comic/img/comic8.png" alt="Comic 11" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Conference travel (before and after a baby)</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="5">
-                        <img src="comic/img/comic11.png" alt="Comic 1" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Reality vs PhD student</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="6">
-                        <img src="comic/img/comic12.png" alt="Comic 2" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Someone brave should speak up (not me)</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="7">
-                        <img src="comic/img/comic13.png" alt="Comic 3" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">My Facebook these days (in 2017)</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic58.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Facebook feed (2025)</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="8">
-                        <img src="comic/img/comic25.png" alt="Comic 4" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academic holidays</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="9">
-                        <img src="comic/img/comic26.png" alt="Comic 5" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Relationship with the PhD</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="10">
-                        <img src="comic/img/comic27.png" alt="Comic 6" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Deadlines</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="11">
-                        <img src="comic/img/comic9.png" alt="Comic 12" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">You're always busy</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="12">
-                        <img src="comic/img/comic10.png" alt="Comic 13" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AI the savior</h3>
-                        </div>
-                    </div>
-
-		    <!---->
-                    <div class="comic-card" index="14">
-                        <img src="comic/img/comic14.png" alt="Comic 14" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Being an immigrant</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="15">
-                        <img src="comic/img/comic15.png" alt="Comic 15" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Leaving the US</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="16">
-                        <img src="comic/img/comic16.png" alt="Comic 16" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Perks of being mobile</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="17">
-                        <img src="comic/img/comic17.png" alt="Comic 17" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Impostor Syndrome</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="18">
-                        <img src="comic/img/comic18.png" alt="Comic 18" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">The Club</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="19">
-                        <img src="comic/img/comic19.png" alt="Comic 19" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">When my advisor wants me to reimplement stuff</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="20">
-                        <img src="comic/img/comic20.png" alt="Comic 20" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">PhD vs. me</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="21">
-                        <img src="comic/img/comic21.png" alt="Comic 21" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Ideas</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="21">
-                        <img src="comic/img/comic2.png" alt="Comic 21" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">No comment</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="22">
-                        <img src="comic/img/comic22.png" alt="Comic 22" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Bad Ideas</h3>
-                        </div>
-                    </div>
-
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic23.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">My brain</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic28.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Peer review bingo</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic29.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">PhD students anonymous</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic30.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">It's never enough</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic31.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-				<h3 class="comic-title">Graduation is always around the corner</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic32.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Inspirational posters</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic33.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AI progress</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic34.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Younger me is always stupid</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic35.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Bureaucracy saves us from AI takeover</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic36.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">PhD student life</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic37.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Paper rejection are always hard</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic38.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Days are too short</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic39.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Sweating it out</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic40.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">My internal demon</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic41.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Parenting</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic42.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">China is always the bad guy (not)</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic43.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">The other side has to be bad</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic44.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Dont say these to a PhD student</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic45.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Days are too short</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic46.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Mood swings</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic47.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Parenting is hard</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic48.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Loneliness</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic49.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Social media sucks</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic50.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Loneliness v2</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic51.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AI art</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic52.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">When Everyone Around You is Brilliant</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic53.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Email</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic54.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Calendar</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic55.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Schengen visa</h3>
-                        </div>
-			<p>If you have never heard the term "Schengen visa" you are really lucky.</p>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic56.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Schengen visa</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic57.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-				<h3 class="comic-title">Quality >>></h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic59.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Number of tabs</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic60.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academia</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic61.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">VPN</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic62.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academic publishing</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic63.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">More academia</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic64.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AGI</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic65.jpg" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academia</h3>
-                        </div>
-                    </div>
-                    <div class="comic-card" index="23">
-                        <img src="comic/img/comic66.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Overleaf</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic67.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Grants</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic68.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academics are suckers</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic69.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AI vs. academia</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic70.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Parental guilt</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic71.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">NLP vs. LLMs</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic72.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Academic echo chamber</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic73.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">AI superpowers</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic74.jpeg" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Parental guilt</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic75.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Internet is dead (Not!)</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic76.jpg" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">LLM research production</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic77.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">LLM reviewers</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic78.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Inner demon</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic80.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Everyone is using AI. It's cheating if its students, its "efficiency" for faculty.</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic81.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Scientists become communicators in the AI age</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic82.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">Immigrant guilt</h3>
-                        </div>
-                    </div>
-		    <div class="comic-card" index="23">
-                        <img src="comic/img/comic83.png" alt="Comic 23" class="comic-thumbnail">
-                        <div class="comic-info">
-                            <h3 class="comic-title">"AI Slop" comics. I know most of these comics are junk but even if 1 in 100 are good, its fine IMO.</h3>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+<body data-page="comics">
+  <header>
+    <div class="container nav">
+      <a class="brand" id="brand" href="index.html"></a>
+      <nav class="navlinks">
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Projects</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="talks.html">Talks</a>
+        <a href="press.html">Press</a>
+        <a href="comics.html">Comics</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
     </div>
+  </header>
 
-    <div class="modal">
-        <button class="modal-close">&times;</button>
-        <div class="modal-content">
-            <img src="" alt="Full Comic" class="modal-image">
-            <div class="modal-caption"></div>
-            <button class="modal-nav modal-prev">&larr;</button>
-            <button class="modal-nav modal-next">&rarr;</button>
-        </div>
+  <main class="container">
+    <section>
+      <h1 style="margin:0 0 8px">Comics</h1>
+      <p class="muted" style="max-width: 70ch">Always wanted to learn how to doodle during my PhD. I tried a lot but I was/am horrible at it. Now trying it with AI. They're not perfect but somewhat capture my thoughts. Not all ideas are original and they're not necessarily about one coherent topic. Usually they range from academic life, parenting, being an immigrant, etc.</p>
+      <div class="spacer"></div>
+      <div class="gallery" id="comics-grid">
+        <!-- Cards adapted to the site card style; titles from your original file -->
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic1.png" alt="Coffee" /><div class="content"><h3>Coffee</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic24.png" alt="Parenting is hard" /><div class="content"><h3>Parenting is hard</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic3.png" alt="Misinformation" /><div class="content"><h3>Misinformation</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic4.png" alt="University Rankings" /><div class="content"><h3>University Rankings</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic5.png" alt="Deepfakes" /><div class="content"><h3>Deepfakes</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic6.png" alt="Travel planning with a passport" /><div class="content"><h3>Travel planning with a passport</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic7.png" alt="Travel reimbursement is fun" /><div class="content"><h3>Travel reimbursement is fun</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic8.png" alt="Conference travel (before and after a baby)" /><div class="content"><h3>Conference travel (before and after a baby)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic11.png" alt="Reality vs PhD student" /><div class="content"><h3>Reality vs PhD student</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic12.png" alt="Someone brave should speak up (not me)" /><div class="content"><h3>Someone brave should speak up (not me)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic13.png" alt="My Facebook these days (in 2017)" /><div class="content"><h3>My Facebook these days (in 2017)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic58.png" alt="Facebook feed (2025)" /><div class="content"><h3>Facebook feed (2025)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic25.png" alt="Academic holidays" /><div class="content"><h3>Academic holidays</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic26.png" alt="Relationship with the PhD" /><div class="content"><h3>Relationship with the PhD</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic27.png" alt="Deadlines" /><div class="content"><h3>Deadlines</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic9.png" alt="You're always busy" /><div class="content"><h3>You're always busy</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic10.png" alt="AI the savior" /><div class="content"><h3>AI the savior</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic14.png" alt="Being an immigrant" /><div class="content"><h3>Being an immigrant</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic15.png" alt="Leaving the US" /><div class="content"><h3>Leaving the US</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic16.png" alt="Perks of being mobile" /><div class="content"><h3>Perks of being mobile</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic17.png" alt="Impostor Syndrome" /><div class="content"><h3>Impostor Syndrome</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic18.png" alt="The Club" /><div class="content"><h3>The Club</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic19.png" alt="When my advisor wants me to reimplement stuff" /><div class="content"><h3>When my advisor wants me to reimplement stuff</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic20.png" alt="PhD vs. me" /><div class="content"><h3>PhD vs. me</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic21.png" alt="Ideas" /><div class="content"><h3>Ideas</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic2.png" alt="No comment" /><div class="content"><h3>No comment</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic22.png" alt="Bad Ideas" /><div class="content"><h3>Bad Ideas</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic23.png" alt="My brain" /><div class="content"><h3>My brain</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic28.png" alt="Peer review bingo" /><div class="content"><h3>Peer review bingo</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic29.png" alt="PhD students anonymous" /><div class="content"><h3>PhD students anonymous</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic30.png" alt="It's never enough" /><div class="content"><h3>It's never enough</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic31.png" alt="Graduation is always around the corner" /><div class="content"><h3>Graduation is always around the corner</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic32.png" alt="Inspirational posters" /><div class="content"><h3>Inspirational posters</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic33.png" alt="AI progress" /><div class="content"><h3>AI progress</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic34.png" alt="Younger me is always stupid" /><div class="content"><h3>Younger me is always stupid</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic35.png" alt="Bureaucracy saves us from AI takeover" /><div class="content"><h3>Bureaucracy saves us from AI takeover</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic36.png" alt="PhD student life" /><div class="content"><h3>PhD student life</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic37.png" alt="Paper rejection are always hard" /><div class="content"><h3>Paper rejection are always hard</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic38.png" alt="Days are too short" /><div class="content"><h3>Days are too short</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic39.png" alt="Sweating it out" /><div class="content"><h3>Sweating it out</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic40.png" alt="My internal demon" /><div class="content"><h3>My internal demon</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic41.png" alt="Parenting" /><div class="content"><h3>Parenting</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic42.png" alt="China is always the bad guy (not)" /><div class="content"><h3>China is always the bad guy (not)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic43.png" alt="The other side has to be bad" /><div class="content"><h3>The other side has to be bad</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic44.png" alt="Dont say these to a PhD student" /><div class="content"><h3>Dont say these to a PhD student</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic45.png" alt="Days are too short" /><div class="content"><h3>Days are too short</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic46.png" alt="Mood swings" /><div class="content"><h3>Mood swings</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic47.png" alt="Parenting is hard" /><div class="content"><h3>Parenting is hard</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic48.png" alt="Loneliness" /><div class="content"><h3>Loneliness</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic49.png" alt="Social media sucks" /><div class="content"><h3>Social media sucks</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic50.png" alt="Loneliness v2" /><div class="content"><h3>Loneliness v2</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic51.png" alt="AI art" /><div class="content"><h3>AI art</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic52.png" alt="When Everyone Around You is Brilliant" /><div class="content"><h3>When Everyone Around You is Brilliant</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic53.png" alt="Email" /><div class="content"><h3>Email</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic54.png" alt="Calendar" /><div class="content"><h3>Calendar</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic55.png" alt="Schengen visa" /><div class="content"><h3>Schengen visa</h3><p class="muted" style="font-size:12px;margin-top:4px">If you have never heard the term "Schengen visa" you are really lucky.</p></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic56.png" alt="Schengen visa" /><div class="content"><h3>Schengen visa</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic57.png" alt="Quality" /><div class="content"><h3>Quality >>></h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic59.png" alt="Number of tabs" /><div class="content"><h3>Number of tabs</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic60.png" alt="Academia" /><div class="content"><h3>Academia</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic61.png" alt="VPN" /><div class="content"><h3>VPN</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic62.png" alt="Academic publishing" /><div class="content"><h3>Academic publishing</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic63.png" alt="More academia" /><div class="content"><h3>More academia</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic64.png" alt="AGI" /><div class="content"><h3>AGI</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic65.jpg" alt="Academia" /><div class="content"><h3>Academia</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic66.png" alt="Overleaf" /><div class="content"><h3>Overleaf</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic67.png" alt="Grants" /><div class="content"><h3>Grants</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic68.png" alt="Academics are suckers" /><div class="content"><h3>Academics are suckers</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic69.png" alt="AI vs. academia" /><div class="content"><h3>AI vs. academia</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic70.png" alt="Parental guilt" /><div class="content"><h3>Parental guilt</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic71.png" alt="NLP vs. LLMs" /><div class="content"><h3>NLP vs. LLMs</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic72.png" alt="Academic echo chamber" /><div class="content"><h3>Academic echo chamber</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic73.png" alt="AI superpowers" /><div class="content"><h3>AI superpowers</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic74.jpeg" alt="Parental guilt" /><div class="content"><h3>Parental guilt</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic75.png" alt="Internet is dead (Not!)" /><div class="content"><h3>Internet is dead (Not!)</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic76.jpg" alt="LLM research production" /><div class="content"><h3>LLM research production</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic77.png" alt="LLM reviewers" /><div class="content"><h3>LLM reviewers</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic78.png" alt="Inner demon" /><div class="content"><h3>Inner demon</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic80.png" alt="Everyone is using AI" /><div class="content"><h3>Everyone is using AI. It's cheating if its students, its "efficiency" for faculty.</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic81.png" alt="Scientists become communicators in the AI age" /><div class="content"><h3>Scientists become communicators in the AI age</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic82.png" alt="Immigrant guilt" /><div class="content"><h3>Immigrant guilt</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="../comic/img/comic83.png" alt="AI slop comics" /><div class="content"><h3>"AI Slop" comics. I know most of these comics are junk but even if 1 in 100 are good, its fine IMO.</h3></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container row">
+      <div id="copyright"></div>
+      <div><a class="link" href="index.html">Back to home</a></div>
     </div>
-   
-    <script>
+  </footer>
 
-        const modal = document.querySelector('.modal');
-        const modalImage = document.querySelector('.modal-image');
-        const modalCaption = document.querySelector('.modal-caption');
-        const closeBtn = document.querySelector('.modal-close');
-        const prevBtn = document.querySelector('.modal-prev');
-        const nextBtn = document.querySelector('.modal-next');
-        const comics = document.querySelectorAll('.comic-card');
-        let currentIndex = 0;
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Lightweight modal wiring (page-local)
+    (function(){
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <button class="modal-btn modal-close" aria-label="Close">×</button>
+        <button class="modal-btn modal-prev" aria-label="Previous">‹</button>
+        <img class="modal-image" alt="Full comic" />
+        <button class="modal-btn modal-next" aria-label="Next">›</button>
+        <div class="modal-caption"></div>`;
+      document.body.appendChild(modal);
 
-        function openModal(index) {
-            currentIndex = index;
-            const comic = comics[index];
-            const fullSizeImage = comic.querySelector('.comic-thumbnail').src;
-            const title = comic.querySelector('.comic-title').textContent;
-            modalImage.src = fullSizeImage;
-            modalCaption.textContent = title;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+      const imgEl = modal.querySelector('.modal-image');
+      const capEl = modal.querySelector('.modal-caption');
+      const closeEl = modal.querySelector('.modal-close');
+      const prevEl = modal.querySelector('.modal-prev');
+      const nextEl = modal.querySelector('.modal-next');
 
-        function navigateComic(direction) {
-            currentIndex = (currentIndex + direction + comics.length) % comics.length;
-            const comic = comics[currentIndex];
-            const fullSizeImage = comic.querySelector('.comic-thumbnail').src;
-            const title = comic.querySelector('.comic-title').textContent;
-            modalImage.src = fullSizeImage;
-            modalCaption.textContent = title;
-        }
+      const cards = Array.from(document.querySelectorAll('.comic-card'));
+      let idx = 0;
 
-        // Rest of the JavaScript remains the same
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+      function open(i){
+        idx = i;
+        const card = cards[idx];
+        const img = card.querySelector('.comic-thumbnail');
+        const ttl = (card.querySelector('h3')||{}).textContent || '';
+        imgEl.src = img.src; imgEl.alt = ttl;
+        capEl.textContent = ttl;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function close(){ modal.classList.remove('active'); document.body.style.overflow=''; }
+      function nav(d){ idx = (idx + d + cards.length) % cards.length; open(idx); }
 
-        comics.forEach((comic, index) => {
-            comic.addEventListener('click', () => openModal(index));
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-        prevBtn.addEventListener('click', () => navigateComic(-1));
-        nextBtn.addEventListener('click', () => navigateComic(1));
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!modal.classList.contains('active')) return;
-            
-            switch(e.key) {
-                case 'ArrowLeft':
-                    navigateComic(-1);
-                    break;
-                case 'ArrowRight':
-                    navigateComic(1);
-                    break;
-                case 'Escape':
-                    closeModal();
-                    break;
-            }
-        });
-    </script>
+      cards.forEach((c,i)=> c.addEventListener('click', ()=> open(i)));
+      closeEl.addEventListener('click', close);
+      prevEl.addEventListener('click', ()=> nav(-1));
+      nextEl.addEventListener('click', ()=> nav(1));
+      modal.addEventListener('click', e => { if (e.target === modal) close(); });
+      document.addEventListener('keydown', e => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key==='Escape') close();
+        if (e.key==='ArrowLeft') nav(-1);
+        if (e.key==='ArrowRight') nav(1);
+      });
+    })();
+  </script>
 </body>
 </html>
+
