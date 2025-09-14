@@ -71,6 +71,26 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
+    title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
+    venue: "Under review",
+    authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/peer_fact_checking_on_whatsapp.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
+    title: "Designing and Evaluating a Community Fact-Checking System for WhatsApp",
+    venue: "Under review",
+    authors: ["Juan Jose Rojas Constain","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/Community_fact_checking_on_WhatsApp_Colombia.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
     title: "Data Donation on Social Media: Tools and Datasets",
     venue: "Under review",
     authors: ["Kiran Garimella"],
