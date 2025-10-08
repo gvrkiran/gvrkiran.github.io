@@ -71,6 +71,26 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
+    title: "WhatsViral: A Privacy-Preserving System for Studying Viral Content on WhatsApp",
+    venue: "Under review",
+    authors: ["Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/WhatsViral_virality_on_whatsapp.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
+    title: "What Does a Neighborhood Look Like Online? Linking the Built Environment to Digital Information Diets",
+    venue: "Under review",
+    authors: ["Hemant Magwana","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/Google_street_view_WhatsApp_data.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
     title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
     venue: "Under review",
     authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
@@ -104,7 +124,7 @@ const PUBLICATIONS = [
     status: "Under review",
     title: "Disagreement Is Disappearing on U.S. Cable Debate Shows",
     venue: "Under review",
-    authors: ["Mehedi Zaman", "Kiran Garimella"],
+    authors: ["S M Mehedi Zaman", "Kiran Garimella"],
     links: [{ label: "paper", href: "content/television_disagreements.pdf" }]
   },
   {
@@ -118,9 +138,9 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
-    title: "Examining (Political) Content Consumption on Facebook Through Data Donation",
+    title: "Demographic Divides in Political Content Exposure on Facebook",
     venue: "Under review",
-    authors: ["Joao Couto", "Kiran Garimella"],
+    authors: ["S M Mehedi Zaman", "Joao Couto", "Kiran Garimella"],
     links: [{ label: "paper", href: "content/Facebook_data_donation_political_content.pdf" }]
   },
 
