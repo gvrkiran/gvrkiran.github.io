@@ -44,12 +44,22 @@
             <a class="btn" id="schBtn" href="#" target="_blank" rel="noreferrer">Scholar</a>
           </div>
         </div>
-	<div class="card photo-card">
+  <div class="card photo-card">
+    <div id="faceTracker" class="face-tracker">
+      <img id="faceImage" class="face-image" src="" alt="Face following gaze" />
+      <div id="faceLoading" class="face-loading" style="display: none;">Loading face...</div>
+      <div id="faceError" class="face-tracker-error" style="display: none;">
+        Error loading face images
+      </div>
+    </div>
+  </div>
+
+	<!--div class="card photo-card">
   <img id="portrait" class="portrait" src="" alt="" loading="lazy" />
   <div id="portraitPlaceholder" class="photo-placeholder">
     Add your headshot: set <code>PROFILE.photo</code> in <code>data.js</code>.
   </div>
-</div>
+</div-->
 
       </div>
     </section>

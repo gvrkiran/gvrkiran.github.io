@@ -265,5 +265,124 @@ function ensureFooterGap(){
     }
   }
 
+// start new faces code 
+//
+  class FaceTracker {
+    constructor(basePath = './faces/') {
+      this.basePath = basePath;
+      this.P_MIN = -15;
+      this.P_MAX = 15;
+      this.STEP = 3;
+      this.SIZE = 256;
+
+      // Available coordinates from your file list
+      this.availableCoords = [
+        [-15, -15], [-15, -12], [-15, -6], [-15, -3], [-15, 3], [-15, 6], [-15, 9], [-15, 12], [-15, 15],
+        [-12, -15], [-12, -12], [-12, -6], [-12, -3], [-12, 3], [-12, 6], [-12, 9], [-12, 12], [-12, 15],
+        [-9, -15], [-9, -12], [-9, -9], [-9, -6], [-9, -3], [-9, 3], [-9, 6], [-9, 9], [-9, 12], [-9, 15],
+        [-6, -15], [-6, -12], [-6, -9], [-6, -6], [-6, -3], [-6, 0], [-6, 3], [-6, 6], [-6, 9], [-6, 12], [-6, 15],
+        [-3, -15], [-3, -12], [-3, -9], [-3, -6], [-3, -3], [-3, 0], [-3, 3], [-3, 6], [-3, 9], [-3, 12], [-3, 15],
+        [0, -15], [0, -12], [0, -9], [0, -6], [0, -3], [0, 0], [0, 3], [0, 6], [0, 9], [0, 12], [0, 15],
+        [3, -15], [3, -12], [3, -9], [3, -6], [3, -3], [3, 0], [3, 3], [3, 6], [3, 9], [3, 12], [3, 15],
+        [6, -15], [6, -12], [6, -9], [6, -6], [6, -3], [6, 0], [6, 3], [6, 6], [6, 9], [6, 12], [6, 15],
+        [9, -15], [9, -12], [9, -9], [9, -6], [9, -3], [9, 0], [9, 3], [9, 6], [9, 9], [9, 12], [9, 15],
+        [12, -6], [12, -9], [12, 0], [12, 3], [12, 6], [12, 9], [12, 12], [12, 15],
+        [15, -15], [15, -12], [15, -9], [15, -6], [15, -3], [15, 0], [15, 3], [15, 6], [15, 9], [15, 12], [15, 15]
+      ];
+
+      this.container = document.getElementById('faceTracker');
+      this.faceImage = document.getElementById('faceImage');
+      this.loadingEl = document.getElementById('faceLoading');
+      this.errorEl = document.getElementById('faceError');
+
+      this.init();
+    }
+
+    quantizeToGrid(val) {
+      const raw = this.P_MIN + (val + 1) * (this.P_MAX - this.P_MIN) / 2;
+      const snapped = Math.round(raw / this.STEP) * this.STEP;
+      return Math.max(this.P_MIN, Math.min(this.P_MAX, snapped));
+    }
+
+    findClosestAvailableCoord(px, py) {
+      let minDistance = Infinity;
+      let closest = [0, 0];
+
+      for (const [x, y] of this.availableCoords) {
+        const distance = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = [x, y];
+        }
+      }
+      return closest;
+    }
+
+    gridToFilename(px, py) {
+      const sanitize = (val) => {
+        return val.toString().replace('-', 'm') + 'p0';
+      };
+      return `gaze_px${sanitize(px)}_py${sanitize(py)}_${this.SIZE}.webp`;
+    }
+
+    updateGaze(clientX, clientY) {
+      if (!this.container) return;
+
+      const rect = this.container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const nx = (clientX - centerX) / (rect.width / 2);
+      const ny = -(clientY - centerY) / (rect.height / 2); // Flip Y-axis
+
+      const clampedX = Math.max(-1, Math.min(1, nx));
+      const clampedY = Math.max(-1, Math.min(1, ny));
+
+      const px = this.quantizeToGrid(clampedX);
+      const py = this.quantizeToGrid(clampedY);
+
+      // Find closest available coordinate
+      const [closestPx, closestPy] = this.findClosestAvailableCoord(px, py);
+
+      const filename = this.gridToFilename(closestPx, closestPy);
+      const imagePath = `${this.basePath}${filename}`;
+
+      this.faceImage.src = imagePath;
+    }
+
+  init() {
+    if (!this.container) return;
+
+    const handleMouseMove = (e) => {
+      this.updateGaze(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        this.updateGaze(touch.clientX, touch.clientY);
+      }
+    };
+
+    // Listen to the entire document instead of just the container
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    // Set initial center gaze
+    const rect = this.container.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    this.updateGaze(centerX, centerY);
+  }
+
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new FaceTracker('./faces/');
+  });
+
+
+/////// end faces code
+
 })();
 
