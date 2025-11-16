@@ -122,14 +122,6 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
-    title: "Disagreement Is Disappearing on U.S. Cable Debate Shows",
-    venue: "Under review",
-    authors: ["S M Mehedi Zaman", "Kiran Garimella"],
-    links: [{ label: "paper", href: "content/television_disagreements.pdf" }]
-  },
-  {
-    year: "Unpublished",
-    status: "Under review",
     title: "How Students (Really) Use ChatGPT: Uncovering Experiences Among Undergraduate Students",
     venue: "Under review",
     authors: ["Meilun Chen", "Kiran Garimella", "Tawfiq Ammari"],
@@ -145,6 +137,13 @@ const PUBLICATIONS = [
   },
 
   // 2026
+  {
+    year: "2026",
+    title: "Disagreement Is Disappearing on U.S. Cable Debate Shows",
+    venue: "ICWSM 2026",
+    authors: ["S M Mehedi Zaman", "Kiran Garimella"],
+    links: [{ label: "paper", href: "content/television_disagreements.pdf" }]
+  },
   {
     year: 2026,
     title: "Personal Experience and Public Support for Internet Shutdowns in Rural India",
