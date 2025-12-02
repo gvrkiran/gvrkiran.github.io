@@ -91,6 +91,16 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
+    title: "The Hype vs. the Reality of Generative AI in Elections: The Case of the 2024 Indian Elections",
+    venue: "Under review",
+    authors: ["Kiran Garimella", "Simon Chauchard"],
+    links: [
+      { label: "paper", href: "content/Generative_AI_content_WhatsApp.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
     title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
     venue: "Under review",
     authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
