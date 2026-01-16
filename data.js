@@ -101,16 +101,6 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
-    title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
-    venue: "Under review",
-    authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/peer_fact_checking_on_whatsapp.pdf" }
-    ]
-  },
-  {
-    year: "Unpublished",
-    status: "Under review",
     title: "Designing and Evaluating a Community Fact-Checking System for WhatsApp",
     venue: "Under review",
     authors: ["Juan Jose Rojas Constain","Kiran Garimella"],
@@ -147,6 +137,17 @@ const PUBLICATIONS = [
   },
 
   // 2026
+
+  {
+    year: "2026",
+    title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
+    venue: "CHI 2026",
+    authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/peer_fact_checking_on_whatsapp.pdf" }
+    ]
+  },
+
   {
     year: "2026",
     title: "Disagreement Is Disappearing on U.S. Cable Debate Shows",
