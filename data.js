@@ -71,6 +71,26 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
+    title: "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
+    venue: "Under review",
+    authors: ["Harsha Nemani","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
+    title: "Quantifying the Illicit Ecosystem of Betting Apps in India",
+    venue: "Under review",
+    authors: ["Aatman Vaidya","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/Betting_apps_India.pdf" }
+    ]
+  },
+  {
+    year: "Unpublished",
+    status: "Under review",
     title: "WhatsViral: A Privacy-Preserving System for Studying Viral Content on WhatsApp",
     venue: "Under review",
     authors: ["Kiran Garimella"],
@@ -124,7 +144,7 @@ const PUBLICATIONS = [
     status: "Under review",
     title: "How Students (Really) Use ChatGPT: Uncovering Experiences Among Undergraduate Students",
     venue: "Under review",
-    authors: ["Meilun Chen", "Kiran Garimella", "Tawfiq Ammari"],
+    authors: ["Tawfiq Ammari", "Mehedi Zaman", "Meilun Chen", "Kiran Garimella"],
     links: [{ label: "paper", href: "content/how_students_use_chatgpt.pdf" }]
   },
   {
