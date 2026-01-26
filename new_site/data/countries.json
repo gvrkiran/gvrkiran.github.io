@@ -1,0 +1,309 @@
+{
+  "countries": {
+    "US": {
+      "name": "United States",
+      "image": "us.webp",
+      "greeting": "Hello",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#002868", "#BF0A30", "#FFFFFF"]
+    },
+    "IN": {
+      "name": "India",
+      "image": "in.webp",
+      "greeting": "Namaste",
+      "greeting_formal": "Swagat hai",
+      "greeting_native": "\u0928\u092e\u0938\u094d\u0924\u0947",
+      "greeting_romanized": "Namaste",
+      "language": "hi",
+      "color_palette": ["#FF9933", "#FFFFFF", "#138808", "#000080"]
+    },
+    "JP": {
+      "name": "Japan",
+      "image": "jp.webp",
+      "greeting": "Konnichiwa",
+      "greeting_formal": "Yokoso",
+      "greeting_native": "\u3053\u3093\u306b\u3061\u306f",
+      "greeting_romanized": "Konnichiwa",
+      "language": "ja",
+      "color_palette": ["#BC002D", "#FFFFFF", "#000000"]
+    },
+    "BR": {
+      "name": "Brazil",
+      "image": "br.webp",
+      "greeting": "Ola",
+      "greeting_formal": "Bem-vindo",
+      "language": "pt",
+      "color_palette": ["#009739", "#FFDF00", "#002776"]
+    },
+    "CN": {
+      "name": "China",
+      "image": "cn.webp",
+      "greeting": "Ni hao",
+      "greeting_formal": "Huanying",
+      "greeting_native": "\u4f60\u597d",
+      "greeting_romanized": "Ni hao",
+      "language": "zh",
+      "color_palette": ["#DE2910", "#FFDE00", "#FFFFFF"]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "image": "gb.webp",
+      "greeting": "Hello",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#012169", "#C8102E", "#FFFFFF"]
+    },
+    "DE": {
+      "name": "Germany",
+      "image": "de.webp",
+      "greeting": "Hallo",
+      "greeting_formal": "Willkommen",
+      "language": "de",
+      "color_palette": ["#000000", "#DD0000", "#FFCC00"]
+    },
+    "FR": {
+      "name": "France",
+      "image": "fr.webp",
+      "greeting": "Bonjour",
+      "greeting_formal": "Bienvenue",
+      "language": "fr",
+      "color_palette": ["#002395", "#FFFFFF", "#ED2939"]
+    },
+    "IT": {
+      "name": "Italy",
+      "image": "it.webp",
+      "greeting": "Ciao",
+      "greeting_formal": "Benvenuto",
+      "language": "it",
+      "color_palette": ["#009246", "#FFFFFF", "#CE2B37"]
+    },
+    "ES": {
+      "name": "Spain",
+      "image": "es.webp",
+      "greeting": "Hola",
+      "greeting_formal": "Bienvenido",
+      "language": "es",
+      "color_palette": ["#AA151B", "#F1BF00", "#FFFFFF"]
+    },
+    "KR": {
+      "name": "South Korea",
+      "image": "kr.webp",
+      "greeting": "Annyeonghaseyo",
+      "greeting_formal": "Hwangyeonghamnida",
+      "greeting_native": "\uc548\ub155\ud558\uc138\uc694",
+      "greeting_romanized": "Annyeonghaseyo",
+      "language": "ko",
+      "color_palette": ["#003478", "#C60C30", "#FFFFFF", "#000000"]
+    },
+    "CA": {
+      "name": "Canada",
+      "image": "ca.webp",
+      "greeting": "Hello",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#FF0000", "#FFFFFF"]
+    },
+    "AU": {
+      "name": "Australia",
+      "image": "au.webp",
+      "greeting": "G'day",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#00008B", "#FFFFFF", "#FFD700", "#008000"]
+    },
+    "MX": {
+      "name": "Mexico",
+      "image": "mx.webp",
+      "greeting": "Hola",
+      "greeting_formal": "Bienvenido",
+      "language": "es",
+      "color_palette": ["#006341", "#FFFFFF", "#CE1126"]
+    },
+    "NL": {
+      "name": "Netherlands",
+      "image": "nl.webp",
+      "greeting": "Hallo",
+      "greeting_formal": "Welkom",
+      "language": "nl",
+      "color_palette": ["#AE1C28", "#FFFFFF", "#21468B", "#FF6600"]
+    },
+    "CH": {
+      "name": "Switzerland",
+      "image": "ch.webp",
+      "greeting": "Gruezi",
+      "greeting_formal": "Willkommen",
+      "language": "de",
+      "color_palette": ["#FF0000", "#FFFFFF"]
+    },
+    "SE": {
+      "name": "Sweden",
+      "image": "se.webp",
+      "greeting": "Hej",
+      "greeting_formal": "Valkommen",
+      "language": "sv",
+      "color_palette": ["#006AA7", "#FECC00"]
+    },
+    "PL": {
+      "name": "Poland",
+      "image": "pl.webp",
+      "greeting": "Czesc",
+      "greeting_formal": "Witamy",
+      "language": "pl",
+      "color_palette": ["#FFFFFF", "#DC143C"]
+    },
+    "BE": {
+      "name": "Belgium",
+      "image": "be.webp",
+      "greeting": "Hallo",
+      "greeting_formal": "Welkom",
+      "language": "nl",
+      "color_palette": ["#000000", "#FFD700", "#FF0000"]
+    },
+    "AT": {
+      "name": "Austria",
+      "image": "at.webp",
+      "greeting": "Servus",
+      "greeting_formal": "Willkommen",
+      "language": "de",
+      "color_palette": ["#ED2939", "#FFFFFF"]
+    },
+    "NO": {
+      "name": "Norway",
+      "image": "no.webp",
+      "greeting": "Hei",
+      "greeting_formal": "Velkommen",
+      "language": "no",
+      "color_palette": ["#BA0C2F", "#FFFFFF", "#00205B"]
+    },
+    "DK": {
+      "name": "Denmark",
+      "image": "dk.webp",
+      "greeting": "Hej",
+      "greeting_formal": "Velkommen",
+      "language": "da",
+      "color_palette": ["#C8102E", "#FFFFFF"]
+    },
+    "IE": {
+      "name": "Ireland",
+      "image": "ie.webp",
+      "greeting": "Dia dhuit",
+      "greeting_formal": "Failte",
+      "language": "en",
+      "color_palette": ["#009A49", "#FFFFFF", "#FF7900"]
+    }
+  },
+  "regions": {
+    "SOUTH_AMERICA": {
+      "name": "South America",
+      "countries": ["AR", "CL", "CO", "PE", "VE", "EC", "BO", "PY", "UY", "GY", "SR"],
+      "image": "regions/south-america.webp",
+      "greeting": "Hola",
+      "greeting_formal": "Bienvenido",
+      "language": "es",
+      "color_palette": ["#FCD116", "#009739", "#003893"]
+    },
+    "CENTRAL_AMERICA": {
+      "name": "Central America & Caribbean",
+      "countries": ["GT", "HN", "SV", "NI", "CR", "PA", "CU", "DO", "HT", "JM", "TT", "PR", "BS", "BB"],
+      "image": "regions/central-america.webp",
+      "greeting": "Hola",
+      "greeting_formal": "Bienvenido",
+      "language": "es",
+      "color_palette": ["#00BFFF", "#FFD700", "#228B22"]
+    },
+    "WEST_AFRICA": {
+      "name": "West Africa",
+      "countries": ["NG", "GH", "SN", "CI", "ML", "BF", "NE", "GN", "BJ", "TG", "SL", "LR", "GM", "GW", "CV", "MR"],
+      "image": "regions/west-africa.webp",
+      "greeting": "Hello",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#FCD116", "#009739", "#CE1126"]
+    },
+    "EAST_AFRICA": {
+      "name": "East Africa",
+      "countries": ["KE", "TZ", "UG", "RW", "ET", "SO", "DJ", "ER", "SS", "BI", "MW", "MZ", "ZM", "ZW"],
+      "image": "regions/east-africa.webp",
+      "greeting": "Jambo",
+      "greeting_formal": "Karibu",
+      "language": "sw",
+      "color_palette": ["#000000", "#BB0000", "#006600"]
+    },
+    "NORTH_AFRICA": {
+      "name": "North Africa",
+      "countries": ["EG", "MA", "DZ", "TN", "LY", "SD"],
+      "image": "regions/north-africa.webp",
+      "greeting": "Marhaba",
+      "greeting_native": "\u0645\u0631\u062d\u0628\u0627",
+      "greeting_romanized": "Marhaba",
+      "language": "ar",
+      "color_palette": ["#C8102E", "#007A3D", "#FFFFFF"]
+    },
+    "SOUTHERN_AFRICA": {
+      "name": "Southern Africa",
+      "countries": ["ZA", "BW", "NA", "SZ", "LS", "AO"],
+      "image": "regions/southern-africa.webp",
+      "greeting": "Sawubona",
+      "greeting_formal": "Welcome",
+      "language": "zu",
+      "color_palette": ["#007A4D", "#FFB612", "#DE3831", "#002395", "#000000"]
+    },
+    "MIDDLE_EAST": {
+      "name": "Middle East",
+      "countries": ["SA", "AE", "QA", "KW", "BH", "OM", "YE", "JO", "LB", "SY", "IQ", "IR", "IL", "PS"],
+      "image": "regions/middle-east.webp",
+      "greeting": "Marhaba",
+      "greeting_native": "\u0645\u0631\u062d\u0628\u0627",
+      "greeting_romanized": "Marhaba",
+      "language": "ar",
+      "color_palette": ["#006C35", "#FFFFFF", "#CE1126"]
+    },
+    "SOUTH_ASIA": {
+      "name": "South Asia",
+      "countries": ["PK", "BD", "LK", "NP", "BT", "MV", "AF"],
+      "image": "regions/south-asia.webp",
+      "greeting": "Namaste",
+      "greeting_formal": "Welcome",
+      "language": "hi",
+      "color_palette": ["#01411C", "#FFFFFF", "#FF6600", "#000080"]
+    },
+    "SOUTHEAST_ASIA": {
+      "name": "Southeast Asia",
+      "countries": ["TH", "VN", "PH", "MY", "SG", "ID", "MM", "KH", "LA", "BN"],
+      "image": "regions/southeast-asia.webp",
+      "greeting": "Hello",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#FF0000", "#FFD700", "#00FF00"]
+    },
+    "CENTRAL_ASIA": {
+      "name": "Central Asia",
+      "countries": ["KZ", "UZ", "TM", "TJ", "KG", "MN"],
+      "image": "regions/central-asia.webp",
+      "greeting": "Salam",
+      "greeting_formal": "Welcome",
+      "language": "ru",
+      "color_palette": ["#00AFCA", "#FFCC00", "#6CBB3C"]
+    },
+    "EASTERN_EUROPE": {
+      "name": "Eastern Europe",
+      "countries": ["RU", "UA", "BY", "MD", "RO", "BG", "RS", "HR", "SI", "BA", "ME", "MK", "AL", "XK", "CZ", "SK", "HU", "LT", "LV", "EE"],
+      "image": "regions/eastern-europe.webp",
+      "greeting": "Zdravstvuyte",
+      "greeting_native": "\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435",
+      "greeting_romanized": "Zdravstvuyte",
+      "language": "ru",
+      "color_palette": ["#0033A0", "#FFD700", "#DA291C"]
+    },
+    "OCEANIA": {
+      "name": "Oceania & Pacific",
+      "countries": ["NZ", "FJ", "PG", "WS", "TO", "VU", "SB", "NC", "PF", "GU"],
+      "image": "regions/oceania.webp",
+      "greeting": "Kia ora",
+      "greeting_formal": "Welcome",
+      "language": "en",
+      "color_palette": ["#000000", "#FFFFFF", "#CC142B"]
+    }
+  }
+}

@@ -1,0 +1,427 @@
+// Main site JS — updated nav (clickable), year-only publications filter, and fallbacks for Projects/Teaching
+(function(){
+  const $ = (sel, el=document) => el.querySelector(sel);
+  const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+  document.addEventListener('DOMContentLoaded', () => {
+    applyCommon();
+    const page = document.body.dataset.page;
+    if (page === 'home') initHome();
+    if (page === 'publications') initPublications();
+    if (page === 'projects') initProjects();
+    if (page === 'teaching') initTeaching();
+    if (page === 'talks') initTalks();
+    if (page === 'press') initPress();
+    if (page === 'comics') {/* page-local modal lives on comics.html */}
+    if (page === 'contact') initContact();
+    if (page === 'other') initOther();
+  });
+
+  function applyCommon() {
+    if ($('#brand')) {
+      $('#brand').textContent = PROFILE.name;
+      $('#brand').setAttribute('href', 'index.html');
+    }
+    if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}. Design by ChatGPT.`;
+
+    // theme toggle - works with personalization system
+    const btn = $('#themeBtn');
+    if (btn) {
+      function setTheme(dark){
+        document.body.classList.toggle('dark', dark);
+        try { localStorage.setItem('dark', dark ? '1' : '0'); } catch {}
+        btn.textContent = dark ? '🌙' : '☀️';
+
+        // Override personalization theme if user manually toggles
+        if (dark) {
+          document.documentElement.setAttribute('data-theme', 'night-clear');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'day-clear');
+        }
+        try { localStorage.setItem('theme_override', dark ? 'night-clear' : 'day-clear'); } catch {}
+      }
+
+      // Check if user has manually overridden the theme
+      const themeOverride = localStorage.getItem('theme_override');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedDark = (typeof localStorage !== 'undefined' && localStorage.getItem('dark')) === '1';
+
+      // Only apply saved preference if there's a theme override (user manually toggled)
+      if (themeOverride) {
+        setTheme(savedDark || prefersDark);
+      } else {
+        // Just update button state based on current theme (set by personalization)
+        const currentTheme = document.documentElement.getAttribute('data-theme') || '';
+        const isDark = currentTheme.includes('night');
+        btn.textContent = isDark ? '🌙' : '☀️';
+        document.body.classList.toggle('dark', isDark);
+      }
+
+      btn.addEventListener('click', () => setTheme(!document.body.classList.contains('dark')));
+    }
+
+    // Build a compact nav across the site
+    const nav = $('.navlinks');
+    if (nav) {
+      nav.innerHTML = [
+    	'<a href="about.html">About</a>',      // ← added
+        '<a href="publications.html">Publications</a>',
+        '<a href="projects.html">Projects</a>',
+        '<a href="teaching.html">Teaching</a>',
+        '<a href="other.html">Other</a>'
+      ].join('');
+      const current = location.pathname.split('/').pop() || 'index.html';
+      $$('.navlinks a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === current));
+    }
+
+    ensureNavClickableStyle();
+    ensureGlobalStackGap();
+    ensureFooterGap();
+  }
+
+// space above the footer line, not a bigger card
+function ensureFooterGap(){
+  const css = `main.container{padding-bottom:48px} .footer{margin-top:0}`;
+  const existing = document.getElementById('footerGapStyle');
+  if (existing) { existing.textContent = css; return; }
+  const s = document.createElement('style');
+  s.id = 'footerGapStyle';
+  s.textContent = css;
+  document.head.appendChild(s);
+}
+
+  function ensureGlobalStackGap(){
+    if (document.getElementById('stackGapStyle')) return;
+    const s = document.createElement('style');
+    s.id = 'stackGapStyle';
+    s.textContent = `.stack{display:grid;gap:18px}.stack>.card{margin:0}`;
+    document.head.appendChild(s);
+  }
+
+  function ensureNavClickableStyle(){
+    if (document.getElementById('navClickableStyle')) return;
+    const s = document.createElement('style');
+    s.id = 'navClickableStyle';
+    s.textContent = `
+      .navlinks a{position:relative;display:inline-block;padding-bottom:10px;cursor:pointer;text-decoration:none}
+      .navlinks a:hover{opacity:.9}
+      .nav      .navlinks a:hover{opacity:.9}
+      .navlinks a::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:2px;background:currentColor;opacity:0;transform:translateY(2px);transition:opacity .16s ease,transform .16s ease}
+      .navlinks a:hover::after{opacity:.4;transform:translateY(0)}
+      .navlinks a.active::after{opacity:1;transform:translateY(0)}
+    `;
+    document.head.appendChild(s);
+  }
+
+  // Home
+  function initHome(){
+    const kws = $('#keywords');
+    if ($('#location')) $('#location').textContent = PROFILE.location || '';
+    if ($('#hero-role')) $('#hero-role').textContent = PROFILE.role || '';
+    if ($('#hero-tagline')) $('#hero-tagline').textContent = PROFILE.tagline || '';
+    if (kws) kws.innerHTML = (window.KEYWORDS||[]).map(t => `<span class="badge">${t}</span>`).join('');
+
+    const img = $('#portrait');
+    const ph  = $('#portraitPlaceholder');
+    if (img) {
+      const src = (PROFILE.photo || '').trim();
+      if (src) {
+        img.src = src; img.alt = `Portrait of ${PROFILE.name}`; img.classList.remove('hidden');
+        if (ph) ph.classList.add('hidden');
+      } else {
+        img.classList.add('hidden');
+        if (ph) ph.classList.remove('hidden');
+      }
+    }
+  }
+
+  // Publications — YEAR ONLY FILTER + Unpublished section
+  function initPublications(){
+    const root = $('#pub-list');
+    if (!root) return;
+
+    const search = $('#pubSearch');
+    const yearSel = $('#pubYear') || $('#pubTopic'); // support either id
+
+    const raw = (typeof PUBLICATIONS !== 'undefined' && Array.isArray(PUBLICATIONS))
+      ? PUBLICATIONS.slice()
+      : (Array.isArray(window.PUBLICATIONS) ? window.PUBLICATIONS.slice() : []);
+    const pubs = raw.map(p => ({...p, year: (p.year===null||p.year===undefined||p.year==='')?null:Number(p.year)}));
+
+    const years = Array.from(new Set(pubs.filter(p => Number.isFinite(p.year)).map(p => p.year))).sort((a,b)=> b-a);
+    const hasUnpublished = pubs.some(p => !Number.isFinite(p.year));
+
+    function opt(v,t,sel){ return `<option value="${v}" ${sel?'selected':''}>${t}</option>`; }
+    const params = new URLSearchParams(location.search);
+    const selected = params.get('y') || 'all';
+
+    if (yearSel) {
+      const opts = [ opt('all','all', selected==='all') ];
+      if (hasUnpublished) opts.push(opt('unpublished','unpublished', selected==='unpublished'));
+      years.forEach(y => opts.push(opt(String(y), String(y), selected===String(y))));
+      yearSel.innerHTML = opts.join('');
+    }
+
+    const matchesQ = (p,q) => !q || [p.title, p.venue, (p.authors||[]).join(' ')].some(x => (x||'').toLowerCase().includes(q));
+
+    const card = (p) => {
+      const kicker = Number.isFinite(p.year) ? [p.year, p.venue].filter(Boolean).join(' • ') : (p.status || 'Unpublished');
+      const links = (p.links||[]).map(l => `<a class="link" href="${l.href}" target="_blank" rel="noreferrer">${l.label} ↗</a>`).join('');
+      return `<div class="card"><div class="content">
+        <div class="kicker">${kicker}</div>
+        <h3>${p.title}</h3>
+        <div class="muted" style="font-size:14px">${(p.authors||[]).join(', ')}</div>
+        <div class="controls" style="margin-top:10px">${links}</div>
+      </div></div>`;
+    };
+
+    function renderAll(q){
+      const unpub = pubs.filter(p => !Number.isFinite(p.year)).filter(p => matchesQ(p,q));
+      const published = pubs.filter(p => Number.isFinite(p.year)).sort((a,b)=> b.year-a.year);
+      let html = '';
+      if (unpub.length) html += `<h2 class="section-title">Unpublished</h2>` + unpub.map(card).join('') + '<div class="spacer"></div>';
+      const byYear = {}; for (const p of published) (byYear[p.year] ||= []).push(p);
+      for (const y of years) { const arr = (byYear[y]||[]).filter(p => matchesQ(p,q)); if (arr.length) html += `<h2 class="section-title">${y}</h2>` + arr.map(card).join(''); }
+      root.innerHTML = html || `<div class="muted">No results.</div>`;
+    }
+
+    function renderFiltered(q, y){
+      let list = (y === 'unpublished') ? pubs.filter(p => !Number.isFinite(p.year)) : pubs.filter(p => p.year === parseInt(y,10));
+      list = list.filter(p => matchesQ(p,q)).sort((a,b)=> (b.year||0)-(a.year||0));
+      root.innerHTML = list.map(card).join('') || `<div class="muted">No results.</div>`;
+    }
+
+    function render(){
+      const q = (search?.value || '').trim().toLowerCase();
+      const y = (yearSel?.value || 'all');
+      const qs = new URLSearchParams(); if (y !== 'all') qs.set('y', y); if (q) qs.set('q', q);
+      history.replaceState(null, '', qs.toString() ? `?${qs}` : location.pathname);
+      if (y === 'all') renderAll(q); else renderFiltered(q, y);
+    }
+
+    yearSel?.addEventListener('change', render);
+    if (search){ let t; search.addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(render,150); }); }
+    render();
+  }
+
+  function renderPub(p){ /* legacy helper retained for safety */ return ''; }
+
+  // Projects
+  function initProjects(){
+    const root = $('#proj-list');
+    if (!root) return;
+    const list = (typeof PROJECTS !== 'undefined' && Array.isArray(PROJECTS))
+      ? PROJECTS
+      : (Array.isArray(window.PROJECTS) ? window.PROJECTS : []);
+    const html = list.map(prj => {
+      const tags = (prj.tags||[]).map(t => `<span class="badge">${t}</span>`).join('');
+      const links = (prj.links||[]).map(l => `<a class="link" href="${l.href}" target="_blank" rel="noreferrer">${l.label} ↗</a>`).join('');
+      return `<div class="card"><div class="content">
+        <h3>${prj.title}</h3>
+        <div class="muted" style="font-size:14px">${prj.summary||''}</div>
+        <div class="badges" style="margin-top:6px">${tags}</div>
+        <div class="controls" style="margin-top:10px">${links}</div>
+      </div></div>`;
+    }).join('');
+    root.innerHTML = html || `<div class="muted">Coming soon.</div>`;
+  }
+
+  // Teaching
+  function initTeaching(){
+    const root = $('#teach-list');
+    if (!root) return;
+    const list = (typeof TEACHING !== 'undefined' && Array.isArray(TEACHING))
+      ? TEACHING
+      : (Array.isArray(window.TEACHING) ? window.TEACHING : []);
+    const html = list.map(t => `<div class="card"><div class="content">
+      <h3>${t.course}</h3>
+      <div class="muted">${t.term||''}</div>
+      <div>${t.info||''}</div>
+    </div></div>`).join('');
+    root.innerHTML = html || `<div class="muted">Coming soon.</div>`;
+  }
+
+  // Talks
+  function initTalks(){
+    const root = $('#talks-list');
+    if (!root) return;
+    root.innerHTML = (window.TALKS||[]).map(t => `<div class="card"><div class="content row">
+      <div>
+        <h3>${t.title}</h3>
+        <div class="muted">${t.where||''}</div>
+      </div>
+      <div class="muted">${t.date||''}</div>
+    </div></div>`).join('') || `<div class="muted">Coming soon.</div>`;
+  }
+
+  // Press
+  function initPress(){
+    const root = $('#press-list');
+    if (!root) return;
+    root.innerHTML = (window.PRESS||[]).map(p => `<div class="card"><div class="content row">
+      <div><h3>${p.outlet}</h3><div class="muted">${p.title}</div></div>
+      <a class="link" href="${p.link}" target="_blank" rel="noreferrer">Read ↗</a>
+    </div></div>`).join('') || `<div class="muted">Coming soon.</div>`;
+  }
+
+  // Contact
+  function initContact(){
+    const a = $('#contact-email');
+    if (a) { a.textContent = PROFILE.email; a.setAttribute('href', `mailto:${PROFILE.email}`); }
+    const lk = $('#contact-linkedin');
+    if (lk && PROFILE.socials && PROFILE.socials.linkedin) {
+      lk.classList.remove('hidden');
+      lk.setAttribute('href', PROFILE.socials.linkedin);
+    }
+  }
+
+  // Other page: wire Substack link from data.js if present
+  function initOther(){
+    const a = $('#substackLink');
+    const note = document.getElementById('substackNote');
+    if (!a) return;
+    const url = (PROFILE.socials && (PROFILE.socials.substack || PROFILE.blog)) || PROFILE.blog;
+    if (url) {
+      a.href = url; a.target = '_blank'; a.rel = 'noreferrer';
+      if (note) note.classList.add('hidden');
+    }
+  }
+
+// start new faces code 
+//
+  class FaceTracker {
+    constructor(basePath = './faces/') {
+      this.basePath = basePath;
+      this.P_MIN = -15;
+      this.P_MAX = 15;
+      this.STEP = 3;
+      this.SIZE = 256;
+
+      // Available coordinates from your file list
+      this.availableCoords = [
+        [-15, -15], [-15, -12], [-15, -6], [-15, -3], [-15, 3], [-15, 6], [-15, 9], [-15, 12], [-15, 15],
+        [-12, -15], [-12, -12], [-12, -6], [-12, -3], [-12, 3], [-12, 6], [-12, 9], [-12, 12], [-12, 15],
+        [-9, -15], [-9, -12], [-9, -9], [-9, -6], [-9, -3], [-9, 3], [-9, 6], [-9, 9], [-9, 12], [-9, 15],
+        [-6, -15], [-6, -12], [-6, -9], [-6, -6], [-6, -3], [-6, 0], [-6, 3], [-6, 6], [-6, 9], [-6, 12], [-6, 15],
+        [-3, -15], [-3, -12], [-3, -9], [-3, -6], [-3, -3], [-3, 0], [-3, 3], [-3, 6], [-3, 9], [-3, 12], [-3, 15],
+        [0, -15], [0, -12], [0, -9], [0, -6], [0, -3], [0, 0], [0, 3], [0, 6], [0, 9], [0, 12], [0, 15],
+        [3, -15], [3, -12], [3, -9], [3, -6], [3, -3], [3, 0], [3, 3], [3, 6], [3, 9], [3, 12], [3, 15],
+        [6, -15], [6, -12], [6, -9], [6, -6], [6, -3], [6, 0], [6, 3], [6, 6], [6, 9], [6, 12], [6, 15],
+        [9, -15], [9, -12], [9, -9], [9, -6], [9, -3], [9, 0], [9, 3], [9, 6], [9, 9], [9, 12], [9, 15],
+        [12, -6], [12, -9], [12, 0], [12, 3], [12, 6], [12, 9], [12, 12], [12, 15],
+        [15, -15], [15, -12], [15, -9], [15, -6], [15, -3], [15, 0], [15, 3], [15, 6], [15, 9], [15, 12], [15, 15]
+      ];
+
+      this.container = document.getElementById('faceTracker');
+      this.faceImage = document.getElementById('faceImage');
+      this.loadingEl = document.getElementById('faceLoading');
+      this.errorEl = document.getElementById('faceError');
+
+      this.init();
+    }
+
+    quantizeToGrid(val) {
+      const raw = this.P_MIN + (val + 1) * (this.P_MAX - this.P_MIN) / 2;
+      const snapped = Math.round(raw / this.STEP) * this.STEP;
+      return Math.max(this.P_MIN, Math.min(this.P_MAX, snapped));
+    }
+
+    findClosestAvailableCoord(px, py) {
+      let minDistance = Infinity;
+      let closest = [0, 0];
+
+      for (const [x, y] of this.availableCoords) {
+        const distance = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = [x, y];
+        }
+      }
+      return closest;
+    }
+
+    gridToFilename(px, py) {
+      const sanitize = (val) => {
+        return val.toString().replace('-', 'm') + 'p0';
+      };
+      return `gaze_px${sanitize(px)}_py${sanitize(py)}_${this.SIZE}.webp`;
+    }
+
+    updateGaze(clientX, clientY) {
+      if (!this.container) return;
+
+      // Skip gaze tracking if personalization is active
+      if (this.container.dataset.personalized === 'true') return;
+
+      const rect = this.container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const nx = (clientX - centerX) / (rect.width / 2);
+      const ny = -(clientY - centerY) / (rect.height / 2); // Flip Y-axis
+
+      const clampedX = Math.max(-1, Math.min(1, nx));
+      const clampedY = Math.max(-1, Math.min(1, ny));
+
+      const px = this.quantizeToGrid(clampedX);
+      const py = this.quantizeToGrid(clampedY);
+
+      // Find closest available coordinate
+      const [closestPx, closestPy] = this.findClosestAvailableCoord(px, py);
+
+      const filename = this.gridToFilename(closestPx, closestPy);
+      const imagePath = `${this.basePath}${filename}`;
+
+      this.faceImage.src = imagePath;
+    }
+
+  init() {
+    if (!this.container) return;
+
+    // Skip initialization if personalization is already active
+    if (this.container.dataset.personalized === 'true') return;
+
+    const handleMouseMove = (e) => {
+      this.updateGaze(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        this.updateGaze(touch.clientX, touch.clientY);
+      }
+    };
+
+    // Listen to the entire document instead of just the container
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    // Set initial center gaze only if not personalized
+    if (this.container.dataset.personalized !== 'true') {
+      const rect = this.container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      this.updateGaze(centerX, centerY);
+    }
+  }
+
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Only initialize FaceTracker if personalization hasn't set a custom image
+    // and the faces directory exists
+    const faceTracker = document.getElementById('faceTracker');
+    if (faceTracker && faceTracker.dataset.personalized !== 'true') {
+      // Check if gaze images exist before initializing
+      const testImg = new Image();
+      testImg.onload = () => new FaceTracker('./faces/');
+      testImg.onerror = () => console.log('Face tracker disabled - no gaze images found');
+      testImg.src = './faces/gaze_px0p0_py0p0_256.webp';
+    }
+  });
+
+
+/////// end faces code
+
+})();
+

@@ -1,0 +1,190 @@
+{
+  "timestamp": "2026-01-25T16:57:33.727667",
+  "model": "gemini-3-pro-image-preview",
+  "reference_image": "kiran_img.jpg",
+  "elapsed_seconds": 602.546979,
+  "successful": [
+    {
+      "code": "US",
+      "name": "United States",
+      "path": "profile-images/us.webp"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "path": "profile-images/in.webp"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "path": "profile-images/cn.webp"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "path": "profile-images/br.webp"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "path": "profile-images/jp.webp"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "path": "profile-images/de.webp"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "path": "profile-images/gb.webp"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "path": "profile-images/fr.webp"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "path": "profile-images/it.webp"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "path": "profile-images/es.webp"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "path": "profile-images/kr.webp"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "path": "profile-images/ca.webp"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "path": "profile-images/au.webp"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "path": "profile-images/mx.webp"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "path": "profile-images/nl.webp"
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "path": "profile-images/ch.webp"
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "path": "profile-images/se.webp"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "path": "profile-images/pl.webp"
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "path": "profile-images/be.webp"
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "path": "profile-images/at.webp"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "path": "profile-images/no.webp"
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "path": "profile-images/dk.webp"
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "path": "profile-images/ie.webp"
+    },
+    {
+      "code": "SOUTH_AMERICA",
+      "name": "South America",
+      "path": "profile-images/regions/south-america.webp"
+    },
+    {
+      "code": "CENTRAL_AMERICA",
+      "name": "Central America & Caribbean",
+      "path": "profile-images/regions/central-america.webp"
+    },
+    {
+      "code": "WEST_AFRICA",
+      "name": "West Africa",
+      "path": "profile-images/regions/west-africa.webp"
+    },
+    {
+      "code": "EAST_AFRICA",
+      "name": "East Africa",
+      "path": "profile-images/regions/east-africa.webp"
+    },
+    {
+      "code": "NORTH_AFRICA",
+      "name": "North Africa",
+      "path": "profile-images/regions/north-africa.webp"
+    },
+    {
+      "code": "SOUTHERN_AFRICA",
+      "name": "Southern Africa",
+      "path": "profile-images/regions/southern-africa.webp"
+    },
+    {
+      "code": "MIDDLE_EAST",
+      "name": "Middle East",
+      "path": "profile-images/regions/middle-east.webp"
+    },
+    {
+      "code": "SOUTH_ASIA",
+      "name": "South Asia",
+      "path": "profile-images/regions/south-asia.webp"
+    },
+    {
+      "code": "SOUTHEAST_ASIA",
+      "name": "Southeast Asia",
+      "path": "profile-images/regions/southeast-asia.webp"
+    },
+    {
+      "code": "CENTRAL_ASIA",
+      "name": "Central Asia",
+      "path": "profile-images/regions/central-asia.webp"
+    },
+    {
+      "code": "EASTERN_EUROPE",
+      "name": "Eastern Europe",
+      "path": "profile-images/regions/eastern-europe.webp"
+    },
+    {
+      "code": "OCEANIA",
+      "name": "Oceania & Pacific",
+      "path": "profile-images/regions/oceania.webp"
+    },
+    {
+      "code": "DEFAULT",
+      "name": "International",
+      "path": "profile-images/base.webp"
+    }
+  ],
+  "failed": [],
+  "skipped": []
+}

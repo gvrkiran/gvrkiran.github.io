@@ -1,0 +1,638 @@
+{
+  "metadata": {
+    "description": "Nano Banana prompts for culturally personalized profile images",
+    "author": "Vincent's Website Generator",
+    "total_prompts": 36,
+    "base_negative_prompt": "cartoon, anime, illustration, painting, drawing, sketch, distorted face, ugly, deformed, disfigured, low quality, blurry, pixelated, grainy, watermark, text, logo, signature, multiple people, crowd, group, harsh shadows, overexposed, underexposed, busy background, cluttered, distracting elements, exaggerated features, unrealistic proportions, stock photo feel, generic corporate, costume-like, theatrical, Halloween, overly ornate, gaudy, excessive accessories"
+  },
+  "countries": {
+    "US": {
+      "name": "United States",
+      "filename": "us.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a perfectly tailored navy blue blazer over a crisp white oxford cloth button-down shirt, collar open casually, modern American professional style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm wood tones suggesting a university office, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm neutrals with subtle blue undertones, Ivy League aesthetic, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Think: Young professor at a top university. Approachable but clearly accomplished. The look should say 'I could be presenting at a conference or grabbing coffee with students.'",
+      "traditional_dress": "Smart casual American style - well-fitted navy blazer over a crisp white oxford shirt, no tie, top button open",
+      "color_palette": [
+        "#002868",
+        "#BF0A30",
+        "#FFFFFF",
+        "#1C3A5F"
+      ]
+    },
+    "IN": {
+      "name": "India",
+      "filename": "in.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing an elegantly tailored kurta in rich ivory with subtle gold thread work at the collar, contemporary cut that bridges traditional and modern,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm terracotta and cream tones evoking Indian architectural aesthetics, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm saffron and cream tones, rich but not overwhelming, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Sophisticated modern Indian aesthetic. The kurta should look like something worn to an upscale Delhi gallery opening - traditional roots, contemporary execution.",
+      "traditional_dress": "Elegant kurta - either a sophisticated neutral tone or subtle traditional pattern",
+      "color_palette": [
+        "#FF9933",
+        "#FFFFFF",
+        "#138808",
+        "#000080"
+      ]
+    },
+    "CN": {
+      "name": "China",
+      "filename": "cn.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern Tang jacket in deep charcoal with subtle mandarin collar, minimalist Chinese design sensibility, silk-like texture,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle clean lines suggesting Chinese ink painting negative space, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with sophisticated grays with subtle red accents, elegant restraint, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Modern Chinese elegance - think tech executive meets traditional scholar. Clean lines, impeccable fit, subtle cultural signifiers.",
+      "traditional_dress": "Modern Tang jacket or Zhongshan suit-inspired collar",
+      "color_palette": [
+        "#DE2910",
+        "#FFDE00",
+        "#1A1A1A",
+        "#8B0000"
+      ]
+    },
+    "BR": {
+      "name": "Brazil",
+      "filename": "br.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a beautifully cut unstructured linen blazer in warm sand color over a clean white crew neck, relaxed Brazilian elegance,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm tropical light with golden hour glow, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm golden tones, sunlit and vibrant but sophisticated, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "São Paulo creative class meets academic. Effortlessly stylish, warm, approachable. The kind of look that works at a beach-side conference or a university lecture.",
+      "traditional_dress": "Relaxed linen suit or elegant casual Brazilian style",
+      "color_palette": [
+        "#009739",
+        "#FFDF00",
+        "#002776",
+        "#C4A962"
+      ]
+    },
+    "JP": {
+      "name": "Japan",
+      "filename": "jp.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a meticulously tailored charcoal jacket with clean Japanese-inspired lines, minimal details, perfect proportions, subtle texture in the fabric,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle zen-like negative space with soft natural light, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with muted earth tones, wabi-sabi aesthetic, intentional imperfection, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Muji meets academia. The beauty is in the perfect fit and thoughtful details. Nothing flashy, everything intentional. Could be at a Tokyo design studio or Kyoto university.",
+      "traditional_dress": "Modern minimalist Japanese style or subtle haori-inspired jacket",
+      "color_palette": [
+        "#BC002D",
+        "#FFFFFF",
+        "#2D2D2D",
+        "#8B7355"
+      ]
+    },
+    "DE": {
+      "name": "Germany",
+      "filename": "de.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a precisely tailored dark gray wool jacket, crisp white shirt, Bauhaus-inspired minimalism in every detail,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle architectural precision, clean geometric forms, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with cool neutrals, precise and balanced, Berlin contemporary, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Bauhaus principles applied to personal style. Functional, precise, no excess. Think Berlin tech scene meets traditional German craftsmanship.",
+      "traditional_dress": "Precise German tailoring, clean modern lines",
+      "color_palette": [
+        "#000000",
+        "#DD0000",
+        "#FFCC00",
+        "#4A4A4A"
+      ]
+    },
+    "GB": {
+      "name": "United Kingdom",
+      "filename": "gb.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a beautifully cut herringbone tweed jacket in muted browns and grays, subtle elbow patches, perfectly British professorial style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm wood-paneled study, leather and books aesthetic, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich warm browns, heritage greens, classic British palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Oxford don meets contemporary academic. Classic British tailoring but not stuffy. The kind of jacket that has character, looks better with age.",
+      "traditional_dress": "British tailoring - tweed or classic suiting",
+      "color_palette": [
+        "#012169",
+        "#C8102E",
+        "#8B4513",
+        "#2F4F4F"
+      ]
+    },
+    "FR": {
+      "name": "France",
+      "filename": "fr.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a perfectly fitted navy wool sweater with subtle texture, white shirt collar visible, quintessential Parisian intellectual style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle soft Parisian light, cream and warm gray tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with sophisticated navy and cream, Left Bank intellectual palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Saint-Germain-des-Prés intellectual. Effortlessly stylish without trying. The kind of person you'd see at a philosophy lecture or a gallery opening.",
+      "traditional_dress": "Effortless Parisian chic",
+      "color_palette": [
+        "#002395",
+        "#FFFFFF",
+        "#ED2939",
+        "#1C1C1C"
+      ]
+    },
+    "IT": {
+      "name": "Italy",
+      "filename": "it.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing an impeccably tailored Italian blazer in rich midnight blue, beautiful drape, white pocket square, understated luxury,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm Mediterranean light, terracotta undertones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich Mediterranean blues, warm earth tones, la dolce vita, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Milanese sprezzatura - looking this good should seem effortless. Think professor at Bocconi who could also be at Milan Fashion Week.",
+      "traditional_dress": "Italian tailored elegance",
+      "color_palette": [
+        "#009246",
+        "#FFFFFF",
+        "#CE2B37",
+        "#1E3A5F"
+      ]
+    },
+    "ES": {
+      "name": "Spain",
+      "filename": "es.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a relaxed but refined linen blazer in warm terracotta, open collar white shirt, Spanish warmth and sophistication,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm ochre and white, Mediterranean architecture feel, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm terracotta, deep reds, Spanish passion tempered with sophistication, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Madrid gallery owner meets Barcelona academic. Warm, passionate, but refined. Colors that evoke Spanish earth and light.",
+      "traditional_dress": "Warm Spanish elegance",
+      "color_palette": [
+        "#AA151B",
+        "#F1BF00",
+        "#FFFFFF",
+        "#8B4513"
+      ]
+    },
+    "KR": {
+      "name": "South Korea",
+      "filename": "kr.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a sleek modern jacket with subtle Korean design elements, clean lines, contemporary Seoul fashion sensibility, perhaps a subtle traditional collar detail,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle clean minimal Korean aesthetic, soft diffused light, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with clean whites and soft grays with subtle traditional color accents, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Gangnam professional meets traditional aesthetics. Tech-forward, design-conscious, impeccably groomed. Modern Korea's blend of tradition and innovation.",
+      "traditional_dress": "Modern Korean style - K-fashion influenced or subtle hanbok elements",
+      "color_palette": [
+        "#003478",
+        "#C60C30",
+        "#FFFFFF",
+        "#1A1A2E"
+      ]
+    },
+    "CA": {
+      "name": "Canada",
+      "filename": "ca.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a quality flannel-lined jacket in deep forest green over a clean gray sweater, outdoorsy but refined, Canadian warmth,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle natural light, suggesting vast landscapes and warm interiors, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with forest greens and warm grays, natural Canadian palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Toronto academic who also feels at home in the wilderness. Approachable, genuine, quality over flash. Think: could lecture at U of T then go hiking.",
+      "traditional_dress": "Smart casual Canadian - approachable and warm",
+      "color_palette": [
+        "#FF0000",
+        "#FFFFFF",
+        "#2E4A3E",
+        "#8B7355"
+      ]
+    },
+    "AU": {
+      "name": "Australia",
+      "filename": "au.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a lightweight unstructured blazer in warm tan over a clean white shirt, relaxed but polished Australian style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm natural light, eucalyptus and sandstone tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm earth tones, golden sunlight, Australian bush palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Sydney academic who doesn't take himself too seriously. Warm, approachable, genuine. Smart but never stuffy - very Australian.",
+      "traditional_dress": "Relaxed Australian smart casual",
+      "color_palette": [
+        "#00008B",
+        "#FFD700",
+        "#8B4513",
+        "#F5DEB3"
+      ]
+    },
+    "MX": {
+      "name": "Mexico",
+      "filename": "mx.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing an elegant contemporary guayabera in pristine white with subtle embroidery, beautifully cut, Mexican craftsmanship meets modern design,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm golden light, subtle terracotta and turquoise hints, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm terracotta, bright accents, Mexican color sensibility, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Mexico City creative class. The guayabera should look sophisticated, not tourist-y. Think: could be at a Condesa gallery or UNAM lecture.",
+      "traditional_dress": "Guayabera or Mexican linen elegance",
+      "color_palette": [
+        "#006341",
+        "#FFFFFF",
+        "#CE1126",
+        "#FFD700"
+      ]
+    },
+    "NL": {
+      "name": "Netherlands",
+      "filename": "nl.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a perfectly cut modernist jacket in charcoal, clean Dutch design aesthetic, functional elegance, perhaps subtle orange accent in pocket square,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle clean architectural lines, Dutch design sensibility, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with clean grays with subtle orange accent, Dutch Masters palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Amsterdam creative district professional. Design-conscious, practical, quietly stylish. The kind of look that works at a tech startup or TU Delft.",
+      "traditional_dress": "Dutch design-forward minimalism",
+      "color_palette": [
+        "#21468B",
+        "#FFFFFF",
+        "#FF6600",
+        "#2D2D2D"
+      ]
+    },
+    "CH": {
+      "name": "Switzerland",
+      "filename": "ch.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing an immaculately tailored jacket in deep charcoal, Swiss precision in every stitch, subtle luxury, perhaps a fine merino turtleneck beneath,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle alpine light, clean and crisp, Swiss precision, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with pristine neutrals, alpine whites and deep grays, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Zürich banker meets ETH professor. Understated luxury, impeccable quality, nothing ostentatious. Swiss values in fabric form.",
+      "traditional_dress": "Swiss precision and luxury",
+      "color_palette": [
+        "#FF0000",
+        "#FFFFFF",
+        "#2D2D2D",
+        "#8B8B8B"
+      ]
+    },
+    "SE": {
+      "name": "Sweden",
+      "filename": "se.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a beautifully simple knit sweater in soft oatmeal over a clean white shirt, Scandinavian lagom aesthetic, perfectly balanced,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle soft Nordic light, blonde wood tones, hygge warmth, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with soft neutrals, pale woods, Swedish design palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Stockholm creative agency meets Uppsala academia. The epitome of lagom - just right, nothing excessive. Approachable, thoughtful, design-conscious.",
+      "traditional_dress": "Scandinavian minimalism",
+      "color_palette": [
+        "#006AA7",
+        "#FECC00",
+        "#E5D9C9",
+        "#FFFFFF"
+      ]
+    },
+    "PL": {
+      "name": "Poland",
+      "filename": "pl.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a well-tailored dark jacket with subtle geometric patterns inspired by Polish folk art, modern interpretation of heritage,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm amber light, suggesting Polish warmth and resilience, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich reds, clean whites, warm amber tones, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Warsaw professional with awareness of Polish design heritage. Modern but rooted. The geometric folk patterns should be very subtle - a texture, not a costume.",
+      "traditional_dress": "Polish professional with subtle traditional elements",
+      "color_palette": [
+        "#FFFFFF",
+        "#DC143C",
+        "#1C1C1C",
+        "#DAA520"
+      ]
+    },
+    "BE": {
+      "name": "Belgium",
+      "filename": "be.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a distinctive but refined jacket, perhaps in unexpected deep burgundy, Belgian eccentricity tempered with classic European tailoring,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle art nouveau lines, Brussels sophistication, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich burgundies, deep golds, Belgian artistic palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Brussels EU quarter meets Antwerp fashion scene. A touch of Magritte surrealism in the color choice perhaps, but always refined. Intellectual with an artistic edge.",
+      "traditional_dress": "Belgian surrealist-inspired or EU professional",
+      "color_palette": [
+        "#000000",
+        "#FFD700",
+        "#8B0000",
+        "#2D2D2D"
+      ]
+    },
+    "AT": {
+      "name": "Austria",
+      "filename": "at.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined loden-green jacket with subtle Austrian tailoring details, classical Viennese elegance, perhaps subtle horn buttons,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm Viennese cafe light, imperial elegance, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with forest greens, warm golds, Habsburg palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Vienna intellectual tradition. Could be discussing philosophy at a Kaffeehaus or presenting at the University of Vienna. Classic Central European cultivation.",
+      "traditional_dress": "Austrian elegance - subtle Tracht influence or Viennese sophistication",
+      "color_palette": [
+        "#ED2939",
+        "#FFFFFF",
+        "#2F4F4F",
+        "#DAA520"
+      ]
+    },
+    "NO": {
+      "name": "Norway",
+      "filename": "no.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a high-quality wool sweater with subtle Norwegian pattern elements, clean Scandinavian lines, connected to nature,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle cool Nordic light, fjord blues and mountain grays, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with deep blues, crisp whites, Norwegian nature palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Oslo professional who spends weekends in nature. The wool pattern should be subtle and sophisticated, not tourist-shop. Norwegian authenticity and quiet confidence.",
+      "traditional_dress": "Norwegian modern or subtle bunad-inspired",
+      "color_palette": [
+        "#BA0C2F",
+        "#FFFFFF",
+        "#00205B",
+        "#4A6FA5"
+      ]
+    },
+    "DK": {
+      "name": "Denmark",
+      "filename": "dk.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a perfectly fitting cashmere sweater in soft gray, ultimate hygge aesthetic, Danish design principles in personal style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm candlelit tones, Danish interior design aesthetic, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm grays, soft creams, hygge comfort palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Copenhagen creative - could be at a design agency or Copenhagen Business School. Hygge embodied: comfortable, cozy, but impeccably stylish. Nothing forced.",
+      "traditional_dress": "Danish hygge aesthetic",
+      "color_palette": [
+        "#C8102E",
+        "#FFFFFF",
+        "#A0A0A0",
+        "#E8DCC4"
+      ]
+    },
+    "IE": {
+      "name": "Ireland",
+      "filename": "ie.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a beautiful Irish tweed jacket in heathered greens and browns, warm and scholarly, subtle Celtic heritage,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle soft Irish light, green rolling hills suggested in the tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with Irish greens, warm browns, literary Ireland palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Trinity College meets Connemara. The tweed should look lived-in and loved, not costume-y. Irish warmth, literary depth, genuine character.",
+      "traditional_dress": "Irish tweed or Celtic-inspired modern",
+      "color_palette": [
+        "#009A49",
+        "#FFFFFF",
+        "#FF7900",
+        "#4A6741"
+      ]
+    }
+  },
+  "regions": {
+    "SOUTH_AMERICA": {
+      "name": "South America",
+      "filename": "regions/south-america.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing an elegant lightweight blazer in warm earth tones, perhaps with subtle textile patterns inspired by Andean weaving traditions, South American warmth,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm Andean light, mountain earth tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with warm terracottas, mountain earth tones, South American textile colors, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Could be in Buenos Aires, Santiago, or Lima. South American cosmopolitan with awareness of indigenous artistic traditions. Warm, cultured, sophisticated.",
+      "traditional_dress": "South American elegance - warm and sophisticated",
+      "color_palette": [
+        "#FCD116",
+        "#009739",
+        "#8B4513",
+        "#CE1126"
+      ],
+      "countries": [
+        "AR",
+        "CL",
+        "CO",
+        "PE",
+        "VE",
+        "EC",
+        "BO",
+        "PY",
+        "UY",
+        "GY",
+        "SR"
+      ]
+    },
+    "CENTRAL_AMERICA": {
+      "name": "Central America & Caribbean",
+      "filename": "regions/central-america.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a crisp light linen shirt in pristine white or soft cream, perhaps a lightweight blazer, Caribbean elegance suited to warm climates,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm tropical light, Caribbean blue and golden tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with Caribbean blues, warm golds, tropical sophistication, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Caribbean professional elegance - appropriate for San Juan, Havana, or Kingston. Light fabrics, warm colors, genuine warmth in expression.",
+      "traditional_dress": "Caribbean professional - light and elegant",
+      "color_palette": [
+        "#00BFFF",
+        "#FFD700",
+        "#228B22",
+        "#FFFFFF"
+      ],
+      "countries": [
+        "GT",
+        "HN",
+        "SV",
+        "NI",
+        "CR",
+        "PA",
+        "CU",
+        "DO",
+        "HT",
+        "JM",
+        "TT",
+        "PR",
+        "BS",
+        "BB"
+      ]
+    },
+    "WEST_AFRICA": {
+      "name": "West Africa",
+      "filename": "regions/west-africa.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a sophisticated modern interpretation of West African formal wear, perhaps a refined senator style or contemporary African tailoring with subtle kente-inspired accents,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm golden African light, rich earth tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich golds, deep greens, kente-inspired warmth, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Lagos or Accra professional. Modern African elegance - not costume, but contemporary fashion that honors heritage. Confident, warm, distinguished.",
+      "traditional_dress": "West African elegance - agbada or modern African styling",
+      "color_palette": [
+        "#FCD116",
+        "#009739",
+        "#CE1126",
+        "#8B4513"
+      ],
+      "countries": [
+        "NG",
+        "GH",
+        "SN",
+        "CI",
+        "ML",
+        "BF",
+        "NE",
+        "GN",
+        "BJ",
+        "TG",
+        "SL",
+        "LR",
+        "GM",
+        "GW",
+        "CV",
+        "MR"
+      ]
+    },
+    "EAST_AFRICA": {
+      "name": "East Africa",
+      "filename": "regions/east-africa.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a well-tailored jacket with subtle East African textile accents, perhaps kitenge-inspired pocket square or collar detail, Nairobi professional style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm savanna light, Maasai-inspired earth tones, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with savanna golds, Maasai reds, East African earth palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Nairobi professional or Ethiopian creative class. Modern African style with subtle cultural references. Warm, confident, cosmopolitan.",
+      "traditional_dress": "East African professional style",
+      "color_palette": [
+        "#000000",
+        "#BB0000",
+        "#006600",
+        "#FFD700"
+      ],
+      "countries": [
+        "KE",
+        "TZ",
+        "UG",
+        "RW",
+        "ET",
+        "SO",
+        "DJ",
+        "ER",
+        "SS",
+        "BI",
+        "MW",
+        "MZ",
+        "ZM",
+        "ZW"
+      ]
+    },
+    "NORTH_AFRICA": {
+      "name": "North Africa",
+      "filename": "regions/north-africa.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined jacket with subtle North African design sensibility, perhaps a nehru collar or Moroccan-inspired tailoring details, Mediterranean sophistication,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm Moroccan light, arabesque patterns suggested, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with Mediterranean blues, Saharan golds, Moorish elegance, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Could be in Cairo, Casablanca, or Tunis. North African intellectual tradition - Mediterranean warmth with Arabic elegance. Sophisticated, cultured.",
+      "traditional_dress": "North African elegance - Mediterranean meets Arabic",
+      "color_palette": [
+        "#C8102E",
+        "#007A3D",
+        "#FFFFFF",
+        "#DAA520"
+      ],
+      "countries": [
+        "EG",
+        "MA",
+        "DZ",
+        "TN",
+        "LY",
+        "SD"
+      ]
+    },
+    "SOUTHERN_AFRICA": {
+      "name": "Southern Africa",
+      "filename": "regions/southern-africa.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern jacket with subtle Southern African textile influence, perhaps Madiba-shirt inspired collar or shweshwe-inspired pocket detail,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm African light, rainbow nation palette suggested, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with vibrant but sophisticated African palette, rainbow nation, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Johannesburg or Cape Town professional. Modern South African style that acknowledges diverse heritage. Confident, warm, forward-looking.",
+      "traditional_dress": "Southern African professional style",
+      "color_palette": [
+        "#007A4D",
+        "#FFB612",
+        "#DE3831",
+        "#002395"
+      ],
+      "countries": [
+        "ZA",
+        "BW",
+        "NA",
+        "SZ",
+        "LS",
+        "AO"
+      ]
+    },
+    "MIDDLE_EAST": {
+      "name": "Middle East",
+      "filename": "regions/middle-east.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern jacket in deep navy or charcoal, impeccable Gulf-style tailoring, perhaps subtle Arabic calligraphy-inspired details,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm golden light, arabesque geometry suggested, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with deep teals, rich golds, desert earth tones, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Dubai professional or Beirut intellectual. Modern Middle Eastern elegance - sophisticated, cultured, bridging tradition and modernity.",
+      "traditional_dress": "Middle Eastern elegance - modern with traditional sensibility",
+      "color_palette": [
+        "#006C35",
+        "#FFFFFF",
+        "#CE1126",
+        "#DAA520"
+      ],
+      "countries": [
+        "SA",
+        "AE",
+        "QA",
+        "KW",
+        "BH",
+        "OM",
+        "YE",
+        "JO",
+        "LB",
+        "SY",
+        "IQ",
+        "IR",
+        "IL",
+        "PS"
+      ]
+    },
+    "SOUTH_ASIA": {
+      "name": "South Asia",
+      "filename": "regions/south-asia.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern interpretation of South Asian formal wear, sophisticated kurta-style collar or contemporary tailoring with subtle regional textile influences,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm South Asian light, intricate patterns suggested, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with rich jewel tones, South Asian sophistication, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Could be in Lahore, Dhaka, or Colombo. South Asian elegance with regional nuances. Warm, cultured, intellectually curious.",
+      "traditional_dress": "South Asian elegance - regional variations",
+      "color_palette": [
+        "#01411C",
+        "#FFFFFF",
+        "#FF6600",
+        "#000080"
+      ],
+      "countries": [
+        "PK",
+        "BD",
+        "LK",
+        "NP",
+        "BT",
+        "MV",
+        "AF"
+      ]
+    },
+    "SOUTHEAST_ASIA": {
+      "name": "Southeast Asia",
+      "filename": "regions/southeast-asia.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined tropical-weight jacket or high-quality mandarin collar shirt, Southeast Asian sophistication suited to warm climates, Singapore professional style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle tropical light, Southeast Asian architectural influence, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with tropical jewel tones, Southeast Asian richness, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Singapore finance meets Bangkok creative. Southeast Asian cosmopolitan - warm, approachable, culturally aware. Appropriate for any ASEAN capital.",
+      "traditional_dress": "Southeast Asian modern - tropical elegance",
+      "color_palette": [
+        "#FF0000",
+        "#FFD700",
+        "#00FF00",
+        "#FFFFFF"
+      ],
+      "countries": [
+        "TH",
+        "VN",
+        "PH",
+        "MY",
+        "SG",
+        "ID",
+        "MM",
+        "KH",
+        "LA",
+        "BN"
+      ]
+    },
+    "CENTRAL_ASIA": {
+      "name": "Central Asia",
+      "filename": "regions/central-asia.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined jacket with subtle Silk Road influence, perhaps ikat-inspired textile accents, Central Asian craftsmanship meets modern tailoring,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle warm steppe light, Silk Road geometry, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with Silk Road blues and golds, nomadic warmth, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Almaty or Tashkent professional. Silk Road heritage meeting modern Central Asian identity. Cultured, warm, bridging East and West.",
+      "traditional_dress": "Central Asian elegance - Silk Road heritage",
+      "color_palette": [
+        "#00AFCA",
+        "#FFCC00",
+        "#6CBB3C",
+        "#FFFFFF"
+      ],
+      "countries": [
+        "KZ",
+        "UZ",
+        "TM",
+        "TJ",
+        "KG",
+        "MN"
+      ]
+    },
+    "EASTERN_EUROPE": {
+      "name": "Eastern Europe",
+      "filename": "regions/eastern-europe.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a well-tailored dark jacket, Eastern European intellectual style, perhaps subtle folk-art geometric accents, Prague or Warsaw professional aesthetic,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle cool European light, architectural heritage, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with deep blues, rich reds, Eastern European palette, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Could be in Prague, Warsaw, or Budapest. Eastern European intellectual tradition - depth, resilience, cultural pride. Sophisticated but not flashy.",
+      "traditional_dress": "Eastern European professional",
+      "color_palette": [
+        "#0033A0",
+        "#FFD700",
+        "#DA291C",
+        "#FFFFFF"
+      ],
+      "countries": [
+        "RU",
+        "UA",
+        "BY",
+        "MD",
+        "RO",
+        "BG",
+        "RS",
+        "HR",
+        "SI",
+        "BA",
+        "ME",
+        "MK",
+        "AL",
+        "XK",
+        "CZ",
+        "SK",
+        "HU",
+        "LT",
+        "LV",
+        "EE"
+      ]
+    },
+    "OCEANIA": {
+      "name": "Oceania & Pacific",
+      "filename": "regions/oceania.webp",
+      "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern jacket with subtle Pacific design influence, perhaps Maori-inspired geometric details, Auckland professional meets Pacific heritage,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle Pacific light, ocean blues and volcanic earth, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with ocean blues, Pacific earth tones, Polynesian warmth, 8K resolution, photorealistic, hyperdetailed",
+      "style_notes": "Auckland or Wellington professional with Pacific heritage awareness. Modern Pacific identity - confident, grounded, connected to land and sea.",
+      "traditional_dress": "Pacific Islander elegance or New Zealand style",
+      "color_palette": [
+        "#000000",
+        "#FFFFFF",
+        "#CC142B",
+        "#006B3F"
+      ],
+      "countries": [
+        "NZ",
+        "FJ",
+        "PG",
+        "WS",
+        "TO",
+        "VU",
+        "SB",
+        "NC",
+        "PF",
+        "GU"
+      ]
+    }
+  },
+  "default": {
+    "name": "International",
+    "filename": "base.webp",
+    "prompt": "Professional portrait photograph of a South Asian man in his early 30s,  wearing a refined modern jacket in deep navy, universal professional elegance, warm and approachable academic style,  warm genuine smile, intelligent and approachable expression, soft studio lighting with subtle rim light, clean neutral background with very subtle soft neutral studio light, universal appeal, high-end editorial photography style, shot on medium format camera, shallow depth of field, color grading with sophisticated neutrals, warm but universal palette, 8K resolution, photorealistic, hyperdetailed",
+    "style_notes": "Default international academic look. Should feel welcoming to anyone from anywhere. Warm, intelligent, approachable, culturally neutral but not bland.",
+    "traditional_dress": "Universal professional elegance",
+    "color_palette": [
+      "#1A1A2E",
+      "#16213E",
+      "#0F3460",
+      "#E94560"
+    ]
+  }
+}

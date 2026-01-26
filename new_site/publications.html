@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications — Academic Site</title>
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="css/themes/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="publications">
+  <header>
+    <div class="container nav">
+      <a class="brand" id="brand" href="index.html"></a>
+      <nav class="navlinks">
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Projects</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="talks.html">Talks</a>
+        <a href="press.html">Press</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <div class="row">
+        <div>
+          <h1 style="margin:0">Publications</h1>
+          <div class="muted">Search by title, venue, or author. Filter by topic.</div>
+        </div>
+        <div class="controls">
+          <a class="btn" id="cvBtn" href="#" target="_blank" rel="noreferrer">CV</a>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="controls">
+        <input type="search" id="pubSearch" placeholder="Search" />
+        <select id="pubTopic" class="select"></select>
+      </div>
+      <div class="spacer"></div>
+      <div id="pub-list" class="list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container row">
+      <div id="copyright"></div>
+      <div><a class="link" href="index.html">Back to home</a></div>
+    </div>
+  </footer>
+
+  <!-- Personalization (lite version for subpages) -->
+  <script src="js/geolocation.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/returning-visitor.js"></script>
+  <script src="js/personalization.js"></script>
+  <script src="js/ambient-background.js"></script>
+  <script src="js/personalization-lite.js"></script>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    document.getElementById('cvBtn').href = PROFILE.cvUrl || '#';
+  </script>
+</body>
+</html>
+

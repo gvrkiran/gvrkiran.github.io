@@ -1,0 +1,512 @@
+/* ========================================
+   Welcome Animation Styles
+   ======================================== */
+
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary, #0a0a0f);
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.welcome-overlay.visible {
+  opacity: 1;
+}
+
+.welcome-overlay.fading-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.welcome-overlay.complete {
+  display: none;
+}
+
+/* Welcome Container */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.welcome-overlay.content-visible .welcome-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Profile Image */
+.welcome-profile {
+  width: min(200px, 50vw);
+  height: min(200px, 50vw);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: welcomePulse 2s ease-in-out infinite;
+}
+
+.welcome-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes welcomePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.1),
+      0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(255, 255, 255, 0.15),
+      0 25px 70px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Welcome Text */
+.welcome-text {
+  margin-top: 1rem;
+}
+
+.welcome-greeting-primary {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 300;
+  color: var(--text-primary, #ffffff);
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.welcome-greeting-native {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  margin: 0.5rem 0 0;
+}
+
+.welcome-greeting-secondary {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-tertiary, rgba(255, 255, 255, 0.5));
+  margin: 0.75rem 0 0;
+  font-weight: 400;
+}
+
+/* Festival Badge */
+.welcome-festival-badge {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, var(--accent-primary, #6366f1), var(--accent-secondary, #a78bfa));
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  animation: festivalPulse 2s ease-in-out infinite;
+}
+
+@keyframes festivalPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.02);
+    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+  }
+}
+
+/* Welcome Meta */
+.welcome-meta {
+  margin-top: 1.5rem;
+  opacity: 0.8;
+}
+
+.welcome-name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary, #ffffff);
+  margin: 0;
+}
+
+.welcome-location {
+  font-size: 0.875rem;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+  margin: 0.25rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.welcome-from {
+  opacity: 0.7;
+}
+
+/* Progress Bar */
+.welcome-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.welcome-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-primary, #6366f1), var(--accent-secondary, #a78bfa));
+  width: 0;
+  animation: welcomeProgress 4s linear forwards;
+}
+
+@keyframes welcomeProgress {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+/* Hide main content during welcome */
+body:not(.welcome-complete) main,
+body:not(.welcome-complete) header,
+body:not(.welcome-complete) footer {
+  opacity: 0;
+}
+
+body.welcome-complete main,
+body.welcome-complete header,
+body.welcome-complete footer {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* ========================================
+   Ambient Background
+   ======================================== */
+
+.ambient-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-repeat: repeat;
+  background-size: 100px 100px;
+}
+
+.ambient-background.visible {
+  opacity: 1;
+}
+
+/* Pattern-specific adjustments */
+.ambient-background[data-pattern="zen"] {
+  background-size: 100px 100px;
+}
+
+.ambient-background[data-pattern="mandala"] {
+  background-size: 150px 150px;
+}
+
+.ambient-background[data-pattern="islamic"] {
+  background-size: 80px 80px;
+}
+
+.ambient-background[data-pattern="wave"] {
+  background-size: 100px 50px;
+}
+
+/* ========================================
+   Weather Effects Canvas
+   ======================================== */
+
+.weather-effects-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+/* Reduce opacity when user is interacting with content */
+body:focus-within .weather-effects-canvas {
+  opacity: 0.4;
+}
+
+/* ========================================
+   Distance Visualization
+   ======================================== */
+
+.distance-viz {
+  padding: 3rem 1rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.distance-viz.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.distance-content {
+  text-align: center;
+}
+
+/* Visual connection */
+.distance-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1.5rem;
+}
+
+.distance-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.point-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-primary, #6366f1);
+  box-shadow: 0 0 10px var(--accent-primary, #6366f1);
+}
+
+.distance-point.destination .point-dot {
+  background: var(--accent-secondary, #a78bfa);
+  box-shadow: 0 0 10px var(--accent-secondary, #a78bfa);
+}
+
+.point-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, var(--muted));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.distance-line {
+  flex: 1;
+  max-width: 200px;
+  height: 60px;
+  position: relative;
+}
+
+.distance-arc {
+  width: 100%;
+  height: 100%;
+}
+
+.arc-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+
+.arc-dot {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.distance-viz.visible .arc-dot {
+  opacity: 1;
+  transition-delay: 1.5s;
+}
+
+/* Distance info */
+.distance-info {
+  margin-top: 1rem;
+}
+
+.distance-number {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.distance-value {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--text-primary, var(--fg));
+  font-variant-numeric: tabular-nums;
+}
+
+.distance-unit {
+  font-size: 1rem;
+  color: var(--text-secondary, var(--muted));
+  font-weight: 400;
+}
+
+.distance-insight {
+  font-size: 0.875rem;
+  color: var(--text-tertiary, var(--muted));
+  margin: 0.5rem 0 0;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-overlay,
+  .welcome-container,
+  .welcome-profile,
+  .distance-viz {
+    animation: none;
+    transition: opacity 0.1s ease;
+  }
+
+  .welcome-progress-bar {
+    animation: none;
+    width: 100%;
+  }
+
+  .arc-path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  @keyframes welcomePulse {
+    0%, 100% {
+      box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.1),
+        0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+/* ========================================
+   Returning Visitor Badge
+   ======================================== */
+
+.returning-visitor-badge {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  backdrop-filter: blur(8px);
+}
+
+.returning-visitor-badge .visit-count {
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+/* Streak indicator */
+.streak-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.streak-indicator::before {
+  content: '\uD83D\uDD25';
+  font-size: 0.875rem;
+}
+
+/* ========================================
+   Loading States
+   ======================================== */
+
+.personalization-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary, #0a0a0f);
+  z-index: 9999;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--accent-primary, #6366f1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Mobile Adjustments
+   ======================================== */
+
+@media (max-width: 640px) {
+  .welcome-profile {
+    width: min(150px, 40vw);
+    height: min(150px, 40vw);
+  }
+
+  .welcome-greeting-primary {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .distance-viz {
+    padding: 2rem 1rem;
+  }
+
+  .distance-value {
+    font-size: 2rem;
+  }
+
+  .welcome-festival-badge {
+    top: 1rem;
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .returning-visitor-badge {
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.75rem;
+  }
+}
