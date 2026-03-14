@@ -31,6 +31,7 @@
         document.body.classList.toggle('dark', dark);
         try { localStorage.setItem('dark', dark ? '1' : '0'); } catch {}
         btn.textContent = dark ? '🌙' : '☀️';
+        document.dispatchEvent(new CustomEvent('themeChanged', { detail: { dark } }));
       }
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedDark = (typeof localStorage !== 'undefined' && localStorage.getItem('dark')) === '1';
@@ -42,7 +43,7 @@
     const nav = $('.navlinks');
     if (nav) {
       nav.innerHTML = [
-    	'<a href="about.html">About</a>',      // ← added
+        '<a href="about.html">About</a>',      // ← added
         '<a href="publications.html">Publications</a>',
         '<a href="projects.html">Projects</a>',
         '<a href="teaching.html">Teaching</a>',
@@ -294,6 +295,10 @@ function ensureFooterGap(){
       this.faceImage = document.getElementById('faceImage');
       this.loadingEl = document.getElementById('faceLoading');
       this.errorEl = document.getElementById('faceError');
+      
+      this.isDark = document.body.classList.contains('dark');
+      this.lastX = window.innerWidth / 2;
+      this.lastY = window.innerHeight / 2;
 
       this.init();
     }
@@ -328,6 +333,9 @@ function ensureFooterGap(){
     updateGaze(clientX, clientY) {
       if (!this.container) return;
 
+      this.lastX = clientX;
+      this.lastY = clientY;
+
       const rect = this.container.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -345,13 +353,23 @@ function ensureFooterGap(){
       const [closestPx, closestPy] = this.findClosestAvailableCoord(px, py);
 
       const filename = this.gridToFilename(closestPx, closestPy);
-      const imagePath = `${this.basePath}${filename}`;
+      let imagePath = `${this.basePath}${filename}`;
+
+      // In light mode (!isDark), we show sunglasses version from faces_with_sunglasses folder
+      if (!this.isDark) {
+        imagePath = `./faces_with_sunglasses/${filename}`;
+      }
 
       this.faceImage.src = imagePath;
     }
 
   init() {
     if (!this.container) return;
+
+    document.addEventListener('themeChanged', (e) => {
+      this.isDark = e.detail.dark;
+      this.updateGaze(this.lastX, this.lastY);
+    });
 
     const handleMouseMove = (e) => {
       this.updateGaze(e.clientX, e.clientY);
@@ -385,4 +403,3 @@ function ensureFooterGap(){
 /////// end faces code
 
 })();
-

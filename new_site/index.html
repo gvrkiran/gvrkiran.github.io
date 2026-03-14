@@ -4,61 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home — Academic Site</title>
-  <!-- Theme CSS (loaded first for theming) -->
-  <link rel="stylesheet" href="css/themes/base.css" />
-  <!-- Animation and effects styles -->
-  <link rel="stylesheet" href="css/animations.css" />
-  <!-- Main styles -->
   <link rel="stylesheet" href="styles.css" />
   <meta name="description" content="Minimal academic homepage for bio, publications, projects, teaching, talks, and press." />
-  <style>
-    /* Personalization loading state */
-    body.personalizing {
-      opacity: 0.98;
-    }
-    body.personalized {
-      opacity: 1;
-      transition: opacity 0.3s ease;
-    }
-    /* Personalized greeting styles */
-    .personalized-greeting-container {
-      margin-bottom: 0.5rem;
-    }
-    .personalized-greeting {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      font-weight: 400;
-      color: var(--text-secondary, var(--muted));
-      letter-spacing: 0.01em;
-    }
-    .greeting-native {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--text-tertiary, var(--muted));
-      display: none;
-    }
-    .greeting-romanized {
-      font-size: 0.875rem;
-      color: var(--text-tertiary, var(--muted));
-      font-style: italic;
-      display: none;
-    }
-    /* Visitor location indicator */
-    .visitor-info {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--text-tertiary, var(--muted));
-      opacity: 0.8;
-    }
-    .visitor-info::before {
-      content: "Visiting from";
-    }
-    /* Profile image personalization */
-    .personalized-profile-image {
-      border-radius: 12px;
-      transition: opacity 0.3s ease;
-    }
-  </style>
 </head>
 <body data-page="home">
   <header>
@@ -82,13 +29,7 @@
     <section class="hero">
       <div class="grid two">
         <div>
-          <!-- Personalized greeting -->
-          <div class="personalized-greeting-container">
-            <span class="personalized-greeting" id="personalized-greeting">Hello</span>
-            <span class="greeting-native"></span>
-          </div>
           <div class="pill">📍 <span id="location"></span></div>
-          <div class="visitor-info"><span id="visitor-location"></span></div>
           <div class="spacer"></div>
           <h1 class="title-xl" id="hero-role"></h1>
           <p class="muted" id="hero-tagline"></p>
@@ -104,11 +45,11 @@
           </div>
         </div>
   <div class="card photo-card">
-    <div id="faceTracker" class="face-tracker personalized-profile-container">
-      <img id="faceImage" class="face-image personalized-profile-image" src="./profile-images/base.webp" alt="Personalized profile" />
-      <div id="faceLoading" class="face-loading" style="display: none;">Loading...</div>
+    <div id="faceTracker" class="face-tracker">
+      <img id="faceImage" class="face-image" src="" alt="Face following gaze" />
+      <div id="faceLoading" class="face-loading" style="display: none;">Loading face...</div>
       <div id="faceError" class="face-tracker-error" style="display: none;">
-        Error loading image
+        Error loading face images
       </div>
     </div>
   </div>
@@ -138,19 +79,6 @@
       <div><a class="link" href="index.html">Back to top</a></div>
     </div>
   </footer>
-
-  <!-- Personalization scripts (load before main.js) -->
-  <script src="js/preloader.js"></script>
-  <script src="js/geolocation.js"></script>
-  <script src="js/weather.js"></script>
-  <script src="js/festivals.js"></script>
-  <script src="js/returning-visitor.js"></script>
-  <script src="js/personalization.js"></script>
-  <script src="js/welcome-animation.js"></script>
-  <script src="js/weather-effects.js"></script>
-  <script src="js/distance-viz.js"></script>
-  <script src="js/ambient-background.js"></script>
-  <script src="js/personalization-init.js"></script>
 
   <!-- Load shared data first. If it fails, a safe fallback right after will provide defaults. -->
   <script src="data.js"></script>

@@ -24,39 +24,18 @@
     }
     if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}. Design by ChatGPT.`;
 
-    // theme toggle - works with personalization system
+    // theme toggle
     const btn = $('#themeBtn');
     if (btn) {
       function setTheme(dark){
         document.body.classList.toggle('dark', dark);
         try { localStorage.setItem('dark', dark ? '1' : '0'); } catch {}
         btn.textContent = dark ? '🌙' : '☀️';
-
-        // Override personalization theme if user manually toggles
-        if (dark) {
-          document.documentElement.setAttribute('data-theme', 'night-clear');
-        } else {
-          document.documentElement.setAttribute('data-theme', 'day-clear');
-        }
-        try { localStorage.setItem('theme_override', dark ? 'night-clear' : 'day-clear'); } catch {}
+        document.dispatchEvent(new CustomEvent('themeChanged', { detail: { dark } }));
       }
-
-      // Check if user has manually overridden the theme
-      const themeOverride = localStorage.getItem('theme_override');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedDark = (typeof localStorage !== 'undefined' && localStorage.getItem('dark')) === '1';
-
-      // Only apply saved preference if there's a theme override (user manually toggled)
-      if (themeOverride) {
-        setTheme(savedDark || prefersDark);
-      } else {
-        // Just update button state based on current theme (set by personalization)
-        const currentTheme = document.documentElement.getAttribute('data-theme') || '';
-        const isDark = currentTheme.includes('night');
-        btn.textContent = isDark ? '🌙' : '☀️';
-        document.body.classList.toggle('dark', isDark);
-      }
-
+      setTheme(savedDark || prefersDark);
       btn.addEventListener('click', () => setTheme(!document.body.classList.contains('dark')));
     }
 
@@ -64,7 +43,7 @@
     const nav = $('.navlinks');
     if (nav) {
       nav.innerHTML = [
-    	'<a href="about.html">About</a>',      // ← added
+        '<a href="about.html">About</a>',      // ← added
         '<a href="publications.html">Publications</a>',
         '<a href="projects.html">Projects</a>',
         '<a href="teaching.html">Teaching</a>',
@@ -316,6 +295,10 @@ function ensureFooterGap(){
       this.faceImage = document.getElementById('faceImage');
       this.loadingEl = document.getElementById('faceLoading');
       this.errorEl = document.getElementById('faceError');
+      
+      this.isDark = document.body.classList.contains('dark');
+      this.lastX = window.innerWidth / 2;
+      this.lastY = window.innerHeight / 2;
 
       this.init();
     }
@@ -350,8 +333,8 @@ function ensureFooterGap(){
     updateGaze(clientX, clientY) {
       if (!this.container) return;
 
-      // Skip gaze tracking if personalization is active
-      if (this.container.dataset.personalized === 'true') return;
+      this.lastX = clientX;
+      this.lastY = clientY;
 
       const rect = this.container.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -370,7 +353,12 @@ function ensureFooterGap(){
       const [closestPx, closestPy] = this.findClosestAvailableCoord(px, py);
 
       const filename = this.gridToFilename(closestPx, closestPy);
-      const imagePath = `${this.basePath}${filename}`;
+      let imagePath = `${this.basePath}${filename}`;
+
+      // In light mode (!isDark), we show sunglasses version from faces_with_sunglasses folder
+      if (!this.isDark) {
+        imagePath = `./faces_with_sunglasses/${filename}`;
+      }
 
       this.faceImage.src = imagePath;
     }
@@ -378,8 +366,10 @@ function ensureFooterGap(){
   init() {
     if (!this.container) return;
 
-    // Skip initialization if personalization is already active
-    if (this.container.dataset.personalized === 'true') return;
+    document.addEventListener('themeChanged', (e) => {
+      this.isDark = e.detail.dark;
+      this.updateGaze(this.lastX, this.lastY);
+    });
 
     const handleMouseMove = (e) => {
       this.updateGaze(e.clientX, e.clientY);
@@ -396,32 +386,20 @@ function ensureFooterGap(){
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('touchmove', handleTouchMove, { passive: true });
 
-    // Set initial center gaze only if not personalized
-    if (this.container.dataset.personalized !== 'true') {
-      const rect = this.container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      this.updateGaze(centerX, centerY);
-    }
+    // Set initial center gaze
+    const rect = this.container.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    this.updateGaze(centerX, centerY);
   }
 
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // Only initialize FaceTracker if personalization hasn't set a custom image
-    // and the faces directory exists
-    const faceTracker = document.getElementById('faceTracker');
-    if (faceTracker && faceTracker.dataset.personalized !== 'true') {
-      // Check if gaze images exist before initializing
-      const testImg = new Image();
-      testImg.onload = () => new FaceTracker('./faces/');
-      testImg.onerror = () => console.log('Face tracker disabled - no gaze images found');
-      testImg.src = './faces/gaze_px0p0_py0p0_256.webp';
-    }
+    new FaceTracker('./faces/');
   });
 
 
 /////// end faces code
 
 })();
-
