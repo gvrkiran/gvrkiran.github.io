@@ -146,6 +146,16 @@ const PUBLICATIONS = [
   // 2026
   {
     year: "2026",
+    title: "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
+    venue: "CSCW 2026",
+    authors: ["Gauri Nayak", "Farhana Shahid", "Kiran Garimella", "Aditya Vashistha"],
+    links: [
+      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
+    ]
+  },
+
+  {
+    year: "2026",
     title: "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
     venue: "IWCSM 2026",
     authors: ["Harsha Nemani","Kiran Garimella"],
