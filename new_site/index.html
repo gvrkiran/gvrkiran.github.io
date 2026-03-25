@@ -3,11 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home — Academic Site</title>
+  <title>Kiran Garimella</title>
   <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Minimal academic homepage for bio, publications, projects, teaching, talks, and press." />
+  <meta name="description" content="Academic homepage of Kiran Garimella." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body data-page="home">
+
   <header>
     <div class="container nav">
       <a class="brand" id="brand" href="index.html"></a>
@@ -15,24 +19,22 @@
         <a href="publications.html">Publications</a>
         <a href="projects.html">Projects</a>
         <a href="teaching.html">Teaching</a>
-        <a href="talks.html">Talks</a>
-        <a href="press.html">Press</a>
-        <a href="contact.html">Contact</a>
+        <a href="other.html">Other</a>
       </nav>
       <div class="actions">
-        <button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button>
+        <button class="btn" id="themeBtn" aria-label="Toggle theme"></button>
       </div>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <div class="grid two">
+      <div class="grid two hero-grid">
         <div>
-          <div class="pill">📍 <span id="location"></span></div>
+          <div class="pill" id="location-pill"></div>
           <div class="spacer"></div>
           <h1 class="title-xl" id="hero-role"></h1>
-          <p class="muted" id="hero-tagline"></p>
+          <p class="muted hero-tagline" id="hero-tagline"></p>
           <div class="spacer"></div>
           <div class="badges" id="keywords"></div>
           <div class="spacer"></div>
@@ -44,31 +46,21 @@
             <a class="btn" id="schBtn" href="#" target="_blank" rel="noreferrer">Scholar</a>
           </div>
         </div>
-  <div class="card photo-card">
-    <div id="faceTracker" class="face-tracker">
-      <img id="faceImage" class="face-image" src="" alt="Face following gaze" />
-      <div id="faceLoading" class="face-loading" style="display: none;">Loading face...</div>
-      <div id="faceError" class="face-tracker-error" style="display: none;">
-        Error loading face images
-      </div>
-    </div>
-  </div>
-
-	<!--div class="card photo-card">
-  <img id="portrait" class="portrait" src="" alt="" loading="lazy" />
-  <div id="portraitPlaceholder" class="photo-placeholder">
-    Add your headshot: set <code>PROFILE.photo</code> in <code>data.js</code>.
-  </div>
-</div-->
-
+        <div class="card photo-card">
+          <div id="faceTracker" class="face-tracker">
+            <img id="faceImage" class="face-image" src="" alt="Face following gaze" />
+            <div id="faceLoading" class="face-loading" style="display:none;">Loading face...</div>
+            <div id="faceError" class="face-tracker-error" style="display:none;">Error loading face images</div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section>
       <div class="grid three cta-cards">
-        <a href="publications.html"><div class="card"><div class="content"><div style="font-weight:600">Publications</div><div class="muted" style="font-size:14px">Searchable list with topic filters</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
-        <a href="projects.html"><div class="card"><div class="content"><div style="font-weight:600">Projects</div><div class="muted" style="font-size:14px">Selected research and prototypes</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
-        <a href="teaching.html"><div class="card"><div class="content"><div style="font-weight:600">Teaching</div><div class="muted" style="font-size:14px">Courses and materials</div><div class="muted" style="margin-top:8px">Explore →</div></div></div></a>
+        <a href="publications.html"><div class="card"><div class="content"><div style="font-weight:600">Publications</div><div class="muted" style="font-size:14px">Searchable list with topic filters</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
+        <a href="projects.html"><div class="card"><div class="content"><div style="font-weight:600">Projects</div><div class="muted" style="font-size:14px">Selected research and prototypes</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
+        <a href="teaching.html"><div class="card"><div class="content"><div style="font-weight:600">Teaching</div><div class="muted" style="font-size:14px">Courses and materials</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
       </div>
     </section>
   </main>
@@ -80,126 +72,33 @@
     </div>
   </footer>
 
-  <!-- Load shared data first. If it fails, a safe fallback right after will provide defaults. -->
   <script src="data.js"></script>
-
-  <!-- Safe fallback: only defines globals if data.js didn't. Avoids redeclaration errors with const in data.js. -->
   <script>
-    (function bootstrapFallback(){
-      // use global eval to create real global var bindings only when absent
-      function defineIfMissing(name, value){
-        if (typeof window[name] === 'undefined' && (function(){ try { return typeof eval(name) === 'undefined'; } catch(e){ return true; } })()) {
-          window[name] = value;
-          // create a global var binding so scripts using bare identifiers don't crash
-          (0, eval)("var " + name + " = window['" + name + "'];");
-        }
-      }
-      defineIfMissing('PROFILE', {
-        name: 'Kiran Gar',
-        role: 'Academic Title',
-        tagline: 'Short tagline about your research',
-        location: 'City, State',
-        email: 'you@example.com',
-        cvUrl: '#',
-        socials: { linkedin: '', scholar: '' }
-      });
-      defineIfMissing('KEYWORDS', ['research','teaching','service']);
-      defineIfMissing('HIGHLIGHTS', [{ label:'Sample highlight', year:'2025' }]);
-      // Non-home pages may also read these; supply minimal fallbacks to prevent errors if opened standalone
-      defineIfMissing('PROJECTS', []);
-      defineIfMissing('PUBLICATIONS', []);
-      defineIfMissing('TEACHING', []);
-      defineIfMissing('TALKS', []);
-      defineIfMissing('PRESS', []);
+    (function(){
+      function d(n,v){ if(typeof window[n]==='undefined'){ window[n]=v; (0,eval)("var "+n+"=window['"+n+"'];"); } }
+      d('PROFILE',{name:'',role:'',tagline:'',location:'',email:'',socials:{}});
+      d('KEYWORDS',[]); d('HIGHLIGHTS',[]); d('PROJECTS',[]); d('PUBLICATIONS',[]); d('TEACHING',[]); d('TALKS',[]); d('PRESS',[]);
     })();
   </script>
-
-  <!-- Site behavior -->
   <script src="main.js"></script>
 
-  <!-- Home-only link wiring with guards to avoid ReferenceError when PROFILE isn't ready yet -->
   <script>
-    (function wireHomeLinks(){
-      function doWire(){
-        try {
-          var p = PROFILE; // guaranteed by fallback above
-          var email = document.getElementById('emailBtn');
-          if (email) email.href = 'mailto:' + (p.email || '');
-          var ln = document.getElementById('lnBtn');
-          if (ln) {
-            if (p.socials && p.socials.linkedin) ln.href = p.socials.linkedin; else ln.classList.add('hidden');
-          }
-          var tw = document.getElementById('twBtn');
-          if (tw) {
-            if (p.socials && p.socials.twitter) tw.href = p.socials.twitter; else tw.classList.add('hidden');
-          }
-          var cv = document.getElementById('cvBtn');
-          if (cv) {
-            if (p.socials && p.socials.cv) cv.href = p.socials.cv; else cv.classList.add('hidden');
-          }
+  (function(){
+    var p = PROFILE;
+    var pill = document.getElementById('location-pill');
+    if (pill) pill.textContent = p.location || '';
+    if (document.getElementById('hero-role')) document.getElementById('hero-role').textContent = p.role || '';
+    if (document.getElementById('hero-tagline')) document.getElementById('hero-tagline').textContent = p.tagline || '';
+    var kws = document.getElementById('keywords');
+    if (kws) kws.innerHTML = (window.KEYWORDS||[]).map(function(t){ return '<span class="badge">'+t+'</span>'; }).join('');
 
-          var sch = document.getElementById('schBtn');
-          if (sch) {
-            if (p.socials && p.socials.scholar) sch.href = p.socials.scholar; else sch.classList.add('hidden');
-          }
-          return true;
-        } catch (e) { return false; }
-      }
-      function tryWire(){ if (!doWire()) setTimeout(tryWire, 20); }
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tryWire); else tryWire();
-    })();
-  </script>
-
-  <!-- Inline tests (kept as-is; adding additional tests without changing existing ones) -->
-  <script>
-    window.addEventListener('load', function(){
-      try {
-        // Existing tests
-        console.assert(typeof PROFILE === 'object', 'PROFILE should be available');
-        var brandText = (document.getElementById('brand').textContent || '').trim();
-        console.assert(brandText === PROFILE.name, 'Brand text matches PROFILE.name');
-        var emailHref = document.getElementById('emailBtn').getAttribute('href') || '';
-        console.assert(emailHref.indexOf('mailto:') === 0, 'Email button wired with mailto:');
-
-        // Additional tests
-        console.assert(Array.isArray(HIGHLIGHTS), 'HIGHLIGHTS array present');
-        var kwEl = document.getElementById('keywords');
-        console.assert(kwEl && kwEl.children.length >= 0, 'Keywords container renders');
-        var lnBtn = document.getElementById('lnBtn');
-        if (!PROFILE.socials || !PROFILE.socials.linkedin) {
-          console.assert(lnBtn.classList.contains('hidden'), 'LinkedIn hidden when not configured');
-        }
-        var cvBtn = document.getElementById('cvBtn');
-        if (!PROFILE.socials || !PROFILE.socials.linkedin) {
-          console.assert(cvBtn.classList.contains('hidden'), 'CV hidden when not configured');
-        }
-        var twBtn = document.getElementById('twBtn');
-        if (!PROFILE.socials || !PROFILE.socials.linkedin) {
-          console.assert(twBtn.classList.contains('hidden'), 'Twitter hidden when not configured');
-        }
-
-        console.info('Index inline tests passed ✓');
-      } catch (e) {
-        console.error('Index inline tests failed', e);
-      }
+    var email = document.getElementById('emailBtn');
+    if (email) email.href = 'mailto:' + (p.email||'');
+    [['lnBtn','linkedin'],['twBtn','twitter'],['cvBtn','cv'],['schBtn','scholar']].forEach(function(pair){
+      var el = document.getElementById(pair[0]);
+      if (el) { if (p.socials && p.socials[pair[1]]) el.href = p.socials[pair[1]]; else el.classList.add('hidden'); }
     });
-  </script>
-
-  <!-- Extra test: verify CSS is loaded (checks computed style for links) -->
-  <script>
-    window.addEventListener('load', function(){
-      try {
-        var testEl = document.createElement('a');
-        testEl.className = 'link';
-        document.body.appendChild(testEl);
-        var cs = getComputedStyle(testEl);
-        // Our CSS sets .link { text-decoration: none; font-size: 14px; }
-        var looksStyled = cs.textDecoration.includes('none') && parseInt(cs.fontSize) === 14;
-        console.assert(looksStyled, 'CSS loaded and applied to .link');
-        testEl.remove();
-      } catch(e) { console.error('CSS load test failed', e); }
-    });
+  })();
   </script>
 </body>
 </html>
-

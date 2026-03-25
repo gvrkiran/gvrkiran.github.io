@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Publications — Academic Site</title>
+  <title>Publications — Kiran Garimella</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="publications">
@@ -14,20 +14,18 @@
         <a href="publications.html">Publications</a>
         <a href="projects.html">Projects</a>
         <a href="teaching.html">Teaching</a>
-        <a href="talks.html">Talks</a>
-        <a href="press.html">Press</a>
-        <a href="contact.html">Contact</a>
+        <a href="other.html">Other</a>
       </nav>
-      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
+      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme"></button></div>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container page-with-video">
     <section>
       <div class="row">
         <div>
           <h1 style="margin:0">Publications</h1>
-          <div class="muted">Search by title, venue, or author. Filter by topic.</div>
+          <div class="muted">Search by title, venue, or author. Filter by year.</div>
         </div>
         <div class="controls">
           <a class="btn" id="cvBtn" href="#" target="_blank" rel="noreferrer">CV</a>
@@ -52,10 +50,7 @@
 
   <script src="data.js"></script>
   <script src="main.js"></script>
-
-  <script>
-    document.getElementById('cvBtn').href = PROFILE.cvUrl || '#';
-  </script>
+  <script>document.getElementById('cvBtn').href = PROFILE.cvUrl || '#';</script>
+  <script src="scroll-video.js" data-frames="frames/publications" data-count="96"></script>
 </body>
 </html>
-
