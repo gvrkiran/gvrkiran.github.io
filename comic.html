@@ -154,6 +154,17 @@
   <script src="data.js"></script>
   <script src="main.js"></script>
   <script>
+    // Shuffle comic cards on each page load
+    (function(){
+      const grid = document.getElementById('comics-grid');
+      const items = Array.from(grid.children);
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        grid.appendChild(items[j]);
+        items[j] = items[i];
+      }
+    })();
+
     // Lightweight modal wiring (page-local)
     (function(){
       const modal = document.createElement('div');
