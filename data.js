@@ -75,6 +75,16 @@ const PROJECTS = [
 // data.js
 const PUBLICATIONS = [
   // Under review
+ {
+    year: "Unpublished",
+    status: "Under review",
+    title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
+    venue: "Under review",
+    authors: ["Shreyasi Roy Chowdhuri","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/How_people_use_ChatGPT.pdf"}
+    ]
+  },
   {
     year: "Unpublished",
     status: "Under review",
