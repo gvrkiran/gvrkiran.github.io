@@ -1,104 +1,92 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kiran Garimella</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Academic homepage of Kiran Garimella." />
+  <meta name="description" content="Kiran Garimella — Assistant Professor at Rutgers. Computational social science, misinformation, AI for the public good." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-<body data-page="home">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
 
-  <header>
-    <div class="container nav">
-      <a class="brand" id="brand" href="index.html"></a>
-      <nav class="navlinks">
-        <a href="publications.html">Publications</a>
-        <a href="projects.html">Projects</a>
-        <a href="teaching.html">Teaching</a>
-        <a href="other.html">Other</a>
-      </nav>
-      <div class="actions">
-        <button class="btn" id="themeBtn" aria-label="Toggle theme"></button>
-      </div>
-    </div>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
+</head>
+<body>
+  <a class="visually-hidden" href="#about">Skip to content</a>
+
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="#top">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="grid two hero-grid">
-        <div>
-          <div class="pill" id="location-pill"></div>
-          <div class="spacer"></div>
-          <h1 class="title-xl" id="hero-role"></h1>
-          <p class="muted hero-tagline" id="hero-tagline"></p>
-          <div class="spacer"></div>
-          <div class="badges" id="keywords"></div>
-          <div class="spacer"></div>
-          <div class="controls">
-            <a class="btn primary" id="emailBtn" href="#">Email</a>
-            <a class="btn" id="cvBtn" href="#" target="_blank" rel="noreferrer">CV</a>
-            <a class="btn" id="lnBtn" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="btn" id="twBtn" href="#" target="_blank" rel="noreferrer">Twitter</a>
-            <a class="btn" id="schBtn" href="#" target="_blank" rel="noreferrer">Scholar</a>
-          </div>
+  <main id="top">
+
+    <section class="hero-section section" data-section="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-name" id="heroName">Kiran Garimella</h1>
+          <p class="hero-role" id="heroRole"></p>
+          <p class="hero-tagline" id="heroTagline"></p>
+          <div class="quick-links" id="quickLinks" aria-label="Quick links"></div>
         </div>
-        <div class="card photo-card">
-          <div id="faceTracker" class="face-tracker">
-            <img id="faceImage" class="face-image" src="" alt="Face following gaze" />
-            <div id="faceLoading" class="face-loading" style="display:none;">Loading face...</div>
-            <div id="faceError" class="face-tracker-error" style="display:none;">Error loading face images</div>
+        <div class="hero-portrait">
+          <div class="face-frame" id="faceFrame">
+            <img id="faceImg" alt="Kiran Garimella" />
           </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="grid three cta-cards">
-        <a href="publications.html"><div class="card"><div class="content"><div style="font-weight:600">Publications</div><div class="muted" style="font-size:14px">Searchable list with topic filters</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
-        <a href="projects.html"><div class="card"><div class="content"><div style="font-weight:600">Projects</div><div class="muted" style="font-size:14px">Selected research and prototypes</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
-        <a href="teaching.html"><div class="card"><div class="content"><div style="font-weight:600">Teaching</div><div class="muted" style="font-size:14px">Courses and materials</div><div class="muted" style="margin-top:8px">Explore &rarr;</div></div></div></a>
-      </div>
+    <section class="section" id="about" data-section="about">
+      <h2 class="section-heading">About</h2>
+      <div class="section-body" id="aboutBody"></div>
     </section>
+
+    <section class="section" id="projects" data-section="projects">
+      <h2 class="section-heading">Projects</h2>
+      <div class="section-body" id="projectsBody"></div>
+    </section>
+
+    <section class="section" id="publications" data-section="publications">
+      <h2 class="section-heading">Publications</h2>
+      <div class="section-body" id="pubsBody"></div>
+      <p class="section-cta"><a href="publications.html">See full list →</a></p>
+    </section>
+
+    <section class="section" id="teaching" data-section="teaching">
+      <h2 class="section-heading">Teaching</h2>
+      <div class="section-body" id="teachingBody"></div>
+    </section>
+
+    <section class="section" id="other" data-section="other">
+      <h2 class="section-heading">Other</h2>
+      <div class="section-body" id="otherBody"></div>
+    </section>
+
   </main>
 
-  <footer class="footer">
-    <div class="container row">
-      <div id="copyright"></div>
-      <div><a class="link" href="index.html">Back to top</a></div>
-    </div>
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
   </footer>
 
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
   <script src="data.js"></script>
-  <script>
-    (function(){
-      function d(n,v){ if(typeof window[n]==='undefined'){ window[n]=v; (0,eval)("var "+n+"=window['"+n+"'];"); } }
-      d('PROFILE',{name:'',role:'',tagline:'',location:'',email:'',socials:{}});
-      d('KEYWORDS',[]); d('HIGHLIGHTS',[]); d('PROJECTS',[]); d('PUBLICATIONS',[]); d('TEACHING',[]); d('TALKS',[]); d('PRESS',[]);
-    })();
-  </script>
-  <script src="main.js"></script>
-
-  <script>
-  (function(){
-    var p = PROFILE;
-    var pill = document.getElementById('location-pill');
-    if (pill) pill.textContent = p.location || '';
-    if (document.getElementById('hero-role')) document.getElementById('hero-role').textContent = p.role || '';
-    if (document.getElementById('hero-tagline')) document.getElementById('hero-tagline').textContent = p.tagline || '';
-    var kws = document.getElementById('keywords');
-    if (kws) kws.innerHTML = (window.KEYWORDS||[]).map(function(t){ return '<span class="badge">'+t+'</span>'; }).join('');
-
-    var email = document.getElementById('emailBtn');
-    if (email) email.href = 'mailto:' + (p.email||'');
-    [['lnBtn','linkedin'],['twBtn','twitter'],['cvBtn','cv'],['schBtn','scholar']].forEach(function(pair){
-      var el = document.getElementById(pair[0]);
-      if (el) { if (p.socials && p.socials[pair[1]]) el.href = p.socials[pair[1]]; else el.classList.add('hidden'); }
-    });
-  })();
-  </script>
+  <script src="js/face-tracker.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/content.js"></script>
 </body>
 </html>

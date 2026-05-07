@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tools · Kiran Garimella</title>
+  <meta name="description" content="Public-facing tools and prototypes from our research." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
+  <style>
+    .subpage main { padding-top: 5rem; padding-bottom: 4rem; }
+    .subpage .section-heading { margin-bottom: 0.6rem; }
+    .subpage .lead { max-width: 70ch; opacity: 0.85; margin-bottom: 1.6rem; font-size: 1.05rem; }
+    .subpage-back { display: inline-block; margin-bottom: 1.2rem; font-size: 0.92rem; opacity: 0.75; }
+    .subpage-back:hover { opacity: 1; }
+    .subpage .card { margin-bottom: 1rem; }
+    .subpage .card h3 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .subpage .card p { line-height: 1.6; margin-bottom: 0.5rem; }
+    .subpage .card a { color: var(--color-accent); text-decoration: underline; font-size: 0.92rem; }
+  </style>
+</head>
+<body class="subpage">
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="index.html">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
+  </header>
+
+  <main id="top">
+    <section class="section">
+      <a class="subpage-back" href="index.html">← Back to home</a>
+      <h1 class="section-heading">Tools</h1>
+      <p class="lead">A few public tools and demos we've built — mostly around privacy-preserving data donation and mobile data collection.</p>
+
+      <article class="card">
+        <h3>Data donation tools (overview paper)</h3>
+        <p>We describe our approach and datasets for data donation across platforms.</p>
+        <p><a href="https://gvrkiran.github.io/content/data_donation_social_media.pdf" target="_blank" rel="noopener">Paper ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>WhatsApp Explorer</h3>
+        <p>Collects WhatsApp data at scale via a QR-code onboarding flow; enables group selection for research studies.</p>
+        <p><a href="https://whatsapp.whats-viral.me/" target="_blank" rel="noopener">Try it ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>WhatsViral (Android)</h3>
+        <p>Identifies viral content on WhatsApp via on-device hashing; supports interventions via notifications.</p>
+        <p><a href="https://play.google.com/store/apps/details?id=com.rutgers.whatsviral" target="_blank" rel="noopener">Play Store ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>YouTube data donation</h3>
+        <p>Uses Google Takeout to streamline donation of watch and search history for research.</p>
+        <p><a href="https://data-donation.vercel.app/donate" target="_blank" rel="noopener">Donate ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>Telegram Watch</h3>
+        <p>Authenticates with Telegram and lets participants choose the groups/channels they wish to donate.</p>
+        <p><a href="https://telegram.whats-viral.me/" target="_blank" rel="noopener">Open ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>Diaspora Watch (Facebook)</h3>
+        <p>Facebook app that collects group/page data with participant consent; enables CrowdTangle-based analysis.</p>
+        <p><a href="https://www.diaspora-watch.us/home/?next=/" target="_blank" rel="noopener">Open ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>Social Media Metadata Research (Android)</h3>
+        <p>Instrumentation for Instagram experiments — collect feed data and test interventions within a companion app.</p>
+        <p><a href="https://play.google.com/store/apps/details?id=com.rutgers.smdr" target="_blank" rel="noopener">Play Store ↗</a></p>
+      </article>
+
+      <article class="card">
+        <h3>Mobile social-media collection (R&amp;D)</h3>
+        <p>Explores Android accessibility for privacy-aware collection across WhatsApp, Facebook, YouTube, and the browser.</p>
+      </article>
+
+      <article class="card">
+        <h3>Uber auditing tools</h3>
+        <p>Browser extension to export Uber trip metadata for pricing and fairness analyses.</p>
+        <p><a href="https://chromewebstore.google.com/detail/trip-data-export/colafoobngpmnekajlpglcollpccllko?pli=1" target="_blank" rel="noopener">Extension ↗</a></p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
+  </footer>
+
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      const links = [
+        { label: 'About',        href: 'index.html#about' },
+        { label: 'Publications', href: 'publications.html' },
+        { label: 'Projects',     href: 'index.html#projects' },
+        { label: 'Teaching',     href: 'index.html#teaching' },
+        { label: 'Other',        href: 'index.html#other' },
+      ];
+      const nav = document.getElementById('navLinks');
+      if (nav) nav.innerHTML = links.map(l => `<a href="${l.href}">${l.label}</a>`).join('');
+      const cr = document.getElementById('copyright');
+      if (cr) cr.textContent = `© ${new Date().getFullYear()} Kiran Garimella`;
+    })();
+  </script>
+</body>
+</html>

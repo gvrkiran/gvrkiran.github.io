@@ -22,7 +22,7 @@
       $('#brand').textContent = PROFILE.name;
       $('#brand').setAttribute('href', 'index.html');
     }
-    if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}. Design by ChatGPT.`;
+    if ($('#copyright')) $('#copyright').textContent = `© ${new Date().getFullYear()} ${PROFILE.name}.`;
 
     // theme toggle
     const btn = $('#themeBtn');
@@ -42,15 +42,22 @@
     // Build a compact nav across the site
     const nav = $('.navlinks');
     if (nav) {
-      nav.innerHTML = [
-        '<a href="about.html">About</a>',      // ← added
-        '<a href="publications.html">Publications</a>',
-        '<a href="projects.html">Projects</a>',
-        '<a href="teaching.html">Teaching</a>',
-        '<a href="other.html">Other</a>'
-      ].join('');
+      const navItems = [
+        { label: 'About', href: 'index.html' },
+        { label: 'Publications', href: 'publications.html' },
+        { label: 'Projects', href: 'projects.html' },
+        { label: 'Teaching', href: 'teaching.html' },
+        { label: 'Other', href: 'other.html' }
+      ];
+      nav.innerHTML = navItems.map((item) => {
+        const attrs = item.external ? ' target="_blank" rel="noreferrer"' : '';
+        return `<a href="${item.href}"${attrs}>${item.label}</a>`;
+      }).join('');
       const current = location.pathname.split('/').pop() || 'index.html';
-      $$('.navlinks a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === current));
+      $$('.navlinks a').forEach((a) => {
+        const href = a.getAttribute('href') || '';
+        a.classList.toggle('active', !/^https?:\/\//.test(href) && href === current);
+      });
     }
 
     ensureNavClickableStyle();
@@ -84,7 +91,6 @@ function ensureFooterGap(){
     s.textContent = `
       .navlinks a{position:relative;display:inline-block;padding-bottom:10px;cursor:pointer;text-decoration:none}
       .navlinks a:hover{opacity:.9}
-      .nav      .navlinks a:hover{opacity:.9}
       .navlinks a::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:2px;background:currentColor;opacity:0;transform:translateY(2px);transition:opacity .16s ease,transform .16s ease}
       .navlinks a:hover::after{opacity:.4;transform:translateY(0)}
       .navlinks a.active::after{opacity:1;transform:translateY(0)}

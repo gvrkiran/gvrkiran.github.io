@@ -34,8 +34,20 @@ const HIGHLIGHTS = [
 
 const PROJECTS = [
   {
-    title: "Applications of AI for multi modal content processing",
-    summary: "We are developing tools and methods to process multi modal data, including images, videos and audio. Thanks to advances in AI, we can now apply these methods reliably to tackle real world problems.",
+    title: "AI usage",
+    summary: "How do users (particularly in the global south) use AI? Going beyond just misinformation or hallucinations, what are positive benefits of AI beyond what we know already? How are users picking up AI and what will they be used for?",
+    tags: ["Global South", "AI usage", "Social Media"]
+//    links: [{ label: "Preprint", href: "#" }, { label: "Data Protocol", href: "#" }]
+  },
+  {
+    title: "AI impact",
+    summary: "What are the impacts of AI going to look like on the economy, jobs, education, environment, etc? How can people upskill themselves? What do we need to do to improve AI adoption? What are the impacts of AI data centers on the environment, including on electricity prices?",
+    tags: ["Global South", "AI usage", "data centers"]
+//    links: [{ label: "Preprint", href: "#" }, { label: "Data Protocol", href: "#" }]
+  },
+  {
+    title: "AI applications",
+    summary: "How can AI be used in solving societal problems like misinformation, political polarization, providing government accountability, etc? We are developing tools and methods to process multi modal data, including images, videos and audio. Thanks to advances in AI, we can now apply these methods reliably to tackle real world problems.",
     tags: ["Television analytics", "Image analysis", "Podcasts"]
 //    links: [{ label: "Overview", href: "#" }]
   },
@@ -45,12 +57,7 @@ const PROJECTS = [
     tags: ["Encryption", "Messaging Platforms", "Misinformation"]
 //    links: [{ label: "Preprint", href: "#" }, { label: "Data Protocol", href: "#" }]
   },
-  {
-    title: "Global south social media and AI usage",
-    summary: "How do users in the global south use social media? Going beyond just misinformation, what are positive benefits of social media beyond what we know already? How are users picking up AI and what will they be used for?",
-    tags: ["Global South", "AI", "Social Media"]
-//    links: [{ label: "Preprint", href: "#" }, { label: "Data Protocol", href: "#" }]
-  },
+
   {
     title: "Data donation on social media",
     summary: "How can we collect data from end users, going beyond depending on APIs provided by the platforms?",
@@ -68,24 +75,14 @@ const PROJECTS = [
 // data.js
 const PUBLICATIONS = [
   // Under review
-  {
+ {
     year: "Unpublished",
     status: "Under review",
-    title: "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
+    title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
     venue: "Under review",
-    authors: ["Harsha Nemani","Kiran Garimella"],
+    authors: ["Shreyasi Roy Chowdhuri","Kiran Garimella"],
     links: [
-      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
-    ]
-  },
-  {
-    year: "Unpublished",
-    status: "Under review",
-    title: "Quantifying the Illicit Ecosystem of Betting Apps in India",
-    venue: "Under review",
-    authors: ["Aatman Vaidya","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Betting_apps_India.pdf" }
+      { label: "paper", href: "content/How_people_use_ChatGPT.pdf"}
     ]
   },
   {
@@ -157,6 +154,34 @@ const PUBLICATIONS = [
   },
 
   // 2026
+  {
+    year: "2026",
+    title: "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
+    venue: "CSCW 2026",
+    authors: ["Gauri Nayak", "Farhana Shahid", "Kiran Garimella", "Aditya Vashistha"],
+    links: [
+      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
+    ]
+  },
+
+  {
+    year: "2026",
+    title: "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
+    venue: "IWCSM 2026",
+    authors: ["Harsha Nemani","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
+    ]
+  },
+  {
+    year: "2026",
+    title: "Quantifying the Illicit Ecosystem of Betting Apps in India",
+    venue: "ICWSM 2026",
+    authors: ["Aatman Vaidya","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/Betting_apps_India.pdf" }
+    ]
+  },
 
   {
     year: "2026",
@@ -1082,3 +1107,12 @@ const PRESS = [
   { outlet: "The Hindu", title: "Rumors and Responsibility", link: "#" }
 ];
 
+
+window.PROFILE = PROFILE;
+window.KEYWORDS = KEYWORDS;
+window.HIGHLIGHTS = HIGHLIGHTS;
+window.PROJECTS = PROJECTS;
+window.PUBLICATIONS = PUBLICATIONS;
+window.TEACHING = TEACHING;
+window.TALKS = TALKS;
+window.PRESS = PRESS;
