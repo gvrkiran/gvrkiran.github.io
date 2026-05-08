@@ -1,56 +1,131 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Publications — Kiran Garimella</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Publications · Kiran Garimella</title>
+  <meta name="description" content="Publications by Kiran Garimella." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
+  <style>
+    .pubs-page main { padding-top: 5rem; padding-bottom: 4rem; }
+    .pub-list { list-style: none; padding: 0; }
+    .pub-list li { padding: 1.1rem 0; border-bottom: 1px solid currentColor; }
+    .pub-list h3 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .pub-meta { color: var(--color-muted); font-size: 0.92rem; margin-top: 0.2rem; }
+    .pub-links { margin-top: 0.5rem; font-size: 0.88rem; }
+    .pub-links a { color: var(--color-accent); margin-right: 0.6rem; text-decoration: underline; }
+    .pub-year-heading {
+      margin-top: 2.4rem;
+      margin-bottom: 0.4rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.3rem;
+      opacity: 0.7;
+    }
+    .pubs-page .section-heading { margin-bottom: 1.4rem; }
+    .pubs-back {
+      display: inline-block;
+      margin-bottom: 1.2rem;
+      font-size: 0.92rem;
+      opacity: 0.75;
+    }
+    .pubs-back:hover { opacity: 1; }
+  </style>
 </head>
-<body data-page="publications">
-  <header>
-    <div class="container nav">
-      <a class="brand" id="brand" href="index.html"></a>
-      <nav class="navlinks">
-        <a href="publications.html">Publications</a>
-        <a href="projects.html">Projects</a>
-        <a href="teaching.html">Teaching</a>
-        <a href="other.html">Other</a>
-      </nav>
-      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme"></button></div>
-    </div>
+<body class="pubs-page">
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="index.html">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
   </header>
 
-  <main class="container page-with-video">
-    <section>
-      <div class="row">
-        <div>
-          <h1 style="margin:0">Publications</h1>
-          <div class="muted">Search by title, venue, or author. Filter by year.</div>
-        </div>
-        <div class="controls">
-          <a class="btn" id="cvBtn" href="#" target="_blank" rel="noreferrer">CV</a>
-        </div>
-      </div>
-      <div class="spacer"></div>
-      <div class="controls">
-        <input type="search" id="pubSearch" placeholder="Search" />
-        <select id="pubTopic" class="select"></select>
-      </div>
-      <div class="spacer"></div>
-      <div id="pub-list" class="list"></div>
+  <main id="top" class="page-with-video">
+    <section class="section">
+      <a class="pubs-back" href="index.html">← Back to home</a>
+      <h1 class="section-heading">Publications</h1>
+      <div id="pubsAll"></div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container row">
-      <div id="copyright"></div>
-      <div><a class="link" href="index.html">Back to home</a></div>
-    </div>
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
   </footer>
 
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
   <script src="data.js"></script>
-  <script src="main.js"></script>
-  <script>document.getElementById('cvBtn').href = PROFILE.cvUrl || '#';</script>
+  <script>
+    /* Render the same 5-item nav as index.html, with anchors back to home for in-page sections */
+    (function () {
+      const links = [
+        { label: 'About',        href: 'index.html#about' },
+        { label: 'Publications', href: 'publications.html' },
+        { label: 'Projects',     href: 'index.html#projects' },
+        { label: 'Teaching',     href: 'index.html#teaching' },
+        { label: 'Other',        href: 'index.html#other' },
+      ];
+      const nav = document.getElementById('navLinks');
+      if (nav) nav.innerHTML = links.map(l => `<a href="${l.href}">${l.label}</a>`).join('');
+    })();
+
+    /* Render all publications grouped by year (desc) */
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const PUBS = window.PUBLICATIONS || [];
+      const byYear = {};
+      PUBS.forEach(p => {
+        const y = String(p.year || 'Other');
+        (byYear[y] = byYear[y] || []).push(p);
+      });
+      const years = Object.keys(byYear).sort((a, b) => {
+        const aN = parseInt(a, 10), bN = parseInt(b, 10);
+        if (isNaN(aN) && isNaN(bN)) return a.localeCompare(b);
+        if (isNaN(aN)) return -1;
+        if (isNaN(bN)) return 1;
+        return bN - aN;
+      });
+      const wrap = $('pubsAll');
+      if (!wrap) return;
+      wrap.innerHTML = years.map(y => {
+        const items = byYear[y].map(p => {
+          const authors = Array.isArray(p.authors) ? p.authors.join(', ') : (p.authors || '');
+          const links = (p.links || []).map(l => `<a href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join(' · ');
+          const venue = (p.venue || '').trim();
+          const status = (p.status || '').trim();
+          // Avoid showing the same string twice when status === venue (e.g. both "Under review").
+          const sameAsVenue = status && venue && status.toLowerCase() === venue.toLowerCase();
+          const venuePart = venue ? `<em>${venue}</em>` : '';
+          const statusPart = (status && !sameAsVenue) ? ` · <em>${status}</em>` : '';
+          const meta = [authors, venuePart].filter(Boolean).join(' · ') + statusPart;
+          return `<li>
+            <h3>${p.title}</h3>
+            <p class="pub-meta">${meta}</p>
+            ${links ? `<p class="pub-links">${links}</p>` : ''}
+          </li>`;
+        }).join('');
+        return `<h2 class="pub-year-heading">${y}</h2><ul class="pub-list">${items}</ul>`;
+      }).join('');
+      const cr = $('copyright');
+      if (cr) cr.textContent = `© ${new Date().getFullYear()} Kiran Garimella`;
+    })();
+  </script>
+
+  <!-- Scroll-driven video widget (top-right corner). 96 frames in frames/publications/. -->
   <script src="scroll-video.js" data-frames="frames/publications" data-count="96"></script>
 </body>
 </html>

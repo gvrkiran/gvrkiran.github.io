@@ -1,54 +1,68 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Comics — Academic Site</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Comics · Kiran Garimella</title>
   <meta name="description" content="A gallery of comics about academic life, research, parenting, and more." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
   <style>
-    /* Page-specific styles kept minimal to match the site's look */
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-    .comic-card img.comic-thumbnail { display: block; width: 100%; height: 260px; object-fit: cover; border-radius: 18px 18px 0 0; }
-    .comic-card .content { padding: 12px 18px 16px; }
-    .comic-card { overflow: hidden; }
-.comic-card h3 { margin: 0; font-size: 16px; line-height: 1.35; }
-/* Modal */
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.94); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    /* Override L1's narrow column — comics need a wide canvas. */
+    html[data-layout="L1"] .comics-page main { max-width: 1320px; }
+    .comics-page main { padding-top: 5rem; padding-bottom: 4rem; }
+    .comics-page .section-heading { margin-bottom: 0.6rem; }
+    .comics-page .lead { max-width: 70ch; opacity: 0.85; margin-bottom: 1.4rem; font-size: 1.05rem; }
+    .subpage-back { display: inline-block; margin-bottom: 1.2rem; font-size: 0.92rem; opacity: 0.75; }
+    .subpage-back:hover { opacity: 1; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .comic-card { padding: 0; cursor: zoom-in; overflow: hidden; }
+    .comic-card img.comic-thumbnail { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+    .comic-card .content { padding: 0.55rem 0.7rem 0.7rem; }
+    .comic-card h3 { margin: 0; font-size: 0.82rem; line-height: 1.3; font-weight: 600; }
+    .comic-card .muted { opacity: 0.7; font-size: 0.7rem; margin-top: 0.2rem; }
+    @media (max-width: 640px) {
+      .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+      .comic-card h3 { font-size: 0.78rem; }
+    }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.94); display: none; align-items: center; justify-content: center; z-index: 1000; }
     .modal.active { display: flex; }
-    .modal-image { max-width: 92vw; max-height: 88vh; border-radius: 12px; }
-    .modal-caption { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(0,0,0,.6); color: #fff; padding: 8px 12px; border-radius: 10px; font-size: 14px; }
-    .modal-btn { position: fixed; top: 16px; width: 44px; height: 44px; border: 0; border-radius: 999px; backdrop-filter: blur(3px); background: rgba(255,255,255,.16); color: #fff; font-size: 24px; cursor: pointer; display:flex; align-items:center; justify-content:center; }
+    .modal-image { max-width: 92vw; max-height: 88vh; border-radius: 8px; }
+    .modal-caption { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 0.85rem; }
+    .modal-btn { position: fixed; top: 16px; width: 44px; height: 44px; border: 0; border-radius: 999px; backdrop-filter: blur(3px); background: rgba(255,255,255,0.16); color: #fff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .modal-close { right: 16px; }
     .modal-prev { left: 16px; top: 50%; transform: translateY(-50%); }
     .modal-next { right: 16px; top: 50%; transform: translateY(-50%); }
-    @media (max-width: 640px){ .comic-card img.comic-thumbnail { height: 200px; } }
   </style>
 </head>
-<body data-page="comics">
-  <header>
-    <div class="container nav">
-      <a class="brand" id="brand" href="index.html"></a>
-      <nav class="navlinks">
-        <a href="publications.html">Publications</a>
-        <a href="projects.html">Projects</a>
-        <a href="teaching.html">Teaching</a>
-        <a href="talks.html">Talks</a>
-        <a href="press.html">Press</a>
-        <a href="comics.html">Comics</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
-    </div>
+<body class="subpage comics-page">
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="index.html">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
   </header>
 
-  <main class="container">
-    <section>
-      <h1 style="margin:0 0 8px">Comics</h1>
-      <p class="muted" style="max-width: 70ch">Always wanted to learn how to doodle during my PhD. I tried a lot but I was/am horrible at it. Now trying it with AI. They're not perfect but somewhat capture my thoughts. Not all ideas are original and they're not necessarily about one coherent topic. Usually they range from academic life, parenting, being an immigrant, etc.</p>
-      <div class="spacer"></div>
+  <main id="top">
+    <section class="section">
+      <a class="subpage-back" href="index.html">← Back to home</a>
+      <h1 class="section-heading">Comics</h1>
+      <p class="lead">Always wanted to learn how to doodle during my PhD. I tried a lot but I was/am horrible at it. Now trying it with AI. They're not perfect but somewhat capture my thoughts. Not all ideas are original and they're not necessarily about one coherent topic — usually they range from academic life, parenting, being an immigrant, etc.</p>
+
       <div class="gallery" id="comics-grid">
-        <!-- Cards adapted to the site card style; titles from your original file -->
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic1.png" alt="Coffee" /><div class="content"><h3>Coffee</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic24.png" alt="Parenting is hard" /><div class="content"><h3>Parenting is hard</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic3.png" alt="Misinformation" /><div class="content"><h3>Misinformation</h3></div></div>
@@ -93,7 +107,7 @@
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic41.png" alt="Parenting" /><div class="content"><h3>Parenting</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic42.png" alt="China is always the bad guy (not)" /><div class="content"><h3>China is always the bad guy (not)</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic43.png" alt="The other side has to be bad" /><div class="content"><h3>The other side has to be bad</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic44.png" alt="Dont say these to a PhD student" /><div class="content"><h3>Dont say these to a PhD student</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic44.png" alt="Don't say these to a PhD student" /><div class="content"><h3>Don't say these to a PhD student</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic45.png" alt="Days are too short" /><div class="content"><h3>Days are too short</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic46.png" alt="Mood swings" /><div class="content"><h3>Mood swings</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic47.png" alt="Parenting is hard" /><div class="content"><h3>Parenting is hard</h3></div></div>
@@ -104,9 +118,9 @@
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic52.png" alt="When Everyone Around You is Brilliant" /><div class="content"><h3>When Everyone Around You is Brilliant</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic53.png" alt="Email" /><div class="content"><h3>Email</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic54.png" alt="Calendar" /><div class="content"><h3>Calendar</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic55.png" alt="Schengen visa" /><div class="content"><h3>Schengen visa</h3><p class="muted" style="font-size:12px;margin-top:4px">If you have never heard the term "Schengen visa" you are really lucky.</p></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic55.png" alt="Schengen visa" /><div class="content"><h3>Schengen visa</h3><p class="muted">If you have never heard the term "Schengen visa" you are really lucky.</p></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic56.png" alt="Schengen visa" /><div class="content"><h3>Schengen visa</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic57.png" alt="Quality" /><div class="content"><h3>Quality >>></h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic57.png" alt="Quality" /><div class="content"><h3>Quality &gt;&gt;&gt;</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic59.png" alt="Number of tabs" /><div class="content"><h3>Number of tabs</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic60.png" alt="Academia" /><div class="content"><h3>Academia</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic61.png" alt="VPN" /><div class="content"><h3>VPN</h3></div></div>
@@ -130,33 +144,55 @@
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic80.png" alt="Everyone is using AI" /><div class="content"><h3>Everyone is using AI. It's cheating if its students, its "efficiency" for faculty.</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic81.png" alt="Scientists become communicators in the AI age" /><div class="content"><h3>Scientists become communicators in the AI age</h3></div></div>
         <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic82.png" alt="Immigrant guilt" /><div class="content"><h3>Immigrant guilt</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic83.png" alt="AI slop comics" /><div class="content"><h3>"AI Slop" comics. I know most of these comics are junk but even if 1 in 100 are good, its fine IMO.</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic84.png" alt="AI slop comics" /><div class="content"><h3>Academic caste system</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic85.png" alt="AI slop comics" /><div class="content"><h3>Public transport</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic86.png" alt="AI slop comics" /><div class="content"><h3>Time management</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic87.png" alt="AI slop comics" /><div class="content"><h3>Parenting guilt vs evolution</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic88.png" alt="AI slop comics" /><div class="content"><h3>Twitter misinformation</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic89.png" alt="AI slop comics" /><div class="content"><h3>AI safety</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic90.png" alt="AI slop comics" /><div class="content"><h3>Difficult to choose</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic91.png" alt="AI slop comics" /><div class="content"><h3>War</h3></div></div>
-        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic92.png" alt="AI slop comics" /><div class="content"><h3>Academia</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic83.png" alt="AI slop comics" /><div class="content"><h3>"AI Slop" comics. I know most of these comics are junk but even if 1 in 100 are good, it's fine IMO.</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic84.png" alt="Academic caste system" /><div class="content"><h3>Academic caste system</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic85.png" alt="Public transport" /><div class="content"><h3>Public transport</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic86.png" alt="Time management" /><div class="content"><h3>Time management</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic87.png" alt="Parenting guilt vs evolution" /><div class="content"><h3>Parenting guilt vs evolution</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic88.png" alt="Twitter misinformation" /><div class="content"><h3>Twitter misinformation</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic89.png" alt="AI safety" /><div class="content"><h3>AI safety</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic90.png" alt="Difficult to choose" /><div class="content"><h3>Difficult to choose</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic91.png" alt="War" /><div class="content"><h3>War</h3></div></div>
+        <div class="card comic-card"><img class="comic-thumbnail" src="comic/img/comic92.png" alt="Academia" /><div class="content"><h3>Academia</h3></div></div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container row">
-      <div id="copyright"></div>
-      <div><a class="link" href="index.html">Back to home</a></div>
-    </div>
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
   </footer>
 
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
   <script src="data.js"></script>
-  <script src="main.js"></script>
   <script>
-    // Shuffle comic cards on each page load
+    /* Render the same 5-item nav as index.html */
+    (function () {
+      const links = [
+        { label: 'About',        href: 'index.html#about' },
+        { label: 'Publications', href: 'publications.html' },
+        { label: 'Projects',     href: 'index.html#projects' },
+        { label: 'Teaching',     href: 'index.html#teaching' },
+        { label: 'Other',        href: 'index.html#other' },
+      ];
+      const nav = document.getElementById('navLinks');
+      if (nav) nav.innerHTML = links.map(l => `<a href="${l.href}">${l.label}</a>`).join('');
+      const cr = document.getElementById('copyright');
+      if (cr) cr.textContent = `© ${new Date().getFullYear()} Kiran Garimella`;
+    })();
+
+    /* Shuffle comic cards on each load */
     (function(){
       const grid = document.getElementById('comics-grid');
+      if (!grid) return;
       const items = Array.from(grid.children);
       for (let i = items.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -165,7 +201,7 @@
       }
     })();
 
-    // Lightweight modal wiring (page-local)
+    /* Lightweight modal for full-size comic viewing */
     (function(){
       const modal = document.createElement('div');
       modal.className = 'modal';
@@ -190,28 +226,27 @@
         idx = i;
         const card = cards[idx];
         const img = card.querySelector('.comic-thumbnail');
-        const ttl = (card.querySelector('h3')||{}).textContent || '';
+        const ttl = (card.querySelector('h3') || {}).textContent || '';
         imgEl.src = img.src; imgEl.alt = ttl;
         capEl.textContent = ttl;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
-      function close(){ modal.classList.remove('active'); document.body.style.overflow=''; }
+      function close(){ modal.classList.remove('active'); document.body.style.overflow = ''; }
       function nav(d){ idx = (idx + d + cards.length) % cards.length; open(idx); }
 
-      cards.forEach((c,i)=> c.addEventListener('click', ()=> open(i)));
+      cards.forEach((c, i) => c.addEventListener('click', () => open(i)));
       closeEl.addEventListener('click', close);
-      prevEl.addEventListener('click', ()=> nav(-1));
-      nextEl.addEventListener('click', ()=> nav(1));
+      prevEl.addEventListener('click', () => nav(-1));
+      nextEl.addEventListener('click', () => nav(1));
       modal.addEventListener('click', e => { if (e.target === modal) close(); });
       document.addEventListener('keydown', e => {
         if (!modal.classList.contains('active')) return;
-        if (e.key==='Escape') close();
-        if (e.key==='ArrowLeft') nav(-1);
-        if (e.key==='ArrowRight') nav(1);
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') nav(-1);
+        if (e.key === 'ArrowRight') nav(1);
       });
     })();
   </script>
 </body>
 </html>
-

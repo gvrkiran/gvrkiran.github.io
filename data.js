@@ -1107,3 +1107,12 @@ const PRESS = [
   { outlet: "The Hindu", title: "Rumors and Responsibility", link: "#" }
 ];
 
+
+window.PROFILE = PROFILE;
+window.KEYWORDS = KEYWORDS;
+window.HIGHLIGHTS = HIGHLIGHTS;
+window.PROJECTS = PROJECTS;
+window.PUBLICATIONS = PUBLICATIONS;
+window.TEACHING = TEACHING;
+window.TALKS = TALKS;
+window.PRESS = PRESS;

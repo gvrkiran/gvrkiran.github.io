@@ -1,68 +1,96 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Advice — Kiran Garimella</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Advice · Kiran Garimella</title>
   <meta name="description" content="Notes for PhD students, job market tips, and how to reach out for a chat." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
+  <style>
+    .subpage main { padding-top: 5rem; padding-bottom: 4rem; }
+    .subpage .section-heading { margin-bottom: 0.6rem; }
+    .subpage .lead { max-width: 70ch; opacity: 0.85; margin-bottom: 1.6rem; font-size: 1.05rem; }
+    .subpage-back { display: inline-block; margin-bottom: 1.2rem; font-size: 0.92rem; opacity: 0.75; }
+    .subpage-back:hover { opacity: 1; }
+    .subpage .card { margin-bottom: 1rem; }
+    .subpage .card h3 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .subpage .card p { line-height: 1.6; margin-bottom: 0.5rem; }
+    .subpage .card a { color: var(--color-accent); text-decoration: underline; }
+  </style>
 </head>
-<body data-page="advice">
-  <header>
-    <div class="container nav">
-      <a class="brand" id="brand" href="index.html"></a>
-      <nav class="navlinks"><a href="other.html">Other</a></nav>
-      <div class="actions"><button class="btn" id="themeBtn" aria-label="Toggle theme">☀️</button></div>
-    </div>
+<body class="subpage">
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="index.html">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
   </header>
 
-  <main class="container">
-    <section>
-      <h1 style="margin:0 0 10px">Advice</h1>
-      <p class="muted" style="max-width:75ch">A living page with a few notes I often share with students. If something resonates—or if you’re stuck—feel free to reach out.</p>
+  <main id="top">
+    <section class="section">
+      <a class="subpage-back" href="index.html">← Back to home</a>
+      <h1 class="section-heading">Advice</h1>
+      <p class="lead">A living page with a few notes I often share with students. If something resonates — or if you're stuck — feel free to reach out.</p>
 
-      <div class="stack">
-        <div class="card"><div class="content">
-          <h3>Office hours for PhD students/Early career faculty</h3>
-          <p>If you’re in data science / computational social science and feel stuck or helpless, I keep informal slots to chat. We can talk about research, life, or hobbies.</p>
-          <p class="muted" style="font-size:14px">Some personal reflections collected during my PhD are <a class="link" href="experiences.html" style="color:blue">here</a>—they’re highly personal and may not apply to everyone.</p>
-          <p class="muted" style="font-size:14px">Some personal reflections collected during my faculty time are <a class="link" href="experiences_faculty.html" style="color:blue">here</a>—they’re highly personal and may not apply to everyone.</p>
-        </div></div>
+      <article class="card">
+        <h3>Office hours for PhD students / early-career faculty</h3>
+        <p>If you're in data science / computational social science and feel stuck or helpless, I keep informal slots to chat. We can talk about research, life, or hobbies.</p>
+        <p>Some personal reflections collected during my PhD are <a href="experiences.html">here</a> — they're highly personal and may not apply to everyone.</p>
+        <p>Some personal reflections collected during my faculty time are <a href="experiences_faculty.html">here</a> — same caveat.</p>
+      </article>
 
-        <div class="card"><div class="content">
-          <h3>Thinking about a PhD?</h3>
-          <p>A PhD can be the most intense and productive 4–5 years of your life. It helps to know your <em>why</em> up front—dark patches happen, and that clarity keeps you steady.</p>
-        </div></div>
+      <article class="card">
+        <h3>Thinking about a PhD?</h3>
+        <p>A PhD can be the most intense and productive 4–5 years of your life. It helps to know your <em>why</em> up front — dark patches happen, and that clarity keeps you steady.</p>
+      </article>
 
-        <div class="card"><div class="content">
-          <h3>Academic job market</h3>
-          <p>If you’re on the postdoc/faculty market and want feedback on materials or process, I’m happy to chat.</p>
-        </div></div>
+      <article class="card">
+        <h3>Academic job market</h3>
+        <p>If you're on the postdoc / faculty market and want feedback on materials or process, I'm happy to chat.</p>
+      </article>
 
-	<div class="card"><div class="content">
-          <h3>Faculty life</h3>
-	  <p>If you have a lot of free time and are wondering how faculty life looks like, I have some videos on my <a href="https://www.youtube.com/@gvrkirann/videos" target="_blank" style="color:blue">YouTube channel</a> recording what I did every week for a few months. It's mostly for my own consumption and accountability but might be insightful.
-	  </p>
-        </div></div>
-
-      </div>
-
-      <div class="spacer"></div>
-      <div class="row">
-        <a class="link" href="other.html">← Back to Other</a>
-      </div>
+      <article class="card">
+        <h3>Faculty life</h3>
+        <p>If you have a lot of free time and are wondering what faculty life looks like, I have some videos on my <a href="https://www.youtube.com/@gvrkirann/videos" target="_blank" rel="noopener">YouTube channel</a> recording what I did every week for a few months. It's mostly for my own consumption and accountability but might be insightful.</p>
+      </article>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container row">
-      <div id="copyright"></div>
-      <div><a class="link" href="index.html">Back to home</a></div>
-    </div>
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
   </footer>
 
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
   <script src="data.js"></script>
-  <script src="main.js"></script>
+  <script>
+    (function () {
+      const links = [
+        { label: 'About',        href: 'index.html#about' },
+        { label: 'Publications', href: 'publications.html' },
+        { label: 'Projects',     href: 'index.html#projects' },
+        { label: 'Teaching',     href: 'index.html#teaching' },
+        { label: 'Other',        href: 'index.html#other' },
+      ];
+      const nav = document.getElementById('navLinks');
+      if (nav) nav.innerHTML = links.map(l => `<a href="${l.href}">${l.label}</a>`).join('');
+      const cr = document.getElementById('copyright');
+      if (cr) cr.textContent = `© ${new Date().getFullYear()} Kiran Garimella`;
+    })();
+  </script>
 </body>
 </html>
-
