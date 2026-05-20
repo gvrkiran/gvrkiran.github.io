@@ -91,6 +91,364 @@ button { background: none; border: 0; cursor: pointer; padding: 0; }
   .nav-bar { padding: 0.7rem 1rem; }
 }
 
+html[data-motif="atlas"] {
+  --motif-accent: #d9a24b;
+  --motif-accent-2: #365f8f;
+  --motif-shell: color-mix(in srgb, var(--color-bg) 84%, #f6e8cf 16%);
+}
+html[data-motif="signal"] {
+  --motif-accent: #d06e52;
+  --motif-accent-2: #294f73;
+  --motif-shell: color-mix(in srgb, var(--color-bg) 84%, #edd9d0 16%);
+}
+html[data-motif="fieldnotes"] {
+  --motif-accent: #8a6f38;
+  --motif-accent-2: #465d82;
+  --motif-shell: color-mix(in srgb, var(--color-bg) 84%, #e7e1d3 16%);
+}
+
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.nav-brand-mark {
+  width: 1.9rem;
+  aspect-ratio: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  background: var(--motif-shell, var(--color-bg));
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  flex: none;
+}
+
+.nav-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-brand-text {
+  display: inline-block;
+}
+
+.hero-section {
+  overflow: clip;
+}
+
+.hero-text,
+.hero-portrait {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-identity-deck {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: min(24px, var(--card-radius, 24px));
+  background: var(--motif-shell, var(--color-bg));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+  max-width: min(100%, 34rem);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.hero-identity-deck:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px rgba(0,0,0,0.1);
+}
+
+.hero-seal-card {
+  width: clamp(84px, 12vw, 120px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  background: #fff;
+  flex: none;
+  transition: transform 220ms ease;
+}
+
+.hero-identity-deck:hover .hero-seal-card {
+  transform: rotate(-5deg) scale(1.02);
+}
+
+.hero-seal-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-motif-copy {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.hero-motif-eyebrow,
+.motif-eyebrow {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--motif-accent-2);
+  font-weight: 700;
+}
+
+.hero-motif-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.16rem);
+  line-height: 1.35;
+  color: var(--color-heading);
+}
+
+.hero-motif-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.hero-motif-chips span,
+.motif-rail span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  line-height: 1.1;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--motif-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--color-bg) 82%, var(--motif-accent) 18%);
+}
+
+.hero-poster-float {
+  position: absolute;
+  right: -3%;
+  bottom: -2rem;
+  width: clamp(118px, 13vw, 180px);
+  z-index: 0;
+  transform: rotate(6deg);
+  transition: transform 280ms ease;
+}
+
+.hero-portrait:hover .hero-poster-float {
+  transform: rotate(8deg) translateY(-3px);
+}
+
+.hero-poster-float img {
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.18);
+}
+
+.hero-poster-float figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-align: right;
+  color: var(--color-muted);
+}
+
+.face-frame {
+  position: relative;
+  z-index: 2;
+}
+
+.motif-pointer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  transform-origin: right center;
+  transition: transform 240ms ease, right 240ms ease, top 240ms ease, left 240ms ease, opacity 240ms ease;
+}
+
+.motif-pointer img {
+  width: 100%;
+  height: auto;
+}
+
+.motif-pointer--hero {
+  width: min(190px, 19vw);
+  right: calc(100% + 0.4rem);
+  top: 54%;
+  transform: translateY(-50%) rotate(-6deg);
+  filter: drop-shadow(0 16px 24px rgba(0,0,0,0.16));
+}
+
+body[data-hover-cue="quicklinks"] .motif-pointer--hero {
+  top: 49%;
+  right: calc(100% + 0.1rem);
+  transform: translateY(-50%) rotate(-10deg) scale(1.03);
+}
+
+body[data-hover-cue="publications"] .motif-pointer--hero {
+  top: 62%;
+  right: calc(100% + 0.6rem);
+  transform: translateY(-50%) rotate(2deg);
+}
+
+body[data-hover-cue="projects"] .motif-pointer--hero {
+  top: 66%;
+  right: calc(100% + 0.8rem);
+  transform: translateY(-50%) rotate(6deg);
+}
+
+body[data-hover-cue="teaching"] .motif-pointer--hero {
+  top: 60%;
+  right: calc(100% + 0.4rem);
+  transform: translateY(-50%) rotate(1deg) scale(0.98);
+}
+
+body[data-hover-cue="other"] .motif-pointer--hero,
+body[data-hover-cue="toggle"] .motif-pointer--hero {
+  top: 44%;
+  right: calc(100% - 0.2rem);
+  transform: translateY(-50%) rotate(-14deg);
+}
+
+.motif-interlude {
+  max-width: 1240px;
+  margin: 1rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.motif-interlude-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 1.2rem;
+  align-items: stretch;
+}
+
+.motif-wide-card,
+.motif-interlude-copy {
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  border-radius: min(28px, var(--card-radius, 28px));
+  overflow: hidden;
+  background: var(--motif-shell, var(--color-bg));
+  box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+}
+
+.motif-wide-card {
+  min-height: 310px;
+}
+
+.motif-wide-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 420ms ease;
+}
+
+.motif-interlude-inner:hover .motif-wide-card img {
+  transform: scale(1.025);
+}
+
+.motif-interlude-copy {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.motif-interlude-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 0.98;
+  margin-top: 0.55rem;
+  color: var(--color-heading);
+}
+
+.motif-interlude-copy p {
+  margin-top: 0.85rem;
+  color: var(--color-muted);
+  max-width: 44ch;
+}
+
+.motif-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.motif-interlude[data-section="motif"] .motif-interlude-copy {
+  transform: translateY(0);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+body[data-active-panel="motif"] .motif-interlude-copy {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 56px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 960px) {
+  .hero-poster-float {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin-top: 1.2rem;
+    width: min(220px, 56vw);
+  }
+
+  .motif-pointer--hero {
+    width: min(180px, 42vw);
+    right: auto;
+    left: -0.5rem;
+    top: auto;
+    bottom: -1.2rem;
+    transform: rotate(-5deg);
+  }
+
+  body[data-hover-cue="quicklinks"] .motif-pointer--hero,
+  body[data-hover-cue="publications"] .motif-pointer--hero,
+  body[data-hover-cue="projects"] .motif-pointer--hero,
+  body[data-hover-cue="teaching"] .motif-pointer--hero,
+  body[data-hover-cue="other"] .motif-pointer--hero,
+  body[data-hover-cue="toggle"] .motif-pointer--hero {
+    left: -0.5rem;
+    bottom: -1.5rem;
+    transform: rotate(-8deg) scale(1.02);
+  }
+
+  .motif-interlude-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-identity-deck {
+    grid-template-columns: 1fr;
+    text-align: left;
+    padding: 0.9rem;
+  }
+
+  .hero-seal-card {
+    width: 90px;
+  }
+
+  .motif-interlude {
+    padding: 0 1rem;
+  }
+
+  .motif-interlude-copy {
+    padding: 1rem;
+  }
+
+  .motif-wide-card {
+    min-height: 240px;
+  }
+}
+
 /* Quick-links bar */
 .quick-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .quick-links a {

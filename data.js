@@ -160,7 +160,7 @@ const PUBLICATIONS = [
     venue: "CSCW 2026",
     authors: ["Gauri Nayak", "Farhana Shahid", "Kiran Garimella", "Aditya Vashistha"],
     links: [
-      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
+      { label: "paper", href: "content/group_rules_cscw.pdf" }
     ]
   },
 

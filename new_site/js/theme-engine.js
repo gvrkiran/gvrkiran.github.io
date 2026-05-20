@@ -96,7 +96,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     const themeName = document.getElementById('themeName');
-    if (themeName) themeName.textContent = `Designed with Claude. Reload for a different template (${theme.name} · #${theme.n}/10)`;
+    if (themeName) themeName.textContent = `Reload for a different theme (${theme.name} · #${theme.n}/10)`;
 
     const btn = document.getElementById('modeToggle');
     if (btn) {
