@@ -78,6 +78,16 @@ const PUBLICATIONS = [
  {
     year: "Unpublished",
     status: "Under review",
+    title: "Inferential Privacy Leakage in Anonymized Conversational AI Logs",
+    venue: "Under review",
+    authors: ["S M Mehedi Zaman","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/chatgpt_demographics_prediction.pdf"}
+    ]
+  },
+ {
+    year: "Unpublished",
+    status: "Under review",
     title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
     venue: "Under review",
     authors: ["Shreyasi Roy Chowdhuri","Kiran Garimella"],
