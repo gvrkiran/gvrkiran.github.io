@@ -1,0 +1,495 @@
+/* Theme 12 — Observatory. Layout: L4.
+   Publications become a star atlas. Dark = a night sky you can explore;
+   light = an 18th-century engraved celestial chart of the SAME data.
+   The canvas (js/theme-12-observatory.js) reads --t12-star / --t12-line /
+   --t12-bg via getComputedStyle, so both palettes drive one renderer. */
+
+html[data-theme="12"] {
+  --color-bg: #050a18;
+  --color-fg: #d8e0ef;
+  --color-heading: #fff7e6;
+  --color-accent: #7dd3fc;
+  --color-accent-2: #f6c667;
+  --color-muted: #8b98b5;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1.02rem;
+  --line-height-body: 1.62;
+  --heading-tracking: 0.01em;
+  --nav-brand-tracking: 0.22em;
+
+  --face-size: 240px;
+  --btn-radius: 999px;
+  --card-radius: 3px;
+  --card-bg: rgba(14, 24, 46, 0.66);
+  --card-border: 1px solid rgba(125, 211, 252, 0.2);
+  --card-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
+  --nav-bg: rgba(5, 10, 24, 0.55);
+  --nav-backdrop: blur(10px);
+
+  /* Canvas palette — dark (night sky). Read by JS via getComputedStyle. */
+  --t12-bg: #050a18;
+  --t12-star: #fff7e6;
+  --t12-line: rgba(125, 211, 252, 0.25);
+  --t12-glow: #f6c667;
+  --t12-hatch: 0;               /* 0 = round glowing stars (night sky) */
+
+  color-scheme: dark;
+}
+
+/* ---- LIGHT MODE = engraved celestial chart on laid paper ---- */
+html[data-theme="12"][data-mode="light"] {
+  --color-bg: #f5efdd;
+  --color-fg: #3b3220;
+  --color-heading: #2c2413;
+  --color-accent: #6a5320;
+  --color-accent-2: #8a3b1e;
+  --color-muted: #7a6a4c;
+
+  --card-bg: rgba(245, 239, 221, 0.7);
+  --card-border: 1px solid rgba(74, 59, 34, 0.35);
+  --card-shadow: none;
+  --nav-bg: rgba(245, 239, 221, 0.72);
+  --nav-backdrop: blur(6px);
+
+  --t12-bg: #f5efdd;
+  --t12-star: #4a3b22;          /* sepia ink */
+  --t12-line: rgba(74, 59, 34, 0.5);
+  --t12-glow: #8a3b1e;
+  --t12-hatch: 1;               /* 1 = engraved dots + cross-hatches */
+
+  color-scheme: light;
+}
+
+html[data-theme="12"] body { background: var(--color-bg); }
+
+/* ============================================================
+   HERO BACKGROUND
+   Layer 1 (::before): CSS starfield fallback — visible with NO JS.
+   The JS canvas is appended on top and paints the real star atlas.
+   ============================================================ */
+html[data-theme="12"] .hero-bg {
+  background: var(--color-bg);
+}
+
+/* Faint milky-way band + deep-space glow (dark) */
+html[data-theme="12"][data-mode="dark"] .hero-bg {
+  background:
+    radial-gradient(120% 60% at 78% 18%, rgba(125, 211, 252, 0.08), transparent 60%),
+    radial-gradient(130% 70% at 20% 88%, rgba(246, 198, 103, 0.05), transparent 62%),
+    var(--color-bg);
+}
+
+/* No-JS decorative starfield: three layered radial-gradient dot patterns.
+   Data-less by design; content stays unaffected and readable. */
+html[data-theme="12"] .hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  opacity: 0.9;
+}
+html[data-theme="12"][data-mode="dark"] .hero-bg::before {
+  background-image:
+    radial-gradient(1.4px 1.4px at 20px 30px, rgba(255, 247, 230, 0.9), transparent 60%),
+    radial-gradient(1px 1px at 120px 80px, rgba(255, 247, 230, 0.55), transparent 60%),
+    radial-gradient(1.6px 1.6px at 210px 150px, rgba(125, 211, 252, 0.7), transparent 60%);
+  background-size: 250px 220px, 190px 170px, 320px 300px;
+}
+html[data-theme="12"][data-mode="light"] .hero-bg::before {
+  background-image:
+    radial-gradient(1.3px 1.3px at 24px 28px, rgba(74, 59, 34, 0.85), transparent 60%),
+    radial-gradient(1px 1px at 118px 84px, rgba(74, 59, 34, 0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 206px 150px, rgba(138, 59, 30, 0.5), transparent 60%);
+  background-size: 240px 210px, 180px 165px, 300px 280px;
+}
+/* Once the JS canvas is live, hide the CSS placeholder starfield. */
+html[data-theme="12"].t12-js .hero-bg::before { display: none; }
+
+/* Ornate double-rule border + corner rosettes around the hero (light chart) */
+html[data-theme="12"][data-mode="light"] .hero-section {
+  --frame: 26px;
+}
+html[data-theme="12"][data-mode="light"] .hero-section::before,
+html[data-theme="12"][data-mode="light"] .hero-section::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+/* double rule */
+html[data-theme="12"][data-mode="light"] .hero-section::before {
+  inset: 14px;
+  border: 1px solid rgba(74, 59, 34, 0.55);
+  box-shadow: inset 0 0 0 4px var(--color-bg), inset 0 0 0 5px rgba(74, 59, 34, 0.35);
+}
+/* corner rosettes (four ✦ glyphs pinned to corners via radial gradients + a glyph layer) */
+html[data-theme="12"][data-mode="light"] .hero-section::after {
+  inset: 14px;
+  background:
+    radial-gradient(circle at 0 0,      rgba(74,59,34,0.55) 2.2px, transparent 3px) 6px 6px / 24px 24px no-repeat,
+    radial-gradient(circle at 100% 0,   rgba(74,59,34,0.55) 2.2px, transparent 3px) -6px 6px / 24px 24px no-repeat,
+    radial-gradient(circle at 0 100%,   rgba(74,59,34,0.55) 2.2px, transparent 3px) 6px -6px / 24px 24px no-repeat,
+    radial-gradient(circle at 100% 100%,rgba(74,59,34,0.55) 2.2px, transparent 3px) -6px -6px / 24px 24px no-repeat;
+}
+/* Keep hero text clear of the light-mode frame */
+html[data-theme="12"][data-mode="light"] .hero-inner { padding-left: 2.6rem; padding-right: 2.6rem; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+html[data-theme="12"] .nav-bar {
+  border-bottom: 1px solid var(--card-border);
+}
+html[data-theme="12"] .nav-brand {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-heading);
+}
+html[data-theme="12"] .nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-fg);
+}
+html[data-theme="12"] .nav-toggle {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+html[data-theme="12"][data-mode="light"] .nav-toggle { color: var(--color-accent-2); border-color: var(--color-accent-2); }
+
+/* ============================================================
+   HERO TEXT
+   ============================================================ */
+html[data-theme="12"] .hero-name {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 1.02;
+  color: var(--color-heading);
+  letter-spacing: -0.01em;
+}
+html[data-theme="12"][data-mode="dark"] .hero-name {
+  text-shadow: 0 0 24px rgba(246, 198, 103, 0.28);
+}
+html[data-theme="12"] .hero-role {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.76rem;
+  color: var(--color-accent);
+  margin-top: 0.9rem;
+}
+html[data-theme="12"][data-mode="light"] .hero-role { color: var(--color-accent-2); }
+html[data-theme="12"] .hero-tagline {
+  font-family: var(--font-body);
+  color: var(--color-fg);
+  max-width: 52ch;
+  margin-top: 1rem;
+  font-size: 1.08rem;
+  font-style: italic;
+}
+
+/* A small coordinate readout under the tagline, echoing a chart's grid ticks. */
+html[data-theme="12"] .hero-text::after {
+  content: 'RA 00h 00m · DEC +40° 26′ · epoch J2026';
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  opacity: 0.85;
+}
+
+html[data-theme="12"] .quick-links { margin-top: 1.5rem; gap: 0.5rem; }
+html[data-theme="12"] .quick-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--card-border);
+  color: var(--color-fg);
+  background: rgba(255, 255, 255, 0.02);
+}
+html[data-theme="12"][data-mode="light"] .quick-links a { background: rgba(74, 59, 34, 0.04); }
+html[data-theme="12"] .quick-links a:hover {
+  background: var(--color-accent);
+  color: #050a18;
+  border-color: var(--color-accent);
+}
+html[data-theme="12"][data-mode="light"] .quick-links a:hover {
+  background: var(--color-accent-2);
+  color: var(--color-bg);
+  border-color: var(--color-accent-2);
+}
+
+/* ============================================================
+   PORTRAIT — telescope eyepiece (thick ring + inner crosshairs)
+   ============================================================ */
+html[data-theme="12"] .face-frame {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid var(--color-accent);
+  box-shadow:
+    0 0 0 3px var(--color-bg),
+    0 0 0 10px rgba(125, 211, 252, 0.18),
+    0 0 44px rgba(0, 0, 0, 0.5);
+}
+html[data-theme="12"][data-mode="light"] .face-frame {
+  border-color: #2c2413;
+  box-shadow:
+    0 0 0 3px var(--color-bg),
+    0 0 0 10px rgba(74, 59, 34, 0.35);
+}
+html[data-theme="12"] .face-frame img {
+  border-radius: 50%;
+}
+html[data-theme="12"][data-mode="light"] .face-frame img {
+  filter: sepia(0.35) contrast(1.05);
+}
+/* inner crosshair lines at ~10% opacity */
+html[data-theme="12"] .face-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    linear-gradient(to right, transparent calc(50% - 0.5px), rgba(255, 247, 230, 0.5) calc(50% - 0.5px), rgba(255, 247, 230, 0.5) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(255, 247, 230, 0.5) calc(50% - 0.5px), rgba(255, 247, 230, 0.5) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  opacity: 0.1;
+}
+html[data-theme="12"][data-mode="light"] .face-frame::before {
+  background:
+    linear-gradient(to right, transparent calc(50% - 0.5px), #2c2413 calc(50% - 0.5px), #2c2413 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(50% - 0.5px), #2c2413 calc(50% - 0.5px), #2c2413 calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  opacity: 0.18;
+}
+
+/* ============================================================
+   SECTIONS below the hero — deep navy panels / paper leaves
+   ============================================================ */
+html[data-theme="12"] section.section {
+  border-top: 1px solid var(--card-border);
+}
+html[data-theme="12"] #about { border-top: none; }
+
+html[data-theme="12"] .section-heading {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 700;
+  color: var(--color-heading);
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+/* small ✦ before each heading */
+html[data-theme="12"] .section-heading::before {
+  content: '✦';
+  color: var(--color-accent);
+  font-size: 0.7em;
+  margin-right: 0.5rem;
+  vertical-align: 0.12em;
+}
+html[data-theme="12"][data-mode="light"] .section-heading::before { color: var(--color-accent-2); }
+
+/* Decorative coordinate-style metadata line under each heading (static CSS content).
+   Distinct per section so it reads like a real chart index rather than a repeat. */
+html[data-theme="12"] .section-body::before,
+html[data-theme="12"] #publications .section-body::before {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  margin-bottom: 1.3rem;
+  opacity: 0.85;
+}
+html[data-theme="12"] #about     .section-body::before { content: 'RA 02h 18m · DEC +12° 44′ · mag 3.1'; }
+html[data-theme="12"] #projects  .section-body::before { content: 'RA 06h 45m · DEC −16° 42′ · mag 1.4'; }
+html[data-theme="12"] #publications .section-body::before { content: 'RA 12h 34m · DEC +05° 12′ · 114 catalogued'; }
+html[data-theme="12"] #teaching  .section-body::before { content: 'RA 18h 36m · DEC +38° 47′ · mag 0.0'; }
+html[data-theme="12"] #other     .section-body::before { content: 'RA 22h 57m · DEC −29° 37′ · mag 1.2'; }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+html[data-theme="12"] .card {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+html[data-theme="12"] .card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.18rem;
+  color: var(--color-heading);
+  margin-bottom: 0.35rem;
+}
+html[data-theme="12"] .card p { color: var(--color-fg); }
+html[data-theme="12"] .pub-meta {
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+html[data-theme="12"] .pub-meta em { font-style: italic; color: var(--color-accent); }
+html[data-theme="12"][data-mode="light"] .pub-meta em { color: var(--color-accent-2); }
+html[data-theme="12"] .pub-links {
+  margin-top: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+html[data-theme="12"] .pub-links a { color: var(--color-accent); margin-right: 0.7rem; text-decoration: underline; }
+html[data-theme="12"][data-mode="light"] .pub-links a { color: var(--color-accent-2); }
+
+/* keyword chips = small star tags */
+html[data-theme="12"] .kw {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-accent);
+}
+html[data-theme="12"][data-mode="light"] .kw { color: var(--color-accent-2); }
+html[data-theme="12"] .kw::before { content: '✦ '; opacity: 0.7; }
+
+/* Other section cards + eyebrow */
+html[data-theme="12"] .other-feature-eyebrow { font-family: var(--font-mono); color: var(--color-accent); }
+html[data-theme="12"][data-mode="light"] .other-feature-eyebrow { color: var(--color-accent-2); }
+html[data-theme="12"] .other-feature-title { font-family: var(--font-display); color: var(--color-heading); }
+html[data-theme="12"] .other-feature-meta { color: var(--color-muted); }
+html[data-theme="12"] .other-cta a,
+html[data-theme="12"] .section-cta a {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+}
+html[data-theme="12"][data-mode="light"] .other-cta a,
+html[data-theme="12"][data-mode="light"] .section-cta a { color: var(--color-accent-2); }
+
+/* Teaching detail rows */
+html[data-theme="12"] .teach-term { font-family: var(--font-mono); letter-spacing: 0.06em; }
+html[data-theme="12"] .teach-info a { color: var(--color-accent); }
+html[data-theme="12"][data-mode="light"] .teach-info a { color: var(--color-accent-2); }
+
+/* About meta (keywords row lives here too) */
+html[data-theme="12"] .about-meta { color: var(--color-muted); font-family: var(--font-mono); font-size: 0.82rem; }
+
+/* Footer */
+html[data-theme="12"] .site-footer {
+  border-top: 1px solid var(--card-border);
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   STAR TOOLTIP (built by JS as .t12-tip) — styled like a chart label
+   ============================================================ */
+html[data-theme="12"] .t12-tip {
+  position: fixed;
+  z-index: 120;
+  max-width: 300px;
+  padding: 0.5rem 0.7rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  background: rgba(5, 10, 24, 0.92);
+  color: var(--color-heading);
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  border-radius: 3px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+html[data-theme="12"] .t12-tip[data-show="1"] { opacity: 1; transform: translateY(0); }
+html[data-theme="12"] .t12-tip .t12-tip-title { color: var(--color-accent-2); font-weight: 700; }
+html[data-theme="12"] .t12-tip .t12-tip-meta { color: var(--color-muted); }
+html[data-theme="12"][data-mode="light"] .t12-tip {
+  background: #fbf7ec;
+  color: #2c2413;
+  border-color: rgba(74, 59, 34, 0.6);
+  box-shadow: 0 6px 20px rgba(74, 59, 34, 0.25);
+}
+html[data-theme="12"][data-mode="light"] .t12-tip .t12-tip-title { color: var(--color-accent-2); }
+
+/* A discreet hint that the hero is interactive (homepage only) */
+html[data-theme="12"] .t12-hint {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  opacity: 0.75;
+  pointer-events: none;
+}
+@media (hover: none), (pointer: coarse) {
+  html[data-theme="12"] .t12-hint::after { content: 'tap a star'; }
+  html[data-theme="12"] .t12-hint span { display: none; }
+}
+
+/* ============================================================
+   SUBPAGES (publications.html etc.) — palette + type + card only.
+   No hero canvas here (JS guards on .hero-bg).
+   ============================================================ */
+html[data-theme="12"] .pubs-page .pub-year-heading {
+  font-family: var(--font-display);
+  color: var(--color-heading);
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.3rem;
+}
+html[data-theme="12"] .pubs-page .pub-year-heading::before {
+  content: '✦ ';
+  color: var(--color-accent);
+  font-size: 0.8em;
+}
+html[data-theme="12"][data-mode="light"] .pubs-page .pub-year-heading::before { color: var(--color-accent-2); }
+html[data-theme="12"] .pubs-page .pub-list li { border-bottom-color: var(--card-border); }
+html[data-theme="12"] .pubs-page .pub-list h3 { font-family: var(--font-display); color: var(--color-heading); }
+html[data-theme="12"] .pubs-page .pub-meta em { color: var(--color-accent); font-style: italic; }
+html[data-theme="12"][data-mode="light"] .pubs-page .pub-meta em { color: var(--color-accent-2); }
+html[data-theme="12"] .pubs-page .pub-links a { color: var(--color-accent); }
+html[data-theme="12"][data-mode="light"] .pubs-page .pub-links a { color: var(--color-accent-2); }
+html[data-theme="12"] .pubs-back { font-family: var(--font-mono); letter-spacing: 0.08em; }
+
+/* Give subpages the deep-space / paper wash so palette carries through */
+html[data-theme="12"][data-mode="dark"] body:not(:has(.hero-bg)) {
+  background:
+    radial-gradient(140% 80% at 82% -10%, rgba(125, 211, 252, 0.06), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 760px) {
+  html[data-theme="12"] .hero-name { font-size: clamp(2.2rem, 11vw, 3rem); }
+  html[data-theme="12"][data-mode="light"] .hero-inner { padding-left: 1.9rem; padding-right: 1.9rem; }
+  html[data-theme="12"] .t12-hint { bottom: 1rem; }
+}
