@@ -17,10 +17,21 @@
     { n: 5,  slug: 'editorial',        name: 'Editorial',       layout: 'L3' },
     { n: 6,  slug: 'specimen',         name: 'Specimen',        layout: 'L2' },
     { n: 7,  slug: 'brutalist-print',  name: 'Brutalist Print', layout: 'L3' },
-    { n: 8,  slug: 'dither',           name: 'Dither',          layout: 'L1' },
-    { n: 9,  slug: 'glitch',           name: 'Glitch',          layout: 'L4' },
-    { n: 10, slug: 'particle-field',   name: 'Particle Field',  layout: 'L4' },
+    { n: 8,  slug: 'dither',           name: 'Dither',          layout: 'L1', js: 'js/theme-08-dither.js' },
+    { n: 9,  slug: 'glitch',           name: 'Glitch',          layout: 'L4', js: 'js/theme-09-glitch.js' },
+    { n: 10, slug: 'particle-field',   name: 'Particle Field',  layout: 'L4', js: 'js/theme-10-particles.js' },
+    { n: 11, slug: 'vitrine',          name: 'Vitrine',         layout: 'L4', js: 'js/theme-11-vitrine.js' },
+    { n: 12, slug: 'observatory',      name: 'Observatory',     layout: 'L4', js: 'js/theme-12-observatory.js' },
+    { n: 13, slug: 'popup',            name: 'Pop-Up',          layout: 'L1', js: 'js/theme-13-popup.js' },
+    { n: 14, slug: 'ink',              name: 'Ink',             layout: 'L4', js: 'js/theme-14-ink.js' },
+    { n: 15, slug: 'holofoil',         name: 'Holofoil',        layout: 'L2', js: 'js/theme-15-holofoil.js' },
+    { n: 16, slug: 'desk-os',          name: 'Desk OS',         layout: 'L1', js: 'js/theme-16-deskos.js' },
+    { n: 17, slug: 'atlas',            name: 'Atlas',           layout: 'L2', js: 'js/theme-17-atlas.js' },
+    { n: 18, slug: 'nocturne',         name: 'Nocturne',        layout: 'L1', js: 'js/theme-18-nocturne.js' },
+    { n: 19, slug: 'herbarium',        name: 'Herbarium',       layout: 'L2', js: 'js/theme-19-herbarium.js' },
+    { n: 20, slug: 'wayback',          name: 'Wayback',         layout: 'L1', js: 'js/theme-20-wayback.js' },
   ];
+  const MAX = THEMES.length;
 
   const url = new URL(location.href);
   const urlTheme = parseInt(url.searchParams.get('theme'), 10);
@@ -36,11 +47,11 @@
   })();
 
   let pick;
-  if (urlTheme >= 1 && urlTheme <= 10) {
+  if (urlTheme >= 1 && urlTheme <= MAX) {
     pick = urlTheme;
-  } else if (forcedTheme >= 1 && forcedTheme <= 10) {
+  } else if (forcedTheme >= 1 && forcedTheme <= MAX) {
     pick = forcedTheme;
-  } else if (navType !== 'reload' && sessionTheme >= 1 && sessionTheme <= 10) {
+  } else if (navType !== 'reload' && sessionTheme >= 1 && sessionTheme <= MAX) {
     // In-session navigation (link click or back/forward) — keep the same theme.
     pick = sessionTheme;
   } else {
@@ -67,10 +78,7 @@
   link.href = cssHref;
   document.head.appendChild(link);
 
-  const lazyScript = (theme.n === 8) ? 'js/theme-08-dither.js'
-                  : (theme.n === 9) ? 'js/theme-09-glitch.js'
-                  : (theme.n === 10) ? 'js/theme-10-particles.js'
-                  : null;
+  const lazyScript = theme.js || null;
 
   window.__theme = {
     THEMES,
@@ -83,7 +91,7 @@
     },
     getMode() { return mode; },
     forceTheme(n) {
-      if (n >= 1 && n <= 10) {
+      if (n >= 1 && n <= MAX) {
         localStorage.setItem('forced_theme', String(n));
         location.reload();
       }
@@ -96,7 +104,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     const themeName = document.getElementById('themeName');
-    if (themeName) themeName.textContent = `Designed with Claude. Reload for a different template (${theme.name} · #${theme.n}/10)`;
+    if (themeName) themeName.textContent = `Designed with Claude. Reload for a different template (${theme.name} · #${theme.n}/${MAX})`;
 
     const btn = document.getElementById('modeToggle');
     if (btn) {

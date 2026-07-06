@@ -264,3 +264,12 @@ button { background: none; border: 0; cursor: pointer; padding: 0; }
   margin-top: 0.3rem;
   line-height: 1.5;
 }
+
+/* ===== v2 additions (themes 11–20) — appended, safe to delete ===== */
+
+/* Picker now lists 20 themes; let it scroll if it overflows the box. */
+.theme-picker ul { max-height: 70vh; overflow-y: auto; }
+
+/* Reusable full-viewport decoration layer used by several new themes.
+   Always non-interactive so it never blocks nav, links, or the ? picker. */
+.t-fixed-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
