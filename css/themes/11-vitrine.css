@@ -1,0 +1,480 @@
+/* Theme 11 — Vitrine (glass, light, sparkle). Layout: L4.
+   The page as an exhibition vitrine: content on floating panes of frosted
+   glass, lit by slow-moving light caustics, with tiny specular glints that
+   answer the cursor. Everything scoped under html[data-theme="11"]. */
+
+html[data-theme="11"] {
+  --color-bg: #eef4ff;
+  --color-fg: #182234;
+  --color-heading: #0f1a2e;
+  --color-accent: #2f79d6;      /* sky-glass blue */
+  --color-accent-2: #8a6be6;    /* pale violet */
+  --color-muted: #45536b;
+
+  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-heading: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1.02rem;
+  --line-height-body: 1.62;
+  --heading-tracking: -0.02em;
+  --nav-brand-tracking: 0.12em;
+
+  --face-size: 300px;
+  --btn-radius: 999px;
+  --card-radius: 20px;
+
+  /* Glass pane tokens (light). Frost tint kept high enough that text on the
+     pane clears 4.5:1 even where the animated gradient runs darkest. */
+  --t11-pane: rgba(255, 255, 255, 0.58);
+  --t11-pane-strong: rgba(255, 255, 255, 0.72);
+  --t11-pane-hi: rgba(255, 255, 255, 0.6);   /* inset top highlight */
+  --t11-pane-border: rgba(255, 255, 255, 0.7);
+  --t11-glint-a: rgba(255, 255, 255, 0.9);
+  --t11-glint-b: rgba(150, 200, 255, 0.8);
+  --t11-caustic: 47, 121, 214;               /* rgb of accent, for JS shader */
+  --t11-light: rgba(255, 255, 255, 0.28);    /* cursor light strength */
+
+  --card-bg: var(--t11-pane);
+  --card-border: 1px solid var(--t11-pane-border);
+  --card-shadow:
+    0 18px 40px -18px rgba(24, 44, 92, 0.35),
+    0 4px 12px -6px rgba(24, 44, 92, 0.2);
+
+  --nav-bg: rgba(255, 255, 255, 0.42);
+  --nav-backdrop: blur(16px) saturate(1.5);
+}
+
+html[data-theme="11"][data-mode="dark"] {
+  --color-bg: #060913;
+  --color-fg: #eef3fb;
+  --color-heading: #ffffff;
+  --color-accent: #7dd3fc;
+  --color-accent-2: #c4b5fd;
+  --color-muted: #c3ccdb;
+
+  --t11-pane: rgba(255, 255, 255, 0.07);
+  --t11-pane-strong: rgba(255, 255, 255, 0.11);
+  --t11-pane-hi: rgba(255, 255, 255, 0.22);
+  --t11-pane-border: rgba(255, 255, 255, 0.14);
+  --t11-glint-a: rgba(224, 242, 255, 0.95);
+  --t11-glint-b: rgba(196, 181, 253, 0.85);
+  --t11-caustic: 125, 211, 252;
+  --t11-light: rgba(190, 220, 255, 0.14);
+
+  --card-shadow:
+    0 22px 48px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+
+  --nav-bg: rgba(10, 16, 32, 0.5);
+  --nav-backdrop: blur(16px) saturate(1.4);
+}
+
+/* ============================ Background field ============================ */
+/* A slow animated gradient behind everything. The body layer is the canonical
+   fallback (no-JS / mobile / WebGL failure). The caustics <canvas> (added by
+   JS into .hero-bg) rides *above* this in the hero only. */
+html[data-theme="11"] body {
+  background:
+    linear-gradient(135deg, #dbeafe 0%, #f0f9ff 45%, #ede9fe 100%);
+  background-size: 300% 300%;
+  background-attachment: fixed;
+  animation: t11-drift 42s ease-in-out infinite;
+}
+html[data-theme="11"][data-mode="dark"] body {
+  background:
+    radial-gradient(60vw 55vh at 18% 12%, rgba(125, 211, 252, 0.12), transparent 60%),
+    radial-gradient(55vw 60vh at 82% 78%, rgba(196, 181, 253, 0.11), transparent 62%),
+    radial-gradient(50vw 45vh at 60% 40%, rgba(99, 102, 241, 0.08), transparent 65%),
+    #060913;
+  background-size: 200% 200%, 200% 200%, 220% 220%, 100% 100%;
+  background-attachment: fixed;
+  animation: t11-drift-dark 46s ease-in-out infinite;
+}
+@keyframes t11-drift {
+  0%   { background-position: 0% 30%; }
+  50%  { background-position: 100% 70%; }
+  100% { background-position: 0% 30%; }
+}
+@keyframes t11-drift-dark {
+  0%   { background-position: 0% 0%, 100% 100%, 40% 60%, 0 0; }
+  50%  { background-position: 100% 40%, 0% 60%, 70% 20%, 0 0; }
+  100% { background-position: 0% 0%, 100% 100%, 40% 60%, 0 0; }
+}
+
+/* The L4 hero fills .hero-bg with a canvas (via JS). Give it a soft gradient
+   base so it is never blank if the canvas is absent (mobile / no-WebGL). */
+html[data-theme="11"] .hero-bg {
+  background:
+    radial-gradient(70% 60% at 25% 25%, rgba(125, 211, 252, 0.22), transparent 60%),
+    radial-gradient(65% 60% at 78% 72%, rgba(196, 181, 253, 0.2), transparent 62%);
+}
+html[data-theme="11"][data-mode="dark"] .hero-bg {
+  background:
+    radial-gradient(70% 60% at 25% 25%, rgba(125, 211, 252, 0.16), transparent 60%),
+    radial-gradient(65% 60% at 78% 72%, rgba(196, 181, 253, 0.15), transparent 62%);
+}
+/* Canvas the JS appends. */
+html[data-theme="11"] .hero-bg .t11-caustics {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+html[data-theme="11"][data-mode="dark"] .hero-bg .t11-caustics {
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+
+/* ============================== Nav bar ================================== */
+html[data-theme="11"] .nav-bar {
+  border-bottom: 1px solid var(--t11-pane-border);
+  box-shadow: inset 0 1px 0 var(--t11-pane-hi), 0 8px 24px -18px rgba(24, 44, 92, 0.4);
+}
+html[data-theme="11"] .nav-brand {
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+html[data-theme="11"] .nav-links a {
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-weight: 500;
+  opacity: 0.85;
+}
+html[data-theme="11"] .nav-links a:hover { opacity: 1; color: var(--color-accent); }
+html[data-theme="11"] .nav-toggle {
+  border: 1px solid var(--t11-pane-border);
+  background: var(--t11-pane);
+  color: var(--color-fg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+html[data-theme="11"] .nav-toggle:hover { color: var(--color-accent); }
+
+/* ============================ Hero typography ============================ */
+html[data-theme="11"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 8vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  /* Solid fallback FIRST (never blank), gradient text where supported. */
+  color: var(--color-heading);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  html[data-theme="11"] .hero-name {
+    background: linear-gradient(180deg, #ffffff 0%, #cfe0fb 55%, #b9c9f2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    /* Lift so light-on-light text keeps an edge against the pale gradient. */
+    text-shadow: 0 1px 2px rgba(24, 44, 92, 0.22);
+  }
+  /* In light mode a white→blue clip on a pale field can wash out; add a
+     drop-shadow halo so it reads as an engraved-glass headline. */
+  html[data-theme="11"] .hero-name {
+    filter: drop-shadow(0 2px 6px rgba(31, 60, 120, 0.28));
+  }
+  html[data-theme="11"][data-mode="dark"] .hero-name {
+    background: linear-gradient(180deg, #ffffff 0%, #d9ecff 55%, #c4b5fd 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 2px 10px rgba(125, 211, 252, 0.25));
+    text-shadow: none;
+  }
+}
+
+html[data-theme="11"] .hero-role {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1.05rem;
+  color: var(--color-accent);
+  margin-top: 0.9rem;
+}
+html[data-theme="11"] .hero-tagline {
+  font-family: var(--font-body);
+  color: var(--color-fg);
+  opacity: 0.92;
+  max-width: 46ch;
+  margin-top: 0.9rem;
+  font-size: 1.08rem;
+}
+
+/* Quick-links as little glass pills. */
+html[data-theme="11"] .quick-links { margin-top: 1.6rem; gap: 0.6rem; }
+html[data-theme="11"] .quick-links a {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--t11-pane-border);
+  border-radius: 999px;
+  background: var(--t11-pane-strong);
+  color: var(--color-heading);
+  box-shadow:
+    inset 0 1px 0 var(--t11-pane-hi),
+    0 8px 20px -12px rgba(24, 44, 92, 0.35);
+  backdrop-filter: blur(10px) saturate(1.5);
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+}
+html[data-theme="11"][data-mode="dark"] .quick-links a { color: var(--color-fg); }
+html[data-theme="11"] .quick-links a:hover {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -12px rgba(47, 121, 214, 0.7);
+}
+html[data-theme="11"][data-mode="dark"] .quick-links a:hover {
+  color: #06121f;
+  box-shadow: 0 12px 26px -12px rgba(125, 211, 252, 0.6);
+}
+
+/* ============================ Portrait glass block ======================= */
+html[data-theme="11"] .face-frame {
+  border-radius: 24px;
+  border: 6px solid var(--t11-pane-strong);
+  background: var(--t11-pane);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(6px) saturate(1.4);
+  -webkit-backdrop-filter: blur(6px) saturate(1.4);
+  /* Chromatic edge: cyan on the left, pink on the right, plus depth. */
+  box-shadow:
+    inset 0 1px 0 var(--t11-pane-hi),
+    -1px 0 0 rgba(125, 211, 252, 0.85),
+    1px 0 0 rgba(244, 114, 182, 0.8),
+    0 26px 60px -22px rgba(24, 44, 92, 0.5);
+}
+html[data-theme="11"][data-mode="dark"] .face-frame {
+  box-shadow:
+    inset 0 1px 0 var(--t11-pane-hi),
+    -1px 0 0 rgba(125, 211, 252, 0.7),
+    1px 0 0 rgba(196, 181, 253, 0.65),
+    0 30px 70px -24px rgba(0, 0, 0, 0.8);
+}
+html[data-theme="11"] .face-frame img { border-radius: 18px; }
+/* Diagonal glare streak sweeping the glass block. */
+html[data-theme="11"] .face-frame::after {
+  content: '';
+  position: absolute;
+  top: -40%; left: -30%;
+  width: 60%; height: 180%;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.12) 55%,
+    transparent 100%);
+  transform: rotate(8deg);
+  pointer-events: none;
+  animation: t11-glare 9s ease-in-out infinite;
+}
+@keyframes t11-glare {
+  0%, 100% { transform: translateX(-20%) rotate(8deg); opacity: 0.5; }
+  50%      { transform: translateX(220%) rotate(8deg); opacity: 0.9; }
+}
+
+/* ============================ Section headings =========================== */
+html[data-theme="11"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+html[data-theme="11"][data-mode="dark"] .section-heading { text-shadow: none; }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  html[data-theme="11"] .section-heading {
+    background: linear-gradient(180deg, var(--color-heading) 0%, var(--color-accent) 160%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* ============================ Glass cards ================================ */
+html[data-theme="11"] .card,
+html[data-theme="11"] .other-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--t11-pane-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow), inset 0 1px 0 var(--t11-pane-hi);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  overflow: hidden;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease;
+}
+/* Cursor-as-light layer: a soft radial highlight positioned at --lx/--ly
+   (written to :root by JS). Sits above the frost, below the text. */
+html[data-theme="11"] .card::before,
+html[data-theme="11"] .other-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(400px circle at var(--lx, 50%) var(--ly, 0%),
+    var(--t11-light), transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 300ms ease;
+}
+html[data-theme="11"] .card > *,
+html[data-theme="11"] .other-card > * { position: relative; z-index: 1; }
+html[data-theme="11"] .card:hover,
+html[data-theme="11"] .other-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 26px 54px -20px rgba(24, 44, 92, 0.42),
+    inset 0 1px 0 var(--t11-pane-hi);
+}
+html[data-theme="11"][data-mode="dark"] .card:hover,
+html[data-theme="11"][data-mode="dark"] .other-card:hover {
+  box-shadow:
+    0 30px 60px -22px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 var(--t11-pane-hi);
+}
+
+html[data-theme="11"] .card h3,
+html[data-theme="11"] .other-feature-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--color-heading);
+  font-size: 1.18rem;
+  margin-bottom: 0.35rem;
+}
+html[data-theme="11"] .card p { color: var(--color-fg); }
+html[data-theme="11"] .card .pub-meta,
+html[data-theme="11"] .other-feature-meta { color: var(--color-muted); }
+html[data-theme="11"] .other-feature-eyebrow {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+html[data-theme="11"] .other-lead { color: var(--color-fg); opacity: 0.9; }
+
+/* Publication + teaching accent links. */
+html[data-theme="11"] .pub-links a,
+html[data-theme="11"] .teach-info a,
+html[data-theme="11"] .section-cta a,
+html[data-theme="11"] .other-cta a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+html[data-theme="11"] .pub-links a:hover,
+html[data-theme="11"] .teach-info a:hover,
+html[data-theme="11"] .section-cta a:hover { color: var(--color-accent-2); }
+html[data-theme="11"] .about-meta { color: var(--color-muted); }
+
+/* Keyword chips as frosted micro-pills. */
+html[data-theme="11"] .kw {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.74rem;
+  padding: 0.24rem 0.7rem;
+  border: 1px solid var(--t11-pane-border);
+  border-radius: 999px;
+  background: var(--t11-pane-strong);
+  color: var(--color-heading);
+  box-shadow: inset 0 1px 0 var(--t11-pane-hi);
+}
+html[data-theme="11"][data-mode="dark"] .kw { color: var(--color-fg); }
+
+/* ================================ Footer ================================= */
+html[data-theme="11"] .site-footer {
+  border-top: 1px solid var(--t11-pane-border);
+  color: var(--color-muted);
+  opacity: 0.9;
+}
+html[data-theme="11"] .site-footer a { color: var(--color-accent); }
+
+/* ============================== Sparkles ================================= */
+/* Container the JS appends into .hero-bg (or CSS-only fallback below). */
+html[data-theme="11"] .t11-glints {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+html[data-theme="11"] .t11-glint {
+  position: absolute;
+  width: 14px; height: 14px;
+  opacity: 0;
+  transform: scale(0.4);
+  will-change: transform, opacity;
+  animation: t11-sparkle 5s ease-in-out infinite;
+}
+html[data-theme="11"] .t11-glint svg { width: 100%; height: 100%; display: block; }
+@keyframes t11-sparkle {
+  0%, 100%   { opacity: 0;    transform: scale(0.4) rotate(0deg); }
+  45%        { opacity: 0.95; transform: scale(1)   rotate(15deg); }
+  60%        { opacity: 0.7;  transform: scale(0.85) rotate(20deg); }
+}
+
+/* No-JS fallback: a handful of static-position CSS sparkles so the hero still
+   twinkles as "the glass theme" even before/without the script. Hidden the
+   instant JS boots (html.t11-js) since JS scatters its own richer set. */
+html[data-theme="11"] .hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 18% 30%, var(--t11-glint-a), transparent 55%),
+    radial-gradient(2px 2px at 74% 22%, var(--t11-glint-b), transparent 55%),
+    radial-gradient(1.5px 1.5px at 40% 68%, var(--t11-glint-a), transparent 55%),
+    radial-gradient(2px 2px at 88% 60%, var(--t11-glint-a), transparent 55%),
+    radial-gradient(1.5px 1.5px at 60% 45%, var(--t11-glint-b), transparent 55%),
+    radial-gradient(2px 2px at 30% 82%, var(--t11-glint-b), transparent 55%);
+  animation: t11-twinkle 6s ease-in-out infinite;
+}
+html.t11-js[data-theme="11"] .hero-bg::after { display: none; }
+@keyframes t11-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.9; }
+}
+
+/* ======================= backdrop-filter fallback ======================== */
+/* If the browser can't blur behind the pane, the frost is invisible and text
+   would float over the busy gradient. Raise pane opacity so text stays ≥4.5:1. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  html[data-theme="11"] {
+    --t11-pane: rgba(255, 255, 255, 0.9);
+    --t11-pane-strong: rgba(255, 255, 255, 0.95);
+    --nav-bg: rgba(255, 255, 255, 0.92);
+  }
+  html[data-theme="11"][data-mode="dark"] {
+    --t11-pane: rgba(16, 22, 40, 0.9);
+    --t11-pane-strong: rgba(22, 30, 52, 0.95);
+    --nav-bg: rgba(10, 16, 32, 0.92);
+  }
+}
+
+/* ================================ Mobile ================================= */
+@media (max-width: 760px) {
+  html[data-theme="11"] { --face-size: 220px; }
+  /* Cheaper frost on phones; the JS also skips the caustics canvas here. */
+  html[data-theme="11"] .card,
+  html[data-theme="11"] .other-card {
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  }
+  html[data-theme="11"] body { background-attachment: scroll; }
+}
+
+/* ============================ Reduced motion ============================= */
+/* base.css already neutralizes CSS animations globally under reduced-motion;
+   these explicit stops make the final static state unambiguous. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="11"] body,
+  html[data-theme="11"][data-mode="dark"] body { animation: none; }
+  html[data-theme="11"] .face-frame::after { animation: none; opacity: 0.6; }
+  html[data-theme="11"] .t11-glint { animation: none; opacity: 0.7; transform: scale(0.9); }
+  html[data-theme="11"] .hero-bg::after { animation: none; opacity: 0.6; }
+}
