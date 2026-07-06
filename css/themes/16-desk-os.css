@@ -1,0 +1,571 @@
+/* Theme 16 — Desk OS ("KiranOS"). Layout: L1.
+   Platinum-era desktop environment. The homepage boots into a tiny OS:
+   menu bar, wallpaper, desktop icons, dock, draggable windows, a toy terminal.
+   Reader Mode / Escape restores a pixel-normal page (see teardown() in JS).
+
+   CSS structure:
+   1. Token overrides (light + dark).
+   2. No-JS / subpage cosmetics: window-chrome ONLY, page stays normal flow & readable.
+   3. body[data-t16="on"] desktop mode: applies ONLY once JS sets the flag.
+   4. Boot screen, windows, terminal, dock, icons.
+   5. Mobile (<=760px): phone home screen + full-screen sheets.
+   6. Reduced motion. */
+
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+html[data-theme="16"] {
+  --color-bg: #c9c9d2;
+  --color-fg: #1f1f27;
+  --color-heading: #14141b;
+  --color-accent: #2b4f9e;      /* platinum "highlight" blue */
+  --color-accent-2: #7a3ea8;
+  --color-muted: #5c5c68;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 0.94rem;
+  --line-height-body: 1.55;
+  --heading-tracking: -0.01em;
+  --nav-brand-tracking: 0.02em;
+
+  --btn-radius: 6px;
+  --card-radius: 6px;
+  --card-bg: #e7e7ee;
+  --card-border: 1px solid #9a9aa6;
+  --card-shadow: 0 1px 0 #ffffff inset, 0 1px 2px rgba(20,20,30,0.12);
+
+  --nav-bg: transparent;
+  --nav-backdrop: none;
+
+  /* theme-local palette */
+  --os-grey: #d9d9e0;
+  --os-grey-hi: #f2f2f6;
+  --os-border: #7c7c88;
+  --os-border-soft: #a7a7b2;
+  --os-title-a: #e9e9f0;
+  --os-title-b: #cfcfda;
+  --os-window: #ececf1;
+  --os-menu: #e4e4ec;
+  --os-wall-1: #7d8bb3;
+  --os-wall-2: #55618a;
+  --os-wall-3: #3c4570;
+  --os-term-bg: #0a0f0a;
+  --os-term-fg: #57ffa0;
+  --os-term-dim: #2f8f5c;
+  --os-shadow: 0 8px 30px rgba(15,17,30,0.35), 0 2px 6px rgba(15,17,30,0.25);
+}
+
+html[data-theme="16"][data-mode="dark"] {
+  --color-bg: #16161c;
+  --color-fg: #e9e9ef;
+  --color-heading: #ffffff;
+  --color-accent: #6f8fe0;
+  --color-accent-2: #b892e6;
+  --color-muted: #9b9ba8;
+
+  --card-bg: #26262e;
+  --card-border: 1px solid #3a3a45;
+  --card-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 2px 6px rgba(0,0,0,0.5);
+
+  --os-grey: #2c2c35;
+  --os-grey-hi: #3a3a45;
+  --os-border: #4a4a56;
+  --os-border-soft: #3a3a45;
+  --os-title-a: #35353f;
+  --os-title-b: #26262e;
+  --os-window: #26262e;
+  --os-menu: #2b2b34;
+  --os-wall-1: #1b2540;
+  --os-wall-2: #10162b;
+  --os-wall-3: #0b0f1e;
+  --os-shadow: 0 10px 34px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5);
+}
+
+html[data-theme="16"] body { background: var(--color-bg); color: var(--color-fg); }
+
+/* ============================================================
+   2. NO-JS / SUBPAGE COSMETICS — window-chrome only.
+   Applies to any theme-16 page whose JS has NOT set data-t16="on".
+   Wraps the whole page in a single faux "window": a fixed title-bar strip
+   with traffic-light dots + a chrome border. Content stays in normal flow
+   and is fully readable/navigable. Relocation is JS-only.
+   ============================================================ */
+html[data-theme="16"] body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 30px;
+  z-index: 99;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--os-title-a) 0 2px, var(--os-title-b) 2px 4px);
+  border-bottom: 1px solid var(--os-border);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset;
+}
+/* traffic lights on the chrome strip */
+html[data-theme="16"] body::after {
+  content: "";
+  position: fixed;
+  top: 10px; left: 16px;
+  z-index: 100;
+  width: 52px; height: 11px;
+  background:
+    radial-gradient(circle at 5px 5px, #ff5f57 0 5px, transparent 6px),
+    radial-gradient(circle at 25px 5px, #febc2e 0 5px, transparent 6px),
+    radial-gradient(circle at 45px 5px, #28c840 0 5px, transparent 6px);
+}
+/* Chrome border around the viewport (drawn on <html> so it never scrolls). */
+html[data-theme="16"] {
+  border: 1px solid var(--os-border);
+  border-top: 0;
+}
+/* Give the fixed nav-bar room below the chrome strip and dress it up. */
+html[data-theme="16"] .nav-bar {
+  top: 30px;
+  --nav-bg: var(--os-menu);
+  --nav-backdrop: none;
+  border-bottom: 1px solid var(--os-border-soft);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset;
+}
+html[data-theme="16"][data-mode="dark"] .nav-bar { box-shadow: none; }
+/* Push page content clear of the 30px chrome strip on subpages/no-JS. */
+html[data-theme="16"] body { padding-top: 30px; }
+
+/* --- Shared type & component styling (both no-JS pages and inside windows) --- */
+html[data-theme="16"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-heading);
+  letter-spacing: -0.02em;
+}
+html[data-theme="16"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  letter-spacing: -0.03em;
+  color: var(--color-heading);
+  line-height: 1.02;
+}
+html[data-theme="16"] .hero-role {
+  font-weight: 600; color: var(--color-accent); margin-top: 0.5rem; font-size: 1rem;
+}
+html[data-theme="16"] .hero-tagline {
+  color: var(--color-muted); margin-top: 0.7rem; max-width: 52ch;
+}
+html[data-theme="16"] .quick-links { margin-top: 1.2rem; }
+html[data-theme="16"] .quick-links a {
+  border: 1px solid var(--os-border);
+  border-radius: 6px;
+  background: linear-gradient(var(--os-grey-hi), var(--os-grey));
+  color: var(--color-fg);
+  font-size: 0.85rem;
+  padding: 0.42rem 0.85rem;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 1px 2px rgba(20,20,30,0.15);
+}
+html[data-theme="16"][data-mode="dark"] .quick-links a {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 1px 2px rgba(0,0,0,0.4);
+}
+html[data-theme="16"] .quick-links a:hover {
+  background: var(--color-accent); color: #fff; border-color: var(--color-accent);
+}
+html[data-theme="16"] .card,
+html[data-theme="16"] .other-card {
+  background: var(--card-bg);
+  border: 1px solid var(--os-border-soft);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+html[data-theme="16"] .card h3,
+html[data-theme="16"] .other-feature-title { color: var(--color-heading); font-weight: 700; }
+html[data-theme="16"] .card p { color: var(--color-muted); }
+html[data-theme="16"] .kw {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 0.12rem 0.5rem;
+  border: 1px solid var(--os-border-soft);
+  border-radius: 4px;
+  background: var(--os-grey);
+  color: var(--color-fg);
+}
+html[data-theme="16"] .pub-meta { color: var(--color-muted); font-size: 0.85rem; margin-top: 0.2rem; }
+html[data-theme="16"] .pub-links a { color: var(--color-accent); }
+html[data-theme="16"] .about-meta { color: var(--color-muted); font-size: 0.85rem; margin-top: 0.4rem; }
+html[data-theme="16"] .face-frame {
+  border: 1px solid var(--os-border);
+  border-radius: 8px;
+  box-shadow: var(--os-shadow);
+  background: var(--os-grey);
+}
+html[data-theme="16"] .site-footer { border-top: 1px solid var(--os-border-soft); }
+
+/* ============================================================
+   3. DESKTOP MODE — applies ONLY when JS has booted (body[data-t16="on"]).
+   Hide normal page flow; the desktop overlay takes over.
+   ============================================================ */
+body[data-t16="on"] { overflow: hidden; padding-top: 0 !important; }
+/* Kill the no-JS chrome strip / dots while the real desktop is up. */
+body[data-t16="on"]::before,
+body[data-t16="on"]::after { display: none; }
+/* Hide the normal nav, main, footer, and the anchored hero flow. */
+body[data-t16="on"] > .nav-bar,
+body[data-t16="on"] > main,
+body[data-t16="on"] > .site-footer,
+body[data-t16="on"] > a.visually-hidden { display: none !important; }
+/* The theme picker overlay must still be reachable (z-index 200 > desktop). */
+
+/* ---- Desktop root ---- */
+.t16-desktop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  font-family: var(--font-body);
+  color: var(--color-fg);
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* Wallpaper */
+.t16-wall {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 12%, var(--os-wall-1), transparent 60%),
+    radial-gradient(120% 100% at 85% 90%, var(--os-wall-3), transparent 62%),
+    linear-gradient(160deg, var(--os-wall-2), var(--os-wall-3));
+  z-index: 0;
+}
+/* faint pinstripe texture over the wallpaper */
+.t16-wall::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 4px);
+  opacity: 0.6;
+}
+/* "KG" seal watermark, centered */
+.t16-seal {
+  position: absolute;
+  left: 50%; top: 52%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: min(46vmin, 380px);
+  height: min(46vmin, 380px);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  border: 2px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.14);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: min(20vmin, 150px);
+  letter-spacing: -0.06em;
+  pointer-events: none;
+}
+.t16-seal::after {
+  content: "KIRANOS · RUTGERS · COMPUTATIONAL SOCIAL SCIENCE · ";
+  position: absolute; inset: 6%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* ---- Menu bar ---- */
+.t16-menubar {
+  position: absolute; top: 0; left: 0; right: 0; height: 28px;
+  z-index: 30;
+  display: flex; align-items: center; gap: 0;
+  padding: 0 10px;
+  background: linear-gradient(var(--os-grey-hi), var(--os-menu));
+  border-bottom: 1px solid var(--os-border);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+  font-size: 12.5px;
+}
+html[data-theme="16"][data-mode="dark"] .t16-menubar { box-shadow: none; }
+.t16-menubar .t16-apple {
+  font-size: 14px; font-weight: 700; padding: 0 9px; color: var(--color-fg);
+}
+.t16-menubar .t16-menu-title { font-weight: 700; padding: 3px 9px; }
+.t16-menubar .t16-menu-item { padding: 3px 9px; border-radius: 4px; }
+.t16-menubar .t16-menu-item:hover,
+.t16-menubar .t16-menu-item[aria-expanded="true"] { background: var(--color-accent); color: #fff; }
+.t16-menubar .t16-spacer { flex: 1; }
+.t16-menubar .t16-tray { display: flex; align-items: center; gap: 12px; padding-right: 4px; }
+.t16-menubar .t16-tray > * { display: inline-flex; align-items: center; gap: 5px; }
+.t16-clock { font-variant-numeric: tabular-nums; min-width: 8.5ch; text-align: right; }
+.t16-batt svg { width: 22px; height: 12px; }
+.t16-tray-theme { opacity: 0.85; font-size: 11.5px; }
+@media (max-width: 900px) { .t16-tray-theme { display: none; } }
+
+/* dropdown menus */
+.t16-dropdown {
+  position: absolute; top: 27px;
+  min-width: 190px;
+  background: var(--os-menu);
+  border: 1px solid var(--os-border);
+  border-radius: 0 0 6px 6px;
+  box-shadow: var(--os-shadow);
+  padding: 4px;
+  z-index: 60;
+  font-size: 12.5px;
+}
+.t16-dropdown[hidden] { display: none; }
+.t16-dropdown button {
+  display: block; width: 100%; text-align: left;
+  padding: 5px 10px; border-radius: 4px; color: var(--color-fg);
+}
+.t16-dropdown button:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
+.t16-dropdown button:disabled { opacity: 0.4; cursor: default; }
+.t16-dropdown hr { border: 0; border-top: 1px solid var(--os-border-soft); margin: 4px 2px; }
+
+/* ---- Icon grid ---- */
+.t16-icons {
+  position: absolute; top: 44px; left: 16px;
+  z-index: 10;
+  display: flex; flex-direction: column; flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px 20px;
+  max-height: calc(100% - 130px);
+}
+.t16-icon {
+  width: 86px; padding: 8px 4px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  border-radius: 8px; color: #fff; text-align: center;
+  cursor: pointer;
+}
+.t16-icon:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.t16-icon .t16-glyph {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  background: linear-gradient(var(--os-grey-hi), var(--os-grey));
+  border: 1px solid var(--os-border);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(10,12,24,0.35), 0 1px 0 rgba(255,255,255,0.5) inset;
+}
+html[data-theme="16"][data-mode="dark"] .t16-icon .t16-glyph { box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+.t16-icon .t16-glyph svg { width: 26px; height: 26px; stroke: var(--color-accent); }
+.t16-icon .t16-label {
+  font-size: 12px; font-weight: 500;
+  padding: 1px 6px; border-radius: 4px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+  max-width: 84px;
+}
+.t16-icon.t16-selected .t16-label { background: var(--color-accent); text-shadow: none; }
+.t16-icon.t16-selected .t16-glyph { outline: 2px solid rgba(255,255,255,0.7); }
+
+/* ---- Windows ---- */
+.t16-window {
+  position: absolute;
+  min-width: 260px; min-height: 160px;
+  width: 620px; height: 460px;
+  background: var(--os-window);
+  border: 1px solid var(--os-border);
+  border-radius: 8px;
+  box-shadow: var(--os-shadow);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  z-index: 20;
+}
+.t16-window[hidden] { display: none; }
+.t16-window.t16-max {
+  left: 0 !important; top: 28px !important;
+  width: 100% !important;
+  height: calc(100% - 28px) !important;
+  border-radius: 0; border-left: 0; border-right: 0; border-bottom: 0;
+}
+.t16-window.t16-minimizing {
+  transition: transform 260ms cubic-bezier(.4,0,.2,1), opacity 260ms;
+  transform-origin: top left;
+  opacity: 0.2;
+  pointer-events: none;
+}
+.t16-titlebar {
+  height: 26px; flex: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 8px;
+  cursor: grab;
+  background:
+    repeating-linear-gradient(90deg, var(--os-title-a) 0 2px, var(--os-title-b) 2px 4px);
+  border-bottom: 1px solid var(--os-border-soft);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset;
+  touch-action: none;
+}
+html[data-theme="16"][data-mode="dark"] .t16-titlebar { box-shadow: none; }
+.t16-window:not(.t16-front) .t16-titlebar { background: var(--os-grey); opacity: 0.94; }
+.t16-titlebar.t16-dragging { cursor: grabbing; }
+.t16-lights { display: flex; gap: 6px; flex: none; }
+.t16-lights button { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.25); }
+.t16-lights .t16-close { background: #ff5f57; }
+.t16-lights .t16-min   { background: #febc2e; }
+.t16-lights .t16-zoom  { background: #28c840; }
+.t16-lights button:hover { filter: brightness(1.1); box-shadow: 0 0 0 2px rgba(255,255,255,0.3) inset; }
+.t16-window:not(.t16-front) .t16-lights button { background: #b9b9c2; }
+.t16-title {
+  flex: 1; text-align: center; font-size: 12.5px; font-weight: 700;
+  color: var(--color-heading);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  padding-right: 54px; /* balance the lights so title stays visually centered */
+}
+.t16-winbody {
+  flex: 1; overflow: auto;
+  background: var(--os-window);
+  padding: 18px 20px;
+  -webkit-user-select: text; user-select: text;
+  cursor: default;
+}
+/* the relocated <section> lives here; strip its huge L1 padding */
+.t16-winbody > section.section { padding: 0 !important; max-width: none !important; }
+.t16-winbody .section-heading { margin-bottom: 0.9rem; font-size: 1.5rem; }
+.t16-winbody .hero-inner { display: block; text-align: left; }
+.t16-winbody .hero-portrait { max-width: 160px; margin-top: 1.1rem; }
+.t16-winbody .face-frame { width: 150px; height: 150px; }
+.t16-resize {
+  position: absolute; right: 0; bottom: 0; width: 16px; height: 16px;
+  cursor: nwse-resize; z-index: 2;
+  background:
+    linear-gradient(135deg, transparent 0 50%, var(--os-border-soft) 50% 60%, transparent 60% 70%, var(--os-border-soft) 70% 80%, transparent 80%);
+  touch-action: none;
+}
+
+/* ---- Terminal window ---- */
+.t16-window.t16-terminal { width: 560px; height: 380px; }
+.t16-term-body {
+  flex: 1; overflow: auto;
+  background: var(--os-term-bg);
+  color: var(--os-term-fg);
+  font-family: var(--font-mono);
+  font-size: 12.5px; line-height: 1.5;
+  padding: 12px 14px;
+  cursor: text;
+  -webkit-user-select: text; user-select: text;
+}
+.t16-term-body .t16-term-line { white-space: pre-wrap; word-break: break-word; }
+.t16-term-body .t16-term-dim { color: var(--os-term-dim); }
+.t16-term-body .t16-term-accent { color: #baffd6; }
+.t16-term-inputline { display: flex; gap: 8px; align-items: baseline; }
+.t16-term-inputline .t16-prompt { color: var(--os-term-dim); flex: none; }
+.t16-term-input {
+  flex: 1; background: transparent; border: 0; outline: none;
+  color: var(--os-term-fg); font-family: var(--font-mono); font-size: 12.5px;
+  caret-color: var(--os-term-fg);
+}
+.t16-terminal .t16-titlebar { background: linear-gradient(#20242a, #14171b); box-shadow: none; }
+.t16-terminal .t16-title { color: #cfe9d8; }
+
+/* ---- Dock ---- */
+.t16-dock {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+  z-index: 25;
+  display: flex; align-items: flex-end; gap: 8px;
+  padding: 7px 12px;
+  background: linear-gradient(rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(10,12,24,0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: calc(100vw - 24px);
+}
+html[data-theme="16"][data-mode="dark"] .t16-dock {
+  background: linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border-color: rgba(255,255,255,0.14);
+}
+.t16-dock button {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: grid; place-items: center;
+  background: linear-gradient(var(--os-grey-hi), var(--os-grey));
+  border: 1px solid var(--os-border);
+  box-shadow: 0 2px 5px rgba(10,12,24,0.3), 0 1px 0 rgba(255,255,255,0.5) inset;
+  transition: transform 140ms ease;
+  position: relative;
+}
+html[data-theme="16"][data-mode="dark"] .t16-dock button { box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+.t16-dock button svg { width: 24px; height: 24px; stroke: var(--color-accent); }
+.t16-dock button:hover { transform: translateY(-6px) scale(1.06); }
+.t16-dock button[data-open="true"]::after {
+  content: ""; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: #fff;
+}
+.t16-dock .t16-dock-sep { width: 1px; height: 34px; background: rgba(255,255,255,0.3); margin: 0 2px; align-self: center; }
+
+/* ---- Boot screen ---- */
+.t16-boot {
+  position: fixed; inset: 0; z-index: 300;
+  background: #050507;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 26px; color: #e7e7ee;
+  font-family: var(--font-display);
+}
+.t16-boot[hidden] { display: none; }
+.t16-boot-logo { font-size: 40px; font-weight: 900; letter-spacing: -0.05em; }
+.t16-boot-logo span { color: #6f8fe0; }
+.t16-boot-sub { font-size: 13px; color: #9b9ba8; letter-spacing: 0.02em; margin-top: -14px; }
+.t16-boot-bar { width: 220px; height: 6px; border-radius: 4px; background: #24242c; overflow: hidden; }
+.t16-boot-bar > i {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, #6f8fe0, #b892e6);
+  animation: t16-boot-fill 1.5s ease forwards;
+}
+.t16-boot-hint { font-size: 11px; color: #55555f; }
+@keyframes t16-boot-fill { from { width: 0%; } to { width: 100%; } }
+
+/* ============================================================
+   5. MOBILE (<=760px): phone home screen + full-screen sheets.
+   No free-floating windows; dock hidden.
+   ============================================================ */
+@media (max-width: 760px) {
+  .t16-menubar { height: 26px; font-size: 12px; }
+  .t16-menubar .t16-menu-title, .t16-menubar .t16-apple + .t16-menu-title { }
+  /* hide the fake File/View/Help on the tiny bar to save room */
+  .t16-menubar .t16-menu-item { display: none; }
+  .t16-dock { display: none; }
+  .t16-seal { top: 46%; }
+
+  .t16-icons {
+    top: 40px; left: 0; right: 0;
+    max-height: none;
+    padding: 14px 14px 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px 6px;
+    flex-direction: initial; flex-wrap: initial; align-content: initial;
+    justify-items: center;
+  }
+  .t16-icon { width: 100%; }
+
+  /* Windows become full-screen sheets that slide up. */
+  .t16-window {
+    left: 0 !important; top: 0 !important;
+    width: 100% !important; height: 100% !important;
+    border-radius: 0; border: 0;
+    box-shadow: none;
+    transform: none;
+  }
+  .t16-window.t16-minimizing { transform: none; opacity: 0; }
+  .t16-titlebar {
+    height: 44px; cursor: default;
+    background: linear-gradient(var(--os-grey-hi), var(--os-menu));
+    padding: 0 10px;
+  }
+  /* On mobile the traffic lights collapse to a single back affordance. */
+  .t16-lights .t16-min, .t16-lights .t16-zoom { display: none; }
+  .t16-lights .t16-close {
+    width: auto; height: auto; border-radius: 6px; background: transparent;
+    border: 0; color: var(--color-accent); font-size: 15px; font-weight: 600;
+    padding: 6px 8px;
+  }
+  .t16-lights .t16-close::before { content: "‹ Back"; }
+  .t16-title { padding-right: 60px; font-size: 14px; }
+  .t16-resize { display: none; }
+  .t16-winbody { padding: 16px 16px 40px; }
+  .t16-window.t16-terminal { width: 100% !important; height: 100% !important; }
+}
+
+/* ============================================================
+   6. REDUCED MOTION — no boot, no minimize/dock animation.
+   (base.css already zeroes transitions globally; this is belt-and-suspenders.)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .t16-boot-bar > i { animation: none; width: 100%; }
+  .t16-window.t16-minimizing { transition: none; }
+  .t16-dock button:hover { transform: none; }
+}
