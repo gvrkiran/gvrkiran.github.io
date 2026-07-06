@@ -1,0 +1,450 @@
+/* Theme 13 — Pop-Up (paper theater). Layout: L1.
+   Light: a pop-up storybook — warm card-stock, die-cut cards, torn-paper
+   dividers, folk-print vermillion/marigold. Dark: a shadow-puppet theater —
+   indigo paper, warm backlight, silhouettes. Sections "fold open" as they
+   scroll into view (see js/theme-13-popup.js); everything is fully visible
+   and static without JS or with reduced motion. */
+
+html[data-theme="13"] {
+  --color-bg: #f6efe3;
+  --color-fg: #2b2117;
+  --color-heading: #241b12;
+  --color-accent: #c9452c;
+  --color-accent-2: #e8a13a;
+  --color-muted: #7a6a55;
+
+  --font-display: 'Fraunces', 'Source Serif 4', serif;
+  --font-heading: 'Fraunces', 'Source Serif 4', serif;
+  --font-body: 'PT Serif', 'Source Serif 4', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1.03rem;
+  --line-height-body: 1.65;
+  --heading-tracking: -0.01em;
+  --nav-brand-tracking: 0.05em;
+
+  --face-size: 210px;
+  --btn-radius: 3px;
+  --card-radius: 4px;
+  --card-bg: #fffdf6;
+  --card-border: 1px solid rgba(120,90,50,0.18);
+  --card-shadow: 0 6px 0 -2px rgba(120,90,50,0.25), 0 8px 14px -6px rgba(90,60,30,0.22);
+
+  --nav-bg: rgba(246,239,227,0.82);
+  --nav-backdrop: blur(6px);
+
+  /* Theme-private tokens */
+  --t13-paper: #f6efe3;
+  --t13-card: #fffdf6;
+  --t13-ink: #2b2117;
+  --t13-notch: rgba(120,90,50,0.35);
+  --t13-tear: #d8c9ac;
+}
+
+html[data-theme="13"][data-mode="dark"] {
+  --color-bg: #141830;
+  --color-fg: #e9e6f5;
+  --color-heading: #fbf6ea;
+  --color-accent: #e8a13a;
+  --color-accent-2: #c9452c;
+  --color-muted: #9a9bc0;
+
+  --card-bg: #1c2142;
+  --card-border: 1px solid rgba(232,161,58,0.18);
+  --card-shadow: 0 0 40px rgba(232,161,58,0.15), 0 10px 24px -12px rgba(0,0,0,0.6);
+
+  --nav-bg: rgba(20,24,48,0.82);
+  --nav-backdrop: blur(6px);
+
+  --t13-paper: #141830;
+  --t13-card: #1c2142;
+  --t13-ink: #e9e6f5;
+  --t13-notch: rgba(232,161,58,0.28);
+  --t13-tear: #23294d;
+}
+
+/* ===================== Base surfaces ===================== */
+
+html[data-theme="13"] body {
+  background: var(--color-bg);
+  position: relative;
+}
+
+/* Paper grain — inline SVG feTurbulence noise, ~4% opacity, light mode only
+   (dark mode reads as smooth theater curtain, not card-stock). */
+html[data-theme="13"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+html[data-theme="13"][data-mode="dark"] body::before {
+  opacity: 0.06;
+  mix-blend-mode: screen;
+}
+html[data-theme="13"] main,
+html[data-theme="13"] .nav-bar,
+html[data-theme="13"] .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== Nav ===================== */
+
+html[data-theme="13"] .nav-bar {
+  border-bottom: 1px solid var(--t13-notch);
+}
+html[data-theme="13"] .nav-brand {
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--color-accent);
+}
+html[data-theme="13"] .nav-links a {
+  font-family: var(--font-body);
+  font-style: italic;
+}
+html[data-theme="13"] .nav-toggle {
+  border-color: var(--t13-notch);
+  border-radius: var(--btn-radius);
+}
+
+/* ===================== Sections & perspective stage ===================== */
+
+html[data-theme="13"] section.section {
+  perspective: 1200px;
+  position: relative;
+}
+
+/* Torn-paper divider between sections — jagged SVG strip, alternating
+   direction per section for a hand-torn look. Skipped on the hero (no
+   "page" above it) and disabled entirely on subpages implicitly since
+   they only have one .section. */
+html[data-theme="13"] section.section + section.section {
+  position: relative;
+}
+html[data-theme="13"] section.section + section.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -1.5rem; right: -1.5rem;
+  height: 22px;
+  background-repeat: repeat-x;
+  background-size: 44px 22px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='22'><path d='M0 4 L6 14 L12 2 L18 16 L24 5 L30 15 L36 3 L44 12 L44 22 L0 22 Z' fill='%23d8c9ac'/></svg>");
+  opacity: 0.55;
+  pointer-events: none;
+}
+html[data-theme="13"][data-mode="dark"] section.section + section.section::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='22'><path d='M0 4 L6 14 L12 2 L18 16 L24 5 L30 15 L36 3 L44 12 L44 22 L0 22 Z' fill='%2323294d'/></svg>");
+  opacity: 0.8;
+}
+html[data-theme="13"] section.section:nth-of-type(even)::before {
+  transform: scaleX(-1);
+}
+
+/* ===================== Fold-open animation (JS-gated) ===================== */
+/* CRITICAL no-JS safety: the folded/hidden starting state only exists
+   under html.t13-js, a class the script adds as its very first action.
+   Without JS (or if the script fails to load) this block never matches,
+   so every heading and section-body child is visible and static. */
+
+html.t13-js[data-theme="13"] section.section[data-section] .section-heading,
+html.t13-js[data-theme="13"] section.section[data-section] .section-body > * {
+  transform: rotateX(78deg);
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transition:
+    transform 620ms cubic-bezier(0.2, 0.9, 0.3, 1.15),
+    opacity 420ms ease;
+  will-change: transform, opacity;
+}
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-heading,
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > * {
+  transform: rotateX(0deg);
+  opacity: 1;
+}
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-heading {
+  transition-delay: 0ms;
+}
+/* Stagger children of .section-body by nth-child — 70ms step. */
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(1)  { transition-delay: 60ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(2)  { transition-delay: 130ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(3)  { transition-delay: 200ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(4)  { transition-delay: 270ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(5)  { transition-delay: 340ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(6)  { transition-delay: 410ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(7)  { transition-delay: 480ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(8)  { transition-delay: 550ms; }
+html.t13-js[data-theme="13"] section.section[data-section].t13-open .section-body > *:nth-child(n+9) { transition-delay: 610ms; }
+
+/* Hero itself doesn't fold (it's the "cover", already open) — only the
+   heading-bearing content sections below it fold. Explicitly exempt it
+   in case a future DOM change adds a heading/body match there. */
+html.t13-js[data-theme="13"] .hero-section .section-heading,
+html.t13-js[data-theme="13"] .hero-section .section-body > * {
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+
+/* Progressive enhancement: scroll-scrubbed fold where the browser supports
+   animation-timeline: view(). Replaces the binary observer toggle with a
+   continuous fold tied to scroll position through the section's own view
+   timeline. Falls back silently everywhere else (the observer above still
+   runs and still works; this just makes the transition scroll-driven). */
+@supports (animation-timeline: view()) {
+  html.t13-js[data-theme="13"] section.section[data-section] .section-heading,
+  html.t13-js[data-theme="13"] section.section[data-section] .section-body > * {
+    transition: none;
+    animation: t13-scroll-fold linear both;
+    animation-timeline: view(block 90% 60%);
+  }
+  @keyframes t13-scroll-fold {
+    from { transform: rotateX(78deg); opacity: 0; }
+    to   { transform: rotateX(0deg);  opacity: 1; }
+  }
+  html.t13-js[data-theme="13"] .hero-section .section-heading,
+  html.t13-js[data-theme="13"] .hero-section .section-body > * {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="13"] section.section[data-section] .section-heading,
+  html[data-theme="13"] section.section[data-section] .section-body > * {
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===================== Hero ===================== */
+
+html[data-theme="13"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 6.4vw, 4.4rem);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.02;
+  color: var(--color-heading);
+}
+html[data-theme="13"] .hero-role {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--color-accent);
+  font-size: 1.1rem;
+  margin-top: 0.7rem;
+}
+html[data-theme="13"] .hero-tagline {
+  font-family: var(--font-body);
+  color: var(--color-muted);
+  max-width: 46ch;
+  margin-top: 0.9rem;
+}
+
+html[data-theme="13"] .quick-links { margin-top: 1.4rem; }
+html[data-theme="13"] .quick-links a {
+  font-family: var(--font-body);
+  border: 1px solid var(--t13-notch);
+  border-radius: var(--btn-radius);
+  background: var(--t13-card);
+  box-shadow: 0 3px 0 -1px rgba(120,90,50,0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+html[data-theme="13"] .quick-links a:hover {
+  transform: translateY(-2px);
+  background: var(--color-accent);
+  color: #fffdf6;
+  box-shadow: 0 5px 0 -1px rgba(120,90,50,0.3);
+}
+
+/* Portrait — die-cut paper doll: white paper border, slight rotation,
+   two layered offset shadows suggesting a stack of card-stock. */
+html[data-theme="13"] .face-frame {
+  border-radius: 4px;
+  border: 6px solid var(--t13-card);
+  transform: rotate(-2deg);
+  box-shadow:
+    0 2px 0 var(--t13-card),
+    3px 8px 0 -2px rgba(120,90,50,0.28),
+    7px 16px 18px -6px rgba(90,60,30,0.32),
+    0 0 0 1px rgba(120,90,50,0.12);
+  transition: transform 260ms ease;
+}
+html[data-theme="13"][data-mode="dark"] .face-frame {
+  box-shadow:
+    0 2px 0 var(--t13-card),
+    3px 8px 0 -2px rgba(0,0,0,0.5),
+    0 0 46px rgba(232,161,58,0.18),
+    0 0 0 1px rgba(232,161,58,0.14);
+}
+html[data-theme="13"] .face-frame:hover { transform: rotate(0deg); }
+
+/* ===================== Die-cut cards ===================== */
+
+html[data-theme="13"] .card {
+  position: relative;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+/* Tiny notch "tabs" — two small rectangles peeking from the top edge,
+   like a die-cut card has been punched from a larger sheet. */
+html[data-theme="13"] .card::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 1.4rem;
+  width: 22px; height: 8px;
+  background: var(--t13-paper);
+  border: 1px solid var(--t13-notch);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+html[data-theme="13"] .card h3 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--color-heading);
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+html[data-theme="13"] .card p {
+  font-family: var(--font-body);
+  color: var(--color-fg);
+}
+html[data-theme="13"] .card:hover {
+  transform: translateY(-3px);
+  transition: transform 200ms ease;
+}
+
+html[data-theme="13"] .kw,
+html[data-theme="13"] .kw-list .kw {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--t13-notch);
+  border-radius: 999px;
+  background: var(--t13-card);
+  color: var(--color-accent-2);
+}
+html[data-theme="13"][data-mode="dark"] .kw {
+  color: var(--color-accent);
+}
+
+html[data-theme="13"] .pub-meta,
+html[data-theme="13"] .teach-term {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--color-muted);
+}
+html[data-theme="13"] .pub-links a,
+html[data-theme="13"] .teach-info a,
+html[data-theme="13"] .other-cta a,
+html[data-theme="13"] .section-cta a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(201,69,44,0.4);
+}
+html[data-theme="13"][data-mode="dark"] .pub-links a,
+html[data-theme="13"][data-mode="dark"] .teach-info a,
+html[data-theme="13"][data-mode="dark"] .other-cta a,
+html[data-theme="13"][data-mode="dark"] .section-cta a {
+  color: var(--color-accent);
+  text-decoration-color: rgba(232,161,58,0.4);
+}
+
+html[data-theme="13"] .other-card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+html[data-theme="13"] .other-card::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 1.2rem;
+  width: 18px; height: 8px;
+  background: var(--t13-paper);
+  border: 1px solid var(--t13-notch);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+html[data-theme="13"] .other-feature-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+html[data-theme="13"] .other-feature-eyebrow { color: var(--color-accent); }
+
+html[data-theme="13"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--color-heading);
+  position: relative;
+  display: inline-block;
+}
+/* A little vermillion underline swash, like a marker flourish under a
+   storybook chapter title. */
+html[data-theme="13"] .section-heading::after {
+  content: '';
+  display: block;
+  width: 3.2em;
+  height: 5px;
+  margin-top: 0.35rem;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+}
+
+/* ===================== Dark-mode silhouettes (shadow-puppet theater) ===================== */
+/* Simple decorative shapes — a tree and a couple of birds — drawn as
+   background SVGs at low opacity in the hero margins. Purely CSS, no JS
+   needed for these; the drifting birds (JS) are separate and additive. */
+html[data-theme="13"][data-mode="dark"] .hero-bg {
+  background:
+    radial-gradient(ellipse at 18% 85%, rgba(232,161,58,0.10), transparent 55%),
+    radial-gradient(ellipse at 82% 20%, rgba(201,69,44,0.08), transparent 50%),
+    var(--color-bg);
+}
+html[data-theme="13"][data-mode="dark"] .hero-bg::after {
+  content: '';
+  position: absolute;
+  left: 4%; bottom: 0;
+  width: 220px; height: 260px;
+  opacity: 0.12;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: contain;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 240'><path d='M100 10 L100 60 M60 90 Q100 40 140 90 Q120 70 100 78 Q80 70 60 90 Z M45 130 Q100 60 155 130 Q125 105 100 118 Q75 105 45 130 Z M30 175 Q100 85 170 175 Q135 145 100 160 Q65 145 30 175 Z M92 175 L108 175 L112 240 L88 240 Z' fill='white'/></svg>");
+}
+
+/* ===================== Mobile ===================== */
+
+@media (max-width: 760px) {
+  html[data-theme="13"] .face-frame { transform: rotate(-1deg); }
+  html[data-theme="13"] section.section + section.section::before {
+    left: -1rem; right: -1rem;
+  }
+}
+
+/* Subpages (no [data-section] sections, no hero) still get the paper
+   grain, die-cut cards, and torn dividers from the rules above (they are
+   not gated on [data-section]/.hero-bg). A plain CSS-only fade-up on
+   cards gives subpages a touch of motion without any JS/fold logic. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme="13"] body:not(:has(.hero-bg)) .card,
+  html[data-theme="13"] body:not(:has(.hero-bg)) .other-card {
+    animation: t13-fade-up 520ms ease both;
+  }
+  @keyframes t13-fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
