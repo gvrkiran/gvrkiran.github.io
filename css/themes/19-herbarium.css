@@ -274,7 +274,7 @@ html[data-theme="19"] .other-card {
   border: 1px solid var(--t19-sheet-border);
   border-radius: var(--card-radius);
   box-shadow: var(--t19-sheet-shadow);
-  padding: 1.5rem 1.5rem 2.4rem;
+  padding: 1.5rem;
   margin-bottom: 1.6rem;
   overflow: hidden;
 }
@@ -353,21 +353,25 @@ html[data-theme="19"] .section-cta a { font-family: var(--font-mono); font-size:
 html[data-theme="19"] .about-meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-muted); margin-top: 0.4rem; }
 
 /* ======================= TAXONOMIC LABEL ======================= */
-/* Bottom-right ruled specimen label. JS fills the binomial + accession no. */
+/* Ruled specimen label. JS fills the binomial + accession no. It flows below the
+   sheet's content (as the card's last child) and hugs the right edge — a real
+   herbarium label sits at the bottom of the mounting sheet. Static flow means it
+   can never overlap the text above it. */
 html[data-theme="19"] .t19-label {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  max-width: 62%;
+  position: static;
+  margin: 1.15rem 0 0 auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
   font-family: var(--font-mono);
   font-size: 0.6rem;
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--color-muted);
-  text-align: right;
+  text-align: left;
   border: 1px solid var(--t19-rule);
   border-radius: 1px;
-  padding: 0.3rem 0.45rem;
+  padding: 0.3rem 0.55rem;
   background: color-mix(in srgb, var(--color-bg) 55%, transparent);
   pointer-events: none;
 }
