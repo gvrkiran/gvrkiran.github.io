@@ -1,0 +1,571 @@
+/* Theme 17 — Atlas. Layout: L2.
+   Expedition cartography: the site as a hand-surveyed map of a research
+   territory. Generative topographic contours (JS) mean the terrain differs on
+   every reload; a dashed expedition route (JS) draws itself section-to-section
+   as you scroll, with numbered waypoint pins. This CSS alone yields a handsome,
+   fully readable flat map sheet (paper + graticule + inset cards + cartouche
+   portrait + compass in the footer) with NO JS.
+   Light = day chart (chart paper, terracotta contours, water-blue accents).
+   Dark  = night navigation chart (deep navy paper, phosphor-green contours,
+           amber route). Same geometry, genuinely different mood.
+   Fonts: Fraunces (display/headings small-caps), Source Serif 4 (body),
+   JetBrains Mono (coordinates/labels) — all already loaded; no @import. */
+
+html[data-theme="17"] {
+  /* ---- Light: day chart ---- */
+  --color-bg: #f2ecdc;              /* chart paper */
+  --color-fg: #35301f;              /* sepia ink */
+  --color-heading: #2a2618;
+  --color-accent: #3f6f8f;          /* water blue */
+  --color-accent-2: #c07a52;        /* terracotta contour */
+  --color-muted: #7c7458;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Source Serif 4', 'PT Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1.04rem;
+  --line-height-body: 1.6;
+  --heading-tracking: 0.06em;       /* letterspaced small-caps headings */
+  --nav-brand-tracking: 0.2em;
+
+  --face-size: 210px;
+  --btn-radius: 2px;
+  --card-radius: 2px;
+
+  /* ---- Atlas-specific tokens (JS reads --t17-* via getComputedStyle) ---- */
+  --t17-paper: #f2ecdc;
+  --t17-paper-2: #ece4cf;           /* subtly darker paper for inset patches */
+  --t17-ink: #35301f;
+  --t17-contour: #c07a52;           /* terrain stroke (JS) */
+  --t17-contour-alpha: 0.25;        /* contours never exceed 25% opacity */
+  --t17-water: #3f6f8f;             /* route + water accents */
+  --t17-route: #b5623b;             /* expedition route dash (JS) — warm ink */
+  --t17-pin: #b5623b;               /* waypoint pin fill */
+  --t17-pin-ink: #f6f1e2;           /* number inside pin */
+  --t17-grid: rgba(63,111,143,0.06);/* graticule line color (~6% opacity) */
+  --t17-grid-strong: rgba(63,111,143,0.10);
+  --t17-tick: #8f7a52;              /* corner ticks on insets */
+  --t17-label-bg: #fbf7ec;          /* white label patch on cards */
+  --t17-label-border: #cdbf9a;
+  --t17-rule: #cdbf9a;              /* double-rule inset border */
+  --t17-rule-2: #a9946b;
+
+  --card-bg: var(--t17-paper-2);
+  --card-border: 1px solid var(--t17-rule);
+  --card-shadow: 0 1px 0 rgba(120,100,60,0.10),
+                 0 10px 24px -18px rgba(90,74,40,0.4);
+
+  --nav-bg: rgba(242,236,220,0.82);
+  --nav-backdrop: blur(7px) saturate(1.04);
+
+  --t17-rot: 0deg;                  /* compass rotation, driven by JS */
+}
+
+/* ---- Dark: night navigation chart ---- */
+html[data-theme="17"][data-mode="dark"] {
+  --color-bg: #0c1420;
+  --color-fg: #cfe0e8;
+  --color-heading: #eaf3f7;
+  --color-accent: #6fb6d6;          /* brighter water */
+  --color-accent-2: #39d98a;        /* phosphor contour */
+  --color-muted: #8ba0ad;
+
+  --t17-paper: #0c1420;
+  --t17-paper-2: #111d2c;
+  --t17-ink: #cfe0e8;
+  --t17-contour: #39d98a;           /* phosphor green */
+  --t17-contour-alpha: 0.18;
+  --t17-water: #6fb6d6;
+  --t17-route: #f2b45c;             /* amber route */
+  --t17-pin: #f2b45c;
+  --t17-pin-ink: #0c1420;
+  --t17-grid: rgba(111,182,214,0.10);
+  --t17-grid-strong: rgba(111,182,214,0.16);
+  --t17-tick: #5f7d8c;
+  --t17-label-bg: #162536;
+  --t17-label-border: #2c435a;
+  --t17-rule: #26394e;
+  --t17-rule-2: #3a5670;
+
+  --card-shadow: 0 0 0 1px rgba(0,0,0,0.25),
+                 0 14px 32px -20px rgba(0,0,0,0.75);
+}
+
+/* =====================================================================
+   PAPER + GRATICULE  (background layers on <body>)
+   The graticule is a 1px grid every ~120px at low opacity; a faint fiber
+   wash gives the paper tooth. Terrain contours are drawn by JS on top of
+   this (behind content). All static → works with NO JS.
+   ===================================================================== */
+html[data-theme="17"] body {
+  background-color: var(--t17-paper);
+  background-image:
+    /* graticule: fine cross-hatch every 120px, with slightly stronger lines every 600px */
+    repeating-linear-gradient(0deg, var(--t17-grid) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(90deg, var(--t17-grid) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(0deg, var(--t17-grid-strong) 0 1px, transparent 1px 600px),
+    repeating-linear-gradient(90deg, var(--t17-grid-strong) 0 1px, transparent 1px 600px);
+  background-attachment: fixed, fixed, fixed, fixed;
+  position: relative;
+}
+/* faint paper tooth / vignette so pure paper isn't flat */
+html[data-theme="17"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 120% at 50% -10%, rgba(255,255,255,0.35), transparent 55%),
+    radial-gradient(140% 120% at 50% 110%, rgba(120,100,60,0.10), transparent 60%);
+  mix-blend-mode: normal;
+}
+html[data-theme="17"][data-mode="dark"] body::before {
+  background:
+    radial-gradient(120% 120% at 50% -10%, rgba(111,182,214,0.06), transparent 55%),
+    radial-gradient(140% 120% at 50% 120%, rgba(0,0,0,0.5), transparent 60%);
+}
+/* Stacking model (critical for legibility):
+   - <main> is a positioned stacking context (z-index 2), sitting above the
+     fixed paper pseudo-layer (z-index 0 on body::before).
+   - The JS terrain + route SVGs are inserted INSIDE <main> at z-index 0.
+   - Every section (and the hero inner) is z-index 1, so TEXT ALWAYS paints
+     above the contours/route. Contours are also ≤25% opacity by construction.
+   The terrain therefore renders behind all content, full-document width. */
+html[data-theme="17"] .nav-bar,
+html[data-theme="17"] main,
+html[data-theme="17"] .site-footer { position: relative; z-index: 2; }
+
+html[data-theme="17"] .t17-terrain,
+html[data-theme="17"] .t17-route-layer {
+  position: absolute;
+  top: 0;
+  /* span the full viewport width even though <main> is a centered, narrower
+     container: center a viewport-wide SVG on main's horizontal midpoint. */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Content above the SVG layer within <main>'s stacking context. */
+html[data-theme="17"] main > section.section,
+html[data-theme="17"] .hero-inner { position: relative; z-index: 1; }
+
+/* =====================================================================
+   NAV
+   ===================================================================== */
+html[data-theme="17"] .nav-bar {
+  border-bottom: 1px solid var(--t17-rule);
+}
+html[data-theme="17"] .nav-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: var(--nav-brand-tracking);
+  color: var(--color-heading);
+}
+html[data-theme="17"] .nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-fg);
+  opacity: 0.82;
+}
+html[data-theme="17"] .nav-links a:hover { opacity: 1; color: var(--color-accent); }
+html[data-theme="17"] .nav-toggle {
+  border: 1px solid var(--t17-rule-2);
+  border-radius: var(--btn-radius);
+  color: var(--color-fg);
+  font-size: 0.9rem;
+}
+html[data-theme="17"] .nav-toggle:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* =====================================================================
+   HERO
+   ===================================================================== */
+html[data-theme="17"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variant: small-caps;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.02;
+  color: var(--color-heading);
+}
+html[data-theme="17"] .hero-role {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.76rem;
+  color: var(--color-accent);
+  margin-top: 0.9rem;
+}
+html[data-theme="17"] .hero-tagline {
+  font-family: var(--font-body);
+  color: var(--color-fg);
+  max-width: 46ch;
+  margin-top: 1rem;
+  font-size: 1.06rem;
+  line-height: 1.6;
+}
+
+/* A "surveyed by" coordinates strip under the hero (JS may enrich; CSS-safe) */
+html[data-theme="17"] .hero-text { position: relative; }
+html[data-theme="17"] .hero-name::after {
+  content: 'Field survey · research territory of K. Garimella';
+  display: block;
+  font-family: var(--font-mono);
+  font-variant: normal;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-top: 0.7rem;
+  font-weight: 400;
+}
+
+html[data-theme="17"] .quick-links { margin-top: 1.5rem; gap: 0.5rem; }
+html[data-theme="17"] .quick-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--t17-rule-2);
+  border-radius: var(--btn-radius);
+  background: var(--t17-label-bg);
+  color: var(--color-fg);
+  box-shadow: 0 1px 0 rgba(120,100,60,0.12);
+}
+html[data-theme="17"] .quick-links a:hover {
+  background: var(--color-accent);
+  color: var(--t17-label-bg);
+  border-color: var(--color-accent);
+}
+html[data-theme="17"][data-mode="dark"] .quick-links a:hover { color: #0c1420; }
+
+/* =====================================================================
+   PORTRAIT — oval cartouche, engraved frame
+   ===================================================================== */
+html[data-theme="17"] .hero-portrait { display: flex; justify-content: center; }
+html[data-theme="17"] .face-frame {
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: var(--t17-paper-2);
+  /* three concentric engraved rings */
+  box-shadow:
+    0 0 0 2px var(--t17-paper),
+    0 0 0 4px var(--t17-rule-2),
+    0 0 0 6px var(--t17-paper),
+    0 0 0 8px var(--t17-rule),
+    0 12px 30px -16px rgba(70,55,30,0.5);
+}
+html[data-theme="17"] .face-frame img {
+  border-radius: 50%;
+  filter: sepia(0.35) contrast(1.05);
+}
+html[data-theme="17"][data-mode="dark"] .face-frame img {
+  filter: sepia(0.2) contrast(1.05) brightness(0.92) hue-rotate(150deg) saturate(0.7);
+}
+/* a little compass tick ornament ring drawn over the cartouche edge */
+html[data-theme="17"] .face-frame::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    repeating-conic-gradient(from 0deg,
+      var(--t17-tick) 0deg 0.6deg, transparent 0.6deg 30deg);
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 3px), #000 calc(50% - 2px), #000 50%, transparent calc(50% + 1px));
+          mask: radial-gradient(circle, transparent calc(50% - 3px), #000 calc(50% - 2px), #000 50%, transparent calc(50% + 1px));
+  opacity: 0.5;
+}
+
+/* =====================================================================
+   SECTION HEADINGS + COORDINATE LINES
+   Headings in Fraunces small-caps, letterspaced. A JetBrains-Mono
+   coordinates line renders under each heading via ::after, keyed by
+   [data-section]. Plausible coords per section (Rutgers / Delhi / Geneva…).
+   The heading is a direct grid child in L2 (column 1) — the ::after sits
+   inside it, so it stays with the heading.
+   ===================================================================== */
+html[data-theme="17"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  color: var(--color-heading);
+  position: relative;
+  padding-bottom: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+/* underline rule with a small tick, like a map neatline */
+html[data-theme="17"] .section-heading::before {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--t17-rule-2) 0 40%, var(--t17-rule) 40% 100%);
+}
+/* coordinates line */
+html[data-theme="17"] [data-section] .section-heading::after {
+  display: block;
+  font-family: var(--font-mono);
+  font-variant: normal;
+  font-weight: 400;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  color: var(--color-muted);
+  margin-top: 0.5rem;
+  content: '';
+}
+html[data-theme="17"] [data-section="about"]        .section-heading::after { content: '40.4990° N, 74.4474° W — New Brunswick sheet'; }
+html[data-theme="17"] [data-section="projects"]     .section-heading::after { content: '28.6139° N, 77.2090° E — Delhi field station'; }
+html[data-theme="17"] [data-section="publications"] .section-heading::after { content: '46.2044° N, 6.1432° E — Geneva survey depot'; }
+html[data-theme="17"] [data-section="teaching"]     .section-heading::after { content: '40.5008° N, 74.4474° W — Rutgers teaching hall'; }
+html[data-theme="17"] [data-section="other"]        .section-heading::after { content: '13.0827° N, 80.2707° E — Chennai outpost'; }
+
+/* =====================================================================
+   CARDS — map-inset style: double-rule border, corner ticks, label patch
+   ===================================================================== */
+html[data-theme="17"] .card,
+html[data-theme="17"] .other-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--t17-rule-2);
+  outline: 3px solid var(--t17-paper);       /* white gap */
+  outline-offset: -6px;                       /* pulls the double-rule inward */
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 1.3rem 1.4rem 1.25rem;
+}
+html[data-theme="17"] .card::before,
+html[data-theme="17"] .other-card::before,
+html[data-theme="17"] .card::after,
+html[data-theme="17"] .other-card::after {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  pointer-events: none;
+  z-index: 1;
+}
+/* top-left + bottom-right corner ticks (two L-shapes via borders) */
+html[data-theme="17"] .card::before,
+html[data-theme="17"] .other-card::before {
+  top: 5px; left: 5px;
+  border-top: 1.5px solid var(--t17-tick);
+  border-left: 1.5px solid var(--t17-tick);
+}
+html[data-theme="17"] .card::after,
+html[data-theme="17"] .other-card::after {
+  bottom: 5px; right: 5px;
+  border-bottom: 1.5px solid var(--t17-tick);
+  border-right: 1.5px solid var(--t17-tick);
+}
+
+/* card title as a white "label patch" */
+html[data-theme="17"] .card h3,
+html[data-theme="17"] .other-feature-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  font-size: 1.16rem;
+  color: var(--color-heading);
+  display: inline-block;
+  background: var(--t17-label-bg);
+  border: 1px solid var(--t17-label-border);
+  border-radius: 1px;
+  padding: 0.12rem 0.55rem;
+  margin-bottom: 0.55rem;
+  box-shadow: 0 1px 0 rgba(120,100,60,0.12);
+}
+html[data-theme="17"] .card p {
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+}
+html[data-theme="17"] .pub-meta,
+html[data-theme="17"] .about-meta {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  margin-top: 0.35rem;
+}
+html[data-theme="17"] .pub-meta em { font-style: italic; color: var(--color-fg); }
+html[data-theme="17"] .pub-links {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+html[data-theme="17"] .pub-links a { color: var(--color-accent); margin-right: 0.6rem; }
+html[data-theme="17"] .pub-links a:hover { text-decoration: underline; }
+
+/* keyword chips = map legend swatches */
+html[data-theme="17"] .kw {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.16rem 0.5rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 1px;
+  background: transparent;
+  color: var(--color-accent);
+}
+html[data-theme="17"] .about-para {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.62;
+}
+
+/* teaching */
+html[data-theme="17"] .teach-term {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+html[data-theme="17"] .teach-info { font-family: var(--font-body); }
+html[data-theme="17"] .teach-info a { color: var(--color-accent); }
+
+/* other section */
+html[data-theme="17"] .other-lead { font-family: var(--font-body); font-size: 1.06rem; }
+html[data-theme="17"] .other-feature-eyebrow {
+  font-family: var(--font-mono);
+  color: var(--color-muted);
+  letter-spacing: 0.16em;
+}
+html[data-theme="17"] .other-feature-meta { font-family: var(--font-body); color: var(--color-fg); opacity: 0.82; }
+html[data-theme="17"] .other-card:hover { transform: translateY(-2px); border-color: var(--color-accent); }
+html[data-theme="17"] .section-cta a {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: var(--color-accent);
+}
+
+/* =====================================================================
+   FOOTER — with a small CSS compass rose (also serves subpages)
+   ===================================================================== */
+html[data-theme="17"] .site-footer {
+  border-top: 1px solid var(--t17-rule);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  align-items: center;
+}
+html[data-theme="17"] #themeName { opacity: 0.85; }
+/* footer compass: a pure-CSS 4-point star inside a ticked ring */
+html[data-theme="17"] .site-footer::before {
+  content: '';
+  order: -1;
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--t17-rule-2);
+  background:
+    /* N-S / E-W needle as two crossed triangles via conic gradient */
+    conic-gradient(from 0deg,
+      var(--color-accent-2) 0deg 6deg, transparent 6deg 84deg,
+      var(--t17-rule-2) 84deg 96deg, transparent 96deg 174deg,
+      var(--color-accent-2) 174deg 186deg, transparent 186deg 264deg,
+      var(--t17-rule-2) 264deg 276deg, transparent 276deg 360deg);
+  -webkit-mask: radial-gradient(circle, #000 0 44%, transparent 46%);
+          mask: radial-gradient(circle, #000 0 44%, transparent 46%);
+}
+
+/* =====================================================================
+   SUBPAGES  (publications / tools / advice / comic — no [data-section],
+   no hero). Deliver paper + graticule + inset cards + footer compass.
+   Ensure pub-list rows read as neat inset ledger lines.
+   No terrain / no route (JS guards on [data-section]).
+   ===================================================================== */
+html[data-theme="17"] .pubs-page .section-heading,
+html[data-theme="17"] main .section-heading {
+  /* on subpages the heading has no data-section ancestor → no coords ::after */
+}
+html[data-theme="17"] .pub-list li { border-bottom: 1px solid var(--t17-rule); }
+html[data-theme="17"] .pub-list h3 { font-family: var(--font-display); font-variant: small-caps; letter-spacing: 0.03em; }
+html[data-theme="17"] .pub-year-heading {
+  font-family: var(--font-display);
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  opacity: 0.9;
+}
+html[data-theme="17"] .pubs-back { font-family: var(--font-mono); letter-spacing: 0.06em; }
+
+/* =====================================================================
+   COMPASS ROSE (hero, top-right) — the JS-injected inline SVG.
+   Base placement + rotation var; JS updates --t17-rot on scroll.
+   ===================================================================== */
+html[data-theme="17"] .t17-compass {
+  position: absolute;
+  top: 84px;
+  right: 24px;
+  width: 92px; height: 92px;
+  z-index: 3;
+  pointer-events: none;
+  transform: rotate(var(--t17-rot, 0deg));
+  transition: transform 120ms linear;
+  opacity: 0.9;
+}
+@media (max-width: 900px) {
+  html[data-theme="17"] .t17-compass { width: 68px; height: 68px; top: 72px; right: 14px; }
+}
+
+/* =====================================================================
+   WAYPOINT PIN LABELS (JS renders numbered circles in the route SVG;
+   these classes style the injected SVG bits so mode-flip is automatic
+   even though JS also sets fills from vars).
+   ===================================================================== */
+html[data-theme="17"] .t17-pin-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* =====================================================================
+   TIER: REDUCED MOTION
+   base.css already neuters CSS animations/transitions. Make sure the
+   compass shows no transition and the route (if drawn by JS) is static.
+   JS itself renders the final state; nothing to hide here.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="17"] .t17-compass { transition: none; }
+  html[data-theme="17"] .other-card:hover { transform: none; }
+}
+
+/* =====================================================================
+   TIER: MOBILE (≤760px)
+   Simplify ornament so the sheet stays crisp and cheap. Graticule spacing
+   tightens slightly; compass shrinks (handled above). Cards keep insets.
+   ===================================================================== */
+@media (max-width: 760px) {
+  html[data-theme="17"] body {
+    background-image:
+      repeating-linear-gradient(0deg, var(--t17-grid) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(90deg, var(--t17-grid) 0 1px, transparent 1px 88px);
+    background-attachment: fixed, fixed;
+  }
+  html[data-theme="17"] .hero-name::after { content: 'Field survey — K. Garimella'; }
+  html[data-theme="17"] .card,
+  html[data-theme="17"] .other-card { outline-offset: -5px; }
+}
+
+/* Respect explicit no-preference for very small paper: nothing extra needed.
+   The page is fully legible with CSS alone: paper, graticule, cartouche,
+   inset cards, footer compass. Contours + route are progressive enhancement. */
