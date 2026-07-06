@@ -20,7 +20,7 @@
     { n: 8,  slug: 'dither',           name: 'Dither',          layout: 'L1', js: 'js/theme-08-dither.js' },
     { n: 9,  slug: 'glitch',           name: 'Glitch',          layout: 'L4', js: 'js/theme-09-glitch.js' },
     { n: 10, slug: 'particle-field',   name: 'Particle Field',  layout: 'L4', js: 'js/theme-10-particles.js' },
-    { n: 11, slug: 'vitrine',          name: 'Vitrine',         layout: 'L4', js: 'js/theme-11-vitrine.js' },
+    { n: 11, slug: 'vitrine',          name: 'Liquid Glass',    layout: 'L4', js: 'js/theme-11-vitrine.js' },
     { n: 12, slug: 'observatory',      name: 'Observatory',     layout: 'L4', js: 'js/theme-12-observatory.js' },
     { n: 13, slug: 'popup',            name: 'Pop-Up',          layout: 'L1', js: 'js/theme-13-popup.js' },
     { n: 14, slug: 'ink',              name: 'Ink',             layout: 'L4', js: 'js/theme-14-ink.js' },
@@ -30,6 +30,7 @@
     { n: 18, slug: 'nocturne',         name: 'Nocturne',        layout: 'L1', js: 'js/theme-18-nocturne.js' },
     { n: 19, slug: 'herbarium',        name: 'Herbarium',       layout: 'L2', js: 'js/theme-19-herbarium.js' },
     { n: 20, slug: 'wayback',          name: 'Wayback',         layout: 'L1', js: 'js/theme-20-wayback.js' },
+    { n: 21, slug: 'chatbot',          name: 'Chatbot',         layout: 'L1', js: 'js/theme-21-chatbot.js' },
   ];
   const MAX = THEMES.length;
 

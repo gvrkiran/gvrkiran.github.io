@@ -1,0 +1,603 @@
+/* Theme 21 — Chatbot ("the site as a conversation"). Layout: L1.
+ *
+ * Homepage boots into a full-screen messenger: header, scrollable thread,
+ * suggestion chips, and a working input. The "bot" answers with real content
+ * from data.js as chat bubbles. A "classic site" button / Escape tears the
+ * chat app down and restores a pixel-normal page.
+ *
+ * Two moods, both deliberate:
+ *   light = WhatsApp-style messenger (doodle bg, tea-green out-bubbles, teal accent)
+ *   dark  = AI-assistant console (near-black, indigo out-bubbles, hairlines, mono ticks)
+ *
+ * Tiers:
+ *   Desktop  — centered app column, scrollable thread.
+ *   Mobile   — full-viewport chat app; input fixed above the keyboard; chips scroll.
+ *   Reduced  — no bubble-enter animation, no typing dots (JS renders instantly).
+ *   No-JS    — the chat app is never built; the normal page shows, with .card
+ *              content styled as chat bubbles from Kiran (fully legible).
+ *
+ * All selectors are scoped to html[data-theme="21"]; every node this theme
+ * creates carries the t21- prefix; the app is gated behind body[data-t21="on"].
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+html[data-theme="21"] {
+  --color-bg: #eae6df;          /* messenger chrome / page bg (light) */
+  --color-fg: #111b21;
+  --color-heading: #111b21;
+  --color-accent: #00a884;      /* WhatsApp teal */
+  --color-accent-2: #128c7e;
+  --color-muted: #667781;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1rem;
+  --line-height-body: 1.5;
+  --heading-tracking: -0.01em;
+  --nav-brand-tracking: 0.04em;
+
+  --btn-radius: 999px;
+  --card-radius: 14px;
+
+  /* chat surfaces (light / messenger) */
+  --t21-thread: #e5ddd5;        /* the classic WhatsApp thread paper */
+  --t21-chrome: #f0f2f5;        /* header + input bars */
+  --t21-bubble-in: #ffffff;     /* bot bubbles */
+  --t21-bubble-out: #d9fdd3;    /* user bubbles (tea green) */
+  --t21-bubble-fg: #111b21;
+  --t21-tick: #53bdeb;          /* read-receipt blue */
+  --t21-hair: rgba(0,0,0,0.08);
+  --t21-shadow: 0 1px 0.5px rgba(11,20,26,0.13);
+  --t21-link: #027eb5;
+  --t21-status: #00a884;
+
+  /* card surfaces reused on subpages + no-JS home */
+  --card-bg: #ffffff;
+  --card-border: 0 solid transparent;
+  --card-shadow: 0 1px 1px rgba(11,20,26,0.13);
+  --nav-bg: rgba(240,242,245,0.92);
+  --nav-backdrop: saturate(1.4) blur(8px);
+}
+
+/* Dark = AI-assistant console */
+html[data-theme="21"][data-mode="dark"] {
+  --color-bg: #0b0e14;
+  --color-fg: #e6e8ee;
+  --color-heading: #f5f7fb;
+  --color-accent: #6366f1;      /* indigo */
+  --color-accent-2: #818cf8;
+  --color-muted: #8b93a7;
+
+  --t21-thread: #0b0e14;
+  --t21-chrome: #12161f;
+  --t21-bubble-in: #1e232e;
+  --t21-bubble-out: #4f46e5;    /* indigo out-bubbles */
+  --t21-bubble-fg: #e6e8ee;
+  --t21-tick: #a5b4fc;
+  --t21-hair: rgba(255,255,255,0.08);
+  --t21-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  --t21-link: #93c5fd;
+  --t21-status: #34d399;
+
+  --card-bg: #1e232e;
+  --card-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  --nav-bg: rgba(18,22,31,0.92);
+}
+
+html[data-theme="21"] body { background: var(--color-bg); }
+
+/* ============================================================
+   WHEN THE APP IS LIVE — hide the normal flow.
+   Only nodes the theme did NOT create are hidden, and only via this flag.
+   ============================================================ */
+html[data-theme="21"] body[data-t21="on"] > main,
+html[data-theme="21"] body[data-t21="on"] > .site-footer,
+html[data-theme="21"] body[data-t21="on"] > .nav-bar {
+  display: none !important;
+}
+/* Lock the page so only the thread scrolls while the app is up. */
+html[data-theme="21"] body[data-t21="on"] {
+  overflow: hidden;
+  height: 100%;
+}
+/* The ? picker must float ABOVE the chat app (app sits at z 1000). */
+html[data-theme="21"] .theme-picker-overlay { z-index: 4000; }
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+html[data-theme="21"] .t21-app {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: var(--t21-thread);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  /* soft depth frame in messenger; flat console in dark handled by tokens */
+}
+html[data-theme="21"][data-mode="light"] .t21-app {
+  background:
+    linear-gradient(rgba(229,221,213,0.94), rgba(229,221,213,0.94)),
+    var(--t21-doodle, none);
+}
+html[data-theme="21"][data-mode="dark"] .t21-app {
+  background: var(--t21-thread);
+}
+
+/* ---- Header bar ---- */
+html[data-theme="21"] .t21-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.9rem;
+  padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
+  background: var(--t21-chrome);
+  border-bottom: 1px solid var(--t21-hair);
+  box-shadow: 0 1px 3px rgba(11,20,26,0.08);
+  position: relative;
+  z-index: 2;
+}
+html[data-theme="21"] .t21-avatar {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  background: var(--t21-bubble-in);
+}
+html[data-theme="21"] .t21-id { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+html[data-theme="21"] .t21-id-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-heading);
+  letter-spacing: var(--heading-tracking);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+html[data-theme="21"] .t21-id-status {
+  font-size: 0.76rem;
+  color: var(--color-muted);
+  display: flex; align-items: center; gap: 0.32rem;
+}
+html[data-theme="21"] .t21-dot {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: var(--t21-status);
+  box-shadow: 0 0 0 0 rgba(52,211,153,0.5);
+  animation: t21-pulse 2.4s ease-out infinite;
+}
+@keyframes t21-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0,168,132,0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(0,168,132,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,168,132,0); }
+}
+html[data-theme="21"] .t21-spacer { flex: 1 1 auto; }
+html[data-theme="21"] .t21-exit {
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  color: var(--color-muted);
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--t21-hair);
+  background: transparent;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  white-space: nowrap;
+}
+html[data-theme="21"] .t21-exit:hover {
+  color: var(--color-heading);
+  border-color: var(--color-accent);
+  background: var(--t21-bubble-in);
+}
+
+/* ---- Thread (scroll area) ---- */
+html[data-theme="21"] .t21-thread {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 1rem clamp(0.7rem, 4vw, 3rem) 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="21"] .t21-thread { scroll-behavior: auto; }
+}
+
+/* small centered "today" pill at the very top of the thread */
+html[data-theme="21"] .t21-daystamp {
+  align-self: center;
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  background: var(--t21-chrome);
+  border: 1px solid var(--t21-hair);
+  padding: 0.28rem 0.7rem;
+  border-radius: 8px;
+  margin: 0.2rem 0 0.7rem;
+  letter-spacing: 0.02em;
+}
+html[data-theme="21"][data-mode="dark"] .t21-daystamp { font-family: var(--font-mono); }
+
+/* ---- Rows + bubbles ---- */
+html[data-theme="21"] .t21-row {
+  display: flex;
+  width: 100%;
+}
+html[data-theme="21"] .t21-row.t21-in { justify-content: flex-start; }
+html[data-theme="21"] .t21-row.t21-out { justify-content: flex-end; }
+
+html[data-theme="21"] .t21-bubble {
+  position: relative;
+  max-width: 72%;
+  padding: 0.5rem 0.7rem 0.42rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  line-height: 1.42;
+  box-shadow: var(--t21-shadow);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+html[data-theme="21"] .t21-in .t21-bubble {
+  background: var(--t21-bubble-in);
+  color: var(--t21-bubble-fg);
+  border-top-left-radius: 4px;   /* tail corner */
+}
+html[data-theme="21"] .t21-out .t21-bubble {
+  background: var(--t21-bubble-out);
+  color: var(--t21-bubble-fg);
+  border-top-right-radius: 4px;  /* tail corner */
+}
+html[data-theme="21"][data-mode="dark"] .t21-out .t21-bubble { color: #fff; }
+
+/* little CSS tail (triangle) to sell the messenger look */
+html[data-theme="21"] .t21-in .t21-bubble::before,
+html[data-theme="21"] .t21-out .t21-bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 9px; height: 12px;
+  background: inherit;
+}
+html[data-theme="21"] .t21-in .t21-bubble::before {
+  left: -6px;
+  border-top-left-radius: 3px;
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+html[data-theme="21"] .t21-out .t21-bubble::before {
+  right: -6px;
+  border-top-right-radius: 3px;
+  clip-path: polygon(0 0, 0 100%, 100% 0);
+}
+
+/* bubble internals */
+html[data-theme="21"] .t21-bubble strong { font-weight: 600; }
+html[data-theme="21"] .t21-bubble p { margin: 0; }
+html[data-theme="21"] .t21-bubble p + p { margin-top: 0.35rem; }
+html[data-theme="21"] .t21-bubble a {
+  color: var(--t21-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+html[data-theme="21"][data-mode="dark"] .t21-out .t21-bubble a { color: #dbe3ff; }
+html[data-theme="21"] .t21-bubble a:hover { opacity: 0.82; }
+
+/* venue / meta line inside a paper bubble */
+html[data-theme="21"] .t21-meta {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-top: 0.15rem;
+}
+html[data-theme="21"][data-mode="dark"] .t21-out .t21-meta { color: rgba(255,255,255,0.72); }
+
+/* timestamp + ticks inside a bubble (bottom-right) */
+html[data-theme="21"] .t21-time {
+  display: inline-block;
+  font-size: 0.62rem;
+  color: var(--color-muted);
+  float: right;
+  margin: 0.28rem -0.15rem -0.1rem 0.6rem;
+  line-height: 1;
+  user-select: none;
+  white-space: nowrap;
+}
+html[data-theme="21"][data-mode="dark"] .t21-time { font-family: var(--font-mono); }
+html[data-theme="21"][data-mode="dark"] .t21-out .t21-time { color: rgba(255,255,255,0.7); }
+html[data-theme="21"] .t21-ticks { color: var(--t21-tick); margin-left: 0.15rem; font-size: 0.68rem; letter-spacing: -0.08em; }
+
+/* enter animation */
+html[data-theme="21"] .t21-row {
+  animation: t21-pop 160ms ease both;
+}
+@keyframes t21-pop {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="21"] .t21-row { animation: none; }
+  html[data-theme="21"] .t21-dot { animation: none; }
+}
+
+/* typing indicator (three dots) */
+html[data-theme="21"] .t21-typing .t21-bubble {
+  padding: 0.62rem 0.8rem;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+html[data-theme="21"] .t21-typing i {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: var(--color-muted);
+  display: inline-block;
+  opacity: 0.5;
+  animation: t21-blink 1.2s infinite ease-in-out;
+}
+html[data-theme="21"] .t21-typing i:nth-child(2) { animation-delay: 0.18s; }
+html[data-theme="21"] .t21-typing i:nth-child(3) { animation-delay: 0.36s; }
+@keyframes t21-blink {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 0.95; transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="21"] .t21-typing i { animation: none; }
+}
+
+/* ---- Composer (chips + input) ---- */
+html[data-theme="21"] .t21-composer {
+  flex: 0 0 auto;
+  background: var(--t21-chrome);
+  border-top: 1px solid var(--t21-hair);
+  padding: 0.5rem clamp(0.6rem, 3vw, 2.2rem);
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  position: relative;
+  z-index: 2;
+}
+html[data-theme="21"] .t21-chips {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+html[data-theme="21"] .t21-chips::-webkit-scrollbar { display: none; }
+html[data-theme="21"] .t21-chip {
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+}
+html[data-theme="21"] .t21-chip:hover { background: var(--color-accent); color: #fff; }
+html[data-theme="21"] .t21-chip:active { transform: scale(0.96); }
+html[data-theme="21"][data-mode="dark"] .t21-chip { color: var(--color-accent-2); border-color: rgba(129,140,248,0.5); }
+html[data-theme="21"][data-mode="dark"] .t21-chip:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+html[data-theme="21"] .t21-inputrow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+html[data-theme="21"] .t21-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-fg);
+  background: var(--t21-bubble-in);
+  border: 1px solid var(--t21-hair);
+  border-radius: 22px;
+  padding: 0.6rem 0.95rem;
+  line-height: 1.3;
+  outline: none;
+  transition: border-color 160ms ease;
+}
+html[data-theme="21"] .t21-input::placeholder { color: var(--color-muted); }
+html[data-theme="21"] .t21-input:focus { border-color: var(--color-accent); }
+html[data-theme="21"][data-mode="dark"] .t21-input { background: #1a1f2b; }
+
+html[data-theme="21"] .t21-send {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 120ms ease, background 160ms ease, opacity 160ms ease;
+}
+html[data-theme="21"] .t21-send:hover { background: var(--color-accent-2); }
+html[data-theme="21"] .t21-send:active { transform: scale(0.92); }
+html[data-theme="21"] .t21-send svg { width: 20px; height: 20px; display: block; }
+
+/* ============================================================
+   MOBILE — it is already a chat app; just tighten spacing.
+   ============================================================ */
+@media (max-width: 760px) {
+  html[data-theme="21"] .t21-bubble { max-width: 82%; font-size: 0.95rem; }
+  html[data-theme="21"] .t21-thread { padding-left: 0.7rem; padding-right: 0.7rem; }
+  html[data-theme="21"] .t21-header { gap: 0.55rem; }
+  html[data-theme="21"] .t21-exit .t21-exit-label { display: none; }  /* icon only on small screens */
+  html[data-theme="21"] .t21-exit { padding: 0.4rem 0.5rem; }
+}
+
+/* ============================================================
+   SUBPAGES + NO-JS HOMEPAGE — CSS-ONLY messenger dressing.
+   The chat app is never built here (JS guards on .hero-section, and no-JS
+   never runs JS at all). Instead we paint the page like a thread and turn
+   .card content into chat bubbles from Kiran. Content stays fully legible.
+   ============================================================ */
+
+/* page background = thread paper */
+html[data-theme="21"] body {
+  background: var(--color-bg);
+}
+html[data-theme="21"][data-mode="light"] body {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(0,0,0,0.018) 1px, transparent 1.4px),
+    radial-gradient(circle at 62% 68%, rgba(0,0,0,0.018) 1px, transparent 1.4px),
+    var(--t21-thread);
+  background-size: 26px 26px, 34px 34px;
+}
+html[data-theme="21"][data-mode="dark"] body { background: var(--t21-thread); }
+
+/* nav bar → messenger chrome */
+html[data-theme="21"] .nav-bar {
+  border-bottom: 1px solid var(--t21-hair);
+  box-shadow: 0 1px 3px rgba(11,20,26,0.06);
+}
+html[data-theme="21"] .nav-brand { color: var(--color-accent); font-weight: 700; }
+html[data-theme="21"] .nav-links a { color: var(--color-fg); font-size: 0.9rem; }
+html[data-theme="21"] .nav-toggle { border-color: var(--t21-hair); color: var(--color-muted); border-radius: 999px; }
+
+/* headings */
+html[data-theme="21"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-heading);
+  letter-spacing: var(--heading-tracking);
+}
+
+/* hero (no-JS homepage) — styled, readable, no app */
+html[data-theme="21"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+}
+html[data-theme="21"] .hero-role { color: var(--color-accent); font-weight: 600; margin-top: 0.5rem; }
+html[data-theme="21"] .hero-tagline { color: var(--color-fg); max-width: 52ch; margin-top: 0.7rem; }
+html[data-theme="21"] .face-frame {
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(11,20,26,0.16);
+  border: 3px solid var(--t21-bubble-in);
+}
+html[data-theme="21"] .quick-links { margin-top: 1.2rem; gap: 0.5rem; }
+html[data-theme="21"] .quick-links a {
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.9rem;
+}
+html[data-theme="21"] .quick-links a:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+/* Cards → chat bubbles from Kiran (left-aligned, white/indigo with a tail).
+   Exclude comic cards so the comics gallery grid stays intact. */
+html[data-theme="21"] .card:not(.comic-card) {
+  position: relative;
+  background: var(--card-bg);
+  border: 0;
+  border-radius: 14px;
+  border-top-left-radius: 4px;
+  box-shadow: var(--card-shadow);
+  padding: 0.85rem 1.05rem;
+  margin-bottom: 0.9rem;
+  margin-left: 0.5rem;
+  max-width: 60ch;
+}
+html[data-theme="21"] .card:not(.comic-card)::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -6px;
+  width: 9px; height: 12px;
+  background: var(--card-bg);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+html[data-theme="21"] .card:not(.comic-card) h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-heading);
+  margin-bottom: 0.3rem;
+}
+html[data-theme="21"] .card p { color: var(--color-fg); font-size: 0.95rem; line-height: 1.5; }
+html[data-theme="21"] .pub-meta,
+html[data-theme="21"] .about-meta { color: var(--color-muted); font-size: 0.85rem; margin-top: 0.25rem; }
+html[data-theme="21"] .pub-links a,
+html[data-theme="21"] .teach-info a,
+html[data-theme="21"] .section-cta a,
+html[data-theme="21"] .other-cta a { color: var(--t21-link); text-decoration: underline; }
+html[data-theme="21"] .teach-term { color: var(--color-muted); }
+
+/* keyword chips → suggestion-chip look */
+html[data-theme="21"] .kw {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.16rem 0.6rem;
+  background: transparent;
+}
+html[data-theme="21"][data-mode="dark"] .kw { color: var(--color-accent-2); border-color: rgba(129,140,248,0.5); }
+
+/* Publications list (publications.html) → bubbles */
+html[data-theme="21"] .pub-list li {
+  position: relative;
+  list-style: none;
+  background: var(--card-bg);
+  border: 0 !important;
+  border-radius: 14px;
+  border-top-left-radius: 4px;
+  box-shadow: var(--card-shadow);
+  padding: 0.8rem 1.05rem;
+  margin-bottom: 0.7rem;
+  margin-left: 0.5rem;
+  max-width: 64ch;
+}
+html[data-theme="21"] .pub-list li::before {
+  content: '';
+  position: absolute; top: 0; left: -6px;
+  width: 9px; height: 12px;
+  background: var(--card-bg);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+html[data-theme="21"] .pub-year-heading { color: var(--color-accent); opacity: 1; font-weight: 700; }
+
+/* Other-grid cards → bubbles */
+html[data-theme="21"] .other-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 0;
+  border-radius: 14px;
+  border-top-left-radius: 4px;
+  box-shadow: var(--card-shadow);
+}
+html[data-theme="21"] .other-card:hover { transform: translateY(-2px); }
+html[data-theme="21"] .other-feature-eyebrow { color: var(--color-muted); font-family: var(--font-mono); }
+html[data-theme="21"] .other-feature-title { color: var(--color-heading); font-family: var(--font-display); }
+html[data-theme="21"] .other-feature-meta { color: var(--color-fg); }
+
+/* footer */
+html[data-theme="21"] .site-footer { border-top: 1px solid var(--t21-hair); opacity: 0.72; }
+
+/* comics gallery cards keep their native look but adopt the bubble surface */
+html[data-theme="21"] .card.comic-card {
+  background: var(--card-bg);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
