@@ -34,11 +34,10 @@
 
   /* ---------------- Canvas setup ---------------- */
   const canvas = document.createElement('canvas');
-  // pointer-events:auto is required: .hero-bg is pointer-events:none (base.css),
-  // so without this the canvas never receives pointermove and hover does nothing.
-  // The canvas sits at z-index 0 (behind hero content at z-index 1), so links/pills
-  // still take clicks; the canvas only gets events over empty sky.
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:auto;';
+  // Canvas stays pointer-transparent — the hero content layer (z-index 1) covers
+  // it, so real pointer moves never reach it. Hover is wired on `window` instead
+  // (see below) and coordinates are mapped into the hero rect.
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;';
   bg.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
@@ -372,10 +371,24 @@
   function navigate() {
     if (hovered >= 0) { window.location.href = stars[hovered].href; }
   }
+  // Only navigate from a star hovered in empty sky — never hijack real links/nav.
+  const INTERACTIVE = 'a, button, input, textarea, select, .nav-bar, .theme-picker-overlay';
+  function onClick(e) {
+    if (hovered < 0) return;
+    const t = e.target;
+    if (t && t.closest && t.closest(INTERACTIVE)) return;
+    navigate();
+  }
 
+  // Listen on `window`, NOT the canvas: the hero content layer (z-index 1) sits
+  // above the canvas, so the canvas never receives real pointer events. We map
+  // window coordinates into the hero via bg.getBoundingClientRect() (done inside
+  // onPointerMove) and hit-test each frame in the render loop.
   if (isTouch) {
     // Tap = show tooltip; second tap on the same star = navigate.
-    canvas.addEventListener('pointerdown', (e) => {
+    window.addEventListener('pointerdown', (e) => {
+      const t = e.target;
+      if (t && t.closest && t.closest(INTERACTIVE)) return;
       const r = bg.getBoundingClientRect();
       px = e.clientX - r.left; py = e.clientY - r.top;
       const prev = hovered;
@@ -383,9 +396,9 @@
       if (hovered >= 0 && hovered === prev) navigate();
     }, { passive: true });
   } else {
-    canvas.addEventListener('pointermove', onPointerMove, { passive: true });
-    canvas.addEventListener('pointerleave', onPointerLeave, { passive: true });
-    canvas.addEventListener('click', navigate);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.addEventListener('pointerleave', onPointerLeave, { passive: true });
+    window.addEventListener('click', onClick);
   }
 
   /* ---------------- Shooting stars & meteors ---------------- */
