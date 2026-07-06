@@ -237,6 +237,7 @@ html[data-theme="14"] .section-heading {
    right→left revealing the text.  Only active once JS marks html.t14-js so no-JS
    never hides content. Reduced-motion: base.css zeroes transitions; JS also skips. */
 html[data-theme="14"].t14-js .section-heading.t14-mask {
+  opacity: 0;                    /* hidden until revealed — never show partial masked text */
   -webkit-mask-image: var(--t14-brush-mask);
   mask-image: var(--t14-brush-mask);
   -webkit-mask-repeat: no-repeat;
@@ -245,12 +246,16 @@ html[data-theme="14"].t14-js .section-heading.t14-mask {
   mask-size: 210% 140%;
   -webkit-mask-position: 130% 50%;
   mask-position: 130% 50%;
-  transition: mask-position 620ms cubic-bezier(.22,.61,.36,1),
+  transition: opacity 620ms ease,
+              mask-position 620ms cubic-bezier(.22,.61,.36,1),
               -webkit-mask-position 620ms cubic-bezier(.22,.61,.36,1);
 }
+/* Revealed: full opacity and mask centered so the white (opaque) region covers the
+   ENTIRE heading box — guarantees the whole word is visible (–10% clipped the left). */
 html[data-theme="14"].t14-js .section-heading.t14-mask.t14-revealed {
-  -webkit-mask-position: -10% 50%;
-  mask-position: -10% 50%;
+  opacity: 1;
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
 }
 /* Brush texture mask data-URI: feTurbulence-driven soft-edged horizontal stroke. */
 html[data-theme="14"] {

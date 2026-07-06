@@ -358,6 +358,13 @@
         : bandMin + (bandMax - bandMin) * ((i % 2 === 0 ? 0.25 : 0.75) + (rng() - 0.5) * 0.35);
       anchors.push([Math.max(10, base), y]);
     });
+    // Terminal anchor near the page bottom so the expedition line runs all the way
+    // down the page, not just to the last section's heading.
+    if (anchors.length) {
+      const last = anchors[anchors.length - 1];
+      const bottomY = (typeof docHeight === 'function' ? docHeight() : root.scrollHeight) - 48;
+      if (bottomY > last[1] + 80) anchors.push([last[0], bottomY]);
+    }
     return anchors;
   }
 
@@ -565,7 +572,7 @@
 
   function tick() {
     rafId = 0;
-    if (document.hidden || !heroVisible) return;   // paused
+    if (document.hidden) return;   // paused only when tab hidden; route must track full-page scroll
     // compass: rotate a few degrees with scroll (subtle)
     const sp = scrollProgress();
     if (compass) {
@@ -581,7 +588,7 @@
   }
   function requestTick() {
     dirty = true;
-    if (!rafId && !document.hidden && heroVisible) rafId = requestAnimationFrame(tick);
+    if (!rafId && !document.hidden) rafId = requestAnimationFrame(tick);
   }
 
   function onScroll() {

@@ -34,7 +34,11 @@
 
   /* ---------------- Canvas setup ---------------- */
   const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;';
+  // pointer-events:auto is required: .hero-bg is pointer-events:none (base.css),
+  // so without this the canvas never receives pointermove and hover does nothing.
+  // The canvas sits at z-index 0 (behind hero content at z-index 1), so links/pills
+  // still take clicks; the canvas only gets events over empty sky.
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:auto;';
   bg.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 

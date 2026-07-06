@@ -141,7 +141,9 @@
   face.appendChild(heroInner); // moves the node, does not clone/rewrite it
 
   // Stats row — HIGHLIGHTS as card "stats". Appended after hero-inner, inside face.
-  const HIGHLIGHTS = Array.isArray(window.HIGHLIGHTS) ? window.HIGHLIGHTS : [];
+  // NatGeo Marketing and NSF CAREER (in prep) are filtered out per site owner's request.
+  const HIGHLIGHTS = (Array.isArray(window.HIGHLIGHTS) ? window.HIGHLIGHTS : [])
+    .filter((h) => !/natgeo|nsf\s*career/i.test((h && h.label) || ''));
   if (HIGHLIGHTS.length) {
     const stats = document.createElement('div');
     stats.className = 't15-card-stats';
