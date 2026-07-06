@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-theme="2" data-mode="light" data-layout="L1">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kiran Garimella</title>
+  <meta name="description" content="Kiran Garimella — Assistant Professor at Rutgers. Computational social science, misinformation, AI for the public good." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="js/theme-engine.js"></script>
+</head>
+<body>
+  <a class="visually-hidden" href="#about">Skip to content</a>
+
+  <header class="nav-bar" role="banner">
+    <a class="nav-brand" href="#top">K.G.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="modeToggle" aria-label="Toggle dark mode">☀</button>
+  </header>
+
+  <main id="top">
+
+    <section class="hero-section section" data-section="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-name" id="heroName">Kiran Garimella</h1>
+          <p class="hero-role" id="heroRole"></p>
+          <p class="hero-tagline" id="heroTagline"></p>
+          <div class="quick-links" id="quickLinks" aria-label="Quick links"></div>
+        </div>
+        <div class="hero-portrait">
+          <div class="face-frame" id="faceFrame">
+            <img id="faceImg" alt="Kiran Garimella" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" data-section="about">
+      <h2 class="section-heading">About</h2>
+      <div class="section-body" id="aboutBody"></div>
+    </section>
+
+    <section class="section" id="projects" data-section="projects">
+      <h2 class="section-heading">Projects</h2>
+      <div class="section-body" id="projectsBody"></div>
+    </section>
+
+    <section class="section" id="publications" data-section="publications">
+      <h2 class="section-heading">Publications</h2>
+      <div class="section-body" id="pubsBody"></div>
+      <p class="section-cta"><a href="publications.html">See full list →</a></p>
+    </section>
+
+    <section class="section" id="teaching" data-section="teaching">
+      <h2 class="section-heading">Teaching</h2>
+      <div class="section-body" id="teachingBody"></div>
+    </section>
+
+    <section class="section" id="other" data-section="other">
+      <h2 class="section-heading">Other</h2>
+      <div class="section-body" id="otherBody"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span id="copyright">© Kiran Garimella</span>
+    <span id="themeName"></span>
+    <a href="#top">↑ Top</a>
+  </footer>
+
+  <div class="theme-picker-overlay" id="themePicker">
+    <div class="theme-picker">
+      <h3>Themes</h3>
+      <p style="font-size:0.82rem;opacity:0.7">Press Esc to close. Click to apply.</p>
+      <ul id="themePickerList"></ul>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="js/face-tracker.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/content.js"></script>
+</body>
+</html>

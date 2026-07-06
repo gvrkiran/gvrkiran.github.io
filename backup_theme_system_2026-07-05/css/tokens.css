@@ -1,0 +1,38 @@
+/* css/tokens.css — default theme contract; themes override these */
+
+:root {
+  --color-bg: #fafafa;
+  --color-fg: #111;
+  --color-heading: #111;
+  --color-accent: #1d4ed8;
+  --color-accent-2: #1d4ed8;
+  --color-muted: #555;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-body: 1rem;
+  --line-height-body: 1.55;
+  --heading-tracking: 0;
+  --nav-brand-tracking: 0.08em;
+
+  --space-unit: 1rem;
+  --face-size: 200px;
+  --btn-radius: 999px;
+  --card-radius: 0;
+  --card-bg: transparent;
+  --card-border: 1px solid currentColor;
+  --card-shadow: none;
+
+  --nav-bg: transparent;
+  --nav-backdrop: none;
+}
+
+html[data-mode="dark"] {
+  --color-bg: #0a0a0c;
+  --color-fg: #f1f1f1;
+  --color-heading: #ffffff;
+  --color-muted: #aaa;
+}

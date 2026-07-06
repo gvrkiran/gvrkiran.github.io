@@ -1,0 +1,166 @@
+/* Theme 8 — Dither. Layout: L1.
+   System 7. Chicago-style headings. 1-bit dithered portrait via canvas Bayer matrix. */
+
+html[data-theme="8"] {
+  --color-bg: #ffffff;
+  --color-fg: #1d1d1d;
+  --color-heading: #1d1d1d;
+  --color-accent: #4a4a4a;
+  --color-muted: #555;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --face-size: 220px;
+  --btn-radius: 0;
+}
+html[data-theme="8"][data-mode="dark"] {
+  --color-bg: #0a0a0a;
+  --color-fg: #e8e8e8;
+  --color-heading: #fff;
+  --color-accent: #aaaaaa;
+  --color-muted: #999;
+}
+
+/* Scanline overlay */
+html[data-theme="8"] body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 3px);
+  mix-blend-mode: multiply;
+}
+html[data-theme="8"][data-mode="dark"] body::before {
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.06) 2px, rgba(255,255,255,0.06) 3px);
+  mix-blend-mode: screen;
+}
+
+html[data-theme="8"] .nav-bar {
+  --nav-bg: var(--color-bg);
+  border-bottom: 1px solid currentColor;
+}
+html[data-theme="8"] .nav-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+html[data-theme="8"] .nav-links a { font-size: 0.85rem; font-weight: 500; }
+html[data-theme="8"] .nav-toggle { border-radius: 4px; box-shadow: 2px 2px 0 currentColor; }
+
+html[data-theme="8"] .face-frame {
+  width: 280px;
+  height: 320px;
+  border: 1px solid var(--color-fg);
+  border-radius: 0;
+  background: var(--color-bg);
+  position: relative;
+  padding: 22px 0 0 0;
+  overflow: visible;
+}
+html[data-theme="8"] .face-frame::before {
+  content: 'kiran.bmp';
+  position: absolute; top: 0; left: 0; right: 0; height: 22px;
+  background: repeating-linear-gradient(0deg, currentColor 0 1px, transparent 1px 3px);
+  color: currentColor;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid currentColor;
+}
+html[data-theme="8"] .face-frame::after {
+  content: '';
+  position: absolute; left: 6px; top: 6px;
+  width: 11px; height: 11px;
+  border: 1px solid currentColor;
+  background: var(--color-bg);
+  z-index: 2;
+}
+html[data-theme="8"] .face-canvas {
+  width: 100% !important;
+  height: calc(100% - 22px) !important;
+  image-rendering: pixelated;
+}
+
+html[data-theme="8"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+html[data-theme="8"] .hero-role {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 0.4rem;
+}
+html[data-theme="8"] .hero-tagline {
+  font-size: 1.05rem;
+  max-width: 50ch;
+  margin-top: 0.8rem;
+}
+
+html[data-theme="8"] .quick-links { gap: 0.5rem; justify-content: center; margin-top: 1.4rem; }
+html[data-theme="8"] .quick-links a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--color-fg);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--color-fg);
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+html[data-theme="8"] .quick-links a:hover {
+  background: var(--color-fg);
+  color: var(--color-bg);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--color-fg);
+}
+
+html[data-theme="8"] .section-heading {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.02em;
+}
+
+html[data-theme="8"] .card {
+  border: 1px solid var(--color-fg);
+  border-radius: 0;
+  padding: 1.1rem 1.3rem;
+  box-shadow: 3px 3px 0 var(--color-fg);
+  background: var(--color-bg);
+}
+html[data-theme="8"] .card h3 { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem; }
+html[data-theme="8"] .card p { color: var(--color-muted); }
+
+html[data-theme="8"] .kw {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid currentColor;
+  background: none;
+  border-radius: 0;
+}
+
+html[data-theme="8"] .other-list { list-style: none; padding: 0; }
+html[data-theme="8"] .other-list li { padding: 0.4rem 0; }
+html[data-theme="8"] .other-list a {
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  box-shadow: 2px 2px 0 currentColor;
+  display: inline-block;
+  font-weight: 700;
+  border-radius: 4px;
+}
+html[data-theme="8"] .pub-meta { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-muted); margin-top: 0.2rem; }
+html[data-theme="8"] .pub-links { margin-top: 0.4rem; font-family: var(--font-mono); font-size: 0.82rem; }
+html[data-theme="8"] .pub-links a { color: var(--color-fg); margin-right: 0.6rem; text-decoration: underline; }
+html[data-theme="8"] .about-meta { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-muted); margin-top: 0.4rem; }
+html[data-theme="8"] .section-cta a { font-weight: 700; }

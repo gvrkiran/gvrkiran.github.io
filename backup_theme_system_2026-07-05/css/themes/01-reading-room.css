@@ -1,0 +1,182 @@
+/* Theme 1 — Reading Room. Layout: L1.
+   Aaronson / Narayanan vibe. EB Garamond. Drop caps. Oxblood accent. */
+
+html[data-theme="1"] {
+  --color-bg: #fbfaf6;
+  --color-fg: #1a1a1a;
+  --color-heading: #1a1a1a;
+  --color-accent: #6b1d1d;
+  --color-accent-2: #b08585;
+  --color-muted: #5a5854;
+
+  --font-display: 'EB Garamond', Georgia, serif;
+  --font-heading: 'EB Garamond', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+
+  --font-size-body: 1.08rem;
+  --line-height-body: 1.7;
+  --heading-tracking: 0.02em;
+  --nav-brand-tracking: 0.16em;
+
+  --face-size: 180px;
+  --btn-radius: 0;
+}
+html[data-theme="1"][data-mode="dark"] {
+  --color-bg: #15140f;
+  --color-fg: #ece7d8;
+  --color-heading: #fff8e7;
+  --color-accent: #d6a3a3;
+  --color-muted: #a8a08e;
+}
+
+html[data-theme="1"] .nav-bar {
+  --nav-bg: var(--color-bg);
+  border-bottom: 1px solid currentColor;
+}
+html[data-theme="1"] .nav-brand {
+  font-variant: small-caps;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+}
+html[data-theme="1"] .nav-links a {
+  font-variant: small-caps;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+}
+html[data-theme="1"] .nav-toggle {
+  border: 1px solid currentColor;
+  border-radius: 0;
+  font-size: 0.9rem;
+}
+
+html[data-theme="1"] .face-frame {
+  border-radius: 50%;
+  filter: grayscale(100%) contrast(0.95);
+  border: 1px solid currentColor;
+}
+
+html[data-theme="1"] .hero-inner { gap: 1.4rem; }
+html[data-theme="1"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+html[data-theme="1"] .hero-role {
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+}
+html[data-theme="1"] .hero-tagline {
+  font-size: 1.15rem;
+  max-width: 52ch;
+  margin-top: 0.6rem;
+}
+
+html[data-theme="1"] .quick-links {
+  gap: 0;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+html[data-theme="1"] .quick-links a {
+  border: 0;
+  border-radius: 0;
+  padding: 0.2rem 0.7rem;
+  font-style: italic;
+  position: relative;
+  background: transparent;
+}
+html[data-theme="1"] .quick-links a:not(:last-child)::after {
+  content: '·';
+  position: absolute;
+  right: -0.15em;
+  opacity: 0.6;
+  font-style: normal;
+}
+html[data-theme="1"] .quick-links a:hover {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+html[data-theme="1"] .section-heading {
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.6rem;
+  text-align: center;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.6rem;
+}
+
+html[data-theme="1"] .about-para {
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+html[data-theme="1"] .about-para::first-letter {
+  font-size: 3.2em;
+  float: left;
+  line-height: 0.9;
+  padding: 0.05em 0.1em 0 0;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+html[data-theme="1"] .about-meta {
+  margin-top: 1rem;
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+html[data-theme="1"] .card {
+  border: 0;
+  border-top: 1px solid currentColor;
+  border-radius: 0;
+  padding: 1rem 0;
+  background: transparent;
+  box-shadow: none;
+}
+html[data-theme="1"] .card h3 {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+html[data-theme="1"] .card p { color: var(--color-fg); }
+
+html[data-theme="1"] .kw-list { gap: 0.4rem; margin-top: 0.6rem; }
+html[data-theme="1"] .kw {
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+html[data-theme="1"] .kw::before { content: '— '; }
+
+html[data-theme="1"] .pub-meta {
+  font-style: italic;
+  color: var(--color-muted);
+  margin-top: 0.2rem;
+  font-size: 0.95rem;
+}
+html[data-theme="1"] .pub-links {
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+html[data-theme="1"] .pub-links a { color: var(--color-accent); margin-right: 0.6rem; }
+
+html[data-theme="1"] .other-list {
+  list-style: none;
+  padding: 0;
+}
+html[data-theme="1"] .other-list li {
+  padding: 0.5rem 0;
+  border-top: 1px solid currentColor;
+  font-style: italic;
+}
+html[data-theme="1"] .section-cta a {
+  color: var(--color-accent);
+  font-style: italic;
+}
