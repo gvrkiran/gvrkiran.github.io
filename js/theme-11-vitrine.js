@@ -1,11 +1,13 @@
 /* js/theme-11-vitrine.js
- * Theme 11 — Vitrine (glass, light, sparkle). Layout L4.
- *   1. Cursor-as-light-source: pointermove writes --lx/--ly (viewport %) to
- *      :root so every frosted pane catches a soft radial highlight.
- *   2. WebGL caustics shader painted into .hero-bg (try/catch → CSS fallback).
- *   3. ~24 seeded 4-point-star sparkles scattered across the hero.
- * Subpage-safe: hero features guard on .hero-bg presence; the cursor light
- * runs everywhere. Reduced-motion / mobile / no-WebGL all degrade gracefully.
+ * Theme 11 — Vitrine (liquid glass). Layout L4.
+ *   0. Inject an SVG displacement filter (#t11-glass) so `backdrop-filter:url(#t11-glass)`
+ *      bends the backdrop like real glass (Chromium honours it; others get the blur).
+ *   1. Cursor light: a fixed spotlight div follows the pointer (--mx/--my px), and
+ *      --lx/--ly (viewport %) drive per-pane sheen — so every glass surface catches light.
+ *   2. WebGL caustics shader painted into .hero-bg (try/catch → CSS gradient fallback).
+ *   3. ~26 seeded 4-point-star sparkles scattered across the hero.
+ * Subpage-safe: hero-only features guard on .hero-bg; glass + spotlight run everywhere.
+ * Reduced-motion / mobile / no-WebGL all degrade gracefully.
  */
 (function () {
   'use strict';
@@ -15,34 +17,66 @@
   const root = document.documentElement;
   const small = window.matchMedia('(max-width: 760px)').matches;
 
-  // Mark that JS is live so the CSS-only fallback sparkles yield to ours.
   root.classList.add('t11-js');
 
   /* ------------------------------------------------------------------ *
-   * 1. Cursor as light source — rAF-throttled pointermove → --lx/--ly. *
+   * 0. SVG glass-refraction filter. Static noise → feDisplacementMap    *
+   *    distorts the backdrop behind any pane that uses url(#t11-glass). *
+   *    Cheap + static, so it's injected in every mode. Skip on mobile   *
+   *    (perf) where the CSS also drops the url() layer.                 *
    * ------------------------------------------------------------------ */
-  // Runs on every page (panes exist on subpages too). Skip on touch/reduced:
-  // touch devices have no hovering cursor, and reduced-motion wants stillness.
+  if (!small) {
+    (function injectGlassFilter() {
+      if (document.getElementById('t11-glass-svg')) return;
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(NS, 'svg');
+      svg.id = 't11-glass-svg';
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('width', '0');
+      svg.setAttribute('height', '0');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;';
+      svg.innerHTML =
+        '<defs>' +
+        '<filter id="t11-glass" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.014" numOctaves="2" seed="14" result="noise"/>' +
+        '<feGaussianBlur in="noise" stdDeviation="1.4" result="soft"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="soft" scale="36" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>' +
+        '</defs>';
+      document.body.appendChild(svg);
+    })();
+  }
+
+  /* ------------------------------------------------------------------ *
+   * 1. Cursor light — a fixed spotlight that follows the pointer, plus  *
+   *    --lx/--ly (viewport %) for per-pane sheen. rAF-throttled.        *
+   * ------------------------------------------------------------------ */
   if (!reduced && window.matchMedia('(hover: hover)').matches) {
-    let px = 50, py = 0, queued = false;
+    const spot = document.createElement('div');
+    spot.className = 't11-spotlight';
+    spot.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(spot);
+
+    let mx = window.innerWidth * 0.5, my = window.innerHeight * 0.35, queued = false;
     const flush = () => {
       queued = false;
-      root.style.setProperty('--lx', px.toFixed(2) + '%');
-      root.style.setProperty('--ly', py.toFixed(2) + '%');
+      root.style.setProperty('--mx', mx.toFixed(1) + 'px');
+      root.style.setProperty('--my', my.toFixed(1) + 'px');
+      root.style.setProperty('--lx', ((mx / window.innerWidth) * 100).toFixed(2) + '%');
+      root.style.setProperty('--ly', ((my / window.innerHeight) * 100).toFixed(2) + '%');
     };
+    flush();
     window.addEventListener('pointermove', (e) => {
-      px = (e.clientX / window.innerWidth) * 100;
-      py = (e.clientY / window.innerHeight) * 100;
+      mx = e.clientX; my = e.clientY;
       if (!queued) { queued = true; requestAnimationFrame(flush); }
     }, { passive: true });
   }
 
   const bg = document.querySelector('.hero-bg');
-  if (!bg) return; // subpages: cursor-light only, no hero canvas/sparkles.
+  if (!bg) return; // subpages: glass + spotlight only, no hero canvas/sparkles.
 
   /* ------------------------------------------------------------------ *
    * 3. Sparkles — seeded mulberry32 PRNG scatters 4-point stars.        *
-   *    (Set up before the canvas so it exists even if WebGL is absent.) *
    * ------------------------------------------------------------------ */
   function mulberry32(a) {
     return function () {
@@ -57,14 +91,13 @@
     layer.className = 't11-glints';
     layer.setAttribute('aria-hidden', 'true');
     const rand = mulberry32(0x5EED11);
-    const N = small ? 12 : 24;
-    // A single 4-point star path, tinted per-instance via currentColor.
+    const N = small ? 14 : 26;
     const star = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.9 5.4 2.7 7.2 8 8-5.3.8-7.1 2.6-8 8-.9-5.4-2.7-7.2-8-8 5.3-.8 7.1-2.6 8-8z"/></svg>';
     let html = '';
     for (let i = 0; i < N; i++) {
       const x = rand() * 100;
       const y = rand() * 100;
-      const size = 6 + rand() * 12;
+      const size = 6 + rand() * 13;
       const delay = (rand() * 6).toFixed(2);
       const dur = (3 + rand() * 4).toFixed(2);
       const tint = rand() > 0.5 ? 'var(--t11-glint-a)' : 'var(--t11-glint-b)';
@@ -77,8 +110,7 @@
   })();
 
   /* ------------------------------------------------------------------ *
-   * 2. WebGL caustics — sum of moving noise octaves, pow()-sharpened,   *
-   *    tinted to accent, half-res, scaled up, ~15% opacity.            *
+   * 2. WebGL caustics — sum of moving noise octaves, tinted, faint.     *
    *    Skipped on mobile & reduced-motion. try/catch → CSS gradient.    *
    * ------------------------------------------------------------------ */
   if (small || reduced) return;
@@ -90,9 +122,9 @@
 
   function readTint() {
     const cs = getComputedStyle(root);
-    const raw = (cs.getPropertyValue('--t11-caustic') || '125,211,252').trim();
+    const raw = (cs.getPropertyValue('--t11-caustic') || '150,190,255').trim();
     const parts = raw.split(',').map((n) => parseFloat(n) / 255);
-    return parts.length === 3 && parts.every((n) => !isNaN(n)) ? parts : [0.49, 0.83, 0.99];
+    return parts.length === 3 && parts.every((n) => !isNaN(n)) ? parts : [0.59, 0.75, 1.0];
   }
 
   try {
@@ -103,11 +135,7 @@
       || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
     if (!gl) throw new Error('no webgl');
 
-    const vsSrc =
-      'attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }';
-
-    // Fragment: layered 2D value-noise, folded and pow()-sharpened into
-    // caustic filaments, tinted to the theme accent, faint alpha.
+    const vsSrc = 'attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }';
     const fsSrc = [
       'precision highp float;',
       'uniform float uTime;',
@@ -120,8 +148,6 @@
       '  return mix(mix(hash(i + vec2(0.0,0.0)), hash(i + vec2(1.0,0.0)), u.x),',
       '             mix(hash(i + vec2(0.0,1.0)), hash(i + vec2(1.0,1.0)), u.x), u.y);',
       '}',
-      // one caustic octave: two counter-drifting noise fields multiplied,
-      // then folded around 0.5 and sharpened.
       'float caustic(vec2 uv, float t, float sc){',
       '  float a = noise(uv * sc + vec2(t * 0.10, t * 0.13));',
       '  float b = noise(uv * sc * 1.7 - vec2(t * 0.12, t * 0.08));',
@@ -138,9 +164,8 @@
       '  c += caustic(uv, t * 1.3,  7.0)  * 0.30;',
       '  c += caustic(uv, t * 0.7, 11.0)  * 0.20;',
       '  c = clamp(c, 0.0, 1.0);',
-      // brighten the highlights, tint toward accent, keep it whispery.
       '  vec3 col = mix(uTint, vec3(1.0), c * 0.7);',
-      '  float alpha = c * 0.18;',
+      '  float alpha = c * 0.22;',
       '  gl_FragColor = vec4(col * alpha, alpha);',
       '}'
     ].join('\n');
@@ -177,7 +202,6 @@
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-    // Half-resolution framebuffer scaled up by CSS (canvas is 100%×100%).
     function resize() {
       const w = Math.max(1, Math.round(bg.clientWidth * 0.5));
       const h = Math.max(1, Math.round(bg.clientHeight * 0.5));
@@ -214,14 +238,12 @@
     bg.appendChild(canvas);
     resize();
 
-    // Pause when the hero scrolls offscreen…
     if ('IntersectionObserver' in window) {
       new IntersectionObserver((entries) => {
         onScreen = entries[0].isIntersecting;
         if (onScreen) start(); else stop();
       }, { threshold: 0.01 }).observe(bg);
     }
-    // …and when the tab is hidden.
     document.addEventListener('visibilitychange', () => {
       visible = !document.hidden;
       if (visible) start(); else stop();
@@ -230,7 +252,6 @@
 
     start();
   } catch (err) {
-    // WebGL unavailable or shader failed — fall back to the CSS gradient only.
     if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
     if (gl && program) { try { gl.deleteProgram(program); } catch (_) {} }
   }
