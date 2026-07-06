@@ -1,16 +1,18 @@
-/* Theme 11 — Vitrine. Layout: L4.
-   Liquid glass: a glowing colour field seen through refracting, light-catching
-   glass panes. Real backdrop distortion via SVG #t11-glass (Chromium), graceful
-   blur fallback elsewhere. Both modes are vivid; text stays on frosted panes. */
+/* Theme 11 — Liquid Glass. Layout: L4.
+   v3. Clear glass slabs over a structured, colourful backdrop. The JS registers
+   per-pane SVG displacement lenses (backdrop-filter: ... url(#t11L-i)) so the
+   backdrop visibly BENDS at each pane's edges — real refraction on Chromium.
+   The CSS below is also the complete fallback material (frosted, crisp edges)
+   for Safari / no-JS / mobile. No milk: low tint, sharp highlights, depth. */
 
-/* ---- Fonts + tokens ------------------------------------------------------ */
+/* ---- Tokens --------------------------------------------------------------- */
 html[data-theme="11"] {
-  --color-bg: #eef2ff;
+  --color-bg: #eef1f8;
   --color-fg: #101828;
   --color-heading: #0b1220;
   --color-accent: #4338ca;
   --color-accent-2: #0e7490;
-  --color-muted: #475569;
+  --color-muted: #45516b;
 
   --font-display: 'Manrope', system-ui, sans-serif;
   --font-heading: 'Manrope', system-ui, sans-serif;
@@ -20,222 +22,225 @@ html[data-theme="11"] {
   --line-height-body: 1.62;
   --heading-tracking: -0.02em;
 
-  --face-size: 300px;
+  --face-size: 290px;
   --btn-radius: 999px;
   --card-radius: 24px;
 
-  /* Glass surface controls (light mode) */
-  --glass-tint: rgba(255, 255, 255, 0.44);
-  --glass-tint-strong: rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.75);
-  --glass-blur: 14px;
-  --glass-shadow:
-    0 14px 44px -10px rgba(30, 27, 90, 0.34),
-    0 3px 10px -2px rgba(30, 27, 90, 0.18);
-  --glass-inner:
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 0 22px rgba(255, 255, 255, 0.18),
-    inset 0 -8px 22px -12px rgba(80, 60, 160, 0.25);
-  --glass-sheen: linear-gradient(133deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.12) 26%, rgba(255,255,255,0) 52%);
+  /* Glass material */
+  --glass-tint: rgba(255, 255, 255, 0.22);
+  --glass-tint-soft: rgba(255, 255, 255, 0.14);
+  --glass-edge: rgba(255, 255, 255, 0.9);
+  --glass-edge-soft: rgba(255, 255, 255, 0.45);
+  --glass-drop:
+    0 24px 60px -20px rgba(18, 26, 66, 0.45),
+    0 6px 16px -6px rgba(18, 26, 66, 0.22);
+  --glass-bevel:
+    inset 0 1px 0 var(--glass-edge),
+    inset 1px 0 0 rgba(255, 255, 255, 0.35),
+    inset -1px 0 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -12px 24px -16px rgba(18, 26, 66, 0.22);
+  --sheen-alpha: 0.34;
 
-  --t11-glint-a: rgba(255, 255, 255, 0.95);
-  --t11-glint-b: #4f46e5;
-  --t11-caustic: 120, 150, 255;
-  --t11-spot: rgba(255, 255, 255, 0.28);
-  --t11-spot-blend: soft-light;
-
-  /* nav uses the shared glass tokens */
-  --nav-bg: transparent;
-  --nav-backdrop: none;
+  --nav-bg: rgba(255, 255, 255, 0.28);
+  --nav-backdrop: blur(16px) saturate(180%);
 }
 
 html[data-theme="11"][data-mode="dark"] {
-  --color-bg: #070b1a;
-  --color-fg: #eef2ff;
+  --color-bg: #070b16;
+  --color-fg: #e8edfb;
   --color-heading: #ffffff;
   --color-accent: #a5b4fc;
   --color-accent-2: #67e8f9;
-  --color-muted: #aab4d4;
+  --color-muted: #9aa7c9;
 
-  --glass-tint: rgba(255, 255, 255, 0.065);
-  --glass-tint-strong: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.28);
-  --glass-shadow:
-    0 18px 50px -12px rgba(0, 0, 0, 0.6),
-    0 3px 12px -2px rgba(0, 0, 0, 0.4);
-  --glass-inner:
-    inset 0 1px 1px rgba(255, 255, 255, 0.5),
-    inset 0 0 26px rgba(255, 255, 255, 0.05),
-    inset 0 -10px 26px -14px rgba(0, 0, 0, 0.6);
-  --glass-sheen: linear-gradient(133deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.06) 24%, rgba(255,255,255,0) 50%);
+  --glass-tint: rgba(255, 255, 255, 0.075);
+  --glass-tint-soft: rgba(255, 255, 255, 0.045);
+  --glass-edge: rgba(255, 255, 255, 0.55);
+  --glass-edge-soft: rgba(255, 255, 255, 0.22);
+  --glass-drop:
+    0 26px 64px -20px rgba(0, 0, 0, 0.65),
+    0 6px 18px -6px rgba(0, 0, 0, 0.45);
+  --glass-bevel:
+    inset 0 1px 0 var(--glass-edge),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset -1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -14px 28px -18px rgba(0, 0, 0, 0.55);
+  --sheen-alpha: 0.2;
 
-  --t11-glint-a: rgba(255, 255, 255, 0.95);
-  --t11-glint-b: #67e8f9;
-  --t11-caustic: 150, 190, 255;
-  --t11-spot: rgba(150, 190, 255, 0.22);
-  --t11-spot-blend: screen;
+  --nav-bg: rgba(10, 14, 30, 0.35);
+  --nav-backdrop: blur(16px) saturate(180%);
 }
 
-/* ---- The glowing colour field (what the glass refracts) ------------------ */
-/* Light mode: pastel-but-saturated orbs drifting over a pale indigo base. */
+/* ---- Backdrop: smooth colour orbs + geometry the glass can bend ----------- */
 html[data-theme="11"] body {
   background:
-    radial-gradient(60vw 62vh at 12% 8%,  rgba(96, 165, 250, 0.62), transparent 60%),
-    radial-gradient(58vw 64vh at 88% 26%, rgba(167, 139, 250, 0.60), transparent 60%),
-    radial-gradient(62vw 60vh at 78% 88%, rgba(244, 114, 182, 0.50), transparent 62%),
-    radial-gradient(56vw 58vh at 20% 82%, rgba(45, 212, 191, 0.46), transparent 62%),
-    radial-gradient(50vw 52vh at 50% 50%, rgba(129, 140, 248, 0.34), transparent 66%),
-    #e7ecff;
+    radial-gradient(52vw 56vh at 14% 12%, rgba(59, 130, 246, 0.55), transparent 62%),
+    radial-gradient(50vw 54vh at 86% 22%, rgba(139, 92, 246, 0.50), transparent 62%),
+    radial-gradient(56vw 52vh at 78% 86%, rgba(236, 72, 153, 0.38), transparent 64%),
+    radial-gradient(48vw 50vh at 16% 84%, rgba(16, 185, 129, 0.36), transparent 62%),
+    var(--color-bg);
   background-attachment: fixed;
-  background-size: 200% 200%, 210% 210%, 220% 220%, 200% 200%, 240% 240%, 100% 100%;
-  animation: t11-drift 34s ease-in-out infinite;
 }
-/* Dark mode: deep nebula — richer, glowing orbs on near-black navy. */
 html[data-theme="11"][data-mode="dark"] body {
   background:
-    radial-gradient(60vw 62vh at 12% 8%,  rgba(67, 97, 238, 0.58), transparent 60%),
-    radial-gradient(58vw 64vh at 88% 26%, rgba(139, 92, 246, 0.52), transparent 60%),
-    radial-gradient(62vw 60vh at 80% 90%, rgba(225, 29, 72, 0.40), transparent 62%),
-    radial-gradient(56vw 58vh at 18% 84%, rgba(6, 182, 212, 0.46), transparent 62%),
-    radial-gradient(52vw 54vh at 50% 46%, rgba(99, 102, 241, 0.36), transparent 66%),
-    #070b1a;
+    radial-gradient(52vw 56vh at 14% 12%, rgba(56, 89, 199, 0.55), transparent 62%),
+    radial-gradient(50vw 54vh at 86% 22%, rgba(124, 78, 220, 0.48), transparent 62%),
+    radial-gradient(56vw 52vh at 78% 86%, rgba(190, 42, 110, 0.36), transparent 64%),
+    radial-gradient(48vw 50vh at 16% 84%, rgba(13, 148, 136, 0.34), transparent 62%),
+    var(--color-bg);
   background-attachment: fixed;
-  background-size: 200% 200%, 210% 210%, 220% 220%, 200% 200%, 240% 240%, 100% 100%;
-  animation: t11-drift 40s ease-in-out infinite;
-}
-@keyframes t11-drift {
-  0%   { background-position: 0% 20%, 100% 0%, 100% 100%, 0% 100%, 40% 50%, 0 0; }
-  50%  { background-position: 100% 60%, 0% 50%, 40% 60%, 80% 20%, 60% 40%, 0 0; }
-  100% { background-position: 0% 20%, 100% 0%, 100% 100%, 0% 100%, 40% 50%, 0 0; }
 }
 
-/* Fixed spotlight that follows the cursor — the glass catches it as it passes. */
-html[data-theme="11"] .t11-spotlight {
+/* Fine dot grid + two thin rings, fixed to the viewport. This is the structure
+   that makes both the blur and the edge refraction legible. */
+html[data-theme="11"] body::before {
+  content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 35%), var(--t11-spot), transparent 62%);
-  mix-blend-mode: var(--t11-spot-blend);
+  background-image:
+    radial-gradient(circle, rgba(16, 26, 64, 0.16) 1.1px, transparent 1.6px),
+    radial-gradient(circle at 24% 30%, transparent 259px, rgba(16, 26, 64, 0.16) 260px, transparent 262px),
+    radial-gradient(circle at 82% 72%, transparent 339px, rgba(16, 26, 64, 0.14) 340px, transparent 342px);
+  background-size: 26px 26px, 100% 100%, 100% 100%;
+}
+html[data-theme="11"][data-mode="dark"] body::before {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.10) 1.1px, transparent 1.6px),
+    radial-gradient(circle at 24% 30%, transparent 259px, rgba(255, 255, 255, 0.12) 260px, transparent 262px),
+    radial-gradient(circle at 82% 72%, transparent 339px, rgba(255, 255, 255, 0.10) 340px, transparent 342px);
+  background-size: 26px 26px, 100% 100%, 100% 100%;
 }
 
-/* Hero L4 background layer: soft colour wash behind the caustics canvas. */
-html[data-theme="11"] .hero-bg {
-  background:
-    radial-gradient(70% 60% at 26% 22%, rgba(129, 140, 248, 0.28), transparent 60%),
-    radial-gradient(66% 62% at 80% 74%, rgba(45, 212, 191, 0.24), transparent 62%);
-}
-html[data-theme="11"][data-mode="dark"] .hero-bg {
-  background:
-    radial-gradient(70% 60% at 26% 22%, rgba(139, 92, 246, 0.26), transparent 60%),
-    radial-gradient(66% 62% at 80% 74%, rgba(6, 182, 212, 0.22), transparent 62%);
-}
-html[data-theme="11"] .hero-bg .t11-caustics { mix-blend-mode: screen; opacity: 0.5; }
-html[data-theme="11"][data-mode="dark"] .hero-bg .t11-caustics { opacity: 0.85; }
-/* Light mode: caustics screen-blend only fogs a light hero — hide them; the
-   vivid orbs + glass carry it. Dark mode keeps the shimmer. */
-html[data-theme="11"][data-mode="light"] .hero-bg .t11-caustics { opacity: 0; }
+/* Keep page content above the fixed texture layer. */
+html[data-theme="11"] .nav-bar,
+html[data-theme="11"] main,
+html[data-theme="11"] .site-footer { position: relative; z-index: 1; }
+/* Clearance so the floating dock never covers the last line of content. */
+html[data-theme="11"] main { padding-bottom: 96px; }
 
-/* ---- The glass surface (shared) ------------------------------------------ */
-/* Applied to: section cards, other-cards, the nav bar, quick-link pills, and
-   the portrait frame. Real refraction via url(#t11-glass); blur is the fallback. */
+html[data-theme="11"] .hero-bg { background: transparent; }
+
+/* ---- The glass material ---------------------------------------------------
+   Default (CSS-only / Safari / mobile): clear frosted slab with crisp bevel.
+   Chromium+JS upgrades backdrop-filter inline to blur+saturate+url(#lens). */
 html[data-theme="11"] .card,
 html[data-theme="11"] .other-card,
-html[data-theme="11"] .nav-bar,
 html[data-theme="11"] .quick-links a,
-html[data-theme="11"] .face-frame {
+html[data-theme="11"] .face-frame,
+html[data-theme="11"] .t11-dock {
   position: relative;
   background: var(--glass-tint);
-  border: 1px solid var(--glass-border);
+  border: 0;
   border-radius: var(--card-radius);
-  box-shadow: var(--glass-shadow), var(--glass-inner);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(185%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(185%);
-  /* Enhanced: bend the backdrop like real glass. Dropped where url() filters
-     aren't honoured (Safari) — the blur+saturate above remains. */
-  backdrop-filter: blur(6px) saturate(185%) url(#t11-glass);
+  box-shadow: var(--glass-drop), var(--glass-bevel), 0 0 0 1px var(--glass-edge-soft);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
   overflow: hidden;
   isolation: isolate;
 }
-/* Specular sheen — the light streak across the top-left of every pane. */
+
+/* Cursor-following specular sheen (viewport-space via fixed attachment). */
 html[data-theme="11"] .card::before,
 html[data-theme="11"] .other-card::before,
-html[data-theme="11"] .quick-links a::before,
-html[data-theme="11"] .face-frame::before {
+html[data-theme="11"] .face-frame::before,
+html[data-theme="11"] .t11-dock::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--glass-sheen);
-  opacity: 0.9;
   pointer-events: none;
   z-index: 1;
+  background: radial-gradient(300px circle at var(--lx, 50vw) var(--ly, 20vh),
+    rgba(255, 255, 255, var(--sheen-alpha)), transparent 70%);
+  background-attachment: fixed;
 }
-/* Content of cards sits above the sheen. */
+/* Static top-corner glint so panes read as glass even without a cursor. */
+html[data-theme="11"] .card::after,
+html[data-theme="11"] .other-card::after,
+html[data-theme="11"] .face-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(126deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.08) 22%, transparent 46%);
+}
+html[data-theme="11"][data-mode="dark"] .card::after,
+html[data-theme="11"][data-mode="dark"] .other-card::after,
+html[data-theme="11"][data-mode="dark"] .face-frame::after {
+  background: linear-gradient(126deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.05) 22%, transparent 46%);
+}
+
 html[data-theme="11"] .card > *,
 html[data-theme="11"] .other-card > * { position: relative; z-index: 2; }
 
-html[data-theme="11"] .card { padding: 1.6rem 1.7rem; }
-html[data-theme="11"] .card + .card,
-html[data-theme="11"] .card { margin-bottom: 1.3rem; }
-
-/* ---- Nav (frosted glass bar) --------------------------------------------- */
-html[data-theme="11"] .nav-bar {
-  border-radius: 0;
-  border: 0;
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: 0 6px 24px -12px rgba(20, 20, 60, 0.4);
+html[data-theme="11"] .card {
+  padding: 1.55rem 1.65rem;
+  margin-bottom: 1.35rem;
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease;
 }
-html[data-theme="11"] .nav-bar::before { display: none; }
-html[data-theme="11"] .nav-brand { font-weight: 800; letter-spacing: 0.02em; }
+html[data-theme="11"] .card:hover,
+html[data-theme="11"] .other-card:hover {
+  transform: translateY(-3px) scale(1.006);
+  box-shadow:
+    0 32px 70px -22px rgba(18, 26, 66, 0.55),
+    0 8px 20px -8px rgba(18, 26, 66, 0.28),
+    var(--glass-bevel),
+    0 0 0 1px var(--glass-edge-soft);
+}
+
+/* ---- Nav ------------------------------------------------------------------ */
+html[data-theme="11"] .nav-bar { border-bottom: 1px solid var(--glass-edge-soft); }
+html[data-theme="11"] .nav-brand { font-weight: 800; }
 html[data-theme="11"] .nav-links a { font-weight: 500; }
-html[data-theme="11"] .nav-toggle {
-  border: 1px solid var(--glass-border);
-  background: var(--glass-tint);
-}
+html[data-theme="11"] .nav-toggle { border-color: var(--glass-edge-soft); }
 
-/* ---- Headings — luminous gradient clip ----------------------------------- */
+/* ---- Hero ------------------------------------------------------------------ */
 html[data-theme="11"] .hero-name {
-  font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  font-size: clamp(2.8rem, 8vw, 5.6rem);
+  font-size: clamp(2.9rem, 8vw, 5.8rem);
   line-height: 0.98;
-  background: linear-gradient(180deg, #ffffff 0%, #c7d2fe 62%, #a5b4fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 10px rgba(80, 90, 200, 0.35));
+  letter-spacing: -0.035em;
+  color: var(--color-heading);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
 }
-html[data-theme="11"][data-mode="light"] .hero-name {
-  background: linear-gradient(180deg, #1e1b4b 0%, #4338ca 60%, #6d28d9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 12px rgba(120, 130, 255, 0.28));
+html[data-theme="11"][data-mode="dark"] .hero-name {
+  text-shadow: 0 2px 18px rgba(120, 140, 255, 0.35);
 }
-/* Fallback: if background-clip:text is unsupported, keep readable solid colour. */
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  html[data-theme="11"] .hero-name { color: var(--color-heading); background: none; -webkit-text-fill-color: currentColor; }
-}
-html[data-theme="11"] .hero-role { color: var(--color-accent); font-weight: 600; }
-html[data-theme="11"] .hero-tagline { color: var(--color-fg); opacity: 0.9; }
+html[data-theme="11"] .hero-role { color: var(--color-accent); font-weight: 700; margin-top: 0.6rem; }
+html[data-theme="11"] .hero-tagline { max-width: 44ch; }
 
+/* Quick-link glass pills */
+html[data-theme="11"] .quick-links { margin-top: 1.4rem; }
+html[data-theme="11"] .quick-links a {
+  border-radius: 999px;
+  padding: 0.62rem 1.2rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), background 200ms ease;
+}
+html[data-theme="11"] .quick-links a:hover {
+  transform: translateY(-2px);
+  background: var(--glass-tint);
+  color: var(--color-fg);
+}
+
+/* Portrait: a thick glass block. */
+html[data-theme="11"] .face-frame { border-radius: 28px; }
+html[data-theme="11"] .face-frame img { border-radius: 28px; }
+
+/* ---- Sections -------------------------------------------------------------- */
 html[data-theme="11"] .section-heading {
-  font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.02em;
   color: var(--color-heading);
 }
-
-/* ---- Cards: inner text + chips ------------------------------------------- */
 html[data-theme="11"] .card h3,
 html[data-theme="11"] .other-feature-title { color: var(--color-heading); font-weight: 700; }
-html[data-theme="11"] .card p,
-html[data-theme="11"] .pub-meta,
-html[data-theme="11"] .teach-info,
-html[data-theme="11"] .about-para,
-html[data-theme="11"] .other-feature-meta { color: var(--color-fg); }
 html[data-theme="11"] .pub-links a,
 html[data-theme="11"] .teach-info a,
 html[data-theme="11"] .section-cta a,
@@ -243,120 +248,98 @@ html[data-theme="11"] .other-cta a { color: var(--color-accent); font-weight: 60
 
 html[data-theme="11"] .kw {
   display: inline-block;
-  padding: 0.28rem 0.7rem;
+  padding: 0.26rem 0.7rem;
   border-radius: 999px;
   font-size: 0.78rem;
-  background: var(--glass-tint-strong);
-  border: 1px solid var(--glass-border);
   color: var(--color-fg);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: var(--glass-tint-soft);
+  box-shadow: inset 0 1px 0 var(--glass-edge-soft), 0 0 0 1px var(--glass-edge-soft);
 }
 
-/* ---- Quick-link pills (glass buttons) ------------------------------------ */
-html[data-theme="11"] .quick-links a {
+/* ---- Glass dock (JS-built, homepage) ---------------------------------------- */
+html[data-theme="11"] .t11-dock {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.45rem 0.55rem;
   border-radius: 999px;
-  padding: 0.6rem 1.15rem;
+}
+html[data-theme="11"] .t11-dock a {
+  position: relative;
+  z-index: 2;
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--color-fg);
-  transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease, background 220ms ease;
+  transition: background 180ms ease, transform 180ms cubic-bezier(.2,.8,.2,1);
 }
-html[data-theme="11"] .quick-links a:hover {
+html[data-theme="11"] .t11-dock a:hover {
+  background: rgba(255, 255, 255, 0.38);
   transform: translateY(-2px);
-  background: var(--glass-tint-strong);
-  box-shadow: var(--glass-shadow), var(--glass-inner), 0 0 0 1px rgba(255,255,255,0.4);
-  color: var(--color-fg);
+}
+html[data-theme="11"][data-mode="dark"] .t11-dock a:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
-/* ---- Portrait — thick glass block with chromatic edges ------------------- */
-html[data-theme="11"] .face-frame {
-  border-radius: 26px;
-  padding: 0;
-  box-shadow:
-    var(--glass-shadow),
-    inset 0 1px 1px rgba(255,255,255,0.7),
-    2px 0 0 rgba(103, 232, 249, 0.35),
-    -2px 0 0 rgba(244, 114, 182, 0.35);
+/* ---- Subpages: mount the whole content column on one glass sheet ------------- */
+html[data-theme="11"] body.pubs-page main > .section,
+html[data-theme="11"] body.subpage main > .section {
+  background: var(--glass-tint);
+  border-radius: var(--card-radius);
+  box-shadow: var(--glass-drop), var(--glass-bevel), 0 0 0 1px var(--glass-edge-soft);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  padding: 2.2rem 2.4rem;
+  margin: 5.5rem auto 3rem;
 }
-html[data-theme="11"] .face-frame img {
-  border-radius: 26px;
-  mix-blend-mode: normal;
-}
-html[data-theme="11"] .face-frame::before { z-index: 3; }
-/* diagonal glare streak across the portrait */
-html[data-theme="11"] .face-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.28) 45%, transparent 60%);
-  pointer-events: none;
-  z-index: 4;
-}
+html[data-theme="11"] body.pubs-page .pubs-back,
+html[data-theme="11"] body.subpage .subpage-back { color: var(--color-accent); font-weight: 600; }
 
-/* ---- Footer -------------------------------------------------------------- */
+/* ---- Footer ------------------------------------------------------------------ */
 html[data-theme="11"] .site-footer {
-  border-top: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-edge-soft);
   color: var(--color-muted);
 }
 html[data-theme="11"] .site-footer a { color: var(--color-accent); }
 
-/* ---- Sparkles ------------------------------------------------------------ */
-html[data-theme="11"] .t11-glints {
-  position: absolute; inset: 0; pointer-events: none; z-index: 1;
-}
-html[data-theme="11"] .t11-glint {
-  position: absolute;
-  display: block;
-  opacity: 0;
-  transform: scale(0.4) rotate(0deg);
-  filter: drop-shadow(0 0 6px currentColor);
-  animation-name: t11-twinkle;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-html[data-theme="11"] .t11-glint svg { width: 100%; height: 100%; display: block; }
-@keyframes t11-twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
-  50%      { opacity: 0.95; transform: scale(1) rotate(45deg); }
-}
-
-/* CSS-only fallback sparkles (no JS): a few static twinkles on the hero bg. */
-html[data-theme="11"]:not(.t11-js) .hero-bg::after {
-  content: "";
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.9), transparent),
-    radial-gradient(2px 2px at 70% 45%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(1.5px 1.5px at 45% 70%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 85% 20%, rgba(255,255,255,0.7), transparent);
-}
-
-/* ---- No-backdrop-filter fallback: raise tint so text stays legible ------- */
+/* ---- Fallback: no backdrop-filter at all → solid readable panes -------------- */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   html[data-theme="11"] .card,
   html[data-theme="11"] .other-card,
-  html[data-theme="11"] .nav-bar { background: rgba(255, 255, 255, 0.9); }
+  html[data-theme="11"] .t11-dock { background: rgba(255, 255, 255, 0.92); }
   html[data-theme="11"][data-mode="dark"] .card,
   html[data-theme="11"][data-mode="dark"] .other-card,
-  html[data-theme="11"][data-mode="dark"] .nav-bar { background: rgba(16, 20, 40, 0.9); }
+  html[data-theme="11"][data-mode="dark"] .t11-dock { background: rgba(13, 18, 38, 0.92); }
 }
 
-/* ---- Mobile: cheaper glass, no SVG refraction ---------------------------- */
+/* ---- Mobile -------------------------------------------------------------------- */
 @media (max-width: 760px) {
+  html[data-theme="11"] { --face-size: 210px; --card-radius: 20px; }
+  html[data-theme="11"] .hero-name {
+    font-size: clamp(2.1rem, 11.5vw, 2.9rem);
+    overflow-wrap: anywhere;
+  }
   html[data-theme="11"] .card,
   html[data-theme="11"] .other-card,
-  html[data-theme="11"] .nav-bar,
   html[data-theme="11"] .quick-links a,
-  html[data-theme="11"] .face-frame {
-    -webkit-backdrop-filter: blur(12px) saturate(170%);
-    backdrop-filter: blur(12px) saturate(170%);
+  html[data-theme="11"] .face-frame,
+  html[data-theme="11"] .t11-dock {
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
+    backdrop-filter: blur(14px) saturate(170%);
   }
-  html[data-theme="11"] { --face-size: 220px; }
+  html[data-theme="11"] .t11-dock { bottom: 10px; }
+  html[data-theme="11"] .t11-dock a { padding: 0.45rem 0.7rem; font-size: 0.8rem; }
 }
 
-/* ---- Reduced motion: freeze the field + sheen, keep everything legible --- */
+/* ---- Reduced motion --------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme="11"] body { animation: none; background-position: 30% 30%, 80% 20%, 70% 90%, 20% 80%, 50% 50%, 0 0; }
-  html[data-theme="11"] .t11-glint { animation: none; opacity: 0.85; transform: scale(1) rotate(45deg); }
+  html[data-theme="11"] .card:hover,
+  html[data-theme="11"] .other-card:hover,
+  html[data-theme="11"] .quick-links a:hover,
+  html[data-theme="11"] .t11-dock a:hover { transform: none; }
 }
