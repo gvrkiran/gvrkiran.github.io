@@ -1,0 +1,636 @@
+/* Theme 15 — Holofoil. Layout: L2.
+   The hero reads as an oversized holographic trading card: rainbow foil sweep,
+   glitter under the surface, tilt toward the pointer. Sections are pages of a
+   collector's binder — every card gets a plastic-sleeve treatment; rare items
+   (recent / under review) get the full glitter + a ★ rarity glyph.
+   JS wraps .hero-inner in a card face — it never rebuilds existing nodes. */
+
+html[data-theme="15"] {
+  --color-bg: #e9e9ef;
+  --color-fg: #1b1d26;
+  --color-heading: #14151d;
+  --color-accent: #ff0084;
+  --color-accent-2: #22d3ee;
+  --color-muted: #63636f;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  --heading-tracking: -0.01em;
+  --nav-brand-tracking: 0.02em;
+
+  --face-size: 160px;
+  --btn-radius: 10px;
+  --card-radius: 14px;
+  --card-bg: #ffffff;
+  --card-border: 1px solid rgba(20,21,29,0.10);
+  --card-shadow: 0 1px 2px rgba(20,21,29,0.06), 0 10px 24px -14px rgba(20,21,29,0.18);
+
+  --nav-bg: rgba(233,233,239,0.72);
+  --nav-backdrop: blur(10px);
+
+  /* Holofoil-specific tokens */
+  --t15-card-bg: #1b1d26;
+  --t15-card-fg: #f4f4f8;
+  --t15-holo-1: #ff0084;
+  --t15-holo-2: #fca500;
+  --t15-holo-3: #22d3ee;
+  --t15-holo-4: #a855f7;
+  --t15-sleeve-glare: rgba(255,255,255,0.55);
+  --t15-px: 0.5;
+  --t15-py: 0.5;
+}
+
+html[data-theme="15"][data-mode="dark"] {
+  --color-bg: #0d0e14;
+  --color-fg: #eceef5;
+  --color-heading: #ffffff;
+  --color-muted: #9a9db0;
+
+  --card-bg: #14151e;
+  --card-border: 1px solid rgba(255,255,255,0.09);
+  --card-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 28px -16px rgba(0,0,0,0.65);
+
+  --nav-bg: rgba(13,14,20,0.72);
+  --t15-card-bg: #05050a;
+  --t15-sleeve-glare: rgba(255,255,255,0.14);
+}
+
+/* ============================== base / body ============================== */
+
+html[data-theme="15"] body {
+  background:
+    radial-gradient(1200px 700px at 12% -8%, rgba(255,0,132,0.06), transparent 60%),
+    radial-gradient(1000px 640px at 100% 0%, rgba(34,211,238,0.06), transparent 55%),
+    var(--color-bg);
+}
+html[data-theme="15"][data-mode="dark"] body {
+  background:
+    radial-gradient(1200px 700px at 12% -8%, rgba(255,0,132,0.10), transparent 60%),
+    radial-gradient(1000px 640px at 100% 0%, rgba(34,211,238,0.10), transparent 55%),
+    var(--color-bg);
+}
+
+/* ================================= nav ==================================== */
+
+html[data-theme="15"] .nav-bar {
+  border-bottom: 1px solid rgba(20,21,29,0.08);
+}
+html[data-theme="15"][data-mode="dark"] .nav-bar {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+html[data-theme="15"] .nav-brand {
+  font-weight: 700;
+  position: relative;
+  background: linear-gradient(100deg, var(--color-fg) 40%, var(--t15-holo-1) 48%, var(--t15-holo-3) 56%, var(--color-fg) 64%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: t15-brand-sheen 7s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="15"] .nav-brand { animation: none; background-position: 50% 0; }
+}
+@keyframes t15-brand-sheen {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+html[data-theme="15"] .nav-links a { font-size: 0.88rem; }
+html[data-theme="15"] .nav-toggle {
+  border-color: rgba(20,21,29,0.25);
+  border-radius: 999px;
+}
+html[data-theme="15"][data-mode="dark"] .nav-toggle { border-color: rgba(255,255,255,0.25); }
+
+/* ============================ hero / big card ============================= */
+
+html[data-theme="15"] .hero-section { padding-bottom: 1rem; }
+/* No-JS only: clears the fixed nav-bar. Once JS adds html.t15-js, the wrapper
+   it installs (.t15-card-outer) supplies its own top offset instead — using
+   the JS-set class (not :has()) keeps this correct on every browser. */
+html:not(.t15-js)[data-theme="15"] .hero-section { padding-top: 6.5rem; }
+
+/* NO-JS BASE: .hero-inner IS the card until JS arrives — dark face, radius,
+   border and a static foil gradient, all CSS-only. This guarantees a fully
+   styled, readable card even with JavaScript disabled (spec: "the card
+   renders flat with a static foil gradient (CSS only)"). When JS wraps
+   .hero-inner in .t15-card, the rule below hands the visual role over to
+   the new outer wrapper and .hero-inner reverts to a plain content pane. */
+html[data-theme="15"] .hero-inner {
+  position: relative;
+  width: min(920px, 100%);
+  margin: 0 auto;
+  border-radius: 26px;
+  background:
+    linear-gradient(115deg, transparent 20%, rgba(255,0,132,0.30) 34%, rgba(252,165,0,0.26) 44%, rgba(34,211,238,0.30) 56%, rgba(168,85,247,0.24) 68%, transparent 82%),
+    var(--t15-card-bg);
+  color: var(--t15-card-fg);
+  padding: 2.4rem 2.6rem 2rem;
+  isolation: isolate;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 30px 60px -24px rgba(0,0,0,0.55),
+    0 8px 20px -10px rgba(0,0,0,0.4);
+}
+
+/* Once JS has wrapped .hero-inner in .t15-card, the outer wrapper becomes
+   the visual card and .hero-inner is reset to a plain grid pane inside it —
+   the foil/shadow/background above would otherwise be duplicated. */
+html[data-theme="15"] .t15-card-outer {
+  display: flex;
+  justify-content: center;
+  padding-top: 6.5rem;
+  padding-bottom: 1.5rem;
+}
+[data-layout="L2"] html[data-theme="15"] .t15-card-outer { padding-top: 6.5rem; }
+
+html[data-theme="15"] .t15-card-outer .hero-inner {
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+  isolation: auto;
+}
+
+html[data-theme="15"] .t15-card {
+  position: relative;
+  width: min(920px, 100%);
+  border-radius: 26px;
+  background: var(--t15-card-bg);
+  color: var(--t15-card-fg);
+  padding: 2.4rem 2.6rem 2rem;
+  isolation: isolate;
+  contain: paint;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 30px 60px -24px rgba(0,0,0,0.55),
+    0 8px 20px -10px rgba(0,0,0,0.4);
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 600ms cubic-bezier(.16,1,.3,1), box-shadow 400ms ease;
+}
+html[data-theme="15"] .t15-card::before {
+  /* card border/frame */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  padding: 1px;
+  background: linear-gradient(155deg, rgba(255,255,255,0.5), rgba(255,255,255,0.08) 30%, rgba(255,255,255,0.02) 60%, rgba(255,255,255,0.3));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 5;
+}
+html[data-theme="15"][data-mode="light"] .t15-card::before {
+  background: linear-gradient(155deg, rgba(255,255,255,0.7), rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0.45));
+}
+
+/* rainbow foil layer — two overlaid diagonal sweeps that read var(--t15-px/py) */
+html[data-theme="15"] .t15-foil-rainbow {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: color-dodge;
+  opacity: 0.85;
+  background:
+    linear-gradient(115deg,
+      transparent 20%,
+      rgba(255,0,132,0.32) 34%,
+      rgba(252,165,0,0.30) 44%,
+      rgba(34,211,238,0.32) 56%,
+      rgba(168,85,247,0.28) 68%,
+      transparent 82%);
+  background-size: 260% 260%;
+  background-position: calc(var(--t15-px, 0.5) * 100%) calc(var(--t15-py, 0.5) * 100%);
+}
+html[data-theme="15"] .t15-foil-rainbow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(65deg,
+      transparent 15%,
+      rgba(34,211,238,0.22) 32%,
+      rgba(255,0,132,0.22) 50%,
+      rgba(252,165,0,0.20) 68%,
+      transparent 85%);
+  background-size: 220% 220%;
+  background-position: calc((1 - var(--t15-px, 0.5)) * 100%) calc((1 - var(--t15-py, 0.5)) * 100%);
+  mix-blend-mode: overlay;
+}
+
+/* glitter layer — repeating dot pattern + turbulence mask so sparkle looks organic */
+html[data-theme="15"] .t15-foil-glitter {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: color-dodge;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='4' cy='6' r='0.9' fill='white'/%3E%3Ccircle cx='19' cy='3' r='0.6' fill='white'/%3E%3Ccircle cx='33' cy='11' r='1' fill='white'/%3E%3Ccircle cx='11' cy='19' r='0.7' fill='white'/%3E%3Ccircle cx='27' cy='23' r='0.5' fill='white'/%3E%3Ccircle cx='36' cy='31' r='0.8' fill='white'/%3E%3Ccircle cx='7' cy='33' r='0.6' fill='white'/%3E%3Ccircle cx='22' cy='36' r='0.9' fill='white'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  background-position: calc(var(--t15-px, 0.5) * -60px) calc(var(--t15-py, 0.5) * -60px);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='2' seed='7' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='2' seed='7' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 9 -3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* glare layer — soft white radial that follows the pointer */
+html[data-theme="15"] .t15-foil-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(320px 320px at calc(var(--t15-px, 0.5) * 100%) calc(var(--t15-py, 0.5) * 100%),
+    rgba(255,255,255,0.35), transparent 60%);
+  mix-blend-mode: soft-light;
+}
+
+/* ---- card face content (wraps the ORIGINAL .hero-inner children) ---- */
+/* Grid layout for .hero-inner (2fr/1fr desktop, single column ≤760px) comes
+   from base.css's [data-layout="L2"] rules and needs no override here — it
+   applies identically whether or not JS has wrapped the node in .t15-card. */
+html[data-theme="15"] .t15-card-face {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(30px);
+}
+
+html[data-theme="15"] .hero-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4.4vw, 3.1rem);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.03;
+  color: #ffffff;
+}
+html[data-theme="15"] .hero-role {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: var(--t15-holo-3);
+  margin-top: 0.55rem;
+  text-transform: uppercase;
+}
+html[data-theme="15"] .hero-tagline {
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgba(244,244,248,0.72);
+  max-width: 46ch;
+  margin-top: 0.9rem;
+}
+
+html[data-theme="15"] .quick-links { margin-top: 1.3rem; gap: 0.5rem; }
+html[data-theme="15"] .quick-links a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border: 1px solid rgba(255,255,255,0.28);
+  color: #fff;
+  background: rgba(255,255,255,0.04);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+}
+html[data-theme="15"] .quick-links a:hover {
+  background: linear-gradient(100deg, var(--t15-holo-1), var(--t15-holo-3));
+  border-color: transparent;
+  color: #0a0a0f;
+}
+
+/* portrait — card art window */
+html[data-theme="15"] .hero-portrait { display: flex; justify-content: center; }
+html[data-theme="15"] .face-frame {
+  border-radius: 16px;
+  border: 3px solid rgba(255,255,255,0.85);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 18px 30px -14px rgba(0,0,0,0.6);
+  position: relative;
+}
+html[data-theme="15"][data-mode="dark"] .face-frame { border-color: rgba(255,255,255,0.65); }
+
+/* set-symbol + card number, echoing the theme counter (15/20) */
+html[data-theme="15"] .t15-card-meta {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.4rem;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em;
+}
+html[data-theme="15"] .t15-set-symbol {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: conic-gradient(from 120deg, var(--t15-holo-1), var(--t15-holo-2), var(--t15-holo-3), var(--t15-holo-4), var(--t15-holo-1));
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+}
+
+/* card stats row — role/highlights as card "stats" */
+html[data-theme="15"] .t15-card-stats {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: rgba(244,244,248,0.75);
+  border-top: 1px dashed rgba(255,255,255,0.18);
+  padding-top: 0.9rem;
+}
+html[data-theme="15"] .t15-card-stats span { white-space: nowrap; }
+html[data-theme="15"] .t15-card-stats b { color: var(--t15-holo-2); font-weight: 700; }
+
+/* ================================ binder ================================= */
+
+html[data-theme="15"] .section-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--heading-tracking);
+  color: var(--color-heading);
+  position: relative;
+  display: inline-block;
+}
+html[data-theme="15"] .section-heading::after {
+  content: '';
+  display: block;
+  height: 3px;
+  margin-top: 0.4rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--t15-holo-1), var(--t15-holo-2), var(--t15-holo-3), var(--t15-holo-4));
+}
+
+/* card pockets — 3-col grid look via base .card, plastic-sleeve treatment */
+html[data-theme="15"] .card {
+  position: relative;
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  isolation: isolate;
+  contain: paint;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+html[data-theme="15"] .card::before {
+  /* top glare streak of the plastic sleeve */
+  content: '';
+  position: absolute;
+  top: 0; left: -20%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, var(--t15-sleeve-glare), transparent);
+  transform: skewX(-18deg) translateX(-40%);
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 700ms cubic-bezier(.16,1,.3,1);
+}
+html[data-theme="15"] .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 16px 30px -16px rgba(20,21,29,0.30);
+}
+html[data-theme="15"][data-mode="dark"] .card:hover {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 16px 34px -16px rgba(0,0,0,0.7);
+}
+html[data-theme="15"] .card:hover::before { transform: skewX(-18deg) translateX(260%); }
+
+html[data-theme="15"] .card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--color-heading);
+  letter-spacing: var(--heading-tracking);
+  margin-bottom: 0.35rem;
+  padding-right: 1.4rem;
+}
+html[data-theme="15"] .card p { color: var(--color-fg); font-size: 0.92rem; }
+html[data-theme="15"] .card .pub-meta,
+html[data-theme="15"] .card .teach-term,
+html[data-theme="15"] .card .about-meta { color: var(--color-muted); }
+/* Link text uses a deepened pink (not the raw --color-accent) so body-text
+   links on a white card clear WCAG AA contrast; dark mode's white cards are
+   dark enough that the vivid accent already reads fine there. */
+html[data-theme="15"] .pub-links a,
+html[data-theme="15"] .teach-info a,
+html[data-theme="15"] .section-cta a { color: #c2005f; }
+html[data-theme="15"][data-mode="dark"] .pub-links a,
+html[data-theme="15"][data-mode="dark"] .teach-info a,
+html[data-theme="15"][data-mode="dark"] .section-cta a { color: var(--color-accent-2); }
+html[data-theme="15"] .pub-links a:hover,
+html[data-theme="15"] .teach-info a:hover { opacity: 0.75; }
+
+/* rarity glyph — ● common / ◆ project / ★ rare (set by JS via data-rarity).
+   Light mode uses deepened teal/gold (not the vivid cyan/orange tokens) so
+   the glyph clears AA against a white card; dark mode's near-black card
+   already gives the vivid tokens plenty of contrast. */
+html[data-theme="15"] .card::after {
+  content: '●';
+  position: absolute;
+  top: 0.95rem;
+  right: 1.1rem;
+  z-index: 3;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  opacity: 0.55;
+}
+html[data-theme="15"] .card.project-card::after { content: '◆'; color: #067a8f; opacity: 1; }
+html[data-theme="15"][data-mode="dark"] .card.project-card::after { color: var(--color-accent-2); opacity: 0.85; }
+html[data-theme="15"] .card[data-rarity="rare"]::after {
+  content: '★';
+  color: #9c6508;
+  opacity: 1;
+}
+html[data-theme="15"][data-mode="dark"] .card[data-rarity="rare"]::after {
+  color: var(--t15-holo-2);
+  text-shadow: 0 0 8px rgba(252,165,0,0.5);
+}
+
+/* rare cards get a subtle standing glitter wash + border sheen, always-on but gentle */
+html[data-theme="15"] .card[data-rarity="rare"] {
+  border-color: rgba(255,0,132,0.28);
+}
+html[data-theme="15"][data-mode="dark"] .card[data-rarity="rare"] {
+  border-color: rgba(34,211,238,0.3);
+}
+html[data-theme="15"] .card[data-rarity="rare"] .t15-mini-glitter {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: color-dodge;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='4' cy='6' r='0.9' fill='%23ff0084'/%3E%3Ccircle cx='19' cy='3' r='0.6' fill='%2322d3ee'/%3E%3Ccircle cx='33' cy='11' r='1' fill='%23fca500'/%3E%3Ccircle cx='11' cy='19' r='0.7' fill='%23a855f7'/%3E%3Ccircle cx='27' cy='23' r='0.5' fill='%23ff0084'/%3E%3Ccircle cx='36' cy='31' r='0.8' fill='%2322d3ee'/%3E%3C/svg%3E");
+  background-size: 34px 34px;
+  animation: t15-glitter-drift 9s linear infinite;
+}
+@keyframes t15-glitter-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 120px 90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="15"] .card[data-rarity="rare"] .t15-mini-glitter { animation: none; }
+}
+
+/* mini-card foil sweep on hover — cheap single layer */
+html[data-theme="15"] .card .t15-mini-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,0,132,0.16) 42%, rgba(34,211,238,0.16) 55%, rgba(252,165,0,0.14) 68%, transparent 80%);
+  transition: opacity 260ms ease;
+}
+html[data-theme="15"] .card:hover .t15-mini-sweep { opacity: 1; }
+
+/* kw chips read as tiny holo tags */
+html[data-theme="15"] .kw {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(20,21,29,0.16);
+  background: rgba(20,21,29,0.03);
+  color: var(--color-fg);
+}
+html[data-theme="15"][data-mode="dark"] .kw {
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+}
+
+/* other-card + other-grid */
+html[data-theme="15"] .other-card {
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+html[data-theme="15"] .other-feature-title { font-family: var(--font-display); color: var(--color-heading); }
+/* base.css sets opacity:0.7 on the eyebrow; at that opacity even our deepened
+   accent misses AA, so full opacity + the same mode-split as other links. */
+html[data-theme="15"] .other-feature-eyebrow { color: #c2005f; opacity: 1; font-family: var(--font-mono); }
+html[data-theme="15"][data-mode="dark"] .other-feature-eyebrow { color: var(--color-accent-2); }
+html[data-theme="15"] .other-feature-meta { color: var(--color-muted); }
+
+/* footer */
+html[data-theme="15"] .site-footer {
+  border-top: 1px solid rgba(20,21,29,0.1);
+  opacity: 0.8;
+}
+html[data-theme="15"][data-mode="dark"] .site-footer { border-top-color: rgba(255,255,255,0.1); }
+
+/* ============================ mobile (<=760px) ============================ */
+
+@media (max-width: 760px) {
+  html[data-theme="15"] .t15-card { padding: 1.8rem 1.5rem 1.5rem; border-radius: 20px; }
+  html[data-theme="15"] .t15-card-outer { padding-top: 5.5rem; }
+  html[data-theme="15"] .face-frame { margin: 0 auto; }
+  html[data-theme="15"] .t15-card-stats { font-size: 0.72rem; }
+}
+
+/* ========================= publications.html binder ======================= */
+/* This subpage renders its own inline <style> with .pub-list / .pub-year-heading
+   instead of .card — give it the same sleeve+foil-on-hover binder treatment. */
+
+html[data-theme="15"] .pubs-page main { padding-top: 6.5rem; }
+html[data-theme="15"] .pub-year-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-heading);
+  opacity: 1;
+  position: relative;
+  padding-left: 0.9rem;
+}
+html[data-theme="15"] .pub-year-heading::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.15em;
+  width: 4px; height: 1em;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--t15-holo-1), var(--t15-holo-3));
+}
+html[data-theme="15"] .pub-list { list-style: none; }
+html[data-theme="15"] .pub-list li {
+  position: relative;
+  border: var(--card-border);
+  border-bottom: var(--card-border);
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  isolation: isolate;
+  contain: paint;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+html[data-theme="15"] .pub-list li::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -20%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, var(--t15-sleeve-glare), transparent);
+  transform: skewX(-18deg) translateX(-40%);
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 700ms cubic-bezier(.16,1,.3,1);
+}
+html[data-theme="15"] .pub-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 14px 26px -16px rgba(20,21,29,0.28);
+}
+html[data-theme="15"] .pub-list li:hover::before { transform: skewX(-18deg) translateX(260%); }
+html[data-theme="15"] .pub-list li::after {
+  content: '●';
+  position: absolute;
+  top: 1rem; right: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  opacity: 0.5;
+}
+html[data-theme="15"] .pub-list li[data-rarity="rare"]::after {
+  content: '★';
+  color: #9c6508;
+  opacity: 1;
+}
+html[data-theme="15"][data-mode="dark"] .pub-list li[data-rarity="rare"]::after {
+  color: var(--t15-holo-2);
+  text-shadow: 0 0 8px rgba(252,165,0,0.5);
+}
+html[data-theme="15"] .pub-list li[data-rarity="rare"] { border-color: rgba(255,0,132,0.28); }
+html[data-theme="15"] .pub-list h3 { font-family: var(--font-display); color: var(--color-heading); padding-right: 1.3rem; }
+/* Sits directly on the page background (not a white card) — deepened pink
+   keeps AA contrast in light mode; the vivid accent already clears it on dark. */
+html[data-theme="15"] .pubs-back { color: #c2005f; }
+html[data-theme="15"][data-mode="dark"] .pubs-back { color: var(--color-accent); }
+
+/* ============================ generic subpages ============================ */
+/* tools.html / advice.html / comic.html use plain .card / .comic-card — the
+   .card rules above already sleeve them. Comic thumbnails get a light frame. */
+html[data-theme="15"] .comic-card { padding: 0; }
+html[data-theme="15"] .comic-card .content { padding: 0.9rem 1rem 1rem; }
+html[data-theme="15"] .comic-card h3 { padding-right: 0; }
+html[data-theme="15"] .comic-thumbnail { border-radius: 0; }
+
+/* ============================ reduced motion =============================== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="15"] .t15-card {
+    transition: none;
+    transform: perspective(900px) rotateX(2deg) rotateY(-4deg);
+  }
+  html[data-theme="15"] .nav-brand { animation: none; }
+}
