@@ -31,6 +31,7 @@
     { n: 19, slug: 'herbarium',        name: 'Herbarium',       layout: 'L2', js: 'js/theme-19-herbarium.js' },
     { n: 20, slug: 'wayback',          name: 'Wayback',         layout: 'L1', js: 'js/theme-20-wayback.js' },
     { n: 21, slug: 'chatbot',          name: 'Chatbot',         layout: 'L1', js: 'js/theme-21-chatbot.js' },
+    { n: 22, slug: 'foundry',          name: 'Foundry',         layout: 'L4', js: 'js/theme-22-foundry.js' },
   ];
   const MAX = THEMES.length;
 

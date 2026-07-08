@@ -1,0 +1,428 @@
+/* Theme 22 — Foundry. Layout: L4.
+   A type-foundry specimen sheet (after fable-25's Glyph). Ivory paper, black
+   ink, one vermilion accent used sparingly. Fraunces 900 display, Space
+   Grotesk supporting text, JetBrains Mono for tiny technical labels.
+   The hero letter is cast from thousands of ink grains (JS canvas): the cursor
+   carves it hollow, a click recasts it, and it cycles the letters of the name.
+   Dark mode is the night proof: the same sheet photo-negative. */
+
+/* ---- Tokens --------------------------------------------------------------- */
+html[data-theme="22"] {
+  --color-bg: #f6f1e5;
+  --color-fg: #171310;
+  --color-heading: #171310;
+  --color-accent: #d8360f;
+  --color-accent-2: #9c2a0e;
+  --color-muted: #6f6657;
+
+  --t22-ink: 23, 19, 16;          /* rgb for the particle renderer + hairlines */
+  --t22-accent: #d8360f;
+  --t22-hair: rgba(23, 19, 16, 0.22);
+  --t22-hair-strong: rgba(23, 19, 16, 0.6);
+  --t22-wash: 246, 241, 229;      /* paper rgb, for the text-legibility wash   */
+
+  --font-display: 'Fraunces', serif;
+  --font-heading: 'Fraunces', serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  --font-size-body: 1rem;
+  --line-height-body: 1.66;
+  --heading-tracking: -0.015em;
+
+  --face-size: 180px;
+  --btn-radius: 0;
+  --card-radius: 0;
+  --card-border: none;
+  --card-bg: transparent;
+
+  --nav-bg: rgba(246, 241, 229, 0.92);
+  --nav-backdrop: blur(8px);
+}
+
+html[data-theme="22"][data-mode="dark"] {
+  --color-bg: #12100c;
+  --color-fg: #f0e9d8;
+  --color-heading: #f6efdd;
+  --color-accent: #ff4a26;
+  --color-accent-2: #ff7a5c;
+  --color-muted: #a89e8a;
+
+  --t22-ink: 240, 233, 216;
+  --t22-accent: #ff4a26;
+  --t22-hair: rgba(240, 233, 216, 0.22);
+  --t22-hair-strong: rgba(240, 233, 216, 0.6);
+  --t22-wash: 18, 16, 12;
+
+  --nav-bg: rgba(18, 16, 12, 0.92);
+  --nav-backdrop: blur(8px);
+}
+
+html[data-theme="22"] body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* ---- Nav: foundry letterhead ---------------------------------------------- */
+html[data-theme="22"] .nav-bar {
+  border-bottom: 1px solid var(--t22-hair-strong);
+  box-shadow: none;
+}
+html[data-theme="22"] .nav-brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0;
+  color: var(--color-heading);
+}
+html[data-theme="22"] .nav-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-fg);
+}
+html[data-theme="22"] .nav-links a:hover { color: var(--color-accent); }
+html[data-theme="22"] .nav-toggle {
+  border: 1px solid var(--t22-hair-strong);
+  background: transparent;
+  border-radius: 0;
+}
+
+/* ---- Hero: the specimen ---------------------------------------------------- */
+html[data-theme="22"] .hero-section {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+}
+html[data-theme="22"] .hero-bg {
+  background: transparent;
+}
+html[data-theme="22"] .hero-bg canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* No-JS: a giant static glyph watermark so the concept still lands. */
+html[data-theme="22"]:not(.t22-js) .hero-bg::after {
+  content: "K";
+  position: absolute;
+  right: 4vw;
+  top: 50%;
+  transform: translateY(-54%);
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: min(64vh, 40vw);
+  line-height: 1;
+  color: rgba(var(--t22-ink), 0.1);
+  pointer-events: none;
+}
+
+/* Legibility wash behind the hero text so grains never fight the words. */
+html[data-theme="22"] .hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;   /* base.css L4 stacks column — we want text left, plate right */
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+html[data-theme="22"] .hero-portrait { align-self: flex-end; margin-bottom: 3.2rem; }
+html[data-theme="22"] .hero-text {
+  position: relative;
+  max-width: 30rem;
+}
+html[data-theme="22"] .hero-text::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -4rem -3rem -3rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(var(--t22-wash), 0.94), rgba(var(--t22-wash), 0.72) 58%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Foundry masthead line above the name. */
+html[data-theme="22"] .hero-text::after { display: none; }
+html[data-theme="22"] .hero-name {
+  position: relative;
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(2.9rem, 6.4vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  padding-top: 1.1rem;
+}
+html[data-theme="22"] .hero-name::before {
+  content: "Garimella Type Foundry · Specimen Nº 22";
+  position: absolute;
+  top: -0.4rem;
+  left: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+html[data-theme="22"] .hero-role {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  margin-top: 0.9rem;
+}
+html[data-theme="22"] .hero-tagline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.02rem;
+  color: var(--color-fg);
+  opacity: 0.85;
+  margin-top: 0.7rem;
+}
+
+/* Quick links: specimen index — bare text, arrow, hairline underline. */
+html[data-theme="22"] .quick-links { gap: 1.1rem; margin-top: 1.4rem; flex-wrap: wrap; }
+html[data-theme="22"] .quick-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-fg);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--t22-hair);
+  border-radius: 0;
+  padding: 0.15rem 0.05rem;
+}
+html[data-theme="22"] .quick-links a::after { content: " ↗"; color: var(--color-accent); }
+html[data-theme="22"] .quick-links a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  background: transparent;
+}
+
+/* Portrait: a small proof plate, inked. */
+html[data-theme="22"] .hero-portrait { flex: 0 0 auto; }
+html[data-theme="22"] .face-frame {
+  position: relative;
+  border: 1px solid var(--t22-hair-strong);
+  border-radius: 0;
+  padding: 10px;
+  background: var(--color-bg);
+  box-shadow: none;
+}
+html[data-theme="22"] .face-frame img {
+  border-radius: 0;
+  filter: grayscale(1) contrast(1.08);
+}
+html[data-theme="22"] .face-frame::before {
+  content: "";
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 14px; height: 14px;
+  border-top: 3px solid var(--t22-accent);
+  border-right: 3px solid var(--t22-accent);
+}
+html[data-theme="22"] .face-frame::after {
+  content: "the founder, proofed";
+  position: absolute;
+  left: 0;
+  bottom: -1.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* Caption chip the JS appends: "● now casting K — click to recast" */
+html[data-theme="22"] .t22-caption {
+  position: absolute;
+  right: max(24px, calc((100% - 1100px) / 2));
+  top: 84px;
+  z-index: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+html[data-theme="22"] .t22-caption b {
+  color: var(--color-accent);
+  font-weight: 400;
+}
+html[data-theme="22"] .t22-caption::before {
+  content: "●";
+  color: var(--color-accent);
+  margin-right: 0.6em;
+  animation: t22-pulse 2.4s ease-in-out infinite;
+}
+@keyframes t22-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+/* ---- Sections: numbered specimen sheets ------------------------------------ */
+html[data-theme="22"] main { counter-reset: t22sec; }
+html[data-theme="22"] section.section:not(.hero-section) {
+  border-top: 1px solid var(--t22-hair-strong);
+  padding-top: 2.6rem;
+}
+html[data-theme="22"] section.section:not(.hero-section) .section-heading {
+  counter-increment: t22sec;
+  position: relative;
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  letter-spacing: -0.015em;
+  color: var(--color-heading);
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+html[data-theme="22"] section.section:not(.hero-section) .section-heading::before {
+  content: "0" counter(t22sec);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+  transform: translateY(-0.35em);
+}
+
+/* ---- Entries: flat, hairline-ruled (no boxes on a specimen sheet) ---------- */
+html[data-theme="22"] .card,
+html[data-theme="22"] .other-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--t22-hair);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1.15rem 0 1.25rem;
+  margin-bottom: 0;
+}
+html[data-theme="22"] .card:hover,
+html[data-theme="22"] .other-card:hover {
+  transform: none;
+  box-shadow: none;
+  background: linear-gradient(90deg, rgba(var(--t22-ink), 0.035), transparent 70%);
+}
+html[data-theme="22"] .card h3,
+html[data-theme="22"] .other-feature-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.22rem;
+  color: var(--color-heading);
+}
+html[data-theme="22"] .card p { color: var(--color-fg); opacity: 0.88; }
+html[data-theme="22"] .pub-meta,
+html[data-theme="22"] .about-meta,
+html[data-theme="22"] .other-feature-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Keywords: set as running small-caps, not chips. */
+html[data-theme="22"] .kw {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+html[data-theme="22"] .kw + .kw::before { content: "· "; color: var(--color-accent); }
+
+/* Links: ink with vermilion arrows. */
+html[data-theme="22"] .pub-links a,
+html[data-theme="22"] .teach-info a,
+html[data-theme="22"] .section-cta a,
+html[data-theme="22"] .other-cta a,
+html[data-theme="22"] .about-para a {
+  color: var(--color-fg);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--t22-hair);
+}
+html[data-theme="22"] .pub-links a:hover,
+html[data-theme="22"] .teach-info a:hover,
+html[data-theme="22"] .section-cta a:hover,
+html[data-theme="22"] .other-cta a:hover,
+html[data-theme="22"] .about-para a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+html[data-theme="22"] .section-cta a::after,
+html[data-theme="22"] .other-cta a::after { content: " ↗"; color: var(--color-accent); }
+
+/* ---- Footer: colophon ------------------------------------------------------ */
+html[data-theme="22"] .site-footer {
+  border-top: 1px solid var(--t22-hair-strong);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+html[data-theme="22"] .site-footer a { color: var(--color-fg); }
+html[data-theme="22"] .site-footer a:hover { color: var(--color-accent); }
+
+/* ---- Subpages: the same sheet ---------------------------------------------- */
+html[data-theme="22"] .pubs-page h1,
+html[data-theme="22"] .subpage h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+html[data-theme="22"] .pub-year,
+html[data-theme="22"] .pubs-page h2,
+html[data-theme="22"] .subpage h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  border-bottom: 1px solid var(--t22-hair-strong);
+  padding-bottom: 0.35rem;
+}
+html[data-theme="22"] .pub-list li {
+  border-top: 1px solid var(--t22-hair);
+  padding: 0.85rem 0;
+  list-style: none;
+}
+html[data-theme="22"] .pub-list li:first-child { border-top: 0; }
+
+/* ---- Mobile ----------------------------------------------------------------- */
+@media (max-width: 760px) {
+  html[data-theme="22"] { --face-size: 130px; }
+  html[data-theme="22"] .hero-section { min-height: 88vh; }
+  html[data-theme="22"] .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+  html[data-theme="22"] .hero-portrait { order: -1; align-self: flex-end; }
+  html[data-theme="22"] .face-frame::after { display: none; }
+  html[data-theme="22"] .hero-name::before { letter-spacing: 0.14em; font-size: 0.58rem; }
+  html[data-theme="22"] .t22-caption { left: 24px; bottom: 16px; }
+}
+
+/* ---- Reduced motion ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="22"] .t22-caption::before { animation: none; }
+}
