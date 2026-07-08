@@ -32,6 +32,7 @@
     { n: 20, slug: 'wayback',          name: 'Wayback',         layout: 'L1', js: 'js/theme-20-wayback.js' },
     { n: 21, slug: 'chatbot',          name: 'Chatbot',         layout: 'L1', js: 'js/theme-21-chatbot.js' },
     { n: 22, slug: 'foundry',          name: 'Foundry',         layout: 'L4', js: 'js/theme-22-foundry.js' },
+    { n: 23, slug: 'perennial',        name: 'Perennial',       layout: 'L4', js: 'js/theme-23-perennial.js' },
   ];
   const MAX = THEMES.length;
 
