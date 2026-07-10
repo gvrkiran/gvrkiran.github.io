@@ -1,6 +1,6 @@
 /* js/theme-engine.js
  * Runs in <head> before body paint.
- * - Picks a random theme [1..10] excluding last_theme (localStorage).
+ * - Picks a random theme [1..MAX] excluding last_theme (localStorage).
  * - Honors ?theme=N URL override and localStorage.forced_theme override.
  * - Sets <html data-theme>, data-layout, data-mode.
  * - Injects css/themes/NN-name.css synchronously.
@@ -33,6 +33,7 @@
     { n: 21, slug: 'chatbot',          name: 'Chatbot',         layout: 'L1', js: 'js/theme-21-chatbot.js' },
     { n: 22, slug: 'foundry',          name: 'Foundry',         layout: 'L4', js: 'js/theme-22-foundry.js' },
     { n: 23, slug: 'perennial',        name: 'Perennial',       layout: 'L4', js: 'js/theme-23-perennial.js' },
+    { n: 24, slug: 'research-ramble',  name: 'Research Ramble', layout: 'L4', js: 'js/theme-24-research-ramble.js' },
   ];
   const MAX = THEMES.length;
 
