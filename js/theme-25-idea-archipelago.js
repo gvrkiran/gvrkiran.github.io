@@ -86,11 +86,15 @@
   function focusPortal(portal) {
     key.innerHTML = '<strong>' + portal.label + '</strong><br>' + portal.note + ' · select to travel there.';
     stage.dataset.focus = portal.key;
+    pointer.blocked = true;
+    lens.dataset.suppressed = 'true';
   }
 
   function resetKey() {
     key.innerHTML = '<strong>Explore the generated universe.</strong><br>Move to inspect · select a glowing portal to navigate.';
     delete stage.dataset.focus;
+    pointer.blocked = false;
+    lens.dataset.suppressed = 'false';
   }
 
   function navigate(target) {
@@ -144,7 +148,7 @@
   lens.setAttribute('aria-hidden', 'true');
   hero.appendChild(lens);
   let pointerFrame = 0;
-  let pointer = { x: 0, y: 0 };
+  let pointer = { x: 0, y: 0, blocked: false };
 
   function renderPointer() {
     pointerFrame = 0;
@@ -158,12 +162,23 @@
     hero.style.setProperty('--t25-mx', x + 'px');
     hero.style.setProperty('--t25-my', y + 'px');
 
-    const size = 186;
+    if (pointer.blocked) {
+      lens.dataset.on = 'false';
+      lens.dataset.suppressed = 'true';
+      return;
+    }
+
+    const size = 164;
     const zoom = 1.72;
-    lens.style.left = x + 'px';
-    lens.style.top = y + 'px';
+    const half = size / 2;
+    const offset = 132;
+    const displayX = x + offset + half > m.w - 16 ? x - offset : x + offset;
+    const displayY = Math.max(half + 18, Math.min(m.h - half - 32, y));
+    lens.style.left = displayX + 'px';
+    lens.style.top = displayY + 'px';
     lens.style.backgroundSize = (m.rw * zoom) + 'px ' + (m.rh * zoom) + 'px';
     lens.style.backgroundPosition = (size / 2 - (x - m.ox) * zoom) + 'px ' + (size / 2 - (y - m.oy) * zoom) + 'px';
+    lens.dataset.suppressed = 'false';
     lens.dataset.on = 'true';
   }
 
@@ -172,10 +187,12 @@
       const rect = hero.getBoundingClientRect();
       pointer.x = event.clientX - rect.left;
       pointer.y = event.clientY - rect.top;
+      pointer.blocked = Boolean(event.target && event.target.closest && event.target.closest('a, button, .hero-text, .t25-world-dock'));
       if (!pointerFrame) pointerFrame = requestAnimationFrame(renderPointer);
     }, { passive: true });
     hero.addEventListener('pointerleave', () => {
       lens.dataset.on = 'false';
+      lens.dataset.suppressed = 'true';
       stage.style.setProperty('--t25-pan-x', '0px');
       stage.style.setProperty('--t25-pan-y', '0px');
     }, { passive: true });
@@ -272,6 +289,17 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => { measureImage(); updateScroll(); }, 220);
   }, { passive: true });
+
+  const modeButton = document.getElementById('modeToggle');
+  function updateModeState() {
+    const dark = root.getAttribute('data-mode') === 'dark';
+    if (!modeButton) return;
+    modeButton.setAttribute('aria-pressed', String(dark));
+    modeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    modeButton.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+  }
+  updateModeState();
+  window.addEventListener('modechange', updateModeState);
 
   const themeName = document.getElementById('themeName');
   if (themeName) themeName.textContent = 'Idea Archipelago · generated with ChatGPT · theme 25/25';
