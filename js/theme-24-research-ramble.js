@@ -93,6 +93,7 @@
 
   function routeX(index) {
     const compact = innerWidth < 760;
+    if (index === 0 && !compact) return innerWidth * 0.88;
     const fractions = compact ? [0.76, 0.22] : [0.79, 0.18];
     return innerWidth * fractions[index % 2];
   }
@@ -264,7 +265,9 @@
   const face = document.createElement('img');
   face.alt = '';
   face.setAttribute('aria-hidden', 'true');
-  head.appendChild(face);
+  const faceCrop = el('span', 't24-face-crop');
+  faceCrop.appendChild(face);
+  head.appendChild(faceCrop);
   const torso = el('span', 't24-torso');
   const armL = el('span', 't24-arm t24-arm-left');
   const armR = el('span', 't24-arm t24-arm-right');
@@ -298,16 +301,74 @@
   passport.append(passSmall, passStrong, track);
   body.appendChild(passport);
 
-  const sourceFace = document.getElementById('faceImg');
-  function syncFace() {
-    const src = sourceFace && (sourceFace.getAttribute('src') || sourceFace.currentSrc);
-    face.src = src || 'faces_with_sunglasses/gaze_px0p0_py0p0_256.webp';
+  /* The guide needs its own gaze origin. Mirroring #faceImg made the fixed
+     character look relative to the off-screen hero portrait after scrolling. */
+  const GAZE_VALUES = [-15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15];
+  const missingFaces = new Set();
+  let gazeX = 0;
+  let gazeY = 0;
+  let faceRaf = 0;
+  let pendingFaceX = 0;
+  let pendingFaceY = 0;
+  let lastFaceSrc = '';
+  let lastGoodFace = '';
+
+  function gazePart(value) {
+    return value < 0 ? 'm' + Math.abs(value) + 'p0' : value + 'p0';
   }
-  syncFace();
-  if (sourceFace && 'MutationObserver' in window) {
-    new MutationObserver(syncFace).observe(sourceFace, { attributes: true, attributeFilter: ['src'] });
+
+  function gazeFolder() {
+    return root.getAttribute('data-mode') === 'dark' ? 'faces' : 'faces_with_sunglasses';
   }
-  face.addEventListener('error', () => { face.src = 'assets/kiran_img.png'; }, { once: true });
+
+  function nearestGaze(value) {
+    return GAZE_VALUES.reduce((best, candidate) =>
+      Math.abs(candidate - value) < Math.abs(best - value) ? candidate : best, GAZE_VALUES[0]);
+  }
+
+  function guideFaceSrc(px, py) {
+    return gazeFolder() + '/gaze_px' + gazePart(px) + '_py' + gazePart(py) + '_256.webp';
+  }
+
+  function setGuideFace(px, py) {
+    gazeX = nearestGaze(px);
+    gazeY = nearestGaze(py);
+    const src = guideFaceSrc(gazeX, gazeY);
+    if (missingFaces.has(src) || src === lastFaceSrc) return;
+    lastFaceSrc = src;
+    face.src = src;
+  }
+
+  face.addEventListener('load', () => { lastGoodFace = face.getAttribute('src') || face.src; });
+  face.addEventListener('error', () => {
+    missingFaces.add(lastFaceSrc);
+    if (lastGoodFace && lastGoodFace !== lastFaceSrc) {
+      lastFaceSrc = lastGoodFace;
+      face.src = lastGoodFace;
+    } else {
+      face.src = 'assets/kiran_img.png';
+    }
+  });
+
+  function trackGuideFace(clientX, clientY) {
+    pendingFaceX = clientX;
+    pendingFaceY = clientY;
+    if (reduced || faceRaf) return;
+    faceRaf = requestAnimationFrame(() => {
+      faceRaf = 0;
+      const rect = head.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const rangeX = Math.max(260, innerWidth * 0.3);
+      const rangeY = Math.max(210, innerHeight * 0.32);
+      const px = Math.max(-15, Math.min(15, ((pendingFaceX - cx) / rangeX) * 15));
+      const py = Math.max(-15, Math.min(15, (-(pendingFaceY - cy) / rangeY) * 15));
+      setGuideFace(px, py);
+    });
+  }
+
+  window.addEventListener('pointermove', event => trackGuideFace(event.clientX, event.clientY), { passive: true });
+  setGuideFace(0, 0);
 
   /* ----------------------------------------------------------------------
      Navigation, narration, and walking state.
@@ -414,9 +475,9 @@
 
   function update(force) {
     raf = 0;
-    const guideLine = innerWidth < 640 ? innerHeight - 10 : innerHeight * 0.72;
+    const guideLine = innerWidth < 640 ? innerHeight - 10 : innerHeight * 0.78;
     const worldY = scrollY + guideLine;
-    const width = innerWidth < 640 ? 92 : 126;
+    const width = innerWidth < 640 ? 96 : 136;
     const rawX = reduced ? 12 : xAtY(worldY) - width * 0.5;
     const x = Math.max(8, Math.min(innerWidth - width - 8, rawX));
     const delta = x - lastX;
@@ -448,7 +509,27 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(measure, 240);
   }, { passive: true });
-  window.addEventListener('modechange', () => setTimeout(drawRoute, 80));
+  const modeButton = document.getElementById('modeToggle');
+  function updateModeState() {
+    const dark = root.getAttribute('data-mode') === 'dark';
+    if (modeButton) {
+      modeButton.setAttribute('aria-pressed', String(dark));
+      modeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      modeButton.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+    }
+  }
+  updateModeState();
+  window.addEventListener('modechange', () => {
+    updateModeState();
+    face.style.opacity = '0.25';
+    lastFaceSrc = '';
+    lastGoodFace = '';
+    setTimeout(() => {
+      setGuideFace(gazeX, gazeY);
+      face.style.opacity = '1';
+      drawRoute();
+    }, 120);
+  });
   window.addEventListener('load', measure, { once: true });
 
   const themeName = document.getElementById('themeName');

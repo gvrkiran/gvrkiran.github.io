@@ -96,7 +96,6 @@ html[data-theme="24"] body::before {
   opacity: 0.85;
 }
 
-html[data-theme="24"] .nav-bar,
 html[data-theme="24"] main,
 html[data-theme="24"] .site-footer {
   position: relative;
@@ -119,6 +118,7 @@ html[data-theme="24"] .nav-bar {
   background: var(--nav-bg);
   box-shadow: 5px 6px 0 var(--t24-shadow);
   gap: 0.8rem;
+  z-index: 120;
 }
 
 html[data-theme="24"] .nav-brand {
@@ -173,7 +173,17 @@ html[data-theme="24"] .nav-toggle {
   background: var(--t24-paper);
   color: var(--t24-ink);
   box-shadow: none;
+  position: relative;
+  z-index: 1;
+  transition: transform 160ms ease, background 220ms ease, color 220ms ease, box-shadow 160ms ease;
 }
+
+html[data-theme="24"] .nav-toggle:hover {
+  transform: rotate(12deg) scale(1.06);
+  box-shadow: 2px 3px 0 var(--t24-ink);
+}
+
+html[data-theme="24"] .theme-picker-overlay { z-index: 300; }
 
 /* --------------------------------------------------------------------------
    The field-trip landscape
@@ -320,6 +330,13 @@ html[data-theme="24"] .quick-links a:hover {
 html[data-theme="24"] .hero-portrait {
   justify-self: center;
   transform: rotate(3deg);
+}
+
+/* Once the walking guide exists, it is the portrait. Keeping the large
+   polaroid behind it created a distracting double-face collage. */
+html[data-theme="24"].t24-js .hero-portrait {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 html[data-theme="24"] .face-frame {
@@ -577,10 +594,10 @@ html[data-theme="24"] .t24-guide {
   --t24-guide-scale: 1;
   position: fixed;
   left: 0;
-  top: calc(72svh - 190px);
+  top: calc(78svh - 194px);
   z-index: 82;
-  width: 126px;
-  height: 190px;
+  width: 136px;
+  height: 194px;
   pointer-events: none;
   will-change: transform;
   transform: translate3d(var(--t24-guide-x), 0, 0) scale(var(--t24-guide-scale));
@@ -589,10 +606,10 @@ html[data-theme="24"] .t24-guide {
 
 html[data-theme="24"] .t24-person {
   position: absolute;
-  left: 8px;
+  left: 7px;
   bottom: 0;
-  width: 108px;
-  height: 178px;
+  width: 118px;
+  height: 184px;
   border: 0;
   background: transparent;
   color: inherit;
@@ -619,36 +636,66 @@ html[data-theme="24"] .t24-guide[data-dir="left"] .t24-person:hover {
 html[data-theme="24"] .t24-head {
   position: absolute;
   z-index: 8;
-  left: 20px;
+  left: 18px;
   top: 0;
-  width: 70px;
-  height: 70px;
-  padding: 3px;
-  border: 3px solid var(--t24-ink);
-  border-radius: 46% 46% 48% 48%;
+  width: 82px;
+  height: 80px;
+  border: 4px solid var(--t24-ink);
+  border-radius: 48% 48% 44% 44% / 46% 46% 52% 52%;
   background: var(--t24-yellow);
-  overflow: hidden;
+  overflow: visible;
   transform-origin: 50% 90%;
 }
 
-html[data-theme="24"] .t24-head img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 43%;
+html[data-theme="24"] .t24-head::before,
+html[data-theme="24"] .t24-head::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 34px;
+  width: 13px;
+  height: 20px;
+  border: 3px solid var(--t24-ink);
+  border-radius: 50%;
+  background: #bd7f68;
 }
 
-html[data-theme="24"] .t24-guide[data-dir="left"] .t24-head img {
-  transform: scaleX(-1);
+html[data-theme="24"] .t24-head::before { left: -10px; }
+html[data-theme="24"] .t24-head::after { right: -10px; }
+
+html[data-theme="24"] .t24-face-crop {
+  position: absolute;
+  inset: 3px;
+  display: block;
+  overflow: hidden;
+  border-radius: 46% 46% 42% 42% / 44% 44% 52% 52%;
+  background: #c98f76;
+}
+
+html[data-theme="24"] .t24-face-crop img {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 143%;
+  height: 143%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  transform: translate(-50%, -50%);
+  transition: opacity 140ms ease;
+}
+
+html[data-theme="24"] .t24-guide[data-dir="left"] .t24-face-crop img {
+  transform: translate(-50%, -50%) scaleX(-1);
 }
 
 html[data-theme="24"] .t24-torso {
   position: absolute;
   z-index: 5;
-  left: 25px;
-  top: 63px;
-  width: 60px;
-  height: 67px;
+  left: 28px;
+  top: 72px;
+  width: 63px;
+  height: 65px;
   border: 3px solid var(--t24-ink);
   border-radius: 17px 17px 12px 12px;
   background: var(--t24-blue);
@@ -688,8 +735,8 @@ html[data-theme="24"] .t24-torso::after {
 html[data-theme="24"] .t24-pack {
   position: absolute;
   z-index: 3;
-  left: 14px;
-  top: 73px;
+  left: 16px;
+  top: 81px;
   width: 30px;
   height: 46px;
   border: 3px solid var(--t24-ink);
@@ -700,7 +747,7 @@ html[data-theme="24"] .t24-pack {
 html[data-theme="24"] .t24-arm {
   position: absolute;
   z-index: 4;
-  top: 72px;
+  top: 79px;
   width: 18px;
   height: 60px;
   border: 3px solid var(--t24-ink);
@@ -709,7 +756,7 @@ html[data-theme="24"] .t24-arm {
   transform-origin: 50% 8px;
 }
 
-html[data-theme="24"] .t24-arm-left { left: 17px; transform: rotate(16deg); }
+html[data-theme="24"] .t24-arm-left { left: 20px; transform: rotate(16deg); }
 html[data-theme="24"] .t24-arm-right { right: 14px; transform: rotate(-27deg); }
 
 html[data-theme="24"] .t24-arm-right::after {
@@ -728,7 +775,7 @@ html[data-theme="24"] .t24-arm-right::after {
 html[data-theme="24"] .t24-leg {
   position: absolute;
   z-index: 2;
-  top: 121px;
+  top: 130px;
   width: 21px;
   height: 48px;
   border: 3px solid var(--t24-ink);
@@ -738,8 +785,8 @@ html[data-theme="24"] .t24-leg {
 }
 
 html[data-theme="24"][data-mode="dark"] .t24-leg { background: #a77d50; }
-html[data-theme="24"] .t24-leg-left { left: 30px; transform: rotate(4deg); }
-html[data-theme="24"] .t24-leg-right { right: 29px; transform: rotate(-4deg); }
+html[data-theme="24"] .t24-leg-left { left: 34px; transform: rotate(4deg); }
+html[data-theme="24"] .t24-leg-right { right: 33px; transform: rotate(-4deg); }
 
 html[data-theme="24"] .t24-leg::after {
   content: "";
@@ -756,9 +803,9 @@ html[data-theme="24"] .t24-leg::after {
 html[data-theme="24"] .t24-shadow {
   position: absolute;
   z-index: 0;
-  left: 18px;
+  left: 21px;
   bottom: 0;
-  width: 76px;
+  width: 82px;
   height: 13px;
   border-radius: 50%;
   background: rgba(23, 33, 61, 0.18);
@@ -785,7 +832,7 @@ html[data-theme="24"] .t24-guide.t24-running .t24-person { filter: drop-shadow(7
 /* Speech bubble */
 html[data-theme="24"] .t24-bubble {
   position: absolute;
-  bottom: 162px;
+  bottom: 174px;
   width: 248px;
   min-height: 108px;
   padding: 0.8rem 0.85rem 0.72rem;
