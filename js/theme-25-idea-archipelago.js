@@ -1,9 +1,9 @@
 /* js/theme-25-idea-archipelago.js
- * Theme 25 — Living Research City.
+ * Theme 25 — The Living Research Kingdom.
  *
- * Six generated miniature districts form one scroll-driven world. A persistent
- * explorer crosses the screen between chapters; the helmet contains Kiran's
- * real gaze-tracked photography, never a generated likeness.
+ * This is one world and one road. Scroll moves a single camera through one
+ * master kingdom image; the explorer's feet stay mathematically locked to the
+ * same road coordinate throughout the journey.
  */
 (function () {
   'use strict';
@@ -12,19 +12,30 @@
   const root = document.documentElement;
   const body = document.body;
   const hero = document.querySelector('.hero-section');
-  if (!hero) return; // Subpages use the CSS-only district banner.
+  if (!hero) return;
 
-  root.classList.add('t25-js');
+  root.classList.add('t25-js', 't25-one-kingdom');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  const SCENES = [
-    { id: 'hero',         name: 'Arrival Observatory', short: 'Arrival',      src: 'assets/ai/25-world-hub-v2.webp',          side: 'left',  x: .79, y: .58, scale: 1.00 },
-    { id: 'about',        name: 'Map Room & Origins',  short: 'About',        src: 'assets/ai/25-world-about-v2.webp',        side: 'right', x: .18, y: .58, scale: .94 },
-    { id: 'projects',     name: 'Signal Jungle',       short: 'Projects',     src: 'assets/ai/25-world-projects-v2.webp',     side: 'left',  x: .82, y: .58, scale: .94 },
-    { id: 'publications', name: 'Paper Peaks',         short: 'Publications', src: 'assets/ai/25-world-publications-v2.webp', side: 'right', x: .18, y: .58, scale: .91 },
-    { id: 'teaching',     name: 'Question Foundry',    short: 'Teaching',     src: 'assets/ai/25-world-teaching-v2.webp',     side: 'left',  x: .82, y: .58, scale: .93 },
-    { id: 'other',        name: 'Side-Quest Moon',     short: 'Other',        src: 'assets/ai/25-world-other-v2.webp',        side: 'right', x: .19, y: .58, scale: .96 }
+  /* Chapter positions refer to progress along one continuous physical road. */
+  const CHAPTERS = [
+    { id: 'hero',         name: 'The Arrival Gate',       short: 'Arrival',      t: 0.00, anchorX: .486, anchorY: .905, zoom: 1.00, avatarScale: .72 },
+    { id: 'about',        name: 'The Orrery Quarter',     short: 'About',        t: 0.17, anchorX: .34, anchorY: .76, zoom: 1.55, avatarScale: .90 },
+    { id: 'projects',     name: 'The Signal Jungle',      short: 'Projects',     t: 0.34, anchorX: .70, anchorY: .74, zoom: 1.85, avatarScale: .94 },
+    { id: 'publications', name: 'The Paper Mountains',    short: 'Publications', t: 0.53, anchorX: .33, anchorY: .70, zoom: 1.88, avatarScale: .91 },
+    { id: 'teaching',     name: 'The Question Foundry',   short: 'Teaching',     t: 0.69, anchorX: .70, anchorY: .49, zoom: 1.82, avatarScale: .86 },
+    { id: 'other',        name: 'The Side-Quest Gardens', short: 'Other',        t: 0.77, anchorX: .35, anchorY: .39, zoom: 1.72, avatarScale: .78 }
+  ];
+  const END = { t: .83, anchorX: .52, anchorY: .30, zoom: 1.58, avatarScale: .66 };
+
+  /* Dense samples follow the exact visible S-road from the gate to citadel. */
+  const ROAD = [
+    [.486, .905], [.492, .838], [.525, .770],
+    [.552, .708], [.565, .650], [.568, .592], [.548, .548],
+    [.522, .505], [.505, .458], [.496, .410], [.487, .360],
+    [.486, .310], [.505, .267], [.535, .230], [.558, .198],
+    [.558, .166], [.545, .137], [.538, .108]
   ];
 
   const el = (tag, className, text) => {
@@ -33,78 +44,74 @@
     if (text != null) node.textContent = text;
     return node;
   };
-  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const lerp = (a, b, t) => a + (b - a) * t;
-  const smooth = t => {
-    t = clamp(t, 0, 1);
+  const smooth = value => {
+    const t = clamp(value, 0, 1);
     return t * t * (3 - 2 * t);
   };
 
-  /* The fixed camera: every chapter is a separately generated district. */
+  function sampleRoad(progress) {
+    const scaled = clamp(progress, 0, 1) * (ROAD.length - 1);
+    const index = Math.min(ROAD.length - 2, Math.floor(scaled));
+    const mix = scaled - index;
+    return {
+      x: lerp(ROAD[index][0], ROAD[index + 1][0], mix),
+      y: lerp(ROAD[index][1], ROAD[index + 1][1], mix)
+    };
+  }
+
+  /* One master kingdom. There are deliberately no scene layers or fades. */
   const machine = el('div', 't25-world-machine');
   machine.setAttribute('aria-hidden', 'true');
-  const sceneNodes = SCENES.map((scene, index) => {
-    const layer = el('div', 't25-scene');
-    layer.dataset.scene = scene.id;
-    layer.dataset.side = scene.side;
-    layer.style.setProperty('--t25-scene-index', index);
-    const image = document.createElement('img');
-    image.src = scene.src;
-    image.alt = '';
-    image.decoding = index === 0 ? 'sync' : 'async';
-    image.loading = index < 2 ? 'eager' : 'lazy';
-    image.draggable = false;
-    image.addEventListener('load', () => {
-      layer.classList.add('is-loaded');
-      if (index === 0) root.classList.add('t25-world-ready');
-    }, { once: true });
-    layer.appendChild(image);
-    machine.appendChild(layer);
-    return layer;
-  });
+  const kingdom = document.createElement('img');
+  kingdom.className = 't25-kingdom';
+  kingdom.src = 'assets/ai/25-world-kingdom-v3-2x.webp';
+  kingdom.alt = '';
+  kingdom.decoding = 'sync';
+  kingdom.loading = 'eager';
+  kingdom.draggable = false;
+  machine.appendChild(kingdom);
 
   const atmosphere = el('div', 't25-atmosphere');
-  for (let i = 0; i < 38; i += 1) {
+  for (let i = 0; i < 42; i += 1) {
     const mote = el('i');
     mote.style.setProperty('--x', ((i * 37) % 101) + '%');
     mote.style.setProperty('--y', ((i * 61) % 97) + '%');
-    mote.style.setProperty('--d', (5 + (i % 8) * 1.3) + 's');
+    mote.style.setProperty('--d', (5 + (i % 8) * 1.25) + 's');
     mote.style.setProperty('--s', (1 + (i % 3)) + 'px');
     atmosphere.appendChild(mote);
   }
   machine.appendChild(atmosphere);
   body.insertBefore(machine, body.firstChild);
 
-  /* Turn the semantic page sections into readable stops in the world. */
-  const sections = SCENES.map(scene => scene.id === 'hero' ? hero : document.getElementById(scene.id)).filter(Boolean);
+  const sections = CHAPTERS.map(chapter => chapter.id === 'hero' ? hero : document.getElementById(chapter.id)).filter(Boolean);
   const kickers = {
-    about: 'District 01 · coordinates & questions',
-    projects: 'District 02 · experiments in motion',
-    publications: 'District 03 · the paper trail',
-    teaching: 'District 04 · ideas are social objects',
-    other: 'District 05 · curiosity refuses a syllabus'
+    about: 'Quest 01 · enter through the orrery quarter',
+    projects: 'Quest 02 · follow the road into the signal jungle',
+    publications: 'Quest 03 · climb through the paper mountains',
+    teaching: 'Quest 04 · cross the question foundry',
+    other: 'Quest 05 · reach the gardens below the citadel'
   };
 
   sections.slice(1).forEach(section => {
     const panel = el('div', 't25-chapter-panel');
-    const kicker = el('p', 't25-chapter-kicker', kickers[section.id] || 'Research district');
-    panel.appendChild(kicker);
+    panel.appendChild(el('p', 't25-chapter-kicker', kickers[section.id] || 'Kingdom quest'));
     Array.from(section.children).forEach(child => panel.appendChild(child));
     section.appendChild(panel);
   });
 
   const enter = el('button', 't25-enter-world');
   enter.type = 'button';
-  enter.innerHTML = '<span>Begin the expedition</span><b aria-hidden="true">↓</b>';
+  enter.innerHTML = '<span>Walk the golden road</span><b aria-hidden="true">↓</b>';
   enter.addEventListener('click', () => {
     document.getElementById('about')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   });
   hero.querySelector('.hero-text')?.appendChild(enter);
-
-  /* Persistent explorer shell + a real, local gaze portrait in its bezel. */
   const originalPortrait = hero.querySelector('.hero-portrait');
   if (originalPortrait) originalPortrait.hidden = true;
 
+  /* Explorer shell: generated body plus Kiran's real local gaze photography. */
   const avatar = el('div', 't25-avatar');
   avatar.setAttribute('aria-hidden', 'true');
   const bodyImage = document.createElement('img');
@@ -116,7 +123,7 @@
   realFace.className = 't25-avatar-face';
   realFace.alt = '';
   realFace.draggable = false;
-  avatar.append(bodyImage, realFace, el('i', 't25-avatar-glint'));
+  avatar.append(bodyImage, realFace, el('i', 't25-avatar-glint'), el('i', 't25-foot-glow'));
   body.appendChild(avatar);
 
   const GAZE_VALUES = [-15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15];
@@ -145,10 +152,8 @@
     const rect = realFace.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const radiusX = Math.max(260, innerWidth * .36);
-    const radiusY = Math.max(220, innerHeight * .42);
-    const px = gazeNearest(clamp((gazeX - cx) / radiusX * 18, -15, 15));
-    const py = gazeNearest(clamp((cy - gazeY) / radiusY * 18, -15, 15));
+    const px = gazeNearest(clamp((gazeX - cx) / Math.max(260, innerWidth * .36) * 18, -15, 15));
+    const py = gazeNearest(clamp((cy - gazeY) / Math.max(220, innerHeight * .42) * 18, -15, 15));
     setGaze(px, py);
   }
   realFace.addEventListener('load', () => { gazeLastGood = realFace.src; });
@@ -172,17 +177,16 @@
     requestAnimationFrame(renderGaze);
   });
 
-  /* A usable route map: direct chapter navigation never sits below the world. */
+  /* Direct quest navigation remains fully clickable above the world. */
   const route = el('nav', 't25-route-map');
-  route.setAttribute('aria-label', 'Research city districts');
-  const routeButtons = SCENES.map((scene, index) => {
+  route.setAttribute('aria-label', 'Stops along the golden road');
+  const routeButtons = CHAPTERS.map((chapter, index) => {
     const button = el('button');
     button.type = 'button';
-    button.dataset.target = scene.id;
-    button.setAttribute('aria-label', 'Go to ' + scene.name);
-    button.innerHTML = '<span>' + String(index).padStart(2, '0') + '</span><b>' + scene.short + '</b>';
+    button.setAttribute('aria-label', 'Walk to ' + chapter.name);
+    button.innerHTML = '<span>' + String(index).padStart(2, '0') + '</span><b>' + chapter.short + '</b>';
     button.addEventListener('click', () => {
-      const target = scene.id === 'hero' ? hero : document.getElementById(scene.id);
+      const target = chapter.id === 'hero' ? hero : document.getElementById(chapter.id);
       target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     });
     route.appendChild(button);
@@ -193,85 +197,108 @@
   body.appendChild(route);
 
   const readout = el('div', 't25-scene-readout');
-  readout.innerHTML = '<span>Now entering</span><strong></strong><small>Scroll to travel · use the route map to jump</small>';
+  readout.innerHTML = '<span>Current waypoint</span><strong></strong><small>One kingdom · one road · scroll to walk</small>';
   const readoutName = readout.querySelector('strong');
   body.appendChild(readout);
 
   let sectionTops = [];
-  let currentScene = -1;
-  let raf = 0;
+  let activeChapter = -1;
+  let baseWidth = innerWidth;
+  let baseHeight = innerHeight;
+  let frame = 0;
+  let walkTimer = 0;
+
+  function measureWorld() {
+    const naturalWidth = kingdom.naturalWidth || 3344;
+    const naturalHeight = kingdom.naturalHeight || 1882;
+    const cover = Math.max(innerWidth / naturalWidth, innerHeight / naturalHeight);
+    baseWidth = naturalWidth * cover;
+    baseHeight = naturalHeight * cover;
+    kingdom.style.width = baseWidth + 'px';
+    kingdom.style.height = baseHeight + 'px';
+  }
 
   function measure() {
     sectionTops = sections.map(section => section.getBoundingClientRect().top + scrollY);
+    measureWorld();
     render();
   }
 
   function render() {
-    raf = 0;
+    frame = 0;
     const viewportH = Math.max(1, innerHeight);
-    const probe = scrollY + viewportH * .52;
+    const probe = scrollY + viewportH * .50;
     let active = 0;
     sectionTops.forEach((top, index) => { if (top <= probe) active = index; });
-    active = clamp(active, 0, SCENES.length - 1);
+    active = clamp(active, 0, CHAPTERS.length - 1);
 
     const start = sectionTops[active] || 0;
-    const end = sectionTops[active + 1] || Math.max(document.documentElement.scrollHeight, start + viewportH);
-    const local = clamp((probe - start) / Math.max(viewportH, end - start), 0, 1);
-    const blend = active < SCENES.length - 1 ? smooth((local - .66) / .34) : 0;
-    const destination = Math.min(active + 1, SCENES.length - 1);
+    const end = sectionTops[active + 1] || Math.max(document.documentElement.scrollHeight - viewportH * .25, start + viewportH);
+    const local = smooth(clamp((probe - start) / Math.max(viewportH, end - start), 0, 1));
+    const from = CHAPTERS[active];
+    const to = CHAPTERS[active + 1] || END;
+    const roadProgress = lerp(from.t, to.t, local);
+    const roadPoint = sampleRoad(roadProgress);
 
-    sceneNodes.forEach((node, index) => {
-      let opacity = 0;
-      if (index === active) opacity = 1 - blend;
-      if (index === destination && destination !== active) opacity = blend;
-      node.style.setProperty('--t25-opacity', opacity.toFixed(4));
-      const entrance = index === destination ? blend : local;
-      node.style.setProperty('--t25-zoom', (1.065 - entrance * .035).toFixed(4));
-      node.style.setProperty('--t25-drift', ((entrance - .5) * -18).toFixed(1) + 'px');
-      node.classList.toggle('is-active', opacity > .02);
-    });
+    const isMobile = innerWidth <= 720;
+    const isTablet = !isMobile && innerWidth <= 1000;
+    const anchorX = isMobile ? .67 : lerp(from.anchorX, to.anchorX, local);
+    const anchorY = isMobile
+      ? lerp(.905, .22, clamp(roadProgress / END.t, 0, 1))
+      : lerp(from.anchorY, to.anchorY, local);
+    const zoomFactor = isMobile ? .30 : (isTablet ? .68 : 1);
+    const desiredZoom = lerp(from.zoom, to.zoom, local);
+    const zoom = 1 + (desiredZoom - 1) * zoomFactor;
 
-    const travel = reduced ? 0 : smooth(local);
-    const from = SCENES[active];
-    const to = SCENES[destination];
-    const avatarX = lerp(from.x, to.x, travel);
-    const avatarY = lerp(from.y, to.y, travel) + (reduced ? 0 : Math.sin(scrollY * .028) * .008);
-    const avatarScale = lerp(from.scale, to.scale, travel);
+    /* The road coordinate is projected to the explorer's foot coordinate. */
+    const roadScreenX = anchorX * innerWidth;
+    const roadScreenY = anchorY * viewportH;
+    const translateX = roadScreenX - roadPoint.x * baseWidth * zoom;
+    const translateY = roadScreenY - roadPoint.y * baseHeight * zoom;
+    kingdom.style.transform = 'translate3d(' + translateX.toFixed(2) + 'px,' + translateY.toFixed(2) + 'px,0) scale(' + zoom.toFixed(4) + ')';
+
     const avatarWidth = avatar.offsetWidth || 230;
     const avatarHeight = avatarWidth * 1.5;
-    avatar.style.setProperty('--t25-avatar-x', (avatarX * innerWidth - avatarWidth / 2).toFixed(1) + 'px');
-    avatar.style.setProperty('--t25-avatar-y', (avatarY * viewportH - avatarHeight / 2).toFixed(1) + 'px');
-    avatar.style.setProperty('--t25-avatar-scale', avatarScale.toFixed(3));
-    avatar.style.setProperty('--t25-stride', reduced ? '0deg' : (Math.sin(scrollY * .055) * 1.8).toFixed(2) + 'deg');
-    avatar.classList.toggle('is-travelling', !reduced && local > .08 && local < .92);
+    avatar.style.setProperty('--t25-avatar-x', (roadScreenX - avatarWidth * .52).toFixed(1) + 'px');
+    avatar.style.setProperty('--t25-avatar-y', (roadScreenY - avatarHeight * .955).toFixed(1) + 'px');
+    avatar.style.setProperty('--t25-avatar-scale', lerp(from.avatarScale, to.avatarScale, local).toFixed(3));
+    avatar.style.setProperty('--t25-stride', reduced ? '0deg' : (Math.sin(scrollY * .058) * 2).toFixed(2) + 'deg');
 
-    const shown = blend > .55 ? destination : active;
-    if (shown !== currentScene) {
-      currentScene = shown;
-      root.dataset.t25District = SCENES[shown].id;
-      readoutName.textContent = SCENES[shown].name;
+    if (active !== activeChapter) {
+      activeChapter = active;
+      root.dataset.t25District = CHAPTERS[active].id;
+      readoutName.textContent = CHAPTERS[active].name;
       routeButtons.forEach((button, index) => {
-        if (index === shown) button.setAttribute('aria-current', 'location');
+        if (index === active) button.setAttribute('aria-current', 'location');
         else button.removeAttribute('aria-current');
       });
       document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
-        const isCurrent = link.getAttribute('href') === '#' + SCENES[shown].id;
-        if (isCurrent) link.setAttribute('aria-current', 'location');
+        if (link.getAttribute('href') === '#' + CHAPTERS[active].id) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
       });
     }
 
-    const maxScroll = Math.max(1, document.documentElement.scrollHeight - viewportH);
-    routeProgress.style.setProperty('--t25-progress', clamp(scrollY / maxScroll, 0, 1).toFixed(4));
+    const questProgress = clamp(roadProgress / END.t, 0, 1);
+    routeProgress.style.setProperty('--t25-progress', questProgress.toFixed(4));
+    root.style.setProperty('--t25-road-progress', questProgress.toFixed(4));
     root.classList.toggle('t25-past-hero', scrollY > viewportH * .62);
   }
 
   window.addEventListener('scroll', () => {
-    if (!raf) raf = requestAnimationFrame(render);
+    if (!reduced) {
+      avatar.classList.add('is-walking');
+      clearTimeout(walkTimer);
+      walkTimer = setTimeout(() => avatar.classList.remove('is-walking'), 130);
+    }
+    if (!frame) frame = requestAnimationFrame(render);
   }, { passive: true });
   window.addEventListener('resize', () => {
-    if (!raf) raf = requestAnimationFrame(measure);
+    if (!frame) frame = requestAnimationFrame(measure);
   }, { passive: true });
+  kingdom.addEventListener('load', () => {
+    root.classList.add('t25-world-ready');
+    measure();
+  }, { once: true });
   window.addEventListener('load', measure, { once: true });
 
   const modeButton = document.getElementById('modeToggle');
@@ -279,13 +306,13 @@
     if (!modeButton) return;
     const dark = root.getAttribute('data-mode') === 'dark';
     modeButton.setAttribute('aria-pressed', String(dark));
-    modeButton.setAttribute('aria-label', dark ? 'Switch the research city to daylight' : 'Switch the research city to night');
+    modeButton.setAttribute('aria-label', dark ? 'Switch the kingdom to daylight' : 'Switch the kingdom to night');
     modeButton.title = dark ? 'Daylight mode' : 'Night mode';
   }
   updateModeButton();
   window.addEventListener('modechange', updateModeButton);
 
   const themeName = document.getElementById('themeName');
-  if (themeName) themeName.textContent = 'Living Research City · six generated districts · theme 25/25';
+  if (themeName) themeName.textContent = 'The Living Research Kingdom · one unbroken quest · theme 25/25';
   measure();
 })();

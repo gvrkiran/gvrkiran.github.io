@@ -1,7 +1,7 @@
-/* Theme 25 — Living Research City. Layout: L4.
- * Six generated miniature districts become a continuous camera journey.
+/* Theme 25 — The Living Research Kingdom. Layout: L4.
+ * One master kingdom and one physical road become a continuous camera journey.
  * Content stays semantic and clickable above the world; the real gaze portrait
- * rides inside a persistent generated explorer shell.
+ * rides inside a persistent generated explorer shell whose feet lock to the road.
  */
 
 html[data-theme="25"] {
@@ -99,47 +99,20 @@ html[data-theme="25"] .t25-world-machine::after {
   mix-blend-mode: soft-light;
 }
 
-html[data-theme="25"] .t25-scene {
-  --t25-opacity: 0;
-  --t25-zoom: 1.065;
-  --t25-drift: 0px;
+html[data-theme="25"] .t25-kingdom {
   position: absolute;
-  inset: -2.5%;
-  z-index: calc(1 + var(--t25-scene-index));
-  opacity: var(--t25-opacity);
-  overflow: hidden;
-  will-change: opacity;
-  transition: opacity 130ms linear;
-}
-
-html[data-theme="25"] .t25-scene:first-child { --t25-opacity: 1; }
-
-html[data-theme="25"] .t25-scene img {
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
   max-width: none;
-  object-fit: cover;
-  object-position: center;
-  transform: translate3d(0, var(--t25-drift), 0) scale(var(--t25-zoom));
+  transform-origin: 0 0;
   filter: brightness(1.08) saturate(1.02) contrast(1.015);
   will-change: transform;
-  transition: filter 420ms ease;
+  transition: filter 420ms ease, opacity 500ms ease;
 }
 
-html[data-theme="25"][data-mode="dark"] .t25-scene img {
+html[data-theme="25"][data-mode="dark"] .t25-kingdom {
   filter: brightness(0.68) saturate(0.82) contrast(1.12) hue-rotate(-2deg);
-}
-
-html[data-theme="25"] .t25-scene::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 239, 206, 0.03), rgba(2, 10, 24, 0.08));
-  transition: background 420ms ease;
-}
-
-html[data-theme="25"][data-mode="dark"] .t25-scene::after {
-  background: linear-gradient(180deg, rgba(3, 9, 20, 0.18), rgba(1, 5, 14, 0.36));
 }
 
 html[data-theme="25"] .t25-atmosphere {
@@ -301,7 +274,7 @@ html[data-theme="25"] .hero-text {
 }
 
 html[data-theme="25"] .hero-text::before {
-  content: "EXPEDITION 25  /  LIVING RESEARCH CITY";
+  content: "EXPEDITION 25  /  ONE KINGDOM  /  ONE GOLDEN ROAD";
   display: block;
   margin-bottom: 1.2rem;
   font-family: var(--font-mono);
@@ -578,7 +551,7 @@ html[data-theme="25"] .t25-avatar {
   aspect-ratio: 2 / 3;
   pointer-events: none;
   transform: translate3d(var(--t25-avatar-x), var(--t25-avatar-y), 0) scale(var(--t25-avatar-scale));
-  transform-origin: 50% 78%;
+  transform-origin: 52% 95.5%;
   filter: drop-shadow(0 26px 22px rgba(0, 0, 0, 0.38));
   will-change: transform;
 }
@@ -592,7 +565,7 @@ html[data-theme="25"] .t25-avatar-body {
   max-width: none;
   object-fit: contain;
   transform: rotate(var(--t25-stride));
-  transform-origin: 52% 72%;
+  transform-origin: 52% 95%;
   transition: filter 320ms ease;
 }
 
@@ -627,7 +600,21 @@ html[data-theme="25"] .t25-avatar-glint {
   mix-blend-mode: screen;
 }
 
-html[data-theme="25"] .t25-avatar.is-travelling::after {
+html[data-theme="25"] .t25-foot-glow {
+  position: absolute;
+  z-index: 0;
+  left: 42%;
+  bottom: 1.6%;
+  width: 24%;
+  height: 3%;
+  border-radius: 50%;
+  background: rgba(255, 211, 110, 0.82);
+  box-shadow: 0 0 18px 7px rgba(245, 189, 96, 0.42);
+  filter: blur(4px);
+  opacity: 0.7;
+}
+
+html[data-theme="25"] .t25-avatar.is-walking::after {
   content: "";
   position: absolute;
   z-index: 0;
@@ -639,6 +626,34 @@ html[data-theme="25"] .t25-avatar.is-travelling::after {
   background: rgba(5, 12, 24, 0.45);
   filter: blur(7px);
   animation: t25-shadow-step 440ms ease-in-out infinite alternate;
+}
+
+html[data-theme="25"] .t25-avatar.is-walking .t25-avatar-body {
+  animation: t25-walk-body 260ms ease-in-out infinite alternate;
+}
+
+html[data-theme="25"] .t25-avatar.is-walking .t25-avatar-face,
+html[data-theme="25"] .t25-avatar.is-walking .t25-avatar-glint {
+  animation: t25-walk-face 260ms ease-in-out infinite alternate;
+}
+
+html[data-theme="25"] .t25-avatar.is-walking .t25-foot-glow {
+  animation: t25-road-spark 260ms ease-in-out infinite alternate;
+}
+
+@keyframes t25-walk-body {
+  from { transform: translateY(0) rotate(calc(var(--t25-stride) - 0.8deg)); }
+  to { transform: translateY(-4px) rotate(calc(var(--t25-stride) + 0.8deg)); }
+}
+
+@keyframes t25-walk-face {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+
+@keyframes t25-road-spark {
+  from { transform: scaleX(0.7); opacity: 0.45; }
+  to { transform: scaleX(1.18); opacity: 0.9; }
 }
 
 @keyframes t25-shadow-step {
@@ -801,7 +816,7 @@ html[data-theme="25"] .subpage main::before {
   margin-bottom: 2rem;
   border: 1px solid var(--t25-line);
   border-radius: 30px;
-  background-image: linear-gradient(90deg, rgba(3, 13, 30, 0.72), transparent 65%), url("../../assets/ai/25-world-publications-v2.webp");
+  background-image: linear-gradient(90deg, rgba(3, 13, 30, 0.72), transparent 65%), url("../../assets/ai/25-world-kingdom-v3.webp");
   background-position: center;
   background-size: cover;
   box-shadow: 0 30px 78px -42px var(--t25-shadow);
@@ -841,8 +856,6 @@ html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important;
   html[data-theme="25"] .nav-toggle { width: 34px; height: 34px; flex-basis: 34px; }
   html[data-theme="25"] .nav-links a { font-size: 0.52rem; padding: 0.42rem 0.45rem; }
 
-  html[data-theme="25"] .t25-scene { inset: -1.5%; }
-  html[data-theme="25"] .t25-scene img { object-position: 57% center; }
   html[data-theme="25"] .t25-atmosphere { opacity: 0.35; }
 
   html[data-theme="25"] .hero-section { min-height: 112svh; }
@@ -916,12 +929,12 @@ html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme="25"] .t25-scene,
-  html[data-theme="25"] .t25-scene img,
+  html[data-theme="25"] .t25-kingdom,
   html[data-theme="25"] .t25-avatar,
   html[data-theme="25"] .t25-avatar-body { transition: none !important; }
   html[data-theme="25"] .t25-atmosphere i,
-  html[data-theme="25"] .t25-avatar.is-travelling::after { animation: none !important; }
+  html[data-theme="25"] .t25-avatar.is-walking::after,
+  html[data-theme="25"] .t25-avatar.is-walking > * { animation: none !important; }
   html[data-theme="25"] .t25-atmosphere { opacity: 0.24; }
 }
 
