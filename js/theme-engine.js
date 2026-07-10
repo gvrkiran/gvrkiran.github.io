@@ -34,6 +34,7 @@
     { n: 22, slug: 'foundry',          name: 'Foundry',         layout: 'L4', js: 'js/theme-22-foundry.js' },
     { n: 23, slug: 'perennial',        name: 'Perennial',       layout: 'L4', js: 'js/theme-23-perennial.js' },
     { n: 24, slug: 'research-ramble',  name: 'Research Ramble', layout: 'L4', js: 'js/theme-24-research-ramble.js' },
+    { n: 25, slug: 'idea-archipelago', name: 'Idea Archipelago', layout: 'L4', js: 'js/theme-25-idea-archipelago.js' },
   ];
   const MAX = THEMES.length;
 

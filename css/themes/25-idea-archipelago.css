@@ -1,0 +1,913 @@
+/* Theme 25 — Idea Archipelago. Layout: L4.
+ * A generated stop-motion academic universe becomes an explorable map: image
+ * portals navigate the site, a live magnifier reveals tiny details, and each
+ * section revisits a crop of the same coherent world. */
+
+html[data-theme="25"] {
+  --color-bg: #f2ecdf;
+  --color-fg: #16233c;
+  --color-heading: #0b1830;
+  --color-accent: #dc654d;
+  --color-accent-2: #147eaa;
+  --color-muted: #657086;
+  --t25-space: #061329;
+  --t25-space-2: #0c2443;
+  --t25-paper: #fffaf0;
+  --t25-glass: rgba(255, 250, 240, 0.82);
+  --t25-line: rgba(13, 28, 53, 0.15);
+  --t25-coral: #ef775f;
+  --t25-cyan: #5bc8e8;
+  --t25-gold: #f4bd62;
+  --t25-mint: #6bc9ad;
+  --t25-shadow: rgba(10, 22, 42, 0.18);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --font-size-body: 1rem;
+  --line-height-body: 1.62;
+  --heading-tracking: -0.04em;
+  --btn-radius: 999px;
+  --card-radius: 20px;
+  --card-bg: rgba(255, 250, 240, 0.8);
+  --card-border: 1px solid rgba(13, 28, 53, 0.16);
+  --card-shadow: 0 18px 50px -32px rgba(10, 22, 42, 0.36);
+  --nav-bg: rgba(255, 250, 240, 0.86);
+  --nav-backdrop: blur(18px) saturate(1.3);
+}
+
+html[data-theme="25"][data-mode="dark"] {
+  --color-bg: #050c1a;
+  --color-fg: #dfeaff;
+  --color-heading: #f8fbff;
+  --color-accent: #ff907a;
+  --color-accent-2: #6bd6f6;
+  --color-muted: #9caac4;
+  --t25-paper: #101d34;
+  --t25-glass: rgba(12, 28, 51, 0.82);
+  --t25-line: rgba(190, 218, 255, 0.15);
+  --t25-shadow: rgba(0, 0, 0, 0.42);
+  --card-bg: rgba(15, 30, 53, 0.8);
+  --card-border: 1px solid rgba(190, 218, 255, 0.14);
+  --card-shadow: 0 22px 55px -30px rgba(0, 0, 0, 0.68);
+  --nav-bg: rgba(6, 15, 31, 0.88);
+}
+
+html[data-theme="25"] { scroll-padding-top: 5.8rem; }
+
+html[data-theme="25"] body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 8% 18%, color-mix(in srgb, var(--t25-cyan) 9%, transparent), transparent 27rem),
+    radial-gradient(circle at 91% 70%, color-mix(in srgb, var(--t25-coral) 8%, transparent), transparent 30rem),
+    var(--color-bg);
+  color: var(--color-fg);
+  overflow-x: clip;
+}
+
+html[data-theme="25"] .nav-bar,
+html[data-theme="25"] main,
+html[data-theme="25"] .site-footer { position: relative; z-index: 3; }
+
+/* Navigation floats like a museum control strip. */
+html[data-theme="25"] .nav-bar {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  right: auto;
+  width: min(1050px, calc(100% - 28px));
+  transform: translateX(-50%);
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(5, 16, 35, 0.48);
+  color: #f6f9ff;
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  box-shadow: 0 16px 50px -25px rgba(0, 0, 0, 0.72);
+  transition: background 260ms ease, color 260ms ease, border-color 260ms ease;
+}
+
+html[data-theme="25"].t25-past-hero .nav-bar {
+  background: var(--nav-bg);
+  color: var(--color-fg);
+  border-color: var(--t25-line);
+}
+
+html[data-theme="25"] .nav-brand {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: -0.06em;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="25"] .nav-links { gap: 0.25rem; }
+
+html[data-theme="25"] .nav-links a {
+  padding: 0.5rem 0.74rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+html[data-theme="25"] .nav-links a:hover,
+html[data-theme="25"] .nav-links a[aria-current="location"] {
+  color: #061329;
+  background: var(--t25-gold);
+  transform: translateY(-1px);
+}
+
+html[data-theme="25"] .nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  padding: 0;
+  border: 1px solid currentColor;
+  color: inherit;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Hero: generated world, portals, and live inspection lens
+   -------------------------------------------------------------------------- */
+html[data-theme="25"] .hero-section {
+  --t25-mx: 50%;
+  --t25-my: 50%;
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--t25-space);
+  color: #f4f7ff;
+}
+
+html[data-theme="25"] .hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-image: url("../../assets/ai/25-idea-archipelago.png");
+  background-position: center;
+  background-size: cover;
+}
+
+html[data-theme="25"].t25-js .hero-bg { background-image: none; }
+
+html[data-theme="25"] .hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3, 11, 26, 0.97) 0%, rgba(3, 11, 26, 0.78) 25%, rgba(3, 11, 26, 0.18) 53%, rgba(3, 11, 26, 0.03) 75%),
+    linear-gradient(180deg, rgba(2, 8, 20, 0.2), transparent 64%, rgba(2, 8, 20, 0.72));
+}
+
+html[data-theme="25"] .hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle 260px at var(--t25-mx) var(--t25-my), rgba(96, 211, 244, 0.11), transparent 72%);
+  mix-blend-mode: screen;
+}
+
+html[data-theme="25"] .t25-world-stage {
+  --t25-pan-x: 0px;
+  --t25-pan-y: 0px;
+  --t25-scroll-y: 0px;
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/ai/25-idea-archipelago.png") center / cover no-repeat;
+  transform: translate3d(var(--t25-pan-x), calc(var(--t25-pan-y) + var(--t25-scroll-y)), 0) scale(1.035);
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 620ms cubic-bezier(.2,.7,.2,1);
+}
+
+html[data-theme="25"] .t25-world-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+  pointer-events: none;
+  filter: saturate(1.02) contrast(1.025);
+}
+
+html[data-theme="25"] .hero-inner {
+  position: relative;
+  z-index: 4;
+  min-height: 100svh;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 8.5rem clamp(1.4rem, 6vw, 5.5rem) 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+}
+
+html[data-theme="25"] .hero-text {
+  width: min(590px, 44vw);
+  pointer-events: auto;
+}
+
+html[data-theme="25"] .hero-text::before {
+  content: "GENERATED WORLD  /  EXPEDITION 25";
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.38rem 0.66rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+  background: rgba(4, 15, 34, 0.46);
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  letter-spacing: 0.13em;
+  color: var(--t25-gold);
+  backdrop-filter: blur(12px);
+}
+
+html[data-theme="25"] .hero-name {
+  max-width: 7ch;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8.3vw, 8.1rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.085em;
+  color: #fff;
+  text-shadow: 0 10px 50px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="25"] .hero-role {
+  max-width: 52ch;
+  margin-top: 1.45rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.69rem, 0.95vw, 0.83rem);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--t25-cyan);
+}
+
+html[data-theme="25"] .hero-tagline {
+  max-width: 46ch;
+  margin-top: 0.7rem;
+  font-size: clamp(0.98rem, 1.25vw, 1.12rem);
+  line-height: 1.55;
+  color: rgba(244, 248, 255, 0.84);
+}
+
+html[data-theme="25"] .quick-links { margin-top: 1.25rem; gap: 0.5rem; }
+
+html[data-theme="25"] .quick-links a {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(4, 15, 34, 0.45);
+  color: #f6f9ff;
+  padding: 0.48rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+html[data-theme="25"] .quick-links a:hover {
+  border-color: var(--t25-gold);
+  background: var(--t25-gold);
+  color: #061329;
+  transform: translateY(-2px);
+}
+
+html[data-theme="25"] .hero-portrait { display: none; }
+
+/* Portal buttons are positioned over exact generated landmarks by JS. */
+html[data-theme="25"] .t25-hotspot {
+  position: absolute;
+  z-index: 6;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 50%;
+  color: #061329;
+  background: var(--t25-gold);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.9), 0 0 0 8px rgba(244,189,98,0.2), 0 0 28px rgba(244,189,98,0.78);
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+html[data-theme="25"] .t25-hotspot::before,
+html[data-theme="25"] .t25-hotspot::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1px solid rgba(244,189,98,0.55);
+  border-radius: 50%;
+  animation: t25-portal-ring 2.8s ease-out infinite;
+}
+
+html[data-theme="25"] .t25-hotspot::after { animation-delay: 1.35s; }
+
+@keyframes t25-portal-ring {
+  0% { opacity: 0; transform: scale(0.55); }
+  28% { opacity: 0.85; }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+
+html[data-theme="25"] .t25-hotspot:hover,
+html[data-theme="25"] .t25-hotspot:focus-visible {
+  z-index: 8;
+  background: #fff;
+  transform: translate(-50%, -50%) scale(1.2);
+  box-shadow: 0 0 0 2px var(--t25-coral), 0 0 0 10px rgba(239,119,95,0.23), 0 0 38px rgba(239,119,95,0.9);
+}
+
+html[data-theme="25"] .t25-hotspot-index {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+}
+
+html[data-theme="25"] .t25-hotspot-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 17px);
+  width: max-content;
+  max-width: 190px;
+  padding: 0.52rem 0.65rem;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 10px;
+  background: rgba(4, 14, 31, 0.9);
+  color: #f7faff;
+  box-shadow: 0 12px 35px -18px #000;
+  font-family: var(--font-body);
+  font-size: 0.69rem;
+  font-weight: 700;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translate(-50%, 8px) scale(0.94);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+html[data-theme="25"] .t25-hotspot-label small {
+  display: block;
+  margin-top: 0.16rem;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--t25-cyan);
+}
+
+html[data-theme="25"] .t25-hotspot:hover .t25-hotspot-label,
+html[data-theme="25"] .t25-hotspot:focus-visible .t25-hotspot-label {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+html[data-theme="25"] .t25-lens {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  top: 0;
+  width: 186px;
+  height: 186px;
+  border: 2px solid rgba(255,255,255,0.84);
+  border-radius: 50%;
+  background-image: url("../../assets/ai/25-idea-archipelago.png");
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 9px rgba(5,17,38,0.4), 0 22px 70px -20px rgba(0,0,0,0.85), inset 0 0 30px rgba(91,200,232,0.14);
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0) scale(0.86);
+  pointer-events: none;
+  transition: opacity 150ms ease, transform 180ms ease;
+}
+
+html[data-theme="25"] .t25-lens::after {
+  content: "INSPECT";
+  position: absolute;
+  left: 50%;
+  bottom: -27px;
+  transform: translateX(-50%);
+  padding: 0.22rem 0.45rem;
+  border-radius: 999px;
+  background: #07162e;
+  color: var(--t25-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+}
+
+html[data-theme="25"] .t25-lens[data-on="true"] { opacity: 1; transform: translate3d(-50%, -50%, 0) scale(1); }
+
+html[data-theme="25"] .t25-map-key {
+  position: absolute;
+  z-index: 6;
+  right: 22px;
+  bottom: 22px;
+  max-width: 310px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  background: rgba(4, 14, 31, 0.7);
+  color: rgba(244,248,255,0.78);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(16px);
+}
+
+html[data-theme="25"] .t25-map-key strong { color: var(--t25-gold); }
+
+/* Mobile's reliable equivalent to image-positioned portals. */
+html[data-theme="25"] .t25-world-dock {
+  display: none;
+  position: absolute;
+  z-index: 8;
+  left: 10px;
+  right: 10px;
+  bottom: 12px;
+  gap: 0.38rem;
+  overflow-x: auto;
+  padding: 0.48rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 16px;
+  background: rgba(4, 14, 31, 0.77);
+  backdrop-filter: blur(16px);
+  scrollbar-width: none;
+}
+
+html[data-theme="25"] .t25-world-dock::-webkit-scrollbar { display: none; }
+html[data-theme="25"] .t25-world-dock button,
+html[data-theme="25"] .t25-world-dock a {
+  flex: 0 0 auto;
+  padding: 0.42rem 0.66rem;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  color: #f6f9ff;
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Sections: revisiting generated regions as cinematic chapter windows
+   -------------------------------------------------------------------------- */
+html[data-theme="25"] main { max-width: none; margin: 0; padding: 0; }
+
+html[data-theme="25"] section.section:not(.hero-section) {
+  position: relative;
+  max-width: 1280px;
+  min-height: 92svh;
+  margin: 0 auto;
+  padding: clamp(7rem, 11vh, 10rem) clamp(1.25rem, 5vw, 4.5rem);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  align-items: center;
+  gap: 1.1rem clamp(1.2rem, 4vw, 4rem);
+}
+
+html[data-theme="25"] section.section:not(.hero-section)::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 64vw;
+  height: 64vw;
+  max-width: 780px;
+  max-height: 780px;
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.5;
+}
+
+html[data-theme="25"] #about::before,
+html[data-theme="25"] #publications::before,
+html[data-theme="25"] #other::before {
+  left: -34%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--t25-cyan) 14%, transparent), transparent 69%);
+}
+
+html[data-theme="25"] #projects::before,
+html[data-theme="25"] #teaching::before {
+  right: -34%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--t25-coral) 13%, transparent), transparent 69%);
+}
+
+html[data-theme="25"] .section-heading {
+  align-self: end;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 6.2vw, 6.4rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.07em;
+  color: var(--color-heading);
+}
+
+html[data-theme="25"] .section-heading::before {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+html[data-theme="25"] #about .section-heading::before { content: "Region 01 · The explorer"; }
+html[data-theme="25"] #projects .section-heading::before { content: "Region 02 · Network observatory"; }
+html[data-theme="25"] #publications .section-heading::before { content: "Region 03 · Paper mountain"; }
+html[data-theme="25"] #teaching .section-heading::before { content: "Region 04 · Learning amphitheater"; }
+html[data-theme="25"] #other .section-heading::before { content: "Region 05 · Side-quest moon"; }
+
+html[data-theme="25"] .section-body { min-width: 0; align-self: start; }
+
+html[data-theme="25"].t25-js #about .section-heading,
+html[data-theme="25"].t25-js #about .section-body,
+html[data-theme="25"].t25-js #publications .section-heading,
+html[data-theme="25"].t25-js #publications .section-body,
+html[data-theme="25"].t25-js #publications .section-cta,
+html[data-theme="25"].t25-js #other .section-heading,
+html[data-theme="25"].t25-js #other .section-body { grid-column: 7 / -1; }
+
+html[data-theme="25"].t25-js #projects .section-heading,
+html[data-theme="25"].t25-js #projects .section-body,
+html[data-theme="25"].t25-js #teaching .section-heading,
+html[data-theme="25"].t25-js #teaching .section-body { grid-column: 1 / span 6; }
+
+html[data-theme="25"]:not(.t25-js) section.section:not(.hero-section) > * { grid-column: 3 / span 8; }
+
+html[data-theme="25"] .t25-section-vista {
+  --t25-rx: 0deg;
+  --t25-ry: 0deg;
+  position: relative;
+  min-height: clamp(460px, 64vh, 610px);
+  border: 1px solid var(--t25-line);
+  border-radius: 34px;
+  background-image: url("../../assets/ai/25-idea-archipelago.png");
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  box-shadow: 0 35px 80px -48px var(--t25-shadow), inset 0 0 0 1px rgba(255,255,255,0.14);
+  overflow: hidden;
+  opacity: 0;
+  transform: perspective(1100px) translateY(44px) rotateX(var(--t25-rx)) rotateY(var(--t25-ry)) scale(0.96);
+  transition: opacity 700ms ease, transform 900ms cubic-bezier(.18,.8,.2,1), box-shadow 240ms ease;
+  will-change: transform;
+}
+
+html[data-theme="25"] .t25-section-vista.is-visible {
+  opacity: 1;
+  transform: perspective(1100px) translateY(0) rotateX(var(--t25-rx)) rotateY(var(--t25-ry)) scale(1);
+}
+
+html[data-theme="25"] .t25-section-vista::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.14), transparent 28%),
+    radial-gradient(circle at var(--t25-vx, 50%) var(--t25-vy, 50%), rgba(91,200,232,0.18), transparent 34%),
+    linear-gradient(0deg, rgba(2,9,22,0.55), transparent 38%);
+  pointer-events: none;
+}
+
+html[data-theme="25"] .t25-section-vista::after {
+  content: attr(data-caption);
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  padding: 0.42rem 0.62rem;
+  border: 1px solid rgba(255,255,255,0.26);
+  border-radius: 999px;
+  background: rgba(4,14,31,0.76);
+  color: #f6f9ff;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+html[data-theme="25"].t25-js #about .t25-section-vista,
+html[data-theme="25"].t25-js #publications .t25-section-vista,
+html[data-theme="25"].t25-js #other .t25-section-vista {
+  grid-column: 1 / span 5;
+  grid-row: 1 / span 3;
+}
+
+html[data-theme="25"].t25-js #projects .t25-section-vista,
+html[data-theme="25"].t25-js #teaching .t25-section-vista {
+  grid-column: 8 / -1;
+  grid-row: 1 / span 3;
+}
+
+html[data-theme="25"] .about-para,
+html[data-theme="25"] .other-lead {
+  max-width: 52ch;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 600;
+}
+
+html[data-theme="25"] .about-meta,
+html[data-theme="25"] .pub-meta,
+html[data-theme="25"] .teach-term,
+html[data-theme="25"] .other-feature-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+html[data-theme="25"] .card,
+html[data-theme="25"] .other-card {
+  position: relative;
+  margin-bottom: 0.85rem;
+  padding: 1.12rem 1.2rem;
+  border: var(--card-border);
+  border-radius: 18px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+html[data-theme="25"] .card::before,
+html[data-theme="25"] .other-card::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 18%;
+  width: 3px;
+  height: 64%;
+  border-radius: 4px;
+  background: linear-gradient(var(--t25-cyan), var(--t25-coral));
+  opacity: 0.75;
+}
+
+html[data-theme="25"] .card:hover,
+html[data-theme="25"] .card:focus-within,
+html[data-theme="25"] .other-card:hover,
+html[data-theme="25"] .other-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--t25-cyan) 48%, transparent);
+  box-shadow: 0 24px 60px -34px var(--t25-shadow), 0 0 0 1px color-mix(in srgb, var(--t25-cyan) 22%, transparent);
+}
+
+html[data-theme="25"] .card h3,
+html[data-theme="25"] .other-feature-title {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--color-heading);
+}
+
+html[data-theme="25"] .card p { margin-top: 0.35rem; }
+
+html[data-theme="25"] .kw {
+  display: inline-block;
+  padding: 0.26rem 0.48rem;
+  border: 1px solid var(--t25-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--t25-cyan) 8%, var(--t25-glass));
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+}
+
+html[data-theme="25"] .pub-links a,
+html[data-theme="25"] .teach-info a,
+html[data-theme="25"] .section-cta a,
+html[data-theme="25"] .other-cta a,
+html[data-theme="25"] .about-para a {
+  color: var(--color-accent-2);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html[data-theme="25"] .other-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Persistent chapter rail after leaving the generated map. */
+html[data-theme="25"] .t25-chapter-rail {
+  position: fixed;
+  z-index: 70;
+  right: 18px;
+  top: 50%;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.55rem;
+  border: 1px solid var(--t25-line);
+  border-radius: 999px;
+  background: var(--t25-glass);
+  box-shadow: 0 18px 45px -25px var(--t25-shadow);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transform: translate(20px, -50%);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+html[data-theme="25"].t25-past-hero .t25-chapter-rail {
+  opacity: 1;
+  transform: translate(0, -50%);
+  pointer-events: auto;
+}
+
+html[data-theme="25"] .t25-chapter-rail button {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-muted);
+  border-radius: 50%;
+  background: transparent;
+}
+
+html[data-theme="25"] .t25-chapter-rail button::before {
+  content: attr(aria-label);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  width: max-content;
+  padding: 0.3rem 0.48rem;
+  border-radius: 7px;
+  background: var(--color-heading);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  opacity: 0;
+  transform: translate(5px, -50%);
+  pointer-events: none;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+html[data-theme="25"] .t25-chapter-rail button:hover::before,
+html[data-theme="25"] .t25-chapter-rail button:focus-visible::before { opacity: 1; transform: translate(0, -50%); }
+html[data-theme="25"] .t25-chapter-rail button[aria-current="location"] { border-color: var(--t25-coral); background: var(--t25-coral); box-shadow: 0 0 0 4px color-mix(in srgb, var(--t25-coral) 20%, transparent); }
+
+/* Footer + subpages */
+html[data-theme="25"] .site-footer {
+  border-top: 1px solid var(--t25-line);
+  background: var(--t25-paper);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  letter-spacing: 0.04em;
+  opacity: 1;
+}
+
+html[data-theme="25"] .site-footer a { color: var(--color-accent); }
+
+html[data-theme="25"] .pubs-page main,
+html[data-theme="25"] .subpage main {
+  width: min(1040px, calc(100% - 2rem));
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-top: 7rem;
+}
+
+html[data-theme="25"] .pubs-page main::before,
+html[data-theme="25"] .subpage main::before {
+  content: "";
+  display: block;
+  height: clamp(230px, 34vw, 390px);
+  margin-bottom: 2rem;
+  border: 1px solid var(--t25-line);
+  border-radius: 30px;
+  background-image:
+    linear-gradient(90deg, rgba(4,14,31,0.72), transparent 62%),
+    url("../../assets/ai/25-idea-archipelago.png");
+  background-position: center, center 43%;
+  background-size: cover;
+  box-shadow: 0 28px 70px -42px var(--t25-shadow);
+}
+
+html[data-theme="25"] .pubs-page section.section,
+html[data-theme="25"] .subpage section.section {
+  display: block;
+  min-height: auto;
+  padding: 2rem clamp(0.6rem, 3vw, 2.2rem) 5rem;
+}
+
+html[data-theme="25"] .pubs-page section.section::before,
+html[data-theme="25"] .subpage section.section::before { display: none; }
+html[data-theme="25"] .pubs-page .section-heading,
+html[data-theme="25"] .subpage .section-heading { font-size: clamp(3rem, 8vw, 6rem); }
+html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important; font-family: var(--font-mono) !important; }
+
+@media (max-width: 920px) {
+  html[data-theme="25"] .nav-bar { top: 8px; width: calc(100% - 16px); }
+  html[data-theme="25"] .nav-links { min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  html[data-theme="25"] .nav-links::-webkit-scrollbar { display: none; }
+  html[data-theme="25"] .nav-links a { padding-inline: 0.55rem; }
+
+  html[data-theme="25"] .hero-text { width: min(560px, 62vw); }
+  html[data-theme="25"] .hero-name { font-size: clamp(4rem, 12vw, 7rem); }
+
+  html[data-theme="25"].t25-js #about .section-heading,
+  html[data-theme="25"].t25-js #about .section-body,
+  html[data-theme="25"].t25-js #projects .section-heading,
+  html[data-theme="25"].t25-js #projects .section-body,
+  html[data-theme="25"].t25-js #publications .section-heading,
+  html[data-theme="25"].t25-js #publications .section-body,
+  html[data-theme="25"].t25-js #publications .section-cta,
+  html[data-theme="25"].t25-js #teaching .section-heading,
+  html[data-theme="25"].t25-js #teaching .section-body,
+  html[data-theme="25"].t25-js #other .section-heading,
+  html[data-theme="25"].t25-js #other .section-body { grid-column: 1 / span 7; }
+
+  html[data-theme="25"].t25-js #about .t25-section-vista,
+  html[data-theme="25"].t25-js #publications .t25-section-vista,
+  html[data-theme="25"].t25-js #other .t25-section-vista,
+  html[data-theme="25"].t25-js #projects .t25-section-vista,
+  html[data-theme="25"].t25-js #teaching .t25-section-vista { grid-column: 8 / -1; grid-row: 1 / span 3; }
+}
+
+@media (max-width: 700px) {
+  html[data-theme="25"] .nav-brand { width: 34px; height: 34px; flex-basis: 34px; }
+  html[data-theme="25"] .nav-toggle { width: 34px; height: 34px; flex-basis: 34px; }
+  html[data-theme="25"] .nav-links a { font-size: 0.56rem; }
+
+  html[data-theme="25"] .hero-section { min-height: 100svh; }
+  html[data-theme="25"] .hero-bg { height: 52svh; bottom: auto; }
+  html[data-theme="25"] .t25-world-stage { inset: 0; transform: none; }
+  html[data-theme="25"] .t25-world-img { object-position: 66% center; }
+  html[data-theme="25"] .hero-section::before {
+    background: linear-gradient(180deg, rgba(3,11,26,0.08) 0 32%, rgba(3,11,26,0.92) 52%, #061329 72%);
+  }
+  html[data-theme="25"] .hero-inner { min-height: 100svh; justify-content: flex-end; padding: 7rem 1.15rem 7rem; }
+  html[data-theme="25"] .hero-text { width: 100%; }
+  html[data-theme="25"] .hero-text::before { font-size: 0.52rem; }
+  html[data-theme="25"] .hero-name { max-width: none; font-size: clamp(3.65rem, 19vw, 5.5rem); }
+  html[data-theme="25"] .hero-role { margin-top: 1rem; }
+  html[data-theme="25"] .hero-tagline { font-size: 0.92rem; }
+  html[data-theme="25"] .t25-hotspot,
+  html[data-theme="25"] .t25-lens,
+  html[data-theme="25"] .t25-map-key { display: none; }
+  html[data-theme="25"] .t25-world-dock { display: flex; }
+
+  html[data-theme="25"] section.section:not(.hero-section) {
+    min-height: auto;
+    padding: 6.5rem 1rem;
+    display: block;
+  }
+  html[data-theme="25"] .section-heading { font-size: clamp(3rem, 16vw, 4.8rem); margin-bottom: 1.2rem; }
+  html[data-theme="25"] .t25-section-vista {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    margin-top: 2rem;
+    background-size: cover;
+    transform: translateY(30px) scale(0.96);
+  }
+  html[data-theme="25"] .t25-section-vista.is-visible { transform: translateY(0) scale(1); }
+  html[data-theme="25"] .other-grid { grid-template-columns: 1fr; }
+  html[data-theme="25"] .t25-chapter-rail { display: none; }
+
+  html[data-theme="25"] .pubs-page main,
+  html[data-theme="25"] .subpage main { width: calc(100% - 1rem); padding-top: 6rem; }
+  html[data-theme="25"] .pubs-page main::before,
+  html[data-theme="25"] .subpage main::before { border-radius: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="25"] .t25-world-stage { transform: none !important; transition: none; }
+  html[data-theme="25"] .t25-hotspot::before,
+  html[data-theme="25"] .t25-hotspot::after { animation: none; }
+  html[data-theme="25"] .t25-lens { display: none; }
+  html[data-theme="25"] .t25-section-vista { transition: none; transform: none; opacity: 1; }
+}
+
+@supports not (color: color-mix(in srgb, red, blue)) {
+  html[data-theme="25"] body { background: var(--color-bg); }
+  html[data-theme="25"] .card:hover,
+  html[data-theme="25"] .other-card:hover { border-color: var(--t25-cyan); }
+}
