@@ -1,10 +1,9 @@
 /* js/theme-25-idea-archipelago.js
- * Theme 25 — Idea Archipelago.
+ * Theme 25 — Living Research City.
  *
- * Turns one identity-preserving generated illustration into an explorable
- * academic world. Portals align with landmarks in the source image and route
- * to real sections. A magnifying lens, subtle parallax, chapter crops, mobile
- * dock, and persistent rail make the image useful instead of ornamental.
+ * Six generated miniature districts form one scroll-driven world. A persistent
+ * explorer crosses the screen between chapters; the helmet contains Kiran's
+ * real gaze-tracked photography, never a generated likeness.
  */
 (function () {
   'use strict';
@@ -12,296 +11,281 @@
 
   const root = document.documentElement;
   const body = document.body;
-  const hero = document.querySelector('.hero-section, [data-section="hero"]');
-  const heroBg = hero && hero.querySelector('.hero-bg');
-  if (!hero || !heroBg) return; // Subpages use the CSS-only generated banner.
+  const hero = document.querySelector('.hero-section');
+  if (!hero) return; // Subpages use the CSS-only district banner.
 
   root.classList.add('t25-js');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const ASSET = 'assets/ai/25-idea-archipelago.png';
 
-  const PORTALS = [
-    { key: 'projects', label: 'Projects', note: 'Network observatory', target: '#projects', x: 0.43, y: 0.225 },
-    { key: 'publications', label: 'Publications', note: 'Paper mountain', target: '#publications', x: 0.635, y: 0.205 },
-    { key: 'teaching', label: 'Teaching', note: 'Learning amphitheater', target: '#teaching', x: 0.87, y: 0.24 },
-    { key: 'about', label: 'About Kiran', note: 'Meet the explorer', target: '#about', x: 0.655, y: 0.62 },
-    { key: 'tools', label: 'Tools', note: 'Invention garden', target: 'tools.html', x: 0.885, y: 0.69 },
-    { key: 'other', label: 'Other', note: 'Side-quest moon', target: '#other', x: 0.32, y: 0.76 }
+  const SCENES = [
+    { id: 'hero',         name: 'Arrival Observatory', short: 'Arrival',      src: 'assets/ai/25-world-hub-v2.webp',          side: 'left',  x: .79, y: .58, scale: 1.00 },
+    { id: 'about',        name: 'Map Room & Origins',  short: 'About',        src: 'assets/ai/25-world-about-v2.webp',        side: 'right', x: .18, y: .58, scale: .94 },
+    { id: 'projects',     name: 'Signal Jungle',       short: 'Projects',     src: 'assets/ai/25-world-projects-v2.webp',     side: 'left',  x: .82, y: .58, scale: .94 },
+    { id: 'publications', name: 'Paper Peaks',         short: 'Publications', src: 'assets/ai/25-world-publications-v2.webp', side: 'right', x: .18, y: .58, scale: .91 },
+    { id: 'teaching',     name: 'Question Foundry',    short: 'Teaching',     src: 'assets/ai/25-world-teaching-v2.webp',     side: 'left',  x: .82, y: .58, scale: .93 },
+    { id: 'other',        name: 'Side-Quest Moon',     short: 'Other',        src: 'assets/ai/25-world-other-v2.webp',        side: 'right', x: .19, y: .58, scale: .96 }
   ];
 
-  const VISTAS = {
-    about:        { position: '72% 62%', caption: 'The explorer · identity & questions' },
-    projects:     { position: '43% 22%', caption: 'Network observatory · active projects' },
-    publications: { position: '64% 16%', caption: 'Paper mountain · selected publications' },
-    teaching:     { position: '89% 20%', caption: 'Learning amphitheater · teaching' },
-    other:        { position: '30% 78%', caption: 'Side-quest moon · comics, tools & advice' }
-  };
-
-  const el = (tag, cls, text) => {
+  const el = (tag, className, text) => {
     const node = document.createElement(tag);
-    if (cls) node.className = cls;
+    if (className) node.className = className;
     if (text != null) node.textContent = text;
     return node;
   };
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const smooth = t => {
+    t = clamp(t, 0, 1);
+    return t * t * (3 - 2 * t);
+  };
 
-  /* Generated world stage. */
-  const stage = el('div', 't25-world-stage');
-  const world = document.createElement('img');
-  world.className = 't25-world-img';
-  world.src = ASSET;
-  world.alt = '';
-  world.setAttribute('aria-hidden', 'true');
-  world.draggable = false;
-  world.addEventListener('error', () => { world.style.display = 'none'; }, { once: true });
-  stage.appendChild(world);
-  heroBg.appendChild(stage);
-
-  const portalNodes = [];
-  PORTALS.forEach((portal, index) => {
-    const tag = portal.target.charAt(0) === '#' ? 'button' : 'a';
-    const node = el(tag, 't25-hotspot');
-    if (tag === 'button') node.type = 'button';
-    else node.href = portal.target;
-    node.dataset.portal = portal.key;
-    node.setAttribute('aria-label', portal.label + ': ' + portal.note);
-    const number = el('span', 't25-hotspot-index', String(index + 1).padStart(2, '0'));
-    const label = el('span', 't25-hotspot-label', portal.label);
-    label.appendChild(el('small', '', portal.note));
-    node.append(number, label);
-    if (tag === 'button') node.addEventListener('click', () => navigate(portal.target));
-    node.addEventListener('mouseenter', () => focusPortal(portal));
-    node.addEventListener('focus', () => focusPortal(portal));
-    node.addEventListener('mouseleave', resetKey);
-    node.addEventListener('blur', resetKey);
-    stage.appendChild(node);
-    portalNodes.push({ node, portal });
+  /* The fixed camera: every chapter is a separately generated district. */
+  const machine = el('div', 't25-world-machine');
+  machine.setAttribute('aria-hidden', 'true');
+  const sceneNodes = SCENES.map((scene, index) => {
+    const layer = el('div', 't25-scene');
+    layer.dataset.scene = scene.id;
+    layer.dataset.side = scene.side;
+    layer.style.setProperty('--t25-scene-index', index);
+    const image = document.createElement('img');
+    image.src = scene.src;
+    image.alt = '';
+    image.decoding = index === 0 ? 'sync' : 'async';
+    image.loading = index < 2 ? 'eager' : 'lazy';
+    image.draggable = false;
+    image.addEventListener('load', () => {
+      layer.classList.add('is-loaded');
+      if (index === 0) root.classList.add('t25-world-ready');
+    }, { once: true });
+    layer.appendChild(image);
+    machine.appendChild(layer);
+    return layer;
   });
 
-  const key = el('div', 't25-map-key');
-  key.setAttribute('aria-live', 'polite');
-  key.innerHTML = '<strong>Explore the generated universe.</strong><br>Move to inspect · select a glowing portal to navigate.';
-  hero.appendChild(key);
-
-  function focusPortal(portal) {
-    key.innerHTML = '<strong>' + portal.label + '</strong><br>' + portal.note + ' · select to travel there.';
-    stage.dataset.focus = portal.key;
-    pointer.blocked = true;
-    lens.dataset.suppressed = 'true';
+  const atmosphere = el('div', 't25-atmosphere');
+  for (let i = 0; i < 38; i += 1) {
+    const mote = el('i');
+    mote.style.setProperty('--x', ((i * 37) % 101) + '%');
+    mote.style.setProperty('--y', ((i * 61) % 97) + '%');
+    mote.style.setProperty('--d', (5 + (i % 8) * 1.3) + 's');
+    mote.style.setProperty('--s', (1 + (i % 3)) + 'px');
+    atmosphere.appendChild(mote);
   }
+  machine.appendChild(atmosphere);
+  body.insertBefore(machine, body.firstChild);
 
-  function resetKey() {
-    key.innerHTML = '<strong>Explore the generated universe.</strong><br>Move to inspect · select a glowing portal to navigate.';
-    delete stage.dataset.focus;
-    pointer.blocked = false;
-    lens.dataset.suppressed = 'false';
-  }
+  /* Turn the semantic page sections into readable stops in the world. */
+  const sections = SCENES.map(scene => scene.id === 'hero' ? hero : document.getElementById(scene.id)).filter(Boolean);
+  const kickers = {
+    about: 'District 01 · coordinates & questions',
+    projects: 'District 02 · experiments in motion',
+    publications: 'District 03 · the paper trail',
+    teaching: 'District 04 · ideas are social objects',
+    other: 'District 05 · curiosity refuses a syllabus'
+  };
 
-  function navigate(target) {
-    const section = document.querySelector(target);
-    if (section) section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-  }
-
-  /* Mobile dock: same destinations, always aligned regardless of image crop. */
-  const dock = el('nav', 't25-world-dock');
-  dock.setAttribute('aria-label', 'Explore the academic universe');
-  PORTALS.forEach(portal => {
-    if (portal.target.charAt(0) === '#') {
-      const button = el('button', '', portal.label);
-      button.type = 'button';
-      button.addEventListener('click', () => navigate(portal.target));
-      dock.appendChild(button);
-    } else {
-      const link = el('a', '', portal.label);
-      link.href = portal.target;
-      dock.appendChild(link);
-    }
+  sections.slice(1).forEach(section => {
+    const panel = el('div', 't25-chapter-panel');
+    const kicker = el('p', 't25-chapter-kicker', kickers[section.id] || 'Research district');
+    panel.appendChild(kicker);
+    Array.from(section.children).forEach(child => panel.appendChild(child));
+    section.appendChild(panel);
   });
-  hero.appendChild(dock);
 
-  /* Object-cover math keeps hotspots on exact image landmarks. */
-  let imageMetrics = null;
-  function measureImage() {
-    const w = heroBg.clientWidth;
-    const h = heroBg.clientHeight;
-    const nw = world.naturalWidth || 1672;
-    const nh = world.naturalHeight || 941;
-    const scale = Math.max(w / nw, h / nh);
-    const rw = nw * scale;
-    const rh = nh * scale;
-    const ox = (w - rw) / 2;
-    const oy = (h - rh) / 2;
-    imageMetrics = { w, h, nw, nh, scale, rw, rh, ox, oy };
-    portalNodes.forEach(({ node, portal }) => {
-      const x = ox + portal.x * rw;
-      const y = oy + portal.y * rh;
-      node.style.left = x + 'px';
-      node.style.top = y + 'px';
-      node.hidden = x < -35 || x > w + 35 || y < -35 || y > h + 35;
-    });
+  const enter = el('button', 't25-enter-world');
+  enter.type = 'button';
+  enter.innerHTML = '<span>Begin the expedition</span><b aria-hidden="true">↓</b>';
+  enter.addEventListener('click', () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  });
+  hero.querySelector('.hero-text')?.appendChild(enter);
+
+  /* Persistent explorer shell + a real, local gaze portrait in its bezel. */
+  const originalPortrait = hero.querySelector('.hero-portrait');
+  if (originalPortrait) originalPortrait.hidden = true;
+
+  const avatar = el('div', 't25-avatar');
+  avatar.setAttribute('aria-hidden', 'true');
+  const bodyImage = document.createElement('img');
+  bodyImage.className = 't25-avatar-body';
+  bodyImage.src = 'assets/ai/25-explorer-body-v2.webp';
+  bodyImage.alt = '';
+  bodyImage.draggable = false;
+  const realFace = document.createElement('img');
+  realFace.className = 't25-avatar-face';
+  realFace.alt = '';
+  realFace.draggable = false;
+  avatar.append(bodyImage, realFace, el('i', 't25-avatar-glint'));
+  body.appendChild(avatar);
+
+  const GAZE_VALUES = [-15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15];
+  const gazeMissing = new Set();
+  let gazeLastGood = '';
+  let gazeX = innerWidth / 2;
+  let gazeY = innerHeight / 2;
+  let gazeFrame = 0;
+
+  function gazeToken(value) {
+    return value < 0 ? 'm' + Math.abs(value) + 'p0' : value + 'p0';
   }
-  world.addEventListener('load', measureImage, { once: true });
-  if (world.complete) measureImage();
-
-  /* Live detail lens and subtle depth response. */
-  const lens = el('div', 't25-lens');
-  lens.setAttribute('aria-hidden', 'true');
-  hero.appendChild(lens);
-  let pointerFrame = 0;
-  let pointer = { x: 0, y: 0, blocked: false };
-
-  function renderPointer() {
-    pointerFrame = 0;
-    if (!imageMetrics) measureImage();
-    const m = imageMetrics;
-    const x = pointer.x, y = pointer.y;
-    const nx = x / Math.max(1, m.w) - 0.5;
-    const ny = y / Math.max(1, m.h) - 0.5;
-    stage.style.setProperty('--t25-pan-x', (-nx * 12).toFixed(1) + 'px');
-    stage.style.setProperty('--t25-pan-y', (-ny * 8).toFixed(1) + 'px');
-    hero.style.setProperty('--t25-mx', x + 'px');
-    hero.style.setProperty('--t25-my', y + 'px');
-
-    if (pointer.blocked) {
-      lens.dataset.on = 'false';
-      lens.dataset.suppressed = 'true';
-      return;
-    }
-
-    const size = 164;
-    const zoom = 1.72;
-    const half = size / 2;
-    const offset = 132;
-    const displayX = x + offset + half > m.w - 16 ? x - offset : x + offset;
-    const displayY = Math.max(half + 18, Math.min(m.h - half - 32, y));
-    lens.style.left = displayX + 'px';
-    lens.style.top = displayY + 'px';
-    lens.style.backgroundSize = (m.rw * zoom) + 'px ' + (m.rh * zoom) + 'px';
-    lens.style.backgroundPosition = (size / 2 - (x - m.ox) * zoom) + 'px ' + (size / 2 - (y - m.oy) * zoom) + 'px';
-    lens.dataset.suppressed = 'false';
-    lens.dataset.on = 'true';
+  function gazeNearest(value) {
+    return GAZE_VALUES.reduce((best, item) => Math.abs(item - value) < Math.abs(best - value) ? item : best, 0);
   }
+  function gazeFolder() {
+    return root.getAttribute('data-mode') === 'dark' ? 'faces_with_sunglasses' : 'faces';
+  }
+  function setGaze(px, py) {
+    const src = gazeFolder() + '/gaze_px' + gazeToken(px) + '_py' + gazeToken(py) + '_256.webp';
+    if (gazeMissing.has(src) || realFace.getAttribute('src') === src) return;
+    realFace.src = src;
+  }
+  function renderGaze() {
+    gazeFrame = 0;
+    const rect = realFace.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const radiusX = Math.max(260, innerWidth * .36);
+    const radiusY = Math.max(220, innerHeight * .42);
+    const px = gazeNearest(clamp((gazeX - cx) / radiusX * 18, -15, 15));
+    const py = gazeNearest(clamp((cy - gazeY) / radiusY * 18, -15, 15));
+    setGaze(px, py);
+  }
+  realFace.addEventListener('load', () => { gazeLastGood = realFace.src; });
+  realFace.addEventListener('error', () => {
+    gazeMissing.add(realFace.getAttribute('src') || '');
+    if (gazeLastGood) realFace.src = gazeLastGood;
+    else setGaze(0, 0);
+  });
+  setGaze(0, 0);
 
   if (finePointer && !reduced) {
-    hero.addEventListener('pointermove', event => {
-      const rect = hero.getBoundingClientRect();
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
-      pointer.blocked = Boolean(event.target && event.target.closest && event.target.closest('a, button, .hero-text, .t25-world-dock'));
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(renderPointer);
-    }, { passive: true });
-    hero.addEventListener('pointerleave', () => {
-      lens.dataset.on = 'false';
-      lens.dataset.suppressed = 'true';
-      stage.style.setProperty('--t25-pan-x', '0px');
-      stage.style.setProperty('--t25-pan-y', '0px');
+    window.addEventListener('pointermove', event => {
+      gazeX = event.clientX;
+      gazeY = event.clientY;
+      if (!gazeFrame) gazeFrame = requestAnimationFrame(renderGaze);
     }, { passive: true });
   }
-
-  /* Section crops reuse the generated world as coherent visual chapters. */
-  const vistas = [];
-  Object.keys(VISTAS).forEach(id => {
-    const section = document.getElementById(id);
-    if (!section) return;
-    const config = VISTAS[id];
-    const vista = el('div', 't25-section-vista');
-    vista.setAttribute('aria-hidden', 'true');
-    vista.dataset.caption = config.caption;
-    vista.style.backgroundPosition = config.position;
-    section.appendChild(vista);
-    vistas.push(vista);
-
-    if (finePointer && !reduced) {
-      vista.addEventListener('pointermove', event => {
-        const rect = vista.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width;
-        const y = (event.clientY - rect.top) / rect.height;
-        vista.style.setProperty('--t25-ry', ((x - 0.5) * 6).toFixed(2) + 'deg');
-        vista.style.setProperty('--t25-rx', ((0.5 - y) * 5).toFixed(2) + 'deg');
-        vista.style.setProperty('--t25-vx', (x * 100).toFixed(1) + '%');
-        vista.style.setProperty('--t25-vy', (y * 100).toFixed(1) + '%');
-      }, { passive: true });
-      vista.addEventListener('pointerleave', () => {
-        vista.style.setProperty('--t25-ry', '0deg');
-        vista.style.setProperty('--t25-rx', '0deg');
-      }, { passive: true });
-    }
+  window.addEventListener('modechange', () => {
+    gazeLastGood = '';
+    realFace.removeAttribute('src');
+    requestAnimationFrame(renderGaze);
   });
 
-  if (reduced || !('IntersectionObserver' in window)) {
-    vistas.forEach(vista => vista.classList.add('is-visible'));
-  } else {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible');
-      });
-    }, { threshold: 0.16 });
-    vistas.forEach(vista => observer.observe(vista));
-  }
-
-  /* Chapter rail + current-section state. */
-  const sections = [hero].concat(Array.from(document.querySelectorAll('section.section[data-section]:not(.hero-section)')));
-  const rail = el('nav', 't25-chapter-rail');
-  rail.setAttribute('aria-label', 'Chapter navigation');
-  const railButtons = sections.map((section, index) => {
-    const label = index === 0 ? 'World map' : (section.querySelector('.section-heading')?.textContent || 'Chapter ' + index);
+  /* A usable route map: direct chapter navigation never sits below the world. */
+  const route = el('nav', 't25-route-map');
+  route.setAttribute('aria-label', 'Research city districts');
+  const routeButtons = SCENES.map((scene, index) => {
     const button = el('button');
     button.type = 'button';
-    button.setAttribute('aria-label', label.trim());
-    button.addEventListener('click', () => section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }));
-    rail.appendChild(button);
+    button.dataset.target = scene.id;
+    button.setAttribute('aria-label', 'Go to ' + scene.name);
+    button.innerHTML = '<span>' + String(index).padStart(2, '0') + '</span><b>' + scene.short + '</b>';
+    button.addEventListener('click', () => {
+      const target = scene.id === 'hero' ? hero : document.getElementById(scene.id);
+      target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+    route.appendChild(button);
     return button;
   });
-  body.appendChild(rail);
+  const routeProgress = el('i', 't25-route-progress');
+  route.appendChild(routeProgress);
+  body.appendChild(route);
 
-  let scrollFrame = 0;
-  function updateScroll() {
-    scrollFrame = 0;
-    const heroH = Math.max(1, hero.offsetHeight);
-    const progress = Math.max(0, Math.min(1, scrollY / heroH));
-    if (!reduced) stage.style.setProperty('--t25-scroll-y', (progress * 26).toFixed(1) + 'px');
-    root.classList.toggle('t25-past-hero', scrollY > heroH * 0.68);
+  const readout = el('div', 't25-scene-readout');
+  readout.innerHTML = '<span>Now entering</span><strong></strong><small>Scroll to travel · use the route map to jump</small>';
+  const readoutName = readout.querySelector('strong');
+  body.appendChild(readout);
 
-    const probe = scrollY + innerHeight * 0.36;
+  let sectionTops = [];
+  let currentScene = -1;
+  let raf = 0;
+
+  function measure() {
+    sectionTops = sections.map(section => section.getBoundingClientRect().top + scrollY);
+    render();
+  }
+
+  function render() {
+    raf = 0;
+    const viewportH = Math.max(1, innerHeight);
+    const probe = scrollY + viewportH * .52;
     let active = 0;
-    sections.forEach((section, index) => {
-      const top = section.getBoundingClientRect().top + scrollY;
-      if (top <= probe) active = index;
+    sectionTops.forEach((top, index) => { if (top <= probe) active = index; });
+    active = clamp(active, 0, SCENES.length - 1);
+
+    const start = sectionTops[active] || 0;
+    const end = sectionTops[active + 1] || Math.max(document.documentElement.scrollHeight, start + viewportH);
+    const local = clamp((probe - start) / Math.max(viewportH, end - start), 0, 1);
+    const blend = active < SCENES.length - 1 ? smooth((local - .66) / .34) : 0;
+    const destination = Math.min(active + 1, SCENES.length - 1);
+
+    sceneNodes.forEach((node, index) => {
+      let opacity = 0;
+      if (index === active) opacity = 1 - blend;
+      if (index === destination && destination !== active) opacity = blend;
+      node.style.setProperty('--t25-opacity', opacity.toFixed(4));
+      const entrance = index === destination ? blend : local;
+      node.style.setProperty('--t25-zoom', (1.065 - entrance * .035).toFixed(4));
+      node.style.setProperty('--t25-drift', ((entrance - .5) * -18).toFixed(1) + 'px');
+      node.classList.toggle('is-active', opacity > .02);
     });
-    railButtons.forEach((button, index) => {
-      if (index === active) button.setAttribute('aria-current', 'location');
-      else button.removeAttribute('aria-current');
-    });
-    document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
-      const currentSection = sections[active];
-      const current = currentSection && currentSection.id && link.getAttribute('href') === '#' + currentSection.id;
-      if (current) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
-    });
+
+    const travel = reduced ? 0 : smooth(local);
+    const from = SCENES[active];
+    const to = SCENES[destination];
+    const avatarX = lerp(from.x, to.x, travel);
+    const avatarY = lerp(from.y, to.y, travel) + (reduced ? 0 : Math.sin(scrollY * .028) * .008);
+    const avatarScale = lerp(from.scale, to.scale, travel);
+    const avatarWidth = avatar.offsetWidth || 230;
+    const avatarHeight = avatarWidth * 1.5;
+    avatar.style.setProperty('--t25-avatar-x', (avatarX * innerWidth - avatarWidth / 2).toFixed(1) + 'px');
+    avatar.style.setProperty('--t25-avatar-y', (avatarY * viewportH - avatarHeight / 2).toFixed(1) + 'px');
+    avatar.style.setProperty('--t25-avatar-scale', avatarScale.toFixed(3));
+    avatar.style.setProperty('--t25-stride', reduced ? '0deg' : (Math.sin(scrollY * .055) * 1.8).toFixed(2) + 'deg');
+    avatar.classList.toggle('is-travelling', !reduced && local > .08 && local < .92);
+
+    const shown = blend > .55 ? destination : active;
+    if (shown !== currentScene) {
+      currentScene = shown;
+      root.dataset.t25District = SCENES[shown].id;
+      readoutName.textContent = SCENES[shown].name;
+      routeButtons.forEach((button, index) => {
+        if (index === shown) button.setAttribute('aria-current', 'location');
+        else button.removeAttribute('aria-current');
+      });
+      document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
+        const isCurrent = link.getAttribute('href') === '#' + SCENES[shown].id;
+        if (isCurrent) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - viewportH);
+    routeProgress.style.setProperty('--t25-progress', clamp(scrollY / maxScroll, 0, 1).toFixed(4));
+    root.classList.toggle('t25-past-hero', scrollY > viewportH * .62);
   }
 
   window.addEventListener('scroll', () => {
-    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScroll);
+    if (!raf) raf = requestAnimationFrame(render);
   }, { passive: true });
-
-  let resizeTimer = 0;
   window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { measureImage(); updateScroll(); }, 220);
+    if (!raf) raf = requestAnimationFrame(measure);
   }, { passive: true });
+  window.addEventListener('load', measure, { once: true });
 
   const modeButton = document.getElementById('modeToggle');
-  function updateModeState() {
-    const dark = root.getAttribute('data-mode') === 'dark';
+  function updateModeButton() {
     if (!modeButton) return;
+    const dark = root.getAttribute('data-mode') === 'dark';
     modeButton.setAttribute('aria-pressed', String(dark));
-    modeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-    modeButton.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+    modeButton.setAttribute('aria-label', dark ? 'Switch the research city to daylight' : 'Switch the research city to night');
+    modeButton.title = dark ? 'Daylight mode' : 'Night mode';
   }
-  updateModeState();
-  window.addEventListener('modechange', updateModeState);
+  updateModeButton();
+  window.addEventListener('modechange', updateModeButton);
 
   const themeName = document.getElementById('themeName');
-  if (themeName) themeName.textContent = 'Idea Archipelago · generated with ChatGPT · theme 25/25';
-  updateScroll();
+  if (themeName) themeName.textContent = 'Living Research City · six generated districts · theme 25/25';
+  measure();
 })();
