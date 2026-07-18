@@ -161,7 +161,7 @@ const PUBLICATIONS = [
     venue: "ICWSM 2026",
     authors: ["Sudhamshu Hosamane", "Farhana Shahid", "Aditya Vashistha", "Kiran Garimella"],
     links: [
-      { label: "paper", href: "content/group_rules_whatsapp_icwsm.pdf" }
+      { label: "paper", href: "content/Group_Rules_whatsapp_icwsm.pdf" }
     ]
   },
   {
