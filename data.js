@@ -74,26 +74,27 @@ const PROJECTS = [
 
 // data.js
 const PUBLICATIONS = [
-  // Under review
- {
+
+  // Unpublished
+  {
     year: "Unpublished",
     status: "Under review",
     title: "Inferential Privacy Leakage in Anonymized Conversational AI Logs",
     venue: "Under review",
-    authors: ["S M Mehedi Zaman","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/chatgpt_demographics_prediction.pdf"}
-    ]
+    authors: ["S M Mehedi Zaman", "Kiran Garimella"],
+    slug: "chatgpt-privacy-leakage",
+    topics: ["ai", "methods"],
+    links: [{ label: "paper", href: "content/chatgpt_demographics_prediction.pdf" }]
   },
- {
+  {
     year: "Unpublished",
     status: "Under review",
     title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
     venue: "Under review",
-    authors: ["Shreyasi Roy Chowdhuri","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/How_people_use_ChatGPT.pdf"}
-    ]
+    authors: ["Shreyasi Roy Chowdhuri", "Kiran Garimella"],
+    slug: "how-people-use-chatgpt",
+    topics: ["ai", "platforms"],
+    links: [{ label: "paper", href: "content/How_people_use_ChatGPT.pdf" }]
   },
   {
     year: "Unpublished",
@@ -101,30 +102,29 @@ const PUBLICATIONS = [
     title: "WhatsViral: A Privacy-Preserving System for Studying Viral Content on WhatsApp",
     venue: "Under review",
     authors: ["Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/WhatsViral_virality_on_whatsapp.pdf" }
-    ]
+    slug: "whatsviral",
+    topics: ["whatsapp", "methods"],
+    links: [{ label: "paper", href: "content/WhatsViral_virality_on_whatsapp.pdf" }]
   },
-
   {
     year: "Unpublished",
     status: "Under review",
     title: "The Hype vs. the Reality of Generative AI in Elections: The Case of the 2024 Indian Elections",
     venue: "Under review",
     authors: ["Kiran Garimella", "Simon Chauchard"],
-    links: [
-      { label: "paper", href: "content/Generative_AI_content_WhatsApp.pdf" }
-    ]
+    slug: "genai-elections-hype",
+    topics: ["ai", "polar"],
+    links: [{ label: "paper", href: "content/Generative_AI_content_WhatsApp.pdf" }]
   },
   {
     year: "Unpublished",
     status: "Under review",
     title: "Designing and Evaluating a Community Fact-Checking System for WhatsApp",
     venue: "Under review",
-    authors: ["Juan Jose Rojas Constain","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Community_fact_checking_on_WhatsApp_Colombia.pdf" }
-    ]
+    authors: ["Juan Jose Rojas Constain", "Kiran Garimella"],
+    slug: "community-factcheck-colombia",
+    topics: ["whatsapp", "misinfo"],
+    links: [{ label: "paper", href: "content/Community_fact_checking_on_WhatsApp_Colombia.pdf" }]
   },
   {
     year: "Unpublished",
@@ -132,10 +132,9 @@ const PUBLICATIONS = [
     title: "Data Donation on Social Media: Tools and Datasets",
     venue: "Under review",
     authors: ["Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/data_donation_social_media.pdf" },
-      { label: "dataset", href: "https://doi.org/10.7910/DVN/VOFPK1" }
-    ]
+    slug: "data-donation-tools",
+    topics: ["methods", "platforms"],
+    links: [{ label: "paper", href: "content/data_donation_social_media.pdf" }, { label: "dataset", href: "https://doi.org/10.7910/DVN/VOFPK1" }]
   },
   {
     year: "Unpublished",
@@ -143,6 +142,8 @@ const PUBLICATIONS = [
     title: "How Students (Really) Use ChatGPT: Uncovering Experiences Among Undergraduate Students",
     venue: "Under review",
     authors: ["Tawfiq Ammari", "Mehedi Zaman", "Meilun Chen", "Kiran Garimella"],
+    slug: "students-chatgpt",
+    topics: ["ai"],
     links: [{ label: "paper", href: "content/how_students_use_chatgpt.pdf" }]
   },
   {
@@ -151,6 +152,8 @@ const PUBLICATIONS = [
     title: "Demographic Divides in Political Content Exposure on Facebook",
     venue: "Under review",
     authors: ["S M Mehedi Zaman", "Joao Couto", "Kiran Garimella"],
+    slug: "facebook-political-divides",
+    topics: ["platforms", "polar"],
     links: [{ label: "paper", href: "content/Facebook_data_donation_political_content.pdf" }]
   },
 
@@ -158,39 +161,38 @@ const PUBLICATIONS = [
   {
     year: "2027",
     title: "Examining LLM Assisted Rule Creation in WhatsApp Groups",
-    venue: "ICWSM 2026",
+    venue: "ICWSM 2027",
     authors: ["Sudhamshu Hosamane", "Farhana Shahid", "Aditya Vashistha", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Group_Rules_whatsapp_icwsm.pdf" }
-    ]
+    slug: "llm-group-rules",
+    topics: ["whatsapp", "ai"],
+    links: [{ label: "paper", href: "content/Group_Rules_whatsapp_icwsm.pdf" }]
   },
   {
     year: "2027",
     title: "From Retrieval to Synthesis: Repair Literacy and the Domestication of Generative AI",
     venue: "Journal of the Association for Information Science and Technology (JASIST)",
     authors: ["Tawfiq Ammari", "Mehedi Zaman", "Meilun Chen", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/chatgpt_jasist.pdf" }
-    ]
+    slug: "repair-literacy-genai",
+    topics: ["ai"],
+    links: [{ label: "paper", href: "content/chatgpt_jasist.pdf" }]
   },
   {
     year: "2027",
     title: "Source Coverage and Citation Bias in LLM-based vs. Traditional Search Engines",
     venue: "ICWSM 2027",
     authors: ["Peixian Zhang", "Qiming Ye", "Zifan Peng", "Kiran Garimella", "Gareth Tyson"],
-    links: [
-      { label: "paper", href: "content/llm_vs_search_engines_icwsm.pdf" }
-    ]
+    slug: "llm-vs-search-citations",
+    topics: ["ai", "media"],
+    links: [{ label: "paper", href: "content/llm_vs_search_engines_icwsm.pdf" }]
   },
-
   {
     year: "2027",
     title: "What Does a Neighborhood Look Like Online? Linking the Built Environment to Digital Information Diets",
     venue: "ICWSM 2027",
-    authors: ["Hemant Magwana","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Google_street_view_WhatsApp_data.pdf" }
-    ]
+    authors: ["Hemant Magwana", "Kiran Garimella"],
+    slug: "neighborhood-online",
+    topics: ["platforms", "methods"],
+    links: [{ label: "paper", href: "content/Google_street_view_WhatsApp_data.pdf" }]
   },
 
   // 2026
@@ -199,45 +201,44 @@ const PUBLICATIONS = [
     title: "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
     venue: "CSCW 2026",
     authors: ["Gauri Nayak", "Farhana Shahid", "Kiran Garimella", "Aditya Vashistha"],
-    links: [
-      { label: "paper", href: "content/group_rules_cscw.pdf" }
-    ]
+    slug: "group-rules-ai",
+    topics: ["whatsapp", "ai"],
+    links: [{ label: "paper", href: "content/group_rules_cscw.pdf" }]
   },
-
   {
     year: "2026",
     title: "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
-    venue: "IWCSM 2026",
-    authors: ["Harsha Nemani","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }
-    ]
+    venue: "ICWSM 2026",
+    authors: ["Harsha Nemani", "Kiran Garimella"],
+    slug: "multimodal-vlm",
+    topics: ["ai", "whatsapp", "methods"],
+    links: [{ label: "paper", href: "content/WhatsApp_Multimodal_Analysis.pdf" }]
   },
   {
     year: "2026",
     title: "Quantifying the Illicit Ecosystem of Betting Apps in India",
     venue: "ICWSM 2026",
-    authors: ["Aatman Vaidya","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Betting_apps_India.pdf" }
-    ]
+    authors: ["Aatman Vaidya", "Kiran Garimella"],
+    slug: "betting-apps",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/Betting_apps_India.pdf" }]
   },
-
   {
     year: "2026",
     title: "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
     venue: "CHI 2026",
-    authors: ["Sudhamshu Hosamane","Tanvi Goyal","Kriti Sharma","Molly Offer-Westort","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/peer_fact_checking_on_whatsapp.pdf" }
-    ]
+    authors: ["Sudhamshu Hosamane", "Tanvi Goyal", "Kriti Sharma", "Molly Offer-Westort", "Kiran Garimella"],
+    slug: "peer-factcheck",
+    topics: ["whatsapp", "misinfo"],
+    links: [{ label: "paper", href: "content/peer_fact_checking_on_whatsapp.pdf" }]
   },
-
   {
     year: "2026",
     title: "Disagreement Is Disappearing on U.S. Cable Debate Shows",
     venue: "ICWSM 2026",
     authors: ["S M Mehedi Zaman", "Kiran Garimella"],
+    slug: "tv-disagreement",
+    topics: ["media", "polar"],
     links: [{ label: "paper", href: "content/television_disagreements.pdf" }]
   },
   {
@@ -245,6 +246,8 @@ const PUBLICATIONS = [
     title: "Personal Experience and Public Support for Internet Shutdowns in Rural India",
     venue: "ICWSM 2026",
     authors: ["Kiran Garimella", "Avinash Collis", "Varun Karekurve Ramachandra"],
+    slug: "internet-shutdowns",
+    topics: ["platforms", "polar"],
     links: [{ label: "paper", href: "content/internet_bans.pdf" }]
   },
   {
@@ -252,6 +255,8 @@ const PUBLICATIONS = [
     title: "Structural Dynamics of Harmful Content Dissemination on WhatsApp",
     venue: "ICWSM 2026",
     authors: ["Yuxin Liu", "Amin Rahimian", "Kiran Garimella"],
+    slug: "harmful-cascades",
+    topics: ["whatsapp", "misinfo", "methods"],
     links: [{ label: "paper", href: "content/whatsapp_misinformation_network_spread.pdf" }]
   },
 
@@ -261,6 +266,8 @@ const PUBLICATIONS = [
     title: "Calibrated and Diverse News Coverage",
     venue: "CIKM 2025",
     authors: ["Tianyi Zhou", "Stefan Neumann", "Kiran Garimella", "Aristides Gionis"],
+    slug: "calibrated-news",
+    topics: ["media", "methods"],
     links: [{ label: "paper", href: "content/calibrated_and_diverse_news_coverage.pdf" }]
   },
   {
@@ -268,13 +275,17 @@ const PUBLICATIONS = [
     title: "Dynamics of Toxicity in Political Podcasts",
     venue: "ACM Multimedia 2025",
     authors: ["Naquee Rizwan", "Nayandeep Deb", "Sarthak Roy", "Vishwajeet Singh Solanki", "Kiran Garimella", "Animesh Mukherjee"],
+    slug: "podcast-toxicity",
+    topics: ["media", "misinfo"],
     links: [{ label: "paper", href: "content/Toxicity_in_Podcasts.pdf" }]
   },
   {
     year: 2025,
-    title: "Political Manipulation of the Israel-Hamas Conflict on WhatsAppp in India",
+    title: "Political Manipulation of the Israel-Hamas Conflict on WhatsApp in India",
     venue: "International Journal of Communication, 2025",
     authors: ["Kiran Garimella"],
+    slug: "israel-hamas-whatsapp",
+    topics: ["whatsapp", "polar"],
     links: [{ label: "paper", href: "content/Israel_Gaza_WhatsApp_narratives_IJOC.pdf" }]
   },
   {
@@ -282,16 +293,17 @@ const PUBLICATIONS = [
     title: "Global Patterns of Viral Content on WhatsApp",
     venue: "ICWSM 2025",
     authors: ["Kiran Garimella", "Princessa Cintaqia", "Juan Jose Rojas Constain", "Bharat Nayak", "Aditya Vashistha"],
-    links: [
-      { label: "paper", href: "content/WhatsApp_groups_misinfo__hate.pdf" },
-      { label: "video", href: "https://www.youtube.com/watch?v=-Zc8J7qcYJQ" }
-    ]
+    slug: "whatsapp-viral-global",
+    topics: ["whatsapp"],
+    links: [{ label: "paper", href: "content/WhatsApp_groups_misinfo__hate.pdf" }, { label: "video", href: "https://www.youtube.com/watch?v=-Zc8J7qcYJQ" }]
   },
   {
     year: 2025,
     title: "Analyzing Patterns and Influence of Advertising in Print Newspapers",
     venue: "ACM Compass 2025",
     authors: ["Harsha Nemani", "Ponnurangam Kumaraguru", "Kiran Garimella"],
+    slug: "print-ads-influence",
+    topics: ["media"],
     links: [{ label: "paper", href: "content/ads_vs_coverage_in_print_newspapers.pdf" }]
   },
   {
@@ -299,38 +311,35 @@ const PUBLICATIONS = [
     title: "Community-Driven Fact-Checking on WhatsApp: Who Fact-Checks Whom, Why, and With What Effect?",
     venue: "Computational Approaches to Content Moderation and Platform Governance workshop at ICWSM 2025",
     authors: ["Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/WhatsApp_community_factchecking____ICWSM_May_2023.pdf" },
-      { label: "video", href: "https://www.youtube.com/watch?v=n74qFEzlW4Q" }
-    ]
+    slug: "whatsapp-community-factcheck",
+    topics: ["whatsapp", "misinfo"],
+    links: [{ label: "paper", href: "content/WhatsApp_community_factchecking____ICWSM_May_2023.pdf" }, { label: "video", href: "https://www.youtube.com/watch?v=n74qFEzlW4Q" }]
   },
   {
     year: 2025,
     title: "Private Sharing of Public Content on Facebook",
     venue: "Countering the Degradation of Social Media workshop at ICWSM 2025",
     authors: ["Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Private_Sharing_of_Public_Content_on_Social_Networks.pdf" },
-      { label: "blog", href: "https://kiran-research2.comminfo.rutgers.edu/tmp/private_sharing_public_content.html" },
-      { label: "video", href: "https://www.youtube.com/watch?v=wreDNJDVBJY" }
-    ]
+    slug: "private-sharing-facebook",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/Private_Sharing_of_Public_Content_on_Social_Networks.pdf" }, { label: "blog", href: "https://kiran-research2.comminfo.rutgers.edu/tmp/private_sharing_public_content.html" }, { label: "video", href: "https://www.youtube.com/watch?v=wreDNJDVBJY" }]
   },
   {
     year: 2025,
     title: "WhatsApp Explorer: A Data Donation Tool To Facilitate Research on WhatsApp",
     venue: "Mobile Media and Communication",
     authors: ["Kiran Garimella", "Simon Chauchard"],
-    links: [
-      { label: "paper", href: "content/WhatsApp_Explorer_Garimella_Chauchard.pdf" },
-      { label: "code", href: "https://github.com/gvrkiran/WhatsAppExplorer" },
-      { label: "tool walkthrough", href: "https://www.youtube.com/watch?v=_NGIJG4a-hY" }
-    ]
+    slug: "whatsapp-explorer",
+    topics: ["whatsapp", "methods"],
+    links: [{ label: "paper", href: "content/WhatsApp_Explorer_Garimella_Chauchard.pdf" }, { label: "code", href: "https://github.com/gvrkiran/WhatsAppExplorer" }, { label: "tool walkthrough", href: "https://www.youtube.com/watch?v=_NGIJG4a-hY" }]
   },
   {
     year: 2025,
     title: "Hate Speech Campaigns in the 2016 Philippine Elections on Facebook",
     venue: "ICWSM 2025",
     authors: ["Sudhamshu Hosamane", "Kiran Garimella"],
+    slug: "philippines-hate-2016",
+    topics: ["misinfo", "polar"],
     links: [{ label: "paper", href: "content/philippines_hate_speech_2016_election.pdf" }]
   },
 
@@ -340,6 +349,8 @@ const PUBLICATIONS = [
     title: "Collecting WhatsApp Data for Social Science Research: Challenges and a Proposed Solution",
     venue: "Book chapter, New York University Press",
     authors: ["Simon Chauchard", "Kiran Garimella"],
+    slug: "whatsapp-data-collection",
+    topics: ["whatsapp", "methods"],
     links: [{ label: "paper", href: "content/WhatsApp_Chauchard_Garimella_AUGUST2023_V3.pdf" }]
   },
   {
@@ -347,26 +358,26 @@ const PUBLICATIONS = [
     title: "Generative AI and Political Discourse: Insights from WhatsApp in Rural India",
     venue: "",
     authors: ["Kiran Garimella", "Simon Chauchard"],
-    links: [
-      { label: "paper", href: "content/generative_AI_whatsapp_DRAFT.pdf" },
-      { label: "Nature Commentary", href: "https://www.nature.com/articles/d41586-024-01588-2" }
-    ]
+    slug: "genai-rural-india",
+    topics: ["ai", "whatsapp"],
+    links: [{ label: "paper", href: "content/generative_AI_whatsapp_DRAFT.pdf" }, { label: "Nature Commentary", href: "https://www.nature.com/articles/d41586-024-01588-2" }]
   },
   {
     year: 2024,
     title: "Television Discourse Decoded: Comprehensive Multimodal Analytics at Scale",
     venue: "KDD 2024",
     authors: ["Anmol Agarwal", "Pratyush Priyadarshi", "Shiven Sinha", "Shrey Gupta", "Hitkul Jangra", "Ponnurangam Kumaraguru", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/TV_Debates_KDD_2024.pdf" },
-      { label: "video", href: "https://youtu.be/STLfV8kv83g" }
-    ]
+    slug: "tv-decoded",
+    topics: ["media", "methods"],
+    links: [{ label: "paper", href: "content/TV_Debates_KDD_2024.pdf" }, { label: "video", href: "https://youtu.be/STLfV8kv83g" }]
   },
   {
     year: 2024,
     title: "Misinformation Mitigation Praxis: Lessons Learned and Future Directions from Co-Insights",
     venue: "SIGIR 2024",
     authors: ["Scott Hale", "Kiran Garimella", "Shiri Dori-Hacohen"],
+    slug: "coinsights-praxis",
+    topics: ["misinfo"],
     links: [{ label: "paper", href: "content/Misinformation_SIGIR2024.pdf" }]
   },
   {
@@ -374,6 +385,8 @@ const PUBLICATIONS = [
     title: "Online Knowledge Production in Polarized Political Memes: The Case of Critical Race Theory",
     venue: "New Media and Society 2024",
     authors: ["Alyvia Walters", "Tawfiq Ammari", "Kiran Garimella", "Shagun Jhaver"],
+    slug: "crt-memes",
+    topics: ["polar", "platforms"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2310.03171" }]
   },
   {
@@ -381,6 +394,8 @@ const PUBLICATIONS = [
     title: "Minimizing polarization and disagreement using topic-based timeline algorithms",
     venue: "Web Conference 2024",
     authors: ["Tianyi Zhou", "Stefan Neuman", "Kiran Garimella", "Aristides Gionis"],
+    slug: "timeline-depolarization",
+    topics: ["polar", "methods"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2402.10053" }]
   },
   {
@@ -388,6 +403,8 @@ const PUBLICATIONS = [
     title: "Unraveling the Dynamics of Television Debates and Social Media Engagement: Insights from an Indian News Show",
     venue: "ICWSM 2024",
     authors: ["Kiran Garimella", "Abhilash Datta"],
+    slug: "tv-debates-social",
+    topics: ["media"],
     links: [{ label: "paper", href: "content/The_Impact_of_Political_debates_on_Social_Media__ICWSM_2023_.pdf" }]
   },
 
@@ -397,6 +414,8 @@ const PUBLICATIONS = [
     title: "Social Media Narratives on Conflict from Northern Syria",
     venue: "Journal of Politics",
     authors: ["Erin Walk", "Elizabeth Parker-Magyar", "Ahmet Akbiyik", "Fotini Christia", "Kiran Garimella"],
+    slug: "syria-narratives",
+    topics: ["platforms"],
     links: [{ label: "paper", href: "content/Social_Media_Narratives_on_Conflict_from_Northern_Syria.pdf" }]
   },
   {
@@ -404,6 +423,8 @@ const PUBLICATIONS = [
     title: "Understanding and combatting misinformation across 16 countries on six continents",
     venue: "Nature Human Behavior",
     authors: ["Antonio A. Arechar", "et al."],
+    slug: "misinfo-16-countries",
+    topics: ["misinfo"],
     links: [{ label: "paper", href: "content/Understanding-and-combatting-misinformation-across-16-countries-on-six-continents.pdf" }]
   },
   {
@@ -411,16 +432,17 @@ const PUBLICATIONS = [
     title: "On the Rise of Fear Speech in Online Social Media",
     venue: "PNAS",
     authors: ["Punyajoy Saha", "Kiran Garimella", "Binny Mathew", "Animesh Mukherjee"],
-    links: [
-      { label: "paper", href: "content/on-the-rise-of-fear-speech-PNAS.pdf" },
-      { label: "student version", href: "https://www.sciencejournalforkids.org/articles/how-does-fear-speech-spread-on-social-media/" }
-    ]
+    slug: "fear-speech",
+    topics: ["misinfo"],
+    links: [{ label: "paper", href: "content/on-the-rise-of-fear-speech-PNAS.pdf" }, { label: "student version", href: "https://www.sciencejournalforkids.org/articles/how-does-fear-speech-spread-on-social-media/" }]
   },
   {
     year: 2023,
     title: "Displacement and Return in the Internet Era: How Social Media Captures Migration Decisions in Northern Syria",
     venue: "World Development",
     authors: ["Erin Walk", "Fotini Christia", "Kiran Garimella"],
+    slug: "syria-displacement",
+    topics: ["platforms"],
     links: [{ label: "paper", href: "content/displacement-and-return-syria-world_development.pdf" }]
   },
   {
@@ -428,6 +450,8 @@ const PUBLICATIONS = [
     title: "Talking politics on WhatsApp: A survey of Cuban, Indian, and Mexican American diaspora communities in the United States",
     venue: "Center for Media Engagement White Paper",
     authors: ["Martin J Riedl", "João VS Ozawa", "Samuel Woolley", "Kiran Garimella"],
+    slug: "diaspora-whatsapp",
+    topics: ["whatsapp", "polar"],
     links: [{ label: "paper", href: "content/Talking-Politics-on-WhatsApp-A-survey-of-Cuban-Indian-and-Mexican-American-Diaspora-Communities-in-the-United-States.pdf" }]
   },
   {
@@ -435,6 +459,8 @@ const PUBLICATIONS = [
     title: "Effects of Algorithmic Trend Promotion: Evidence from Coordinated Campaigns in Twitter’s Trending Topics",
     venue: "ICWSM 2023",
     authors: ["Joseph Schlessinger", "Kiran Garimella", "Maurice Jakesch", "Dean Eckles"],
+    slug: "trend-promotion",
+    topics: ["platforms", "misinfo"],
     links: [{ label: "paper", href: "content/Effect_of_Trending_Topics_on_Tweet_Volume__ICWSM_2022_.pdf" }]
   },
 
@@ -444,6 +470,8 @@ const PUBLICATIONS = [
     title: "Decentralized yet Unifying: Digital Media and Solidarity in Hong Kong's Anti-Extradition Movement",
     venue: "Journal of Quantitative Description",
     authors: ["Brian Leung", "Yuan Hsiao", "Kiran Garimella"],
+    slug: "hongkong-solidarity",
+    topics: ["platforms", "polar"],
     links: [{ label: "paper", href: "https://journalqd.org/article/view/2977" }]
   },
   {
@@ -451,6 +479,8 @@ const PUBLICATIONS = [
     title: "Using Facebook and LinkedIn Data to Study International Mobility",
     venue: "Book chapter, Oxford University Press",
     authors: ["Carolina Coimbra Vieira", "Masoomali Fatehkia", "Kiran Garimella", "Ingmar Weber", "Emilio Zagheni"],
+    slug: "mobility-facebook-linkedin",
+    topics: ["methods", "platforms"],
     links: [{ label: "chapter", href: "content/Using_Facebook_and_LinkedIn_Data_to_Study_Mobility__book_chapter_.pdf" }]
   },
   {
@@ -458,6 +488,8 @@ const PUBLICATIONS = [
     title: "Jettisoning Junk Messaging in the Era of End-to-End Encryption: A Case Study of WhatsApp",
     venue: "WWW 2022",
     authors: ["Pushkal Agarwal", "Aravindh Raman", "Damiola Ibosiola", "Nishanth Sastry", "Gareth Tyson", "Kiran Garimella"],
+    slug: "whatsapp-junk",
+    topics: ["whatsapp", "platforms"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2106.05184" }]
   },
   {
@@ -465,6 +497,8 @@ const PUBLICATIONS = [
     title: "What Circulates on Partisan WhatsApp in India?: Insights from an Unusual Dataset",
     venue: "Journal of Quantitative Description",
     authors: ["Simon Chauchard", "Kiran Garimella"],
+    slug: "partisan-whatsapp",
+    topics: ["whatsapp", "polar"],
     links: [{ label: "paper", href: "content/What-Circulates-on-Partisan-WhatsApp-in-India.pdf" }]
   },
   {
@@ -472,6 +506,8 @@ const PUBLICATIONS = [
     title: "Tiplines to Combat Misinformation on Encrypted Platforms: A Case Study of the 2019 Indian Election on WhatsApp",
     venue: "HKS Misinformation Review",
     authors: ["Ashkan Kazemi", "Devin Gaffney", "Gautam Shahi", "Scott Hale", "Kiran Garimella"],
+    slug: "whatsapp-tiplines",
+    topics: ["whatsapp", "misinfo"],
     links: [{ label: "paper", href: "https://misinforeview.hks.harvard.edu/article/research-note-tiplines-to-uncover-misinformation-on-encrypted-platforms-a-case-study-of-the-2019-indian-general-election-on-whatsapp/" }]
   },
   {
@@ -479,21 +515,18 @@ const PUBLICATIONS = [
     title: "Providing normative information increases intentions to accept a COVID-19 vaccine",
     venue: "Nature Communications",
     authors: ["Alex Moehring", "Avinash Collis", "Amin Rahimian", "Dean Eckles", "Sinan Aral", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/nature_communications_vaccine_norms.pdf" },
-      { label: "data", href: "http://covidsurvey.mit.edu/" },
-      { label: "additional material", href: "https://psyarxiv.com/srv6t/" }
-    ]
+    slug: "vaccine-norms",
+    topics: ["health"],
+    links: [{ label: "paper", href: "content/nature_communications_vaccine_norms.pdf" }, { label: "data", href: "http://covidsurvey.mit.edu/" }, { label: "additional material", href: "https://psyarxiv.com/srv6t/" }]
   },
   {
     year: 2022,
     title: "Global survey on COVID-19 beliefs, behaviors, and norms",
     venue: "Nature Human Behavior",
     authors: ["Alex Moehring", "Avinash Collis", "Amin Rahimian", "Stella Babalola", "Nina Gobat", "Dominick Shattuck", "Jeni Stolow", "Dean Eckles", "Sinan Aral", "Kiran Garimella"],
-    links: [
-      { label: "website", href: "https://covidsurvey.mit.edu/" },
-      { label: "paper", href: "content/COVID_BBN_survey_report.pdf" }
-    ]
+    slug: "covid-survey-global",
+    topics: ["health", "methods"],
+    links: [{ label: "website", href: "https://covidsurvey.mit.edu/" }, { label: "paper", href: "content/COVID_BBN_survey_report.pdf" }]
   },
 
   // 2021
@@ -502,6 +535,8 @@ const PUBLICATIONS = [
     title: "Trend Alert: Manipulation of Twitter Trends Through Cross-Platform Coordination",
     venue: "CSCW 2021",
     authors: ["Maurice Jakesch", "Mor Naaman", "Dean Eckles", "Kiran Garimella"],
+    slug: "twitter-trend-manipulation",
+    topics: ["platforms", "misinfo"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2104.13259" }]
   },
   {
@@ -509,36 +544,35 @@ const PUBLICATIONS = [
     title: "Claim Matching Beyond English to Scale Global Fact-Checking",
     venue: "ACL 2021",
     authors: ["Ashkan Kazemi", "Devin Gaffney", "Scott Hale", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/2106.00853" },
-      { label: "data", href: "https://zenodo.org/record/4890950" }
-    ]
+    slug: "claim-matching",
+    topics: ["misinfo", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/2106.00853" }, { label: "data", href: "https://zenodo.org/record/4890950" }]
   },
   {
     year: 2021,
     title: "Evolution of Individual Impact on Social Media",
     venue: "ICWSM 2021",
     authors: ["Robert West", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/2103.10754" },
-      { label: "data", href: "https://zenodo.org/record/4685973" }
-    ]
+    slug: "individual-impact",
+    topics: ["platforms", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/2103.10754" }, { label: "data", href: "https://zenodo.org/record/4685973" }]
   },
   {
     year: 2021,
     title: "\"Short is the Road that Leads from Fear to Hate\": Fear Speech in Indian WhatsApp Groups",
     venue: "The Web Conference 2021",
     authors: ["Punyajoy Saha", "Binny Mathew", "Animesh Mukherjee", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/2102.03870" },
-      { label: "data", href: "https://github.com/punyajoy/Fear-Speech-analysis" }
-    ]
+    slug: "fear-speech-whatsapp",
+    topics: ["misinfo", "whatsapp"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/2102.03870" }, { label: "data", href: "https://github.com/punyajoy/Fear-Speech-analysis" }]
   },
   {
     year: 2021,
     title: "Political Polarization in Online News Consumption",
     venue: "ICWSM 2021",
     authors: ["Robert West", "Rebecca Weiss", "Tim Smith", "Kiran Garimella"],
+    slug: "news-polarization",
+    topics: ["polar", "media"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2104.06481" }]
   },
 
@@ -547,7 +581,9 @@ const PUBLICATIONS = [
     year: 2020,
     title: "A First Look at COVID-19 Messages on WhatsApp in Pakistan",
     venue: "IEEE/ACM ASONAM 2020",
-    authors: ["—"], // authors not listed in snippet beyond arXiv; keep minimal
+    authors: ["—"],
+    slug: "covid-whatsapp-pakistan",
+    topics: ["whatsapp", "health"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2011.09145" }]
   },
   {
@@ -555,6 +591,8 @@ const PUBLICATIONS = [
     title: "Characterising and Detecting Sponsored Influencer Posts on Instagram",
     venue: "IEEE/ACM ASONAM 2020",
     authors: ["—"],
+    slug: "instagram-influencers",
+    topics: ["platforms", "methods"],
     links: [{ label: "paper", href: "http://arxiv.org/abs/2011.05757" }]
   },
   {
@@ -562,6 +600,8 @@ const PUBLICATIONS = [
     title: "Human Estimates of Body Measurements: Accuracy, Biases, and Mental Models",
     venue: "EPJ Data Science",
     authors: ["Kirill Martynov", "Kiran Garimella", "Robert West"],
+    slug: "body-estimates",
+    topics: ["methods"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/2009.07828" }]
   },
   {
@@ -569,6 +609,8 @@ const PUBLICATIONS = [
     title: "Darks and Stripes: Effects of Clothing on Weight Perception",
     venue: "IEEE Journal on Social Computing",
     authors: ["Kirill Martynov", "Kiran Garimella", "Robert West"],
+    slug: "clothing-perception",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/clothing_weight_perception.pdf" }]
   },
   {
@@ -576,6 +618,8 @@ const PUBLICATIONS = [
     title: "Tracking global gender gaps in information technology using online data",
     venue: "ITU Digital Skills Insights 2020",
     authors: ["Florianne C. J. Verkroost", "Ridhi Kashyap", "Kiran Garimella", "Ingmar Weber", "Emilio Zagheni"],
+    slug: "gender-gaps-it",
+    topics: ["platforms", "methods"],
     links: [{ label: "paper", href: "https://drive.google.com/file/d/1DYJBy6UnSBcI7O5yyGk8ttCZEoKjzpQd/view" }]
   },
   {
@@ -583,6 +627,8 @@ const PUBLICATIONS = [
     title: "Can WhatsApp benefit from debunked fact-checked stories to reduce misinformation?",
     venue: "HKS Misinformation Review",
     authors: ["Julio Reis", "Philipe Melo", "Kiran Garimella", "Fabricio Benevenuto"],
+    slug: "whatsapp-debunks",
+    topics: ["whatsapp", "misinfo"],
     links: [{ label: "paper", href: "https://misinforeview.hks.harvard.edu/article/can-whatsapp-benefit-from-debunked-fact-checked-stories-to-reduce-misinformation/" }]
   },
   {
@@ -590,6 +636,8 @@ const PUBLICATIONS = [
     title: "Images and misinformation in political groups: evidence from WhatsApp in India",
     venue: "HKS Misinformation Review",
     authors: ["Kiran Garimella", "Dean Eckles"],
+    slug: "whatsapp-image-misinfo",
+    topics: ["whatsapp", "misinfo"],
     links: [{ label: "paper", href: "https://misinforeview.hks.harvard.edu/article/images-and-misinformation-in-political-groups-evidence-from-whatsapp-in-india/" }]
   },
   {
@@ -597,26 +645,26 @@ const PUBLICATIONS = [
     title: "A Dataset of Fact-Checked Images Shared on WhatsApp During the Brazilian and Indian Elections",
     venue: "ICWSM 2020 (Dataset paper)",
     authors: ["Julio Reis", "Philipe Melo", "Kiran Garimella", "Jussara Almeida", "Dean Eckles", "Fabricio Benevenuto"],
-    links: [
-      { label: "paper", href: "content/Dataset-of-Fact-Checked-Images-Shared-on-WhatsApp-During-the-Brazilian-and-Indian-Elections.pdf" },
-      { label: "data", href: "https://zenodo.org/record/3734805" }
-    ]
+    slug: "factchecked-images-dataset",
+    topics: ["misinfo", "methods"],
+    links: [{ label: "paper", href: "content/Dataset-of-Fact-Checked-Images-Shared-on-WhatsApp-During-the-Brazilian-and-Indian-Elections.pdf" }, { label: "data", href: "https://zenodo.org/record/3734805" }]
   },
   {
     year: 2020,
     title: "Characterising User Content on a Multi-Lingual Social Network",
     venue: "ICWSM 2020",
     authors: ["Pushkal Agarwal", "Kiran Garimella", "Sagar Joglekar", "Nishanth Sastry", "Gareth Tyson"],
-    links: [
-      { label: "paper", href: "content/characterising-user-content-on-a-multi-lingual-social-network.pdf" },
-      { label: "data", href: "http://tiny.cc/share-chat" }
-    ]
+    slug: "sharechat-multilingual",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/characterising-user-content-on-a-multi-lingual-social-network.pdf" }, { label: "data", href: "http://tiny.cc/share-chat" }]
   },
   {
     year: 2020,
     title: "Urban Dictionary Embeddings for Slang NLP Applications",
     venue: "LREC 2020",
     authors: ["Steve Wilson", "Walid Magdy", "Barbara McGillivray", "Kiran Garimella", "Gareth Tyson"],
+    slug: "urban-dictionary",
+    topics: ["methods", "ai"],
     links: [{ label: "paper", href: "content/urban-dictionary-embeddings-for-slang-nlp-applications.pdf" }]
   },
 
@@ -626,6 +674,8 @@ const PUBLICATIONS = [
     title: "Can WhatsApp Counter Misinformation by Limiting Message Forwarding?",
     venue: "Complex Networks 2019",
     authors: ["Philipe Melo", "Carolina Vieira", "Kiran Garimella", "Pedro de Melo", "Fabricio Benevenuto"],
+    slug: "whatsapp-forwarding-limits",
+    topics: ["whatsapp", "misinfo"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/1909.08740" }]
   },
   {
@@ -633,36 +683,35 @@ const PUBLICATIONS = [
     title: "Hot Streaks on Social Media",
     venue: "ICWSM 2019",
     authors: ["Kiran Garimella", "Robert West"],
-    links: [
-      { label: "paper", href: "content/hot-streaks-social-media.pdf" },
-      { label: "slides", href: "content/hot-streaks-social-media.pptx" }
-    ]
+    slug: "hot-streaks",
+    topics: ["platforms", "methods"],
+    links: [{ label: "paper", href: "content/hot-streaks-social-media.pdf" }, { label: "slides", href: "content/hot-streaks-social-media.pptx" }]
   },
   {
     year: 2019,
     title: "WhatsApp Monitor: A Fact-Checking System for WhatsApp",
     venue: "ICWSM 2019 (Demo)",
     authors: ["Philipe Melo", "Johnnatan Messias", "Gustavo Resende", "Kiran Garimella", "Jussara Almeida", "Fabricio Benevenuto"],
-    links: [
-      { label: "paper", href: "content/Whatsapp_monitor.pdf" },
-      { label: "demo", href: "http://www.whatsapp-monitor.dcc.ufmg.br/" }
-    ]
+    slug: "whatsapp-monitor",
+    topics: ["whatsapp", "misinfo"],
+    links: [{ label: "paper", href: "content/Whatsapp_monitor.pdf" }, { label: "demo", href: "http://www.whatsapp-monitor.dcc.ufmg.br/" }]
   },
   {
     year: 2019,
     title: "Tools for WhatsApp data collection",
     venue: "ICWSM 2019 (Tutorial)",
     authors: ["Kiran Garimella", "Philipe Melo", "Gareth Tyson", "Jussara Almeida", "Fabricio Benevenuto"],
-    links: [
-      { label: "slides", href: "content/WhatsApp_data_collection____Tutorial_at_ICWSM_19.pdf" },
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/whatsapp-tutorial/" }
-    ]
+    slug: "whatsapp-tools-tutorial",
+    topics: ["whatsapp", "methods"],
+    links: [{ label: "slides", href: "content/WhatsApp_data_collection____Tutorial_at_ICWSM_19.pdf" }, { label: "website", href: "https://users.ics.aalto.fi/kiran/whatsapp-tutorial/" }]
   },
   {
     year: 2019,
     title: "Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data",
     venue: "Data4Refugees Challenge",
     authors: ["Neal Marquez", "Kiran Garimella", "Ott Toomet", "Ingmar Weber", "Emilio Zagheni"],
+    slug: "refugee-segregation",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/data4refugees.pdf" }]
   },
   {
@@ -670,6 +719,8 @@ const PUBLICATIONS = [
     title: "Disinformation on Facebook — A case study from Finland",
     venue: "Tech report",
     authors: ["Vili Ketonen", "Kiran Garimella", "Aristides Gionis"],
+    slug: "facebook-finland",
+    topics: ["misinfo", "platforms"],
     links: [{ label: "paper", href: "content/fakenews-on-facebook-finland.pdf" }]
   },
 
@@ -679,6 +730,8 @@ const PUBLICATIONS = [
     title: "Polarization on Social Media",
     venue: "PhD Thesis",
     authors: ["Kiran Garimella"],
+    slug: "phd-thesis",
+    topics: ["polar"],
     links: [{ label: "thesis", href: "content/thesis.pdf" }]
   },
   {
@@ -686,51 +739,45 @@ const PUBLICATIONS = [
     title: "Studying Migrant Assimilation Through Facebook Interests",
     venue: "SocInfo 2018 (Short paper)",
     authors: ["Antoine Dubois", "Emilio Zagheni", "Kiran Garimella", "Ingmar Weber"],
-    links: [
-      { label: "paper", href: "content/Studying_Migrant_Assimilation_Through_Facebook_Interests.pdf" },
-      { label: "poster", href: "https://docs.google.com/presentation/d/15ebSNLuwVSScjx116AEfTSi9NG7qDTTbcxmMt1K2-QQ/edit?usp=sharing" }
-    ]
+    slug: "migrant-assimilation",
+    topics: ["platforms", "methods"],
+    links: [{ label: "paper", href: "content/Studying_Migrant_Assimilation_Through_Facebook_Interests.pdf" }, { label: "poster", href: "https://docs.google.com/presentation/d/15ebSNLuwVSScjx116AEfTSi9NG7qDTTbcxmMt1K2-QQ/edit?usp=sharing" }]
   },
   {
     year: 2018,
     title: "WhatsApp Doc?: A First Look at WhatsApp Public Group Data",
     venue: "ICWSM 2018 (Dataset paper)",
     authors: ["Kiran Garimella", "Gareth Tyson"],
-    links: [
-      { label: "paper", href: "content/whatsapp.pdf" },
-      { label: "slides", href: "content/WhatsApp.pptx" }
-    ]
+    slug: "whatsapp-public-groups",
+    topics: ["whatsapp", "methods"],
+    links: [{ label: "paper", href: "content/whatsapp.pdf" }, { label: "slides", href: "content/WhatsApp.pptx" }]
   },
   {
     year: 2018,
     title: "Professional Gender Gaps Across US Cities",
     venue: "ICWSM 2018 (Short paper)",
     authors: ["Karri Haranko", "Emilio Zagheni", "Kiran Garimella", "Ingmar Weber"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1801.09429" },
-      { label: "poster", href: "https://docs.google.com/presentation/d/1ruVlDT3jhEK3lmGaMvS2iaLtcfliPqzbfugfNXhb_i8/edit?usp=sharing" }
-    ]
+    slug: "gender-gaps-cities",
+    topics: ["platforms", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1801.09429" }, { label: "poster", href: "https://docs.google.com/presentation/d/1ruVlDT3jhEK3lmGaMvS2iaLtcfliPqzbfugfNXhb_i8/edit?usp=sharing" }]
   },
   {
     year: 2018,
     title: "Political Discourse on Social Media: Echo Chambers, Gatekeepers, and the Price of Bipartisanship",
     venue: "WWW 2018",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1801.01665" },
-      { label: "slides", href: "content/WWW2018.pptx" }
-    ]
+    slug: "echo-chambers",
+    topics: ["polar", "platforms"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1801.01665" }, { label: "slides", href: "content/WWW2018.pptx" }]
   },
   {
     year: 2018,
     title: "Joint Non-negative Matrix Factorization for Learning Ideological Leaning on Twitter",
     venue: "WSDM 2018",
     authors: ["Preeti Lahoti", "Kiran Garimella", "Aristides Gionis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1711.10251" },
-      { label: "slides", href: "content/wsdm18.pdf" },
-      { label: "website", href: "http://resources.mpi-inf.mpg.de/d5/filterbubble/" }
-    ]
+    slug: "nmf-ideology",
+    topics: ["methods", "polar"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1711.10251" }, { label: "slides", href: "content/wsdm18.pdf" }, { label: "website", href: "http://resources.mpi-inf.mpg.de/d5/filterbubble/" }]
   },
 
   // 2017
@@ -739,49 +786,44 @@ const PUBLICATIONS = [
     title: "Balancing Information Exposure on Social Networks",
     venue: "NIPS 2017",
     authors: ["Kiran Garimella", "Aristides Gionis", "Nikos Parotsidis", "Nikolaj Tatti"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1611.00172" },
-      { label: "poster", href: "content/nips_2017_poster.pdf" },
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/BalanceExposure/" },
-      { label: "video", href: "https://www.youtube.com/watch?v=EayNxWQGAmk" }
-    ]
+    slug: "balancing-exposure",
+    topics: ["polar", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1611.00172" }, { label: "poster", href: "content/nips_2017_poster.pdf" }, { label: "website", href: "https://users.ics.aalto.fi/kiran/BalanceExposure/" }, { label: "video", href: "https://www.youtube.com/watch?v=EayNxWQGAmk" }]
   },
   {
     year: 2017,
     title: "Quantifying Controversy on Social Media",
     venue: "WSDM 2016; Transactions on Social Computing",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1507.05224" },
-      { label: "slides", href: "content/wsdm_presentation.pptx" }
-    ]
+    slug: "quantifying-controversy",
+    topics: ["polar", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1507.05224" }, { label: "slides", href: "content/wsdm_presentation.pptx" }]
   },
   {
     year: 2017,
     title: "Understanding Para Social Breakups on Twitter",
     venue: "WebScience 2017 (Poster; also ICCSS 2017)",
     authors: ["Kiran Garimella", "Jonathan Cohen", "Ingmar Weber"],
-    links: [
-      { label: "paper", href: "content/Understanding-Para-Social-Breakups-on-Twitter.pdf" },
-      { label: "poster", href: "content/Understanding_parasocial_breakups_on_Twitter_WEBSCI.pdf" }
-    ]
+    slug: "parasocial-breakups",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/Understanding-Para-Social-Breakups-on-Twitter.pdf" }, { label: "poster", href: "content/Understanding_parasocial_breakups_on_Twitter_WEBSCI.pdf" }]
   },
   {
     year: 2017,
     title: "The Effect of Collective Attention on Controversial Debates on Social Media",
     venue: "WebScience 2017 (Best student paper award)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "content/The-Effect-of-Collective-Attention-on-Controversial-Debates-on-Social-Media.pdf" },
-      { label: "slides", href: "content/websci17_effect_of_collective_attention.pptx" },
-      { label: "website", href: "https://mmathioudakis.github.io/polarization/" }
-    ]
+    slug: "collective-attention",
+    topics: ["polar"],
+    links: [{ label: "paper", href: "content/The-Effect-of-Collective-Attention-on-Controversial-Debates-on-Social-Media.pdf" }, { label: "slides", href: "content/websci17_effect_of_collective_attention.pptx" }, { label: "website", href: "https://mmathioudakis.github.io/polarization/" }]
   },
   {
     year: 2017,
     title: "Factors in Recommending Contrarian Content on Social Media",
     venue: "WebScience 2017 (Short paper)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
+    slug: "contrarian-recommendation",
+    topics: ["polar", "methods"],
     links: [{ label: "paper", href: "content/Factors-in-Recommending-Contrarian-Content-on-Social-Media.pdf" }]
   },
   {
@@ -789,97 +831,81 @@ const PUBLICATIONS = [
     title: "Ad-blocking: A Study on Performance, Privacy and Counter-measures",
     venue: "WebScience 2017 (Short paper)",
     authors: ["Kiran Garimella", "Orestis Kostakis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "content/Ad-blocking-A-Study-on-Performance-Privacy-and-Counter-measures.pdf" },
-      { label: "slides", href: "content/websci17_Adblocking.pptx" },
-      { label: "website", href: "adblock/" }
-    ]
+    slug: "ad-blocking",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/Ad-blocking-A-Study-on-Performance-Privacy-and-Counter-measures.pdf" }, { label: "slides", href: "content/websci17_Adblocking.pptx" }, { label: "website", href: "adblock/" }]
   },
   {
     year: 2017,
     title: "Polarization on Social Media",
     venue: "ICWSM 2017 (Tutorial)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/controversy-tutorial/" },
-      { label: "slides", href: "https://www.slideshare.net/KiranGarimella1/polarization-on-social-media" }
-    ]
+    slug: "polarization-tutorial",
+    topics: ["polar"],
+    links: [{ label: "website", href: "https://users.ics.aalto.fi/kiran/controversy-tutorial/" }, { label: "slides", href: "https://www.slideshare.net/KiranGarimella1/polarization-on-social-media" }]
   },
   {
     year: 2017,
     title: "The Ebb and Flow of Controversial Debates on Social Media",
     venue: "ICWSM 2017 (Short paper)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "content/The-Ebb-and-Flow-of-Controversial-Debates-on-Social-Media.pdf" },
-      { label: "poster", href: "content/ebb_and_flow_ICWSM.pdf" },
-      { label: "website", href: "https://mmathioudakis.github.io/polarization/" }
-    ]
+    slug: "ebb-flow-debates",
+    topics: ["polar"],
+    links: [{ label: "paper", href: "content/The-Ebb-and-Flow-of-Controversial-Debates-on-Social-Media.pdf" }, { label: "poster", href: "content/ebb_and_flow_ICWSM.pdf" }, { label: "website", href: "https://mmathioudakis.github.io/polarization/" }]
   },
   {
     year: 2017,
     title: "A Motif-based Approach for Identifying Controversy",
     venue: "ICWSM 2017 (Short paper)",
     authors: ["Mauro Coletto", "Kiran Garimella", "Aristides Gionis", "Claudio Lucchese"],
-    links: [
-      { label: "paper", href: "content/A-Motif-based-Approach-for-Identifying-Controversy.pdf" },
-      { label: "poster", href: "content/motifs_ICWSM.pdf" }
-    ]
+    slug: "motif-controversy",
+    topics: ["methods", "polar"],
+    links: [{ label: "paper", href: "content/A-Motif-based-Approach-for-Identifying-Controversy.pdf" }, { label: "poster", href: "content/motifs_ICWSM.pdf" }]
   },
   {
     year: 2017,
     title: "A Long-Term Analysis of Polarization on Twitter",
     venue: "ICWSM 2017 (Short paper; also ICCSS 2017)",
     authors: ["Kiran Garimella", "Ingmar Weber"],
-    links: [
-      { label: "paper", href: "content/A-Long-Term-Analysis-of-Polarization-on-Twitter.pdf" },
-      { label: "poster", href: "content/Longterm_polarization_ICWSM.pdf" },
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/polarizationTwitter/" }
-    ]
+    slug: "longterm-polarization",
+    topics: ["polar"],
+    links: [{ label: "paper", href: "content/A-Long-Term-Analysis-of-Polarization-on-Twitter.pdf" }, { label: "poster", href: "content/Longterm_polarization_ICWSM.pdf" }, { label: "website", href: "https://users.ics.aalto.fi/kiran/polarizationTwitter/" }]
   },
   {
     year: 2017,
     title: "Media Attention to Science",
     venue: "WWW 2017 (Poster)",
     authors: ["Kiran Garimella", "Han Xiao"],
-    links: [
-      { label: "paper", href: "content/Media-attention-science.pdf" },
-      { label: "poster", href: "content/Poster_Media-Attention-to-Science.pdf" },
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/mediaAttentionScience/" }
-    ]
+    slug: "media-attention-science",
+    topics: ["media"],
+    links: [{ label: "paper", href: "content/Media-attention-science.pdf" }, { label: "poster", href: "content/Poster_Media-Attention-to-Science.pdf" }, { label: "website", href: "https://users.ics.aalto.fi/kiran/mediaAttentionScience/" }]
   },
   {
     year: 2017,
     title: "Understanding International Migration using Tensor Factorization",
     venue: "WWW 2017 (Poster)",
     authors: ["Hieu Nguyen", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1702.04996" },
-      { label: "poster", href: "content/Poster_Understanding-International-Migration-using-Tensor-Factorization.pdf" },
-      { label: "website", href: "https://users.ics.aalto.fi/kiran/migrationTwitter/" }
-    ]
+    slug: "migration-tensor",
+    topics: ["methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1702.04996" }, { label: "poster", href: "content/Poster_Understanding-International-Migration-using-Tensor-Factorization.pdf" }, { label: "website", href: "https://users.ics.aalto.fi/kiran/migrationTwitter/" }]
   },
   {
     year: 2017,
     title: "Exposing Twitter Users to Contrarian News",
     venue: "WWW 2017 (Demo)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "content/Exposing-Users-to-Contrarian-Viewpoints.pdf" },
-      { label: "poster", href: "content/Poster_Exposing-Twitter-Users-to-Contrarian-News.pdf" },
-      { label: "demo", href: "https://users.ics.aalto.fi/kiran/reducingControversy/homepage" }
-    ]
+    slug: "contrarian-news-demo",
+    topics: ["polar"],
+    links: [{ label: "paper", href: "content/Exposing-Users-to-Contrarian-Viewpoints.pdf" }, { label: "poster", href: "content/Poster_Exposing-Twitter-Users-to-Contrarian-News.pdf" }, { label: "demo", href: "https://users.ics.aalto.fi/kiran/reducingControversy/homepage" }]
   },
   {
     year: 2017,
     title: "Balancing Opposing Views to Reduce Controversy",
     venue: "WSDM 2017 (Best student paper award)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1611.00172" },
-      { label: "slides", href: "content/wsdm17_reducing_polarization.pptx" },
-      { label: "poster", href: "content/wsdm17_poster.pdf" }
-    ]
+    slug: "balancing-views",
+    topics: ["polar", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1611.00172" }, { label: "slides", href: "content/wsdm17_reducing_polarization.pptx" }, { label: "poster", href: "content/wsdm17_poster.pdf" }]
   },
 
   // 2016
@@ -888,52 +914,45 @@ const PUBLICATIONS = [
     title: "Discovering the Network Backbone from Traffic Activity Data",
     venue: "PAKDD 2016 / Journal of Data Science and Analytics 2016",
     authors: ["Kiran Garimella", "Sanjay Chawla", "Aristides Gionis", "Dominic Tsang"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1402.6138" },
-      { label: "slides", href: "content/PAKDD_presentation.pptx" }
-    ]
+    slug: "network-backbone",
+    topics: ["methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1402.6138" }, { label: "slides", href: "content/PAKDD_presentation.pptx" }]
   },
   {
     year: 2016,
     title: "Quote RTs on Twitter: Usage of the New Feature for Political Discourse",
     venue: "ACM WebScience 2016 (also ICCSS 2016)",
     authors: ["Kiran Garimella", "Ingmar Weber", "Munmun De Choudhury"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1603.07933" },
-      { label: "slides", href: "content/websci16_presentation.pptx" }
-    ]
+    slug: "quote-rts",
+    topics: ["polar", "platforms"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1603.07933" }, { label: "slides", href: "content/websci16_presentation.pptx" }]
   },
   {
     year: 2016,
     title: "Social Media Image Analysis for Public Health",
     venue: "CHI 2016 (Short paper)",
     authors: ["Kiran Garimella", "Aboud Alfayad", "Ingmar Weber"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1512.04476" },
-      { label: "poster", href: "https://docs.google.com/presentation/d/1E5lwzwtDndp5vlYfd-IJqAr3Y2TbN-dqPeVocPC1CmI" },
-      { label: "data", href: "imagga_tags_data/" }
-    ]
+    slug: "images-public-health",
+    topics: ["health", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1512.04476" }, { label: "poster", href: "https://docs.google.com/presentation/d/1E5lwzwtDndp5vlYfd-IJqAr3Y2TbN-dqPeVocPC1CmI" }, { label: "data", href: "imagga_tags_data/" }]
   },
   {
     year: 2016,
     title: "Exploring Controversy on Twitter",
     venue: "CSCW 2016 (Demo)",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1512.05550" },
-      { label: "demo", href: "https://users.ics.aalto.fi/kiran/controversy" },
-      { label: "poster", href: "content/WSDM_CSCW_poster.pdf" }
-    ]
+    slug: "exploring-controversy",
+    topics: ["polar"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1512.05550" }, { label: "demo", href: "https://users.ics.aalto.fi/kiran/controversy" }, { label: "poster", href: "content/WSDM_CSCW_poster.pdf" }]
   },
   {
     year: 2016,
     title: "Quantifying Controversy on Social Media",
     venue: "WSDM 2016; Transactions on Social Computing",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Michael Mathioudakis"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1507.05224" },
-      { label: "slides", href: "content/wsdm_presentation.pptx" }
-    ]
+    slug: "quantifying-controversy",
+    topics: ["polar", "methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1507.05224" }, { label: "slides", href: "content/wsdm_presentation.pptx" }]
   },
 
   // 2015
@@ -942,10 +961,9 @@ const PUBLICATIONS = [
     title: "Scalable Facility Location for Massive Graphs on Pregel-like Systems",
     venue: "CIKM 2015",
     authors: ["Kiran Garimella", "Gianmarco De Francisci Morales", "Aristides Gionis", "Mauro Sozio"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1503.03635" },
-      { label: "slides", href: "content/facility_slides.pptx" }
-    ]
+    slug: "facility-location",
+    topics: ["methods"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1503.03635" }, { label: "slides", href: "content/facility_slides.pptx" }]
   },
 
   // 2014
@@ -954,16 +972,17 @@ const PUBLICATIONS = [
     title: "From \"I love you babe\" to \"leave me alone\" — Romantic Relationship Breakups on Twitter",
     venue: "SocInfo 2014 (also ICCSS 2015)",
     authors: ["Kiran Garimella", "Ingmar Weber", "Sonya Dal Cin"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1409.5980" },
-      { label: "slides", href: "content/twitter_breakup_presentation.pptx" }
-    ]
+    slug: "twitter-breakups",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1409.5980" }, { label: "slides", href: "content/twitter_breakup_presentation.pptx" }]
   },
   {
     year: 2014,
     title: "Co-Following on Twitter",
     venue: "ACM Hypertext 2014 (Short paper)",
     authors: ["Kiran Garimella", "Ingmar Weber"],
+    slug: "co-following",
+    topics: ["methods", "platforms"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/1407.0791" }]
   },
   {
@@ -971,16 +990,17 @@ const PUBLICATIONS = [
     title: "Gender Asymmetries in Reality and Fiction: The Bechdel Test of Social Media",
     venue: "ICWSM 2014",
     authors: ["David Garcia", "Ingmar Weber", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/1404.0163" },
-      { label: "slides", href: "https://www.sg.ethz.ch/media/talk_slides/ICWSM14_1.pdf" }
-    ]
+    slug: "bechdel-test",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "https://arxiv.org/abs/1404.0163" }, { label: "slides", href: "https://www.sg.ethz.ch/media/talk_slides/ICWSM14_1.pdf" }]
   },
   {
     year: 2014,
     title: "Who Watches (and Shares) What on YouTube? And When? Using Twitter to Understand YouTube Viewership",
     venue: "WSDM 2014",
     authors: ["Adiya Abisheva", "Kiran Garimella", "David Garcia", "Ingmar Weber"],
+    slug: "youtube-viewership",
+    topics: ["platforms", "media"],
     links: [{ label: "paper", href: "https://arxiv.org/abs/1312.4511" }]
   },
   {
@@ -988,16 +1008,17 @@ const PUBLICATIONS = [
     title: "Giving is Caring: Understanding Online Donation behavior through Email",
     venue: "ACM CSCW 2014",
     authors: ["Yelena Mejova", "Kiran Garimella", "Ingmar Weber", "Michael Dougal"],
-    links: [
-      { label: "paper", href: "content/email.pdf" },
-      { label: "slides", href: "https://pt.slideshare.net/YelenaMejova/giving-is-caring-31393976" }
-    ]
+    slug: "email-donations",
+    topics: ["platforms"],
+    links: [{ label: "paper", href: "content/email.pdf" }, { label: "slides", href: "https://pt.slideshare.net/YelenaMejova/giving-is-caring-31393976" }]
   },
   {
     year: 2014,
     title: "Inferring International and Internal Migration Patterns from Twitter Data",
     venue: "WWW 2014 (Web Science workshop)",
     authors: ["Emilio Zagheni", "Kiran Garimella", "Ingmar Weber", "Bogdan State"],
+    slug: "migration-twitter",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/migrations_twitter.pdf" }]
   },
   {
@@ -1005,6 +1026,8 @@ const PUBLICATIONS = [
     title: "Using Co-Following for Out-of-Context Twitter Friend Recommendation",
     venue: "ICWSM 2014 (Demo)",
     authors: ["Ingmar Weber", "Kiran Garimella"],
+    slug: "friend-recommendation",
+    topics: ["platforms", "methods"],
     links: [{ label: "paper", href: "content/Using-Co-Following-for-Personalized-Out-of-Context-Twitter-Friend-Recommendation.pdf" }]
   },
   {
@@ -1012,21 +1035,18 @@ const PUBLICATIONS = [
     title: "Visualizing User-Defined, Discriminative Geo-Temporal Twitter Activity",
     venue: "ICWSM 2014 (Demo)",
     authors: ["Ingmar Weber", "Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Visualizing-User-Defined-Discriminative-Geo-Temporal-Twitter-Activity.pdf" },
-      { label: "demo1", href: "http://nyc.qcri.org/" },
-      { label: "demo2", href: "http://qtr.qcri.org/" }
-    ]
+    slug: "geo-temporal-viz",
+    topics: ["methods"],
+    links: [{ label: "paper", href: "content/Visualizing-User-Defined-Discriminative-Geo-Temporal-Twitter-Activity.pdf" }, { label: "demo1", href: "http://nyc.qcri.org/" }, { label: "demo2", href: "http://qtr.qcri.org/" }]
   },
   {
     year: 2014,
     title: "FAST: Forecast and Analytics of Social Media and Traffic",
     venue: "ACM CSCW 2014 (Demo)",
     authors: ["Kiran Garimella", "Carlos Castillo"],
-    links: [
-      { label: "paper", href: "content/fast_forecast_analytics_social_media_traffic_2014_garimella_castillo.pdf" },
-      { label: "demo", href: "http://fast.qcri.org/" }
-    ]
+    slug: "traffic-forecast",
+    topics: ["methods"],
+    links: [{ label: "paper", href: "content/fast_forecast_analytics_social_media_traffic_2014_garimella_castillo.pdf" }, { label: "demo", href: "http://fast.qcri.org/" }]
   },
 
   // 2013
@@ -1035,6 +1055,8 @@ const PUBLICATIONS = [
     title: "Secular vs. Islamist Polarization in Egypt on Twitter",
     venue: "ASONAM 2013",
     authors: ["Ingmar Weber", "Kiran Garimella", "Alaa Batayneh"],
+    slug: "egypt-polarization",
+    topics: ["polar"],
     links: [{ label: "paper", href: "content/Secular-vs.-Islamist-Polarization-in-Egypt-on-Twitter.pdf" }]
   },
   {
@@ -1042,6 +1064,8 @@ const PUBLICATIONS = [
     title: "#Egypt: Visualizing Islamist vs. Secular Tension on Twitter",
     venue: "ASONAM 2013 (Demo)",
     authors: ["Ingmar Weber", "Kiran Garimella"],
+    slug: "egypt-viz",
+    topics: ["polar", "methods"],
     links: [{ label: "paper", href: "content/Egypt-Visualizing-Islamist-vs.-Secular-Tension-on-Twitter.pdf" }]
   },
   {
@@ -1049,6 +1073,8 @@ const PUBLICATIONS = [
     title: "Inferring Audience Partisanship for YouTube Videos",
     venue: "WWW 2013 (Poster)",
     authors: ["Ingmar Weber", "Kiran Garimella", "Erik Borra"],
+    slug: "youtube-partisanship",
+    topics: ["media", "methods"],
     links: [{ label: "paper", href: "content/Inferring-Audience-Partisanship-for-YouTube-Videos.pdf" }]
   },
   {
@@ -1056,6 +1082,8 @@ const PUBLICATIONS = [
     title: "Political Hashtag Trends",
     venue: "ECIR 2013 (Short paper)",
     authors: ["Ingmar Weber", "Kiran Garimella", "Asmelash Teka"],
+    slug: "hashtag-trends",
+    topics: ["polar", "platforms"],
     links: [{ label: "paper", href: "content/Political-Hashtag-Trends.pdf" }]
   },
   {
@@ -1063,6 +1091,8 @@ const PUBLICATIONS = [
     title: "Political Hashtag Hijacking in the U.S.",
     venue: "WWW 2013 (Poster)",
     authors: ["Asmelash Teka", "Kiran Garimella", "Ingmar Weber"],
+    slug: "hashtag-hijacking",
+    topics: ["polar", "platforms"],
     links: [{ label: "paper", href: "content/Political-Hashtag-Hijacking-in-the-U.S.pdf" }]
   },
 
@@ -1072,6 +1102,8 @@ const PUBLICATIONS = [
     title: "Mining Web Query Logs to analyze political issues",
     venue: "ACM WebScience 2012",
     authors: ["Ingmar Weber", "Kiran Garimella", "Erik Borra"],
+    slug: "query-logs",
+    topics: ["polar", "methods"],
     links: [{ label: "paper", href: "content/Mining-Web-Query-Logs-to-Analyze-Political-Issues.pdf" }]
   },
   {
@@ -1079,6 +1111,8 @@ const PUBLICATIONS = [
     title: "Political Search Trends",
     venue: "SIGIR 2012 (Demo)",
     authors: ["Ingmar Weber", "Kiran Garimella", "Erik Borra"],
+    slug: "search-trends",
+    topics: ["polar", "methods"],
     links: [{ label: "paper", href: "content/Political-search-trends.pdf" }]
   },
 
@@ -1088,6 +1122,8 @@ const PUBLICATIONS = [
     title: "Towards Multi-Document Summarization of Scientific Articles: Making Interesting Comparisons with SciSumm",
     venue: "ACL 2011 (Workshop on Automatic Summarization)",
     authors: ["Nitin Agarwal", "Kiran Garimella", "Ravi Shankar", "Carolyn Rose"],
+    slug: "scisumm",
+    topics: ["methods", "ai"],
     links: [{ label: "paper", href: "content/Towards-Multi-Document-Summarization-of-Scientific-Articles.pdf" }]
   },
   {
@@ -1095,6 +1131,8 @@ const PUBLICATIONS = [
     title: "SciSumm: A Multi-Document Summarization System for Scientific Articles",
     venue: "ACL 2011 (Demo)",
     authors: ["Nitin Agarwal", "Kiran Garimella", "Ravi Shankar", "Carolyn Rose"],
+    slug: "scisumm-demo",
+    topics: ["methods", "ai"],
     links: [{ label: "paper", href: "content/SciSumm-A-Multi-Document-Summarization-System-for-Scientific-Articles.pdf" }]
   },
   {
@@ -1102,6 +1140,8 @@ const PUBLICATIONS = [
     title: "Load Prediction and Hot Spot Detection Models for Autonomic Cloud Computing",
     venue: "UCC 2011",
     authors: ["Prasad Saripalli", "Kiran Garimella", "Ravi Shankar", "Nitin Bindal"],
+    slug: "cloud-load",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/Load-Prediction-and-Hot-Spot-Detection-Models-for-Autonomic-Cloud-Computing.pdf" }]
   },
 
@@ -1111,6 +1151,8 @@ const PUBLICATIONS = [
     title: "Frequent Itemset based Hierarchical Document Clustering using Wikipedia as External Knowledge",
     venue: "KES 2010 (Masters Thesis)",
     authors: ["Kiran Garimella", "Ravi Shankar", "Vikram Pudi"],
+    slug: "itemset-clustering",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/Frequent-Itemset-Based-Hierarchical-Document-Clustering.pdf" }]
   },
   {
@@ -1118,6 +1160,8 @@ const PUBLICATIONS = [
     title: "Evolutionary Clustering using Frequent Itemsets",
     venue: "StreamKDD workshop, KDD 2010",
     authors: ["Ravi Shankar", "Kiran Garimella", "Vikram Pudi"],
+    slug: "evolutionary-clustering",
+    topics: ["methods"],
     links: [{ label: "paper", href: "content/Evolutionary-Clustering-using-Frequent-Itemsets.pdf" }]
   },
   {
@@ -1125,6 +1169,8 @@ const PUBLICATIONS = [
     title: "Document Clustering using Various External Knowledge Sources",
     venue: "Masters Thesis",
     authors: ["Kiran Garimella"],
+    slug: "masters-thesis",
+    topics: ["methods"],
     links: [{ label: "link", href: "content/Kiran_Masters_Thesis.pdf" }]
   }
 ];

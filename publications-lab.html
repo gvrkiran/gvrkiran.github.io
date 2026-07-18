@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications Lab — design rotation</title>
+  <meta name="description" content="Design lab for the publications page." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f7f1e3; --ink: #22306b; --ink-soft: rgba(34,48,107,0.62); --ember: #d9482b;
+      --serif: 'Source Serif 4', Georgia, serif; --display: 'Fraunces', Georgia, serif; --mono: 'Space Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 4.5rem 1.4rem 5rem; }
+    .kicker { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); }
+    h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.02; margin: 0.5rem 0 0.8rem; }
+    .lede { max-width: 64ch; color: var(--ink-soft); font-size: 1.02rem; }
+    .lede a { color: var(--ember); }
+    .lede code { font-family: var(--mono); font-size: 0.85em; }
+
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; margin: 2.6rem 0 1rem; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      border: 2px solid var(--ink); background: #fdfaf1; text-decoration: none; display: flex; flex-direction: column;
+      transition: transform 180ms, box-shadow 180ms;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 rgba(34,48,107,0.25); }
+    .card .thumb { aspect-ratio: 2.1; overflow: hidden; border-bottom: 2px solid var(--ink); position: relative; }
+    .card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .card .tag { position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--ember); color: var(--paper); padding: 0.22rem 0.5rem; }
+    .card .body { padding: 1.1rem 1.2rem 1.3rem; }
+    .card h2 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; margin-bottom: 0.35rem; }
+    .card p { font-size: 0.88rem; color: var(--ink-soft); }
+    .card .go { margin-top: 0.8rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ember); }
+
+    .also { margin-top: 3rem; }
+    .also h2 { font-family: var(--display); font-weight: 900; font-size: 1.5rem; margin-bottom: 1rem; }
+    .also .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 760px) { .also .two { grid-template-columns: 1fr; } }
+    .sketch { border: 1.5px dashed var(--ink-soft); padding: 1.1rem 1.2rem; }
+    .sketch h3 { font-family: var(--display); font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .sketch p { font-size: 0.88rem; color: var(--ink-soft); }
+    .sketch .label { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); }
+
+    .footnotes { margin-top: 3rem; font-size: 0.88rem; color: var(--ink-soft); border-top: 2px solid var(--ink); padding-top: 1.4rem; }
+    .footnotes b { color: var(--ink); }
+    .footnotes ul { padding-left: 1.2rem; }
+    .footnotes code { font-family: var(--mono); font-size: 0.82em; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="kicker">publications.html · design lab</span>
+    <h1>Four designs, one page</h1>
+    <p class="lede"><a href="publications.html">publications.html</a> serves one of the four designs below at random per visit (never the same one twice in a row). The design stays put while you browse and across reloads — the "↻ shuffle" button in each design's top bar is what deals a new one. Force a specific design with <code>?pub=1..4</code>.</p>
+
+    <div class="grid">
+      <a class="card" href="publications.html?pub=2">
+        <div class="thumb"><span class="tag">no 2 · the scroll story</span><img src="assets/pub-art/papers/internet-shutdowns.webp" alt="" style="object-position: 50% 35%"></div>
+        <div class="body">
+          <h2>The Orchard</h2>
+          <p>The whole archive as a walk through the orchard: eighteen trees, 2027 back to 2010, each grown from that year's papers. Branches grow and fruits ripen continuously as you scroll; the horizon strip jumps between years; seedlings sprout in the greenhouse.</p>
+          <span class="go">walk the orchard →</span>
+        </div>
+      </a>
+      <a class="card" href="publications.html?pub=3">
+        <div class="thumb"><span class="tag">no 3 · the compact one</span><img src="assets/pub-art/papers/tv-disagreement.webp" alt="" style="object-position: 50% 30%"></div>
+        <div class="body">
+          <h2>The Stamp Collection</h2>
+          <p>All 117 papers issued as stamps across 19 album plates — one per year plus a proofs page for work under review. Catalog numbers run from № 001 (the 2010 thesis), and postmark cities follow the desk where each paper was written: Hyderabad, Doha, Helsinki, Cambridge, New Brunswick.</p>
+          <span class="go">open the album →</span>
+        </div>
+      </a>
+      <a class="card" href="publications.html?pub=4">
+        <div class="thumb">
+          <span class="tag">no 4 · the whole archive</span>
+          <svg viewBox="0 0 300 143" style="width:100%;height:100%;display:block">
+            <rect width="300" height="143" fill="#f7f1e3"/>
+            <g>
+              <rect x="24" y="28" width="13" height="62" rx="1" fill="#22306b"/>
+              <rect x="39" y="22" width="17" height="68" rx="1" fill="#d9482b"/>
+              <rect x="58" y="34" width="12" height="56" rx="1" fill="#c98a1b"/>
+              <rect x="72" y="26" width="15" height="64" rx="1" fill="#3e6b4f"/>
+              <rect x="98" y="30" width="14" height="60" rx="1" fill="#7a3e57"/>
+              <rect x="114" y="21" width="16" height="69" rx="1" fill="#22306b"/>
+              <rect x="132" y="33" width="12" height="57" rx="1" fill="#3f6a80"/>
+              <rect x="146" y="27" width="15" height="63" rx="1" fill="#b0703c"/>
+              <rect x="163" y="24" width="13" height="66" rx="1" fill="#d9482b"/>
+              <rect x="188" y="31" width="15" height="59" rx="1" fill="#3e6b4f"/>
+              <rect x="205" y="23" width="13" height="67" rx="1" fill="#c98a1b"/>
+              <rect x="220" y="29" width="16" height="61" rx="1" fill="#22306b"/>
+              <rect x="245" y="34" width="12" height="56" rx="1" fill="#7a3e57" transform="rotate(-6 251 90)"/>
+            </g>
+            <rect x="14" y="90" width="272" height="9" rx="2" fill="#e3d3b0" stroke="#c9b285"/>
+            <text x="150" y="122" text-anchor="middle" style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px" fill="#22306b" opacity="0.65">A SHELF PER YEAR · 117 BOOKS</text>
+          </svg>
+        </div>
+        <div class="body">
+          <h2>The Library</h2>
+          <p>All 117 papers as book spines on one wall of shelves, one shelf per year, colored by hand-tagged topic. Pull a book to peek at its illustrated cover, open it for details. Under-review work sits on the arrivals cart.</p>
+          <span class="go">browse the shelves →</span>
+        </div>
+      </a>
+      <a class="card" href="publications.html?pub=1">
+        <div class="thumb">
+          <span class="tag">no 1 · the classic</span>
+          <svg viewBox="0 0 300 143" style="width:100%;height:100%;display:block">
+            <rect width="300" height="143" fill="#fdfaf1"/>
+            <text x="22" y="34" style="font-family:Georgia,serif;font-size:15px;font-weight:bold" fill="#22306b">2026</text>
+            <g fill="#22306b">
+              <rect x="22" y="46" width="200" height="6" rx="2" opacity="0.85"/>
+              <rect x="22" y="58" width="150" height="4" rx="2" opacity="0.4"/>
+              <rect x="22" y="74" width="216" height="6" rx="2" opacity="0.85"/>
+              <rect x="22" y="86" width="132" height="4" rx="2" opacity="0.4"/>
+              <rect x="22" y="102" width="184" height="6" rx="2" opacity="0.85"/>
+              <rect x="22" y="114" width="160" height="4" rx="2" opacity="0.4"/>
+            </g>
+            <rect x="22" y="57" width="26" height="5" rx="2" fill="#d9482b" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h2>The Classic List</h2>
+          <p>The original page, unchanged: every paper grouped by year, in whatever site theme loads. Fastest to skim, easiest to ctrl-F — it earns its spot in the rotation.</p>
+          <span class="go">read the list →</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="also">
+      <h2>On the bench</h2>
+      <div class="two">
+        <div class="sketch">
+          <span class="label">sketched, not built</span>
+          <h3>The Metro Map</h3>
+          <p>Research threads as colored subway lines through time; papers as stations, cross-topic papers as interchanges. A good map of how the work evolved, but a weak stage for the illustrations.</p>
+        </div>
+        <div class="sketch">
+          <span class="label">retired</span>
+          <h3>The Observatory</h3>
+          <p>The night-sky constellation view didn't earn its keep. The file is still at <a href="publications-sky.html" style="text-decoration:underline">publications-sky.html</a> if you ever want to revisit (or delete) it — it's out of the rotation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnotes">
+      <b>Build notes</b>
+      <ul>
+        <li><b>Rotation:</b> publications.html picks a design per visit (session-stable, survives reloads; the ↻ shuffle button rerolls; <code>?pub=N</code> forces; never repeats the previous pick).</li>
+        <li><b>Illustrations:</b> one per paper, risograph duotone, generated by <code>assets/pub-art/generate_pub_art.py</code> from hand-written visual briefs in <code>assets/pub-art/papers-meta.json</code>. To illustrate a new paper: add its entry there, run <code>build_manifest.py</code> then <code>generate_pub_art.py manifest_all.json</code>.</li>
+        <li><b>Metadata:</b> every entry in data.js now carries <code>slug</code> (art filename) and hand-tagged <code>topics</code>; all three designs read them. Typos fixed (IWCSM, WhatsAppp); the 2027 "LLM Assisted Rule Creation" venue was changed to ICWSM 2027 — worth double-checking.</li>
+        <li><b>Known quirk:</b> "Quantifying Controversy on Social Media" is listed under both 2016 and 2017 in data.js (conference + journal version); both share one stamp/book/fruit illustration.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,476 @@
+{
+  "comment": "Master curation table for all publications. slug = stable id for art files (assets/pub-art/papers/<slug>.png). topics = hand-tagged, primary first (legend: whatsapp, misinfo, polar, ai, health, media, methods, platforms). metaphor = illustration brief fed to generate_pub_art.py (risograph house style). match = exact title in data.js (after typo fixes).",
+  "papers": [
+
+    { "match": "Inferential Privacy Leakage in Anonymized Conversational AI Logs",
+      "slug": "chatgpt-privacy-leakage", "topics": ["ai", "methods"],
+      "metaphor": "A paper silhouette of a person made entirely of chat transcript lines, held up to a desk lamp by a hand with a magnifying glass; hidden watermark shapes glow through the paper — a house, a birthday cake, a briefcase — secrets showing through anonymized text." },
+
+    { "match": "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
+      "slug": "how-people-use-chatgpt", "topics": ["ai", "platforms"],
+      "metaphor": "A world map at night with four glowing homes on different continents, each sending a curling paper speech bubble along dotted routes to the same big friendly robot head at the center, which holds four different tools: a ladle, a textbook, a wrench and a stethoscope." },
+
+    { "match": "WhatsViral: A Privacy-Preserving System for Studying Viral Content on WhatsApp",
+      "slug": "whatsviral", "topics": ["whatsapp", "methods"],
+      "metaphor": "A doctor pressing a stethoscope against a giant sealed envelope with a padlock; the sound waves picked up are drawn as rows of tiny multiplying chat bubbles on a paper chart spooling out of the stethoscope, the envelope never opened." },
+
+    { "match": "The Hype vs. the Reality of Generative AI in Elections: The Case of the 2024 Indian Elections",
+      "slug": "genai-elections-hype", "topics": ["ai", "polar"],
+      "metaphor": "A giant parade balloon shaped like a menacing robot looming over a town square, casting a big shadow — but below it stands a small, calm, solid ballot box, and a child holds a pin on a stick up toward the balloon." },
+
+    { "match": "Designing and Evaluating a Community Fact-Checking System for WhatsApp",
+      "slug": "community-factcheck-colombia", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "Neighbors gathered around a village well; instead of water they draw up a bucket full of folded paper notes, and one person holds a note up to the sunlight to reveal a checkmark watermark while others wait their turn." },
+
+    { "match": "Data Donation on Social Media: Tools and Datasets",
+      "slug": "data-donation-tools", "topics": ["methods", "platforms"],
+      "metaphor": "A blood-donation clinic for phones: a smartphone reclines on a donor chair, a thin tube carrying tiny droplet-shaped hearts from the phone into a shared glass flask on a stand, a nurse holding a clipboard with a checklist of empty boxes." },
+
+    { "match": "How Students (Really) Use ChatGPT: Uncovering Experiences Among Undergraduate Students",
+      "slug": "students-chatgpt", "topics": ["ai"],
+      "metaphor": "A student's messy desk at midnight — stacked textbooks, cold coffee, desk lamp — with a small genie made of light emerging from the laptop like from a magic lamp, offering a finished scroll; the student takes it but edits it heavily with a red pencil." },
+
+    { "match": "Demographic Divides in Political Content Exposure on Facebook",
+      "slug": "facebook-political-divides", "topics": ["platforms", "polar"],
+      "metaphor": "One apartment building at night with a single antenna on the roof splitting into two cables; through two neighboring windows, two residents watch different glowing feeds pour from the same antenna — one stream vermilion, one indigo." },
+
+    { "match": "Examining LLM Assisted Rule Creation in WhatsApp Groups",
+      "slug": "llm-group-rules", "topics": ["whatsapp", "ai"],
+      "metaphor": "A long scroll of house rules where the top half is loose human handwriting squiggles and the bottom half is perfectly regular machine-type marks, the two halves stitched together with visible thread; a large magnifying glass inspects the seam." },
+
+    { "match": "From Retrieval to Synthesis: Repair Literacy and the Domestication of Generative AI",
+      "slug": "repair-literacy-genai", "topics": ["ai"],
+      "metaphor": "A cozy home workshop bench where a person with a small screwdriver repairs a cuckoo clock shaped like a friendly robot head, its gears and springs laid out neatly; on the shelf above, glass jars hold spare gears and folded speech bubbles." },
+
+    { "match": "Source Coverage and Citation Bias in LLM-based vs. Traditional Search Engines",
+      "slug": "llm-vs-search-citations", "topics": ["ai", "media"],
+      "metaphor": "Two librarians answering the same request side by side: a classic librarian high on a wooden ladder gathering an armful of varied books from many shelves, and a sleek robot librarian at a counter handing over three identical shiny volumes; thin citation threads trail from every book." },
+
+    { "match": "What Does a Neighborhood Look Like Online? Linking the Built Environment to Digital Information Diets",
+      "slug": "neighborhood-online", "topics": ["platforms", "methods"],
+      "metaphor": "A street of small houses with laundry lines and trees, mirrored upside-down in the sky above as the same street rebuilt from glowing chat windows and signal towers, the two versions connected by telephone poles that pass through both worlds." },
+
+    { "match": "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
+      "slug": "group-rules-ai", "topics": ["whatsapp", "ai"],
+      "blurb": "20 Indian group admins co-wrote rules with an AI assistant. They liked the lighter load — and drew sharp lines around trust, tone and authority.",
+      "metaphor": "A large community noticeboard holding one big scroll of rules, being written simultaneously by a human hand holding a pencil from the left and a friendly robot hand holding a pencil from the right, while a small crowd of round chat-bubble characters watches attentively from below like villagers at a town meeting." },
+
+    { "match": "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
+      "slug": "multimodal-vlm", "topics": ["ai", "whatsapp", "methods"],
+      "blurb": "A VLM toolkit that reads text, images and video in one frame — showing that text-only pipelines systematically undercount political content on WhatsApp.",
+      "metaphor": "A tangled flood of mixed media — photographs, film strips, posters, memes and speech bubbles — pouring into a large triangular glass prism from the left, and emerging on the right as neat, orderly parallel sorted ribbons, like chaos refracted into order." },
+
+    { "match": "Quantifying the Illicit Ecosystem of Betting Apps in India",
+      "slug": "betting-apps", "topics": ["platforms"],
+      "blurb": "Tens of thousands of Meta ads, influencer posts and 300k Play Store reviews, linked into one map from recruitment narratives to financial harm.",
+      "metaphor": "A giant smartphone drawn as a casino slot machine, its three reels showing a cricket ball, a coin and a pair of dice, with a fishing line and hook dangling a shiny coin above it as bait, while a stream of small coins drains out of the bottom of the phone into a dark hole." },
+
+    { "match": "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
+      "slug": "peer-factcheck", "topics": ["whatsapp", "misinfo"],
+      "blurb": "A randomized field study on participants' real group messages in India: peer corrections modestly outperform local journalists and national fact-checking tiplines.",
+      "metaphor": "Two neighbors leaning over a garden fence made of chat bubbles, one passing a crumpled rumor note to the other, who inspects it through a large magnifying glass that reveals a bold checkmark inside the note, warm and friendly neighborhood scene." },
+
+    { "match": "Disagreement Is Disappearing on U.S. Cable Debate Shows",
+      "slug": "tv-disagreement", "topics": ["media", "polar"],
+      "blurb": "21,000 episodes and 2.13M host–guest exchanges from Fox, MSNBC and CNN: on-air debate fell by roughly a third since 2017, and pushback is partisan and asymmetric.",
+      "metaphor": "Two vintage television sets facing each other like boxers in a ring, each screen showing a talking head in profile, with a once-mighty lightning bolt between them now dissolving into faint dots and confetti, the spark of debate literally fading away." },
+
+    { "match": "Personal Experience and Public Support for Internet Shutdowns in Rural India",
+      "slug": "internet-shutdowns", "topics": ["platforms", "polar"],
+      "blurb": "246 rural participants voluntarily went offline for 48 hours. Support for shutdowns did not drop — it ticked up, as people rediscovered family time and offline life.",
+      "metaphor": "A rural Indian landscape at dusk where a giant wifi symbol sets on the horizon like the sun, a cleanly cut telephone cable in the foreground sprouts a small flower from its cut end, and a family sits together under a large banyan tree playing a board game by lantern light." },
+
+    { "match": "Structural Dynamics of Harmful Content Dissemination on WhatsApp",
+      "slug": "harmful-cascades", "topics": ["whatsapp", "misinfo", "methods"],
+      "blurb": "5.1 million messages across ~6,000 Indian WhatsApp groups: harmful content cascades deeper and wider than benign content, and network structure — not just modality — drives the spread.",
+      "metaphor": "A branching cascade diagram drawn as ink dropped into water: from a single phone at the top, one dark ink drop splits and spreads downward through many layers of round chat bubbles, reaching far deeper and wider than a small tidy light-colored drop cascading beside it." },
+
+    { "match": "Calibrated and Diverse News Coverage",
+      "slug": "calibrated-news", "topics": ["media", "methods"],
+      "metaphor": "An editor holding an old-fashioned balance scale at arm's length: both pans stacked with folded newspapers in many different patterns and colors, perfectly level, while a small dial at the scale's pivot points exactly to the middle." },
+
+    { "match": "Dynamics of Toxicity in Political Podcasts",
+      "slug": "podcast-toxicity", "topics": ["media", "misinfo"],
+      "metaphor": "Two vintage radio microphones facing each other across a small table; from one, a wisp of dark smoke rises and curls into thorny bramble shapes, while a round meter between the microphones creeps into the red zone." },
+
+    { "match": "Political Manipulation of the Israel-Hamas Conflict on WhatsApp in India",
+      "slug": "israel-hamas-whatsapp", "topics": ["whatsapp", "polar"],
+      "metaphor": "A pair of puppeteer hands hovering above a phone screen, pulling fine strings tied to a parade of chat bubbles below, the bubbles marching in tight formation carrying tiny banners and torches like a staged procession." },
+
+    { "match": "Global Patterns of Viral Content on WhatsApp",
+      "slug": "whatsapp-viral-global", "topics": ["whatsapp"],
+      "metaphor": "A globe wrapped in one continuous garland of paper chat bubbles strung like paper dolls, circling the continents; a few bubbles burst into small confetti clouds as the chain crosses each ocean." },
+
+    { "match": "Analyzing Patterns and Influence of Advertising in Print Newspapers",
+      "slug": "print-ads-influence", "topics": ["media"],
+      "metaphor": "A broadsheet newspaper page seen from above as a map: the advertisements are bright vermilion islands slowly flooding like a rising tide over the indigo columns of news text, while a tiny journalist stands on a shrinking text island holding a pen like a flag." },
+
+    { "match": "Community-Driven Fact-Checking on WhatsApp: Who Fact-Checks Whom, Why, and With What Effect?",
+      "slug": "whatsapp-community-factcheck", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "A neighborhood wall at dusk pasted with layers of chat-bubble posters; one neighbor shines a hand torch across them and the false posters curl and peel under the beam while other neighbors point them out to each other." },
+
+    { "match": "Private Sharing of Public Content on Facebook",
+      "slug": "private-sharing-facebook", "topics": ["platforms"],
+      "metaphor": "A public town notice board covered in big bright posters, and beside it a quiet queue of people folding small copies of those posters into envelopes and slipping them one by one through a narrow mail slot in a plain door." },
+
+    { "match": "WhatsApp Explorer: A Data Donation Tool To Facilitate Research on WhatsApp",
+      "slug": "whatsapp-explorer", "topics": ["whatsapp", "methods"],
+      "metaphor": "An explorer with a headlamp and a butterfly net standing at the mouth of a cave shaped like a giant speech bubble, gently catching folded paper messages that flutter out like bats into specimen jars strapped to their backpack." },
+
+    { "match": "Hate Speech Campaigns in the 2016 Philippine Elections on Facebook",
+      "slug": "philippines-hate-2016", "topics": ["misinfo", "polar"],
+      "metaphor": "A megaphone lashed to a bamboo pole above a town plaza raining down sharp paper darts folded from speech bubbles, while people below open banana-leaf umbrellas and huddle together under them." },
+
+    { "match": "Collecting WhatsApp Data for Social Science Research: Challenges and a Proposed Solution",
+      "slug": "whatsapp-data-collection", "topics": ["whatsapp", "methods"],
+      "metaphor": "A researcher in a field apron harvesting padlocked envelopes that hang from a tree like fruit, placing each carefully into a woven basket lined with cotton wool, a clipboard and consent forms leaning against the trunk." },
+
+    { "match": "Generative AI and Political Discourse: Insights from WhatsApp in Rural India",
+      "slug": "genai-rural-india", "topics": ["ai", "whatsapp"],
+      "metaphor": "A rural Indian market stall at dusk selling glowing paper masks of smiling politician faces, freshly printed by a small humming machine under the cart that spits them out on a conveyor, while shoppers hold them up to their phones." },
+
+    { "match": "Television Discourse Decoded: Comprehensive Multimodal Analytics at Scale",
+      "slug": "tv-decoded", "topics": ["media", "methods"],
+      "metaphor": "A vintage television drawn as an exploded engineering diagram — screen, dials, speaker and tubes floating apart in mid-air — with neat streams of tiny faces, waveforms and symbols flowing from each part into a row of glass specimen jars below." },
+
+    { "match": "Misinformation Mitigation Praxis: Lessons Learned and Future Directions from Co-Insights",
+      "slug": "coinsights-praxis", "topics": ["misinfo"],
+      "metaphor": "A lighthouse built from stacked magnifying glasses sweeping its wide beam across a dark sea dotted with paper boats folded from rumor pages; the boats caught in the beam turn back toward the horizon." },
+
+    { "match": "Online Knowledge Production in Polarized Political Memes: The Case of Critical Race Theory",
+      "slug": "crt-memes", "topics": ["polar", "platforms"],
+      "metaphor": "Two facing printing presses stamping the same picture card in two different color schemes; two crowds collect their versions hot off the press and carry them away in opposite directions, stacking them into two separate leaning towers." },
+
+    { "match": "Minimizing polarization and disagreement using topic-based timeline algorithms",
+      "slug": "timeline-depolarization", "topics": ["polar", "methods"],
+      "metaphor": "A river split into two churning rapids being gently re-braided into one calm stream by a series of small wooden lock gates, operated by a patient lock-keeper pulling simple levers on a bank-side control post." },
+
+    { "match": "Unraveling the Dynamics of Television Debates and Social Media Engagement: Insights from an Indian News Show",
+      "slug": "tv-debates-social", "topics": ["media"],
+      "metaphor": "A television studio desk where a heated panel debate throws literal sparks; each spark arcs out into the dark audience, lands on a raised phone, and becomes a small glowing bird that flies up out of frame." },
+
+    { "match": "Social Media Narratives on Conflict from Northern Syria",
+      "slug": "syria-narratives", "topics": ["platforms"],
+      "metaphor": "A cracked stone wall bearing three overlapping weathered posters of the same village landscape painted three different ways — one in flames, one peaceful, one abandoned — with small phone screens embedded in the wall like lit windows." },
+
+    { "match": "Understanding and combatting misinformation across 16 countries on six continents",
+      "slug": "misinfo-16-countries", "topics": ["misinfo"],
+      "metaphor": "A ring of sixteen hands of many skin tones around a round table, each holding an identical rumor card up toward one shared candle in the center, the candlelight revealing a checkmark watermark in some cards and a hollow void in others." },
+
+    { "match": "On the Rise of Fear Speech in Online Social Media",
+      "slug": "fear-speech", "topics": ["misinfo"],
+      "metaphor": "A quiet row of houses at night where a thin ribbon of dark smoke slips out of one window, thickening as it drifts house to house and wrapping around door handles like a rope; one window stays warmly lit with its shutters open." },
+
+    { "match": "Displacement and Return in the Internet Era: How Social Media Captures Migration Decisions in Northern Syria",
+      "slug": "syria-displacement", "topics": ["platforms"],
+      "metaphor": "A family walking a long winding road carrying suitcases, following stepping stones that are glowing phone screens laid in the dirt; far ahead the road loops back toward a small house on the horizon with one lit window." },
+
+    { "match": "Talking politics on WhatsApp: A survey of Cuban, Indian, and Mexican American diaspora communities in the United States",
+      "slug": "diaspora-whatsapp", "topics": ["whatsapp", "polar"],
+      "metaphor": "Three kitchen tables in three homes — one with a tiny espresso cup, one with a steel chai tumbler, one with pan dulce on a plate — connected across rooftops by a single telephone wire strung with paper chat bubbles like laundry." },
+
+    { "match": "Effects of Algorithmic Trend Promotion: Evidence from Coordinated Campaigns in Twitter’s Trending Topics",
+      "slug": "trend-promotion", "topics": ["platforms", "misinfo"],
+      "metaphor": "A carnival high-striker game where a whole team of identical small figures swing their hammers in perfect unison, sending the puck up the tower toward a bell shaped like a little bird, while a lone fairgoer watches suspiciously." },
+
+    { "match": "Decentralized yet Unifying: Digital Media and Solidarity in Hong Kong's Anti-Extradition Movement",
+      "slug": "hongkong-solidarity", "topics": ["platforms", "polar"],
+      "metaphor": "A dense night skyline where hundreds of separate phone flashlights shine from balconies and windows, their beams converging overhead into the shape of one huge glowing umbrella sheltering the city." },
+
+    { "match": "Using Facebook and LinkedIn Data to Study International Mobility",
+      "slug": "mobility-facebook-linkedin", "topics": ["methods", "platforms"],
+      "metaphor": "An open suitcase plastered with travel stickers releasing a flock of paper planes, each plane trailing a dotted arc over a globe drawn on the suitcase lining, with a small ledger and pencil resting beside it." },
+
+    { "match": "Jettisoning Junk Messaging in the Era of End-to-End Encryption: A Case Study of WhatsApp",
+      "slug": "whatsapp-junk", "topics": ["whatsapp", "platforms"],
+      "metaphor": "A postal sorter at a conveyor belt of sealed padlocked envelopes, weighing each one on a small hand scale without opening it; the heavy oily-dark ones tip the scale and drop through a trapdoor into a bin below." },
+
+    { "match": "What Circulates on Partisan WhatsApp in India?: Insights from an Unusual Dataset",
+      "slug": "partisan-whatsapp", "topics": ["whatsapp", "polar"],
+      "metaphor": "Two water mills on opposite banks of one river, each wheel scooping up chat bubbles from the current and pouring them into its own village's cistern through bamboo channels, the two streams never mixing." },
+
+    { "match": "Tiplines to Combat Misinformation on Encrypted Platforms: A Case Study of the 2019 Indian Election on WhatsApp",
+      "slug": "whatsapp-tiplines", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "An old wooden counter with a brass bell and a tip jar where people queue to drop in folded suspicious notes; behind the counter a clerk with an eyeshade unfolds one under a desk lamp, holding two rubber stamps — one with a check, one with a cross." },
+
+    { "match": "Providing normative information increases intentions to accept a COVID-19 vaccine",
+      "slug": "vaccine-norms", "topics": ["health"],
+      "metaphor": "A person hesitating at the door of a small clinic while friendly neighbors lean out of the surrounding windows, each proudly showing a small round bandage on their arm; the hesitant person begins rolling up their sleeve." },
+
+    { "match": "Global survey on COVID-19 beliefs, behaviors, and norms",
+      "slug": "covid-survey-global", "topics": ["health", "methods"],
+      "metaphor": "A globe wearing a paper face mask, orbited like satellites by a ring of clipboards with checkbox forms, each clipboard trailing a tiny pencil on a string; a few checkmarks drift in space between them." },
+
+    { "match": "Trend Alert: Manipulation of Twitter Trends Through Cross-Platform Coordination",
+      "slug": "twitter-trend-manipulation", "topics": ["platforms", "misinfo"],
+      "metaphor": "Backstage at a theater, a crew of stagehands hoists a giant papier-mache flame up through the stage floor with ropes and pulleys, while the audience out front applauds the flame as though it had risen on its own." },
+
+    { "match": "Claim Matching Beyond English to Scale Global Fact-Checking",
+      "slug": "claim-matching", "topics": ["misinfo", "methods"],
+      "metaphor": "A telephone switchboard operator plugging cables between rows of speech bubbles filled with different abstract squiggle scripts; wherever two bubbles say the same thing, the pair lights up in the same color." },
+
+    { "match": "Evolution of Individual Impact on Social Media",
+      "slug": "individual-impact", "topics": ["platforms", "methods"],
+      "metaphor": "One tree drawn across four seasons in a single panorama: a few birds on the sapling, a great chattering flock at its summer peak, thinning in autumn, and a handful of loyal birds on the bare winter branch." },
+
+    { "match": "\"Short is the Road that Leads from Fear to Hate\": Fear Speech in Indian WhatsApp Groups",
+      "slug": "fear-speech-whatsapp", "topics": ["misinfo", "whatsapp"],
+      "metaphor": "A string of paper lanterns strung between village houses at night; most lanterns glow warmly, but a dark flame jumps from lantern to lantern along the string, and a child watches it approach from a doorway." },
+
+    { "match": "Political Polarization in Online News Consumption",
+      "slug": "news-polarization", "topics": ["polar", "media"],
+      "metaphor": "A breakfast table split down the middle by a tall newspaper wall; two readers on either side sip from identical coffee cups, each facing a completely different front page printed on their side of the same wall." },
+
+    { "match": "A First Look at COVID-19 Messages on WhatsApp in Pakistan",
+      "slug": "covid-whatsapp-pakistan", "topics": ["whatsapp", "health"],
+      "metaphor": "A dusk skyline of domes and minarets with a single paper kite flying above it, the kite's long tail made of chained chat bubbles carrying tiny masks and pill shapes from rooftop to rooftop." },
+
+    { "match": "Characterising and Detecting Sponsored Influencer Posts on Instagram",
+      "slug": "instagram-influencers", "topics": ["platforms", "methods"],
+      "metaphor": "A boutique window display where a glamorous mannequin holds a phone taking a selfie; a tiny price tag hangs discreetly from the phone on a thread, and a detective's magnifying glass in the corner of the window enlarges the tag." },
+
+    { "match": "Human Estimates of Body Measurements: Accuracy, Biases, and Mental Models",
+      "slug": "body-estimates", "topics": ["methods"],
+      "metaphor": "A tailor's fitting room where three tailors measure the same customer and hold up three ribbons of clearly different lengths, while the mirror behind them reflects a fourth, different silhouette altogether." },
+
+    { "match": "Darks and Stripes: Effects of Clothing on Weight Perception",
+      "slug": "clothing-perception", "topics": ["methods"],
+      "metaphor": "Two identical mannequins side by side on twin weighing scales, one dressed in dark solids and one in bold horizontal stripes; the two scale needles point to different numbers while a puzzled observer scratches their head." },
+
+    { "match": "Tracking global gender gaps in information technology using online data",
+      "slug": "gender-gaps-it", "topics": ["platforms", "methods"],
+      "metaphor": "Two staircases built from computer keyboards climbing toward the same glowing monitor at the summit — one staircase crowded with climbers, the other nearly empty — with a small bridge under construction between them." },
+
+    { "match": "Can WhatsApp benefit from debunked fact-checked stories to reduce misinformation?",
+      "slug": "whatsapp-debunks", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "A bucket brigade of round chat-bubble characters passing water pails toward a bonfire of burning rumor pages — but arriving as the fire has mostly burned down, embers still glowing under the smoke." },
+
+    { "match": "Images and misinformation in political groups: evidence from WhatsApp in India",
+      "slug": "whatsapp-image-misinfo", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "A wet photograph pinned to a clothesline, dripping ink; each drip lands and blooms into a smaller copy of the same photo, and the copies grow subtly more distorted with every row down." },
+
+    { "match": "A Dataset of Fact-Checked Images Shared on WhatsApp During the Brazilian and Indian Elections",
+      "slug": "factchecked-images-dataset", "topics": ["misinfo", "methods"],
+      "metaphor": "A botanist's specimen cabinet with wide flat drawers pulled open, each drawer holding photographs pinned like pressed butterflies, every specimen tagged with a small colored label bearing either a check or a cross symbol." },
+
+    { "match": "Characterising User Content on a Multi-Lingual Social Network",
+      "slug": "sharechat-multilingual", "topics": ["platforms"],
+      "metaphor": "One great banyan tree whose separate branches bloom in different colors of leaves, each branch's leaves patterned with a different abstract script squiggle, all sharing a single root system woven from chat bubbles." },
+
+    { "match": "Urban Dictionary Embeddings for Slang NLP Applications",
+      "slug": "urban-dictionary", "topics": ["methods", "ai"],
+      "metaphor": "A thick leather dictionary lying open on a graffiti-covered street wall used as a desk; loose spray-painted word shapes lift off the wall and arrange themselves above the book into tidy constellation clusters joined by chalk lines." },
+
+    { "match": "Can WhatsApp Counter Misinformation by Limiting Message Forwarding?",
+      "slug": "whatsapp-forwarding-limits", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "A relay race of chat-bubble runners passing a flaming baton down a track; a referee's white-gloved hand places a hurdle in front of every fifth runner, and the flame visibly shrinks at each hurdle it clears." },
+
+    { "match": "Hot Streaks on Social Media",
+      "slug": "hot-streaks", "topics": ["platforms", "methods"],
+      "metaphor": "An open matchbook shaped like a calendar month: one consecutive row of matches is struck and burning bright vermilion, while all the earlier and later matches stand unburnt in indigo, a hand hovering proudly above the streak." },
+
+    { "match": "WhatsApp Monitor: A Fact-Checking System for WhatsApp",
+      "slug": "whatsapp-monitor", "topics": ["whatsapp", "misinfo"],
+      "metaphor": "A dim control room with a wall of small round radar screens, each green sweep passing over drifting chat bubbles; one operator wearing headphones leans in and circles a suspicious blip with a wax pencil." },
+
+    { "match": "Tools for WhatsApp data collection",
+      "slug": "whatsapp-tools-tutorial", "topics": ["whatsapp", "methods"],
+      "metaphor": "A canvas tool roll spread open on a workbench holding hybrid instruments: a wrench whose head is a speech bubble, a screwdriver tipped with an envelope, calipers gripping a tiny padlock, and a measuring tape marked with bubble icons." },
+
+    { "match": "Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data",
+      "slug": "refugee-segregation", "topics": ["methods"],
+      "metaphor": "An aerial nighttime view of a city where two interleaved neighborhoods glow in two different colors separated by a dark river; one single lit bridge crosses it, carrying a thin string of moving lights." },
+
+    { "match": "Disinformation on Facebook — A case study from Finland",
+      "slug": "facebook-finland", "topics": ["misinfo", "platforms"],
+      "metaphor": "A snowy Nordic village under faint northern lights where a sly fox slips forged letters into a red roadside mailbox; the letters' shadows stretch across the snow in the shape of wolves." },
+
+    { "match": "Polarization on Social Media", "year": 2018,
+      "slug": "phd-thesis", "topics": ["polar"],
+      "metaphor": "A hardbound indigo book standing open like a tent on a hilltop; from its pages two flocks of speech bubbles fly out in opposite directions, while a small graduate figure stands in the middle holding a brass compass." },
+
+    { "match": "Studying Migrant Assimilation Through Facebook Interests",
+      "slug": "migrant-assimilation", "topics": ["platforms", "methods"],
+      "metaphor": "A worn suitcase planted in soil like a flowerpot, sprouting a young tree whose leaves gradually change shape as they climb — the lowest leaves foreign and ornate, the top leaves matching the plain local trees around it." },
+
+    { "match": "WhatsApp Doc?: A First Look at WhatsApp Public Group Data",
+      "slug": "whatsapp-public-groups", "topics": ["whatsapp", "methods"],
+      "metaphor": "A doctor's office where a giant friendly speech bubble lies on the examination table; the doctor holds a stethoscope to it while an x-ray on the wall reveals dozens of smaller chat bubbles clustered inside it." },
+
+    { "match": "Professional Gender Gaps Across US Cities",
+      "slug": "gender-gaps-cities", "topics": ["platforms", "methods"],
+      "metaphor": "A city skyline built from stacked briefcases in two colors, the towers on every block rising to unequal heights; in the foreground a seesaw balances two small professional figures at uneven heights." },
+
+    { "match": "Political Discourse on Social Media: Echo Chambers, Gatekeepers, and the Price of Bipartisanship",
+      "slug": "echo-chambers", "topics": ["polar", "platforms"],
+      "metaphor": "Two great dome-shaped chambers built from speech bubbles, each with a crowd inside shouting into its own curved wall; between the domes a single gatekeeper's toll booth, where one brave bird carrying a message pays a coin to cross." },
+
+    { "match": "Joint Non-negative Matrix Factorization for Learning Ideological Leaning on Twitter",
+      "slug": "nmf-ideology", "topics": ["methods", "polar"],
+      "metaphor": "A large wooden weaving loom threading two spools — one indigo, one vermilion — into a single bolt of cloth whose emerging pattern resolves into two distinct camps of small woven figures facing apart." },
+
+    { "match": "Balancing Information Exposure on Social Networks",
+      "slug": "balancing-exposure", "topics": ["polar", "methods"],
+      "metaphor": "A tightrope walker crossing a gorge between two cliff-top crowds, carrying a long balance pole with a basket of indigo pamphlets on one end and vermilion pamphlets on the other, letting them flutter down evenly to both sides." },
+
+    { "match": "Quantifying Controversy on Social Media",
+      "slug": "quantifying-controversy", "topics": ["polar", "methods"],
+      "metaphor": "A scientist dipping a large glass thermometer into a boiling cauldron of speech bubbles; the thermometer's scale is marked with small storm-cloud icons instead of numbers, and the reading is noted in a field notebook." },
+
+    { "match": "Understanding Para Social Breakups on Twitter",
+      "slug": "parasocial-breakups", "topics": ["platforms"],
+      "metaphor": "A fan sitting alone in a dark room lit only by a television showing a waving celebrity; with tiny scissors the fan gently cuts a single red thread that runs from their own chest into the screen." },
+
+    { "match": "The Effect of Collective Attention on Controversial Debates on Social Media",
+      "slug": "collective-attention", "topics": ["polar"],
+      "metaphor": "A town-square debate between two small crowds, with an enormous eye opening in the sky above them; as the eye widens, the ground between the two podiums cracks and the crowds drift further apart on separating slabs." },
+
+    { "match": "Factors in Recommending Contrarian Content on Social Media",
+      "slug": "contrarian-recommendation", "topics": ["polar", "methods"],
+      "metaphor": "A waiter in a fine restaurant lifting a silver cloche to reveal the opposite dish: the plate holds a small vermilion flag while the diner's entire table is set in indigo; the diner leans back, intrigued." },
+
+    { "match": "Ad-blocking: A Study on Performance, Privacy and Counter-measures",
+      "slug": "ad-blocking", "topics": ["platforms"],
+      "metaphor": "A pedestrian walking calmly under a sturdy umbrella-shield held by a small knight, while a hailstorm of bright coupon-shaped confetti bounces off; behind them the street is quiet and readable." },
+
+    { "match": "Polarization on Social Media", "year": 2017,
+      "slug": "polarization-tutorial", "topics": ["polar"],
+      "metaphor": "A lecture hall chalkboard where the chalk drawing itself is a valley splitting into two cliffs; the lecturer lays a wooden ruler across the chalk canyon as a bridge while students lean in from their seats." },
+
+    { "match": "The Ebb and Flow of Controversial Debates on Social Media",
+      "slug": "ebb-flow-debates", "topics": ["polar"],
+      "metaphor": "A moonlit beach where waves made of speech bubbles roll up the sand and recede, leaving curved lines of foam; a small figure with a lantern and a measuring stick records each high-water mark." },
+
+    { "match": "A Motif-based Approach for Identifying Controversy",
+      "slug": "motif-controversy", "topics": ["methods", "polar"],
+      "metaphor": "A patchwork quilt under a large magnifying glass; hidden in the stitching, tiny repeating knot patterns glow vermilion exactly where the indigo and cream threads tangle against each other." },
+
+    { "match": "A Long-Term Analysis of Polarization on Twitter",
+      "slug": "longterm-polarization", "topics": ["polar"],
+      "metaphor": "Five garden hedges in a row showing the same garden across the years: one bush at first, gradually trimmed by two gardeners on opposite sides into two tall separate walls, with one narrow gap where a single bird still flies through." },
+
+    { "match": "Media Attention to Science",
+      "slug": "media-attention-science", "topics": ["media"],
+      "metaphor": "A scientist at a lab window releasing a single white paper dove; outside, a waiting flock of megaphone-headed birds each repeats a copy of the dove, every copy a little larger, louder and more vermilion than the last." },
+
+    { "match": "Understanding International Migration using Tensor Factorization",
+      "slug": "migration-tensor", "topics": ["methods"],
+      "metaphor": "A glass puzzle cube filled with tiny houses and dotted travel arcs, held by two careful hands; as one layer of the cube rotates into place, the tangled arcs inside align into clean flowing migration streams between continents etched on its faces." },
+
+    { "match": "Exposing Twitter Users to Contrarian News",
+      "slug": "contrarian-news-demo", "topics": ["polar"],
+      "metaphor": "A cheerful mail carrier on a bicycle deliberately delivering vermilion newspapers into a street of identical indigo mailboxes; on a porch, one resident reads theirs with eyebrows raised and coffee paused mid-sip." },
+
+    { "match": "Balancing Opposing Views to Reduce Controversy",
+      "slug": "balancing-views", "topics": ["polar", "methods"],
+      "metaphor": "An apothecary carefully dropping tiny speech-bubble pills onto one pan of an ornate brass balance until two heaps of opposite colors sit perfectly level; the counterweight on the beam is a small brass dove." },
+
+    { "match": "Discovering the Network Backbone from Traffic Activity Data",
+      "slug": "network-backbone", "topics": ["methods"],
+      "metaphor": "An anatomical illustration of a city drawn as a body on a medical chart: a surgeon lifts a translucent skin-flap of ordinary streets to reveal a glowing spine of main roads and arterial junctions beneath." },
+
+    { "match": "Quote RTs on Twitter: Usage of the New Feature for Political Discourse",
+      "slug": "quote-rts", "topics": ["polar", "platforms"],
+      "metaphor": "A bird on a stage holding up a small picture frame containing another bird mid-song, presenting it to the crowd while adding its own sharp musical note above the frame; half the audience cheers, half boos." },
+
+    { "match": "Social Media Image Analysis for Public Health",
+      "slug": "images-public-health", "topics": ["health", "methods"],
+      "metaphor": "A doctor's lightbox wall glowing with a grid of everyday snapshots — meals, jogs, birthday cakes — examined like x-rays by a physician who marks a few frames with a red grease pencil." },
+
+    { "match": "Exploring Controversy on Twitter",
+      "slug": "exploring-controversy", "topics": ["polar"],
+      "metaphor": "An explorer in a pith helmet paddling a canoe to the exact fork of a river that splits into two differently-colored rapids, holding up a brass compass whose needle has split into two opposing points." },
+
+    { "match": "Scalable Facility Location for Massive Graphs on Pregel-like Systems",
+      "slug": "facility-location", "topics": ["methods"],
+      "metaphor": "A giant pegboard map where a small crane lowers warehouse pieces onto pegs one by one; from each placed warehouse, light beams reach out to the nearest cluster of little houses, the beams growing shorter and neater with each placement." },
+
+    { "match": "From \"I love you babe\" to \"leave me alone\" — Romantic Relationship Breakups on Twitter",
+      "slug": "twitter-breakups", "topics": ["platforms"],
+      "metaphor": "Two lovebirds perched on the same telephone wire slowly sliding toward opposite poles; the string of small heart-shaped bubbles hung between them snaps in the middle, and the halves flutter down like autumn leaves." },
+
+    { "match": "Co-Following on Twitter",
+      "slug": "co-following", "topics": ["methods", "platforms"],
+      "metaphor": "Flocks of birds perched along two great telephone wires that cross each other to form overlapping rings against the evening sky; the shared overlap section is by far the most crowded stretch of wire." },
+
+    { "match": "Gender Asymmetries in Reality and Fiction: The Bechdel Test of Social Media",
+      "slug": "bechdel-test", "topics": ["platforms"],
+      "metaphor": "A night cinema seen from the projection booth: on screen, two women sit in conversation over tea; beside the screen an old applause-style meter with a swinging needle ticks upward as they speak." },
+
+    { "match": "Who Watches (and Shares) What on YouTube? And When? Using Twitter to Understand YouTube Viewership",
+      "slug": "youtube-viewership", "topics": ["platforms", "media"],
+      "metaphor": "A drive-in theater at night where every car windshield glows with a different film; above the lot, a flock of small birds ferries popcorn-sized snippets of the films from car to car." },
+
+    { "match": "Giving is Caring: Understanding Online Donation behavior through Email",
+      "slug": "email-donations", "topics": ["platforms"],
+      "metaphor": "A large envelope opening like two cupped paper hands above a donation box, coins sliding down its folded chute; the envelope's wax seal is a small glowing heart." },
+
+    { "match": "Inferring International and Internal Migration Patterns from Twitter Data",
+      "slug": "migration-twitter", "topics": ["methods"],
+      "metaphor": "A world map made entirely of tiny perched birds; as groups of birds lift off and settle elsewhere, their dotted flight arcs linger in the air, redrawing the map's contours where they land." },
+
+    { "match": "Using Co-Following for Out-of-Context Twitter Friend Recommendation",
+      "slug": "friend-recommendation", "topics": ["platforms", "methods"],
+      "metaphor": "A matchmaker owl behind a tiny desk lit by a banker's lamp, consulting a ledger of overlapping circles while formally introducing two shy birds from visibly different flocks, feathers patterned in different motifs." },
+
+    { "match": "Visualizing User-Defined, Discriminative Geo-Temporal Twitter Activity",
+      "slug": "geo-temporal-viz", "topics": ["methods"],
+      "metaphor": "A glass model of a city on a table, neighborhoods lighting up in traveling waves as a large clock hand sweeps overhead; an operator at a lighting console slides levers, conducting the glow like a stage technician." },
+
+    { "match": "FAST: Forecast and Analytics of Social Media and Traffic",
+      "slug": "traffic-forecast", "topics": ["methods"],
+      "metaphor": "A television weather forecaster gesturing at a wall map, but the map shows city roads and the weather fronts are advancing bands of tiny cars and speech bubbles; the forecaster's baton points at tomorrow's traffic jam." },
+
+    { "match": "Secular vs. Islamist Polarization in Egypt on Twitter",
+      "slug": "egypt-polarization", "topics": ["polar"],
+      "metaphor": "Two skylines facing each other across a wide river at dusk, each reflected in the water as a dense crowd of speech bubbles; the two reflections reach toward each other but a boat's wake keeps a bright line between them." },
+
+    { "match": "#Egypt: Visualizing Islamist vs. Secular Tension on Twitter",
+      "slug": "egypt-viz", "topics": ["polar", "methods"],
+      "metaphor": "A cartographer's desk with a hand-drawn map of a city square; pins of two colors cluster on opposite sides, and taut threads between the pins form two dense separate webs that barely cross in the middle." },
+
+    { "match": "Inferring Audience Partisanship for YouTube Videos",
+      "slug": "youtube-partisanship", "topics": ["media", "methods"],
+      "metaphor": "A film projector's single beam passing through a triangular prism and splitting into two colored beams, each lighting a different section of theater seats; the audiences sit tinted by whichever beam reaches them." },
+
+    { "match": "Political Hashtag Trends",
+      "slug": "hashtag-trends", "topics": ["polar", "platforms"],
+      "metaphor": "A garden trellis built as a neat lattice grid with two flowering vines climbing it from opposite corners, blooming in alternating bursts; a gardener stands back charting their competing growth on graph paper." },
+
+    { "match": "Political Hashtag Hijacking in the U.S.",
+      "slug": "hashtag-hijacking", "topics": ["polar", "platforms"],
+      "metaphor": "A parade float built around a big lattice-grid sculpture rolling through a cheering crowd, while masked figures clamber up its back mid-parade and quietly swap its banners for ones of the opposite color." },
+
+    { "match": "Mining Web Query Logs to analyze political issues",
+      "slug": "query-logs", "topics": ["polar", "methods"],
+      "metaphor": "An archaeologist kneeling in the sand, brushing dust off an impossibly long paper receipt unrolled across the dig site; the cleaned stretch reveals two-colored footprints walking down the scroll toward a small ballot box drawn at its end." },
+
+    { "match": "Political Search Trends",
+      "slug": "search-trends", "topics": ["polar", "methods"],
+      "metaphor": "A church organ whose pipes are empty rounded search bars of many heights; two organists share the bench playing opposing chords, and colored notes rise from whichever pipes swell loudest that week." },
+
+    { "match": "Towards Multi-Document Summarization of Scientific Articles: Making Interesting Comparisons with SciSumm",
+      "slug": "scisumm", "topics": ["methods", "ai"],
+      "metaphor": "A cast-iron juicer press squeezing a tall stack of scientific papers; the extracted juice fills one small elegant glass in neat colored layers, while the spent pulp pages rest in a bowl beside it." },
+
+    { "match": "SciSumm: A Multi-Document Summarization System for Scientific Articles",
+      "slug": "scisumm-demo", "topics": ["methods", "ai"],
+      "metaphor": "A wooden vending machine that accepts thick stacks of papers into a wide slot at the top and dispenses one small, perfectly folded pamphlet from a little door at the bottom, into the hands of a delighted researcher." },
+
+    { "match": "Load Prediction and Hot Spot Detection Models for Autonomic Cloud Computing",
+      "slug": "cloud-load", "topics": ["methods"],
+      "metaphor": "A weather station built on top of an actual cloud: a meteorologist reads dials wired directly into the cloud's fluff, while tiny server racks poke out of it like chimneys, two of them glowing dangerously warm." },
+
+    { "match": "Frequent Itemset based Hierarchical Document Clustering using Wikipedia as External Knowledge",
+      "slug": "itemset-clustering", "topics": ["methods"],
+      "metaphor": "A librarian sorting an avalanche of loose pages into rows of glass jars by matching the recurring stamp symbols on their corners, pausing to consult a giant open encyclopedia perched on a reading stand." },
+
+    { "match": "Evolutionary Clustering using Frequent Itemsets",
+      "slug": "evolutionary-clustering", "topics": ["methods"],
+      "metaphor": "A tide-pool coral reef drawn as a time-lapse: clusters of similar shells regroup slightly with each incoming wave line, most neighbors staying together while a few drift to new clusters, each wave marked on a tide pole." },
+
+    { "match": "Document Clustering using Various External Knowledge Sources",
+      "slug": "masters-thesis", "topics": ["methods"],
+      "metaphor": "A young apprentice at an enormous sorting desk under one warm lamp, arranging tall piles of documents whose corners bear matching knot symbols; in the pigeonholes behind, one slot holds a ribboned diploma scroll." }
+  ]
+}

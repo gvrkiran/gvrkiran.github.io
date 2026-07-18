@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications · The Stamp Collection — Kiran Garimella</title>
+  <meta name="description" content="All publications by Kiran Garimella, issued as a stamp collection — one plate per year." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --desk: #2b2420;
+      --page: #f5efdf;
+      --page-2: #ece2c8;
+      --ink: #22306b;
+      --ink-soft: rgba(34, 48, 107, 0.6);
+      --ember: #d9482b;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display: 'Fraunces', Georgia, serif;
+      --mono: 'Space Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--desk); color: var(--ink); font-family: var(--serif); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0.06; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1rem 1.4rem; font-family: var(--mono); font-size: 0.78rem; color: rgba(245,239,223,0.75);
+      background: linear-gradient(180deg, rgba(43,36,32,0.94) 55%, transparent);
+    }
+    .topbar .brand { font-weight: 700; color: var(--page); text-decoration: none; letter-spacing: 0.06em; }
+    .topbar a:hover { color: var(--ember); }
+    .topbar .switcher b { color: var(--ember); font-weight: 700; }
+
+    .masthead { text-align: center; color: var(--page); padding: 5.2rem 1rem 1.2rem; }
+    .masthead .kicker { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); }
+    .masthead h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2.2rem, 6vw, 3.8rem); margin: 0.5rem 0 0.6rem; }
+    .masthead p { color: rgba(245,239,223,0.72); max-width: 56ch; margin: 0 auto; font-size: 0.98rem; }
+
+    .chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; padding: 0.9rem 1rem 0.4rem; }
+    .chips button {
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+      color: rgba(245,239,223,0.85); border: 1px solid rgba(245,239,223,0.4); border-radius: 999px; padding: 0.34rem 0.8rem;
+      transition: all 150ms;
+    }
+    .chips button:hover { border-color: var(--page); }
+    .chips button.active { background: var(--ember); border-color: var(--ember); color: var(--page); }
+
+    .yearnav { text-align: center; font-family: var(--mono); font-size: 0.7rem; padding: 0.5rem 1rem 1.6rem; color: rgba(245,239,223,0.55); }
+    .yearnav a { text-decoration: none; padding: 0 0.22rem; }
+    .yearnav a:hover { color: var(--ember); }
+
+    /* ---------- album spreads ---------- */
+    .album {
+      max-width: 1240px; margin: 0 auto 3.4rem; padding: 0 1rem;
+      display: grid; grid-template-columns: 3fr 2fr; gap: 0;
+      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.5));
+      scroll-margin-top: 4.5rem;
+    }
+    .page {
+      background: linear-gradient(105deg, var(--page) 92%, var(--page-2));
+      min-height: 640px; padding: 2.6rem 2.4rem 2.6rem; position: relative;
+    }
+    .page.left { border-radius: 6px 0 0 6px; box-shadow: inset -28px 0 40px -30px rgba(43,36,32,0.55); }
+    .page.right { border-radius: 0 6px 6px 0; background: linear-gradient(255deg, var(--page) 92%, var(--page-2)); box-shadow: inset 28px 0 40px -30px rgba(43,36,32,0.55); }
+    .page-label { position: absolute; top: 1.1rem; right: 1.6rem; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+    .year-tab {
+      position: absolute; top: -16px; left: 2.2rem; background: var(--ember); color: var(--page);
+      font-family: var(--mono); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.24em;
+      padding: 0.45rem 1.2rem; border-radius: 4px 4px 0 0;
+    }
+    .album.proofs .year-tab { background: #3e6b4f; }
+    .page h2 { font-family: var(--display); font-weight: 900; font-size: 1.5rem; margin-bottom: 0.2rem; }
+    .page .sub { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1.8rem; }
+
+    .sheet { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2rem 1.8rem; }
+    @media (max-width: 700px) { .sheet { grid-template-columns: repeat(2, 1fr); } }
+    .mount { position: relative; transition: opacity 300ms, filter 300ms; }
+    .mount.mute { opacity: 0.22; filter: saturate(0.2); }
+    .stamp-wrap { position: relative; transform: rotate(var(--tilt, 0deg)); transition: transform 220ms cubic-bezier(.2,.8,.3,1.2); cursor: pointer; }
+    .stamp-wrap:hover { transform: rotate(0deg) translateY(-6px) scale(1.03); z-index: 5; }
+    .stamp {
+      position: relative; background: #fdfaf1; padding: 9px 9px 0;
+      box-shadow: 0 2px 4px rgba(43,36,32,0.28), 0 10px 22px -8px rgba(43,36,32,0.35);
+    }
+    .stamp::before {
+      content: ""; position: absolute; inset: -5px; pointer-events: none; z-index: 2;
+      background-image:
+        radial-gradient(circle 4.6px at 8px 5px, var(--page) 4.2px, transparent 5px),
+        radial-gradient(circle 4.6px at 8px 5px, var(--page) 4.2px, transparent 5px),
+        radial-gradient(circle 4.6px at 5px 8px, var(--page) 4.2px, transparent 5px),
+        radial-gradient(circle 4.6px at 5px 8px, var(--page) 4.2px, transparent 5px);
+      background-size: 16px 10px, 16px 10px, 10px 16px, 10px 16px;
+      background-position: 3px 0, 3px 100%, 0 3px, 100% 3px;
+      background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    }
+    .stamp img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .stamp .fallback { width: 100%; aspect-ratio: 1; display: none; align-items: center; justify-content: center; background: var(--page-2); font-family: var(--mono); color: var(--ink-soft); font-size: 0.8rem; text-align: center; padding: 0.5rem; }
+    .stamp .caption {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem;
+      font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); padding: 5px 2px 7px;
+    }
+    .stamp .denom { position: absolute; top: 13px; left: 13px; z-index: 3; background: rgba(253,250,241,0.92); border: 1px solid var(--ink); font-family: var(--mono); font-size: 0.6rem; font-weight: 700; padding: 0.1rem 0.3rem; }
+    .postmark { position: absolute; top: -16px; right: -18px; width: 92px; height: 92px; z-index: 4; opacity: 0.5; transform: rotate(-12deg); pointer-events: none; transition: opacity 200ms; mix-blend-mode: multiply; }
+    .stamp-wrap:hover .postmark { opacity: 0.85; }
+    .proof-mark {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 4;
+      pointer-events: none; transform: rotate(-18deg);
+      font-family: var(--mono); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.5em; padding-left: 0.5em;
+      color: rgba(62, 107, 79, 0.55); border: 3px double rgba(62, 107, 79, 0.45); border-radius: 4px;
+      margin: 26% 8%;
+    }
+    .mount .title {
+      margin-top: 0.7rem; font-size: 0.8rem; line-height: 1.3; color: var(--ink);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .index-list { list-style: none; padding: 0; margin: 0; }
+    .index-list li { display: flex; gap: 0.7rem; padding: 0.48rem 0; border-bottom: 1px dotted var(--ink-soft); font-size: 0.85rem; align-items: baseline; cursor: pointer; }
+    .index-list li:hover { color: var(--ember); }
+    .index-list .no { font-family: var(--mono); font-size: 0.64rem; color: var(--ember); flex: 0 0 3.4ch; }
+    .index-list .v { margin-left: auto; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+    .colophon {
+      margin-top: 2rem; background: #fdfaf1; border: 1px solid rgba(34,48,107,0.25);
+      padding: 1rem 1.1rem; font-size: 0.84rem; color: var(--ink-soft);
+      box-shadow: 0 3px 8px rgba(43,36,32,0.15); transform: rotate(-0.6deg);
+    }
+    .colophon b { color: var(--ember); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+
+    /* loupe modal */
+    .veil { position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center; background: rgba(24,19,16,0.62); backdrop-filter: blur(5px); padding: 1.2rem; }
+    .veil.open { display: flex; }
+    .loupe {
+      position: relative; background: var(--page); width: min(880px, 96vw); max-height: 90vh; overflow: auto;
+      display: grid; grid-template-columns: minmax(0, 380px) 1fr; border-radius: 4px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+    .loupe .big-stamp { padding: 2rem; background: var(--page-2); display: flex; align-items: center; }
+    .loupe .big-stamp .stamp { width: 100%; }
+    .loupe .body { padding: 1.8rem 1.8rem 1.6rem; }
+    .loupe .venue-chip { display: inline-block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--page); background: var(--ember); padding: 0.25rem 0.55rem; margin-right: 0.4rem; }
+    .loupe .cat-chip { display: inline-block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); border: 1.5px solid var(--ink); padding: 0.22rem 0.5rem; }
+    .loupe h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; line-height: 1.16; margin: 0.8rem 0 0.5rem; }
+    .loupe .authors { font-size: 0.9rem; color: var(--ink-soft); }
+    .loupe .authors b { color: var(--ink); font-weight: 600; }
+    .loupe .blurb { margin-top: 0.9rem; font-size: 0.93rem; }
+    .loupe .links { margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .loupe .links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border: 1.5px solid var(--ink); padding: 0.38rem 0.7rem; }
+    .loupe .links a:hover { background: var(--ink); color: var(--page); }
+    .loupe .close { position: absolute; top: 0.7rem; right: 0.9rem; font-family: var(--mono); background: var(--ink); color: var(--page); padding: 0.3rem 0.6rem; z-index: 3; }
+
+    .footnote { text-align: center; color: rgba(245,239,223,0.6); font-family: var(--mono); font-size: 0.72rem; padding: 0 1rem 4rem; }
+
+    @media (max-width: 980px) {
+      .album { grid-template-columns: 1fr; }
+      .page.left, .page.right { border-radius: 6px; box-shadow: none; margin-bottom: 1.2rem; min-height: 0; }
+      .loupe { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="index.html">K.G.</a>
+    <span class="switcher"><a href="index.html">← home</a> · <a href="publications.html?pub=2">orchard</a> · <b>stamps</b> · <a href="publications.html?pub=4">library</a> · <a href="publications.html?pub=1">classic</a> · <a href="publications.html?reroll=1" title="switch to a random design">↻ shuffle</a></span>
+  </div>
+
+  <header class="masthead">
+    <span class="kicker">Publications · The Stamp Collection</span>
+    <h1>The Stamp Collection</h1>
+    <p id="mastheadNote">Every paper issued as a stamp: the illustration is the artwork, the venue is the postmark — cancelled in the city where the work was done. One plate per year; proofs up front.</p>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="Filter by topic"></nav>
+  <nav class="yearnav" id="yearnav" aria-label="Jump to a year"></nav>
+
+  <div id="albums"><!-- spreads injected --></div>
+
+  <p class="footnote" id="footNote"></p>
+
+  <div class="veil" id="veil" role="dialog" aria-modal="true">
+    <div class="loupe">
+      <button class="close" id="loupeClose">esc</button>
+      <div class="big-stamp">
+        <div class="stamp">
+          <img id="loupeImg" alt="" onerror="this.style.display='none'" />
+          <div class="caption"><span id="loupeCapVenue"></span><span id="loupeCapYear"></span></div>
+        </div>
+      </div>
+      <div class="body">
+        <div><span class="venue-chip" id="loupeVenue"></span><span class="cat-chip" id="loupeCat"></span></div>
+        <h2 id="loupeTitle"></h2>
+        <p class="authors" id="loupeAuthors"></p>
+        <p class="blurb" id="loupeBlurb"></p>
+        <div class="links" id="loupeLinks"></div>
+      </div>
+    </div>
+  </div>
+
+<script src="data.js"></script>
+<script>
+'use strict';
+const ART = (slug) => `assets/pub-art/papers/${slug}.webp`;
+const TOPIC_NAMES = {
+  whatsapp: 'whatsapp', misinfo: 'misinformation', polar: 'politics', ai: 'AI',
+  health: 'health', media: 'media', methods: 'methods', platforms: 'platforms',
+};
+const BLURBS = {
+  'group-rules-ai': '20 Indian group admins co-wrote rules with an AI assistant. They liked the lighter load — and drew sharp lines around trust, tone and authority.',
+  'multimodal-vlm': 'A VLM toolkit that reads text, images and video in one frame — showing that text-only pipelines systematically undercount political content on WhatsApp.',
+  'betting-apps': 'Tens of thousands of Meta ads, influencer posts and 300k Play Store reviews, linked into one map from recruitment narratives to financial harm.',
+  'peer-factcheck': 'A randomized field study on participants’ real group messages in India: peer corrections modestly outperform local journalists and national fact-checking tiplines.',
+  'tv-disagreement': '21,000 episodes and 2.13M host–guest exchanges from Fox, MSNBC and CNN: on-air debate fell by roughly a third since 2017.',
+  'internet-shutdowns': '246 rural participants voluntarily went offline for 48 hours. Support for shutdowns did not drop — it ticked up.',
+  'harmful-cascades': '5.1 million messages across ~6,000 Indian groups: harmful content cascades deeper and wider, and structure — not just modality — drives it.',
+};
+
+/* venue → postmark abbreviation */
+function venueShort(p) {
+  const v = (p.venue || '').trim();
+  if (!v) return p.status ? 'PREPRINT' : '—';
+  if (/thesis/i.test(v)) return 'THESIS';
+  if (/book chapter/i.test(v)) return 'BOOK';
+  if (/tech report|white paper/i.test(v)) return 'REPORT';
+  if (/the web conference|www/i.test(v)) return 'WEBCONF';
+  if (/under review/i.test(v)) return 'PREPRINT';
+  const m = v.match(/[A-Za-z&]+/);
+  return (m ? m[0] : v).toUpperCase().slice(0, 8);
+}
+/* postmark city by era (approximate career map) */
+function postCity(p) {
+  const y = parseInt(p.year, 10);
+  if (isNaN(y)) return 'NEW BRUNSWICK NJ';
+  if (y <= 2012) return 'HYDERABAD';
+  if (y <= 2014) return 'DOHA';
+  if (y <= 2018) return 'HELSINKI';
+  if (y <= 2021) return 'CAMBRIDGE MA';
+  return 'NEW BRUNSWICK NJ';
+}
+function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+function postmark(short, year, city, id) {
+  return `<svg class="postmark" viewBox="0 0 100 100">
+    <defs><path id="pmc-${id}" d="M 50 50 m -33 0 a 33 33 0 1 1 66 0 a 33 33 0 1 1 -66 0"/></defs>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#22306b" stroke-width="2"/>
+    <circle cx="50" cy="50" r="26" fill="none" stroke="#22306b" stroke-width="1.4"/>
+    <text style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;fill:#22306b">
+      <textPath href="#pmc-${id}">· ${short} · ${year} · ${city}</textPath>
+    </text>
+    <g stroke="#22306b" stroke-width="1.6" fill="none">
+      <path d="M 78 40 q 12 4 24 0"/><path d="M 78 50 q 12 4 24 0"/><path d="M 78 60 q 12 4 24 0"/>
+    </g>
+  </svg>`;
+}
+
+/* ---------- data + catalog numbers ---------- */
+const PUBS = (window.PUBLICATIONS || []);
+const byYear = {};
+PUBS.forEach(p => { (byYear[String(p.year)] = byYear[String(p.year)] || []).push(p); });
+const YEARS_DESC = Object.keys(byYear).filter(y => y !== 'Unpublished').sort((a, b) => b - a);
+const PROOFS = byYear['Unpublished'] || [];
+
+/* catalog: № 1 = oldest issued paper */
+let catalog = new Map();
+{
+  let n = 1;
+  YEARS_DESC.slice().reverse().forEach(y => {
+    byYear[y].slice().reverse().forEach(p => catalog.set(p, String(n++).padStart(3, '0')));
+  });
+  PROOFS.forEach((p, i) => catalog.set(p, 'P-' + (i + 1)));
+}
+
+/* ---------- build spreads ---------- */
+const albums = document.getElementById('albums');
+const plateCount = YEARS_DESC.length + 1;
+let plateIdx = 0;
+
+function stampMount(p) {
+  const cat = catalog.get(p);
+  const tilt = ((hash(p.slug) >> 4) % 7 - 3) * 0.7;
+  const isProof = String(p.year) === 'Unpublished';
+  const mount = document.createElement('div');
+  mount.className = 'mount';
+  mount.dataset.topics = (p.topics || []).join(' ');
+  mount.innerHTML = `
+    <div class="stamp-wrap" style="--tilt:${tilt}deg" tabindex="0" role="button" aria-label="${p.title.replace(/"/g, '&quot;')}">
+      <div class="stamp">
+        <span class="denom">№ ${cat}</span>
+        <img src="${ART(p.slug)}" alt="" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="fallback">art<br>drying</div>
+        <div class="caption"><span>${venueShort(p)}</span><span>${isProof ? 'PROOF' : p.year}</span></div>
+        ${isProof ? '' : `<span class="proofless"></span>`}
+      </div>
+      ${isProof ? '<span class="proof-mark">PROOF</span>' : postmark(venueShort(p), p.year, postCity(p), p.slug)}
+    </div>
+    <p class="title">${p.title}</p>`;
+  const wrap = mount.querySelector('.stamp-wrap');
+  wrap.addEventListener('click', () => openLoupe(p));
+  wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLoupe(p); } });
+  return mount;
+}
+
+function buildSpread(label, papers, opts = {}) {
+  plateIdx++;
+  const album = document.createElement('section');
+  album.className = 'album' + (opts.proofs ? ' proofs' : '');
+  album.id = opts.proofs ? 'series-proofs' : `series-${label}`;
+  const left = document.createElement('section');
+  left.className = 'page left';
+  left.innerHTML = `
+    <span class="year-tab">${opts.proofs ? 'PROOFS' : 'SERIES ' + label}</span>
+    <span class="page-label">plate ${plateIdx} of ${plateCount}</span>
+    <h2>${opts.proofs ? 'Not yet issued' : (papers.length + ' issue' + (papers.length > 1 ? 's' : ''))}</h2>
+    <p class="sub">${opts.proofs ? 'under review · printed without postmarks' : 'click a stamp for the loupe'}</p>`;
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  papers.forEach(p => sheet.appendChild(stampMount(p)));
+  left.appendChild(sheet);
+
+  const right = document.createElement('section');
+  right.className = 'page right';
+  right.innerHTML = `
+    <span class="page-label">collector’s index</span>
+    <h2>Index of plates</h2>
+    <p class="sub">${opts.proofs ? 'proofs' : 'series ' + label} · ${papers.length} stamp${papers.length > 1 ? 's' : ''}</p>`;
+  const ul = document.createElement('ul');
+  ul.className = 'index-list';
+  papers.forEach(p => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="no">${catalog.get(p)}</span><span>${p.title}</span><span class="v">${venueShort(p)}</span>`;
+    li.addEventListener('click', () => openLoupe(p));
+    ul.appendChild(li);
+  });
+  right.appendChild(ul);
+  if (opts.colophon) {
+    const c = document.createElement('div');
+    c.className = 'colophon';
+    c.innerHTML = opts.colophon;
+    right.appendChild(c);
+  }
+  album.appendChild(left);
+  album.appendChild(right);
+  albums.appendChild(album);
+}
+
+buildSpread('PROOFS', PROOFS, { proofs: true });
+YEARS_DESC.forEach((y, i) => buildSpread(y, byYear[y], i === YEARS_DESC.length - 1 ? {
+  colophon: `<b>colophon</b> ${PUBS.length} stamps · illustrations drawn per paper in a risograph duotone, generated from hand-written visual briefs · postmark cities follow the desk where the work was done: Hyderabad, Doha, Helsinki, Cambridge, New Brunswick.`,
+} : {}));
+
+document.getElementById('footNote').textContent =
+  `${PUBS.length} stamps across ${plateCount} plates · reload publications.html for a different design`;
+
+/* ---------- chips + yearnav ---------- */
+const chips = document.getElementById('chips');
+const allBtn = document.createElement('button');
+allBtn.textContent = 'all';
+allBtn.classList.add('active');
+allBtn.addEventListener('click', () => setTopic(null, allBtn));
+chips.appendChild(allBtn);
+Object.entries(TOPIC_NAMES).forEach(([key, name]) => {
+  const n = PUBS.filter(p => (p.topics || []).includes(key)).length;
+  if (!n) return;
+  const b = document.createElement('button');
+  b.textContent = `${name} · ${n}`;
+  b.addEventListener('click', () => setTopic(key, b));
+  chips.appendChild(b);
+});
+function setTopic(key, btn) {
+  chips.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.mount').forEach(m =>
+    m.classList.toggle('mute', key !== null && !m.dataset.topics.split(' ').includes(key)));
+}
+const yearnav = document.getElementById('yearnav');
+yearnav.innerHTML = `<a href="#series-proofs">proofs</a> · ` +
+  YEARS_DESC.map(y => `<a href="#series-${y}">${String(y).slice(2)}</a>`).join(' · ');
+
+/* ---------- loupe ---------- */
+const veil = document.getElementById('veil');
+function openLoupe(p) {
+  const img = document.getElementById('loupeImg');
+  img.style.display = '';
+  img.src = ART(p.slug);
+  img.alt = `Illustration for “${p.title}”`;
+  document.getElementById('loupeCapVenue').textContent = venueShort(p);
+  document.getElementById('loupeCapYear').textContent = String(p.year) === 'Unpublished' ? 'PROOF' : p.year;
+  document.getElementById('loupeVenue').textContent = p.venue || p.status || '—';
+  document.getElementById('loupeCat').textContent = '№ ' + catalog.get(p);
+  document.getElementById('loupeTitle').textContent = p.title;
+  const authors = Array.isArray(p.authors) ? p.authors : [p.authors].filter(Boolean);
+  document.getElementById('loupeAuthors').innerHTML = authors.map(a => /garimella/i.test(a) ? `<b>${a}</b>` : a).join(', ');
+  const blurb = BLURBS[p.slug];
+  document.getElementById('loupeBlurb').textContent = blurb || '';
+  document.getElementById('loupeBlurb').style.display = blurb ? '' : 'none';
+  document.getElementById('loupeLinks').innerHTML =
+    (p.links || []).map(l => `<a href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('') +
+    `<a href="https://scholar.google.com/scholar?q=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">scholar ↗</a>`;
+  veil.classList.add('open');
+}
+document.getElementById('loupeClose').addEventListener('click', () => veil.classList.remove('open'));
+veil.addEventListener('click', (e) => { if (e.target === veil) veil.classList.remove('open'); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape') veil.classList.remove('open'); });
+</script>
+</body>
+</html>

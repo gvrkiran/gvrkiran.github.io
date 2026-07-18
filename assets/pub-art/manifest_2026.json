@@ -1,0 +1,62 @@
+{
+  "outdir": "2026",
+  "items": [
+    {
+      "slug": "group-rules-ai",
+      "title": "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
+      "metaphor": "A large community noticeboard holding one big scroll of rules, being written simultaneously by a human hand holding a pencil from the left and a friendly robot hand holding a pencil from the right, while a small crowd of round chat-bubble characters watches attentively from below like villagers at a town meeting."
+    },
+    {
+      "slug": "multimodal-vlm",
+      "title": "Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models",
+      "metaphor": "A tangled flood of mixed media — photographs, film strips, posters, memes and speech bubbles — pouring into a large triangular glass prism from the left, and emerging on the right as neat, orderly parallel sorted ribbons, like chaos refracted into order."
+    },
+    {
+      "slug": "betting-apps",
+      "title": "Quantifying the Illicit Ecosystem of Betting Apps in India",
+      "metaphor": "A giant smartphone drawn as a casino slot machine, its three reels showing a cricket ball, a coin and a pair of dice, with a fishing line and hook dangling a shiny coin above it as bait, while a stream of small coins drains out of the bottom of the phone into a dark hole."
+    },
+    {
+      "slug": "peer-factcheck",
+      "title": "Evaluating Community-Based and Peer Fact-Checking on WhatsApp",
+      "metaphor": "Two neighbors leaning over a garden fence made of chat bubbles, one passing a crumpled rumor note to the other, who inspects it through a large magnifying glass that reveals a bold checkmark inside the note, warm and friendly neighborhood scene."
+    },
+    {
+      "slug": "tv-disagreement",
+      "title": "Disagreement Is Disappearing on U.S. Cable Debate Shows",
+      "metaphor": "Two vintage television sets facing each other like boxers in a ring, each screen showing a talking head in profile, with a once-mighty lightning bolt between them now dissolving into faint dots and confetti, the spark of debate literally fading away."
+    },
+    {
+      "slug": "internet-shutdowns",
+      "title": "Personal Experience and Public Support for Internet Shutdowns in Rural India",
+      "metaphor": "A rural Indian landscape at dusk where a giant wifi symbol sets on the horizon like the sun, a cleanly cut telephone cable in the foreground sprouts a small flower from its cut end, and a family sits together under a large banyan tree playing a board game by lantern light."
+    },
+    {
+      "slug": "harmful-cascades",
+      "title": "Structural Dynamics of Harmful Content Dissemination on WhatsApp",
+      "metaphor": "A branching cascade diagram drawn as ink dropped into water: from a single phone at the top, one dark ink drop splits and spreads downward through many layers of round chat bubbles, reaching far deeper and wider than a small tidy light-colored drop cascading beside it."
+    },
+
+    {
+      "slug": "tv-disagreement",
+      "style": "inkwash",
+      "outfile": "variants/tv-disagreement__inkwash.png",
+      "quality": "medium",
+      "metaphor": "Two vintage television sets facing each other like boxers in a ring, each screen showing a talking head in profile, with a once-mighty lightning bolt between them now dissolving into faint dots, the spark of debate literally fading away."
+    },
+    {
+      "slug": "tv-disagreement",
+      "style": "poster",
+      "outfile": "variants/tv-disagreement__poster.png",
+      "quality": "medium",
+      "metaphor": "Two vintage television sets facing each other like boxers in a ring, each screen showing a talking head in profile, with a once-mighty lightning bolt between them now dissolving into faint dots, the spark of debate literally fading away."
+    },
+    {
+      "slug": "tv-disagreement",
+      "style": "woodcut",
+      "outfile": "variants/tv-disagreement__woodcut.png",
+      "quality": "medium",
+      "metaphor": "Two vintage television sets facing each other like boxers in a ring, each screen showing a talking head in profile, with a once-mighty lightning bolt between them now dissolving into faint dots, the spark of debate literally fading away."
+    }
+  ]
+}

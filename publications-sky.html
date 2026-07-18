@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications · The Observatory — Kiran Garimella</title>
+  <meta name="description" content="All publications by Kiran Garimella as a night sky of constellations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #0a0f2c;
+      --night-2: #131a3f;
+      --starlight: #f3ecd9;
+      --dim: rgba(243, 236, 217, 0.55);
+      --ember: #ff7a52;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display: 'Fraunces', Georgia, serif;
+      --mono: 'Space Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body { height: 100%; }
+    body { background: var(--night); color: var(--starlight); font-family: var(--serif); overflow: hidden; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+
+    #stars, #skySvg { position: fixed; inset: 0; width: 100%; height: 100%; }
+    #skySvg { z-index: 2; }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1rem 1.4rem; font-family: var(--mono); font-size: 0.78rem; color: var(--dim);
+    }
+    .topbar .brand { font-weight: 700; color: var(--starlight); text-decoration: none; letter-spacing: 0.06em; }
+    .topbar a:hover { color: var(--ember); }
+
+    .masthead {
+      position: fixed; top: 3.6rem; left: 1.4rem; z-index: 20; max-width: 350px; pointer-events: none;
+      background: radial-gradient(ellipse at top left, rgba(10,15,44,0.92) 55%, rgba(10,15,44,0));
+      padding: 0 2.2rem 2.2rem 0; border-radius: 8px;
+    }
+    .masthead .hint { margin-top: 0.7rem; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--dim); opacity: 0.9; }
+    .masthead .kicker { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ember); }
+    .masthead h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2rem, 4.5vw, 3.2rem); line-height: 1; margin: 0.4rem 0 0.6rem; }
+    .masthead p { font-size: 0.88rem; color: var(--dim); line-height: 1.5; }
+
+    /* legend */
+    .legend {
+      position: fixed; left: 1.4rem; bottom: 1.2rem; z-index: 20;
+      display: flex; flex-wrap: wrap; gap: 0.45rem; max-width: min(680px, 68vw);
+    }
+    .legend button {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+      border: 1px solid rgba(243,236,217,0.35); border-radius: 999px;
+      padding: 0.32rem 0.7rem; color: var(--dim);
+      transition: all 160ms;
+    }
+    .legend button:hover { border-color: var(--starlight); color: var(--starlight); }
+    .legend button.active { background: var(--starlight); color: var(--night); border-color: var(--starlight); }
+    .legend button .n { opacity: 0.6; }
+
+    .resetview {
+      position: fixed; right: 1.4rem; bottom: 1.2rem; z-index: 20; display: none;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid var(--ember); color: var(--ember); border-radius: 999px; padding: 0.4rem 0.9rem;
+    }
+    .resetview.show { display: block; }
+
+    /* svg styling */
+    .constellation path.link { fill: none; stroke: var(--starlight); stroke-opacity: 0.22; stroke-width: 1; }
+    .constellation .clabel {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+      fill: var(--dim); cursor: pointer;
+    }
+    .constellation .clabel:hover { fill: var(--ember); }
+    .star { cursor: pointer; }
+    .star circle.core { fill: var(--starlight); transition: r 140ms; }
+    .star circle.glow { fill: var(--starlight); opacity: 0.12; }
+    .star.is-2026 circle.core { fill: var(--ember); }
+    .star.is-2026 circle.glow { fill: var(--ember); opacity: 0.2; animation: pulse 2.6s ease-in-out infinite; }
+    .star.nebula circle.core { fill: none; stroke: var(--starlight); stroke-width: 1.2; stroke-dasharray: 2 3; }
+    @keyframes pulse { 50% { opacity: 0.42; } }
+    .constellation.dimmed { opacity: 0.13; transition: opacity 400ms; }
+    .constellation { transition: opacity 400ms; }
+
+    /* year axis */
+    .axis line { stroke: var(--starlight); stroke-opacity: 0.1; }
+    .axis text { font-family: var(--mono); font-size: 11px; fill: var(--dim); opacity: 0.7; }
+
+    /* tooltip */
+    .tooltip {
+      position: fixed; z-index: 50; pointer-events: none; max-width: 280px;
+      background: var(--starlight); color: var(--night);
+      padding: 0.55rem 0.75rem; font-size: 0.84rem; line-height: 1.35; border-radius: 2px;
+      opacity: 0; transform: translateY(4px); transition: opacity 140ms, transform 140ms;
+    }
+    .tooltip.show { opacity: 1; transform: translateY(0); }
+    .tooltip .tt-meta { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: #a4491f; display: block; margin-top: 0.3rem; }
+
+    /* dossier */
+    .dossier {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 40;
+      width: min(430px, 94vw); background: var(--night-2);
+      border-left: 1px solid rgba(243,236,217,0.25);
+      transform: translateX(102%); transition: transform 360ms cubic-bezier(.2,.8,.25,1);
+      display: flex; flex-direction: column; overflow-y: auto;
+      box-shadow: -18px 0 50px rgba(0,0,0,0.45);
+    }
+    .dossier.open { transform: translateX(0); }
+    .dossier .art { aspect-ratio: 1.25; background: var(--night); position: relative; overflow: hidden; flex: 0 0 auto; }
+    .dossier .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .dossier .art .placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column; gap: 0.6rem;
+      align-items: center; justify-content: center; color: var(--dim);
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 1rem;
+    }
+    .dossier .art .placeholder .glyph { font-size: 2.4rem; color: var(--starlight); }
+    .dossier .body { padding: 1.4rem 1.5rem 2rem; }
+    .dossier .chip { display: inline-block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid var(--ember); color: var(--ember); padding: 0.22rem 0.5rem; margin-right: 0.4rem; }
+    .dossier h2 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.18; margin: 0.9rem 0 0.55rem; }
+    .dossier .authors { font-size: 0.88rem; color: var(--dim); }
+    .dossier .authors b { color: var(--starlight); font-weight: 600; }
+    .dossier .links { margin-top: 1.1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .dossier .links a {
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid rgba(243,236,217,0.5); padding: 0.35rem 0.65rem; text-decoration: none;
+    }
+    .dossier .links a:hover { background: var(--starlight); color: var(--night); }
+    .dossier .close { position: absolute; top: 0.7rem; right: 0.9rem; font-family: var(--mono); font-size: 0.85rem; background: rgba(10,15,44,0.75); padding: 0.3rem 0.6rem; z-index: 2; }
+
+    @media (max-width: 760px) { .masthead p, .masthead .hint { display: none; } .legend { max-width: 92vw; } }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <svg id="skySvg" preserveAspectRatio="xMidYMid meet"></svg>
+
+  <div class="topbar">
+    <a class="brand" href="index.html">K.G.</a>
+    <span>mockup b — <a href="publications-lab.html">back to the lab</a></span>
+  </div>
+
+  <header class="masthead">
+    <span class="kicker">Publications · Design B</span>
+    <h1>The Observatory</h1>
+    <p>All <span id="pubCount">117</span> papers as one sky. Each research thread is a constellation; left to right is 2010 → 2027. Orange stars are this year's papers. The dotted cloud at the far right is the nebula — work under review, not yet a star.</p>
+    <p class="hint">hover a star · click for the dossier · click a constellation name to fly to it</p>
+  </header>
+  <nav class="legend" id="legend" aria-label="Constellations"></nav>
+  <button class="resetview" id="resetView">↩ whole sky</button>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <aside class="dossier" id="dossier" role="dialog" aria-label="Paper details">
+    <button class="close" id="dossierClose">esc</button>
+    <div class="art" id="dossierArt"></div>
+    <div class="body">
+      <div id="dossierChips"></div>
+      <h2 id="dossierTitle"></h2>
+      <p class="authors" id="dossierAuthors"></p>
+      <div class="links" id="dossierLinks"></div>
+    </div>
+  </aside>
+
+<script src="data.js"></script>
+<script>
+/* ---------- constellation taxonomy (priority order, first match wins) ---------- */
+const TOPICS = [
+  { key: 'whatsapp',  name: 'WhatsApp & Encrypted Messaging', test: /whatsapp|encrypted|tipline|forwarding|viral content/i },
+  { key: 'misinfo',   name: 'Misinformation & Harmful Speech', test: /misinformation|fact[- ]?check|fake news|debunk|rumor|misinfo|hate|fear speech|toxic/i },
+  { key: 'polar',     name: 'Polarization & Politics',        test: /polariz|partisan|political|controvers|election|ideolog|islamist|debate|disagreement/i },
+  { key: 'ai',        name: 'AI & Society',                   test: /\bAI\b|artificial intelligence|\bLLM\b|GPT|chatbot|generative|vision.?language/i },
+  { key: 'health',    name: 'Health & Vaccines',              test: /vaccin|covid|health/i },
+  { key: 'media',     name: 'Media & Attention',              test: /news|television|cable|podcast|attention|coverage|advertis|trending|media/i },
+  { key: 'methods',   name: 'Data, Networks & Methods',       test: /network|cluster|algorithm|dataset|data donation|tool|detect|predict|embedding|graph|itemset|query|method|measur|quantify|cascade|cloud/i },
+  { key: 'platforms', name: 'Platforms & Behavior',           test: /.*/ },
+];
+function classify(p) {
+  const hay = p.title + ' ' + (p.venue || '');
+  return TOPICS.find(t => t.test.test(hay));
+}
+
+/* 2026 papers with generated art */
+const ART_BY_TITLE = {
+  'Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation': 'group-rules-ai',
+  'Large-Scale Multimodal Content Analysis and Annotation with Vision-Language Models': 'multimodal-vlm',
+  'Quantifying the Illicit Ecosystem of Betting Apps in India': 'betting-apps',
+  'Evaluating Community-Based and Peer Fact-Checking on WhatsApp': 'peer-factcheck',
+  'Disagreement Is Disappearing on U.S. Cable Debate Shows': 'tv-disagreement',
+  'Personal Experience and Public Support for Internet Shutdowns in Rural India': 'internet-shutdowns',
+  'Structural Dynamics of Harmful Content Dissemination on WhatsApp': 'harmful-cascades',
+};
+
+/* ---------- background canvas ---------- */
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let bgStars = [];
+function sizeCanvas() {
+  canvas.width = innerWidth * devicePixelRatio;
+  canvas.height = innerHeight * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  bgStars = Array.from({ length: 240 }, () => ({
+    x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+    r: Math.random() * 1.1 + 0.2, ph: Math.random() * Math.PI * 2, sp: 0.4 + Math.random() * 1.2,
+  }));
+}
+sizeCanvas(); addEventListener('resize', sizeCanvas);
+let meteor = null, lastMeteor = 0;
+function drawBg(t) {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  const g = ctx.createLinearGradient(0, 0, innerWidth, innerHeight);
+  g.addColorStop(0, 'rgba(46,58,120,0.35)'); g.addColorStop(0.5, 'rgba(10,15,44,0)'); g.addColorStop(1, 'rgba(88,52,60,0.22)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, innerWidth, innerHeight);
+  ctx.fillStyle = '#f3ecd9';
+  bgStars.forEach(s => {
+    ctx.globalAlpha = 0.25 + 0.5 * (0.5 + 0.5 * Math.sin(t / 900 * s.sp + s.ph));
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  if (!meteor && t - lastMeteor > 6500 && Math.random() < 0.02) {
+    meteor = { x: Math.random() * innerWidth * 0.7 + innerWidth * 0.2, y: Math.random() * innerHeight * 0.3, vx: -4.5, vy: 2.2, life: 1 };
+  }
+  if (meteor) {
+    meteor.x += meteor.vx * 3; meteor.y += meteor.vy * 3; meteor.life -= 0.03;
+    ctx.strokeStyle = `rgba(243,236,217,${Math.max(0, meteor.life) * 0.8})`;
+    ctx.lineWidth = 1.4; ctx.beginPath();
+    ctx.moveTo(meteor.x, meteor.y); ctx.lineTo(meteor.x + 42, meteor.y - 20); ctx.stroke();
+    if (meteor.life <= 0) { meteor = null; lastMeteor = t; }
+  }
+  requestAnimationFrame(drawBg);
+}
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(drawBg);
+else { drawBg(0); }
+
+/* ---------- build the sky ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('skySvg');
+const VW = 1680, VH = 940;
+const HOME = [0, 0, VW, VH];
+svg.setAttribute('viewBox', HOME.join(' '));
+
+const pubs = (window.PUBLICATIONS || []).map((p, i) => {
+  const yearNum = parseInt(p.year, 10);
+  const topic = classify(p);
+  return { ...p, idx: i, yearNum: isNaN(yearNum) ? null : yearNum, topic };
+});
+
+const X0 = 150, X1 = VW - 110, Y0 = 130, Y1 = VH - 110;
+const yearX = (y) => X0 + (Math.min(2028, Math.max(2010, y)) - 2010) / (2028 - 2010) * (X1 - X0);
+function mul32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+/* year axis */
+const axis = document.createElementNS(NS, 'g');
+axis.classList.add('axis');
+for (let y = 2010; y <= 2027; y += 2) {
+  const x = yearX(y);
+  const l = document.createElementNS(NS, 'line');
+  l.setAttribute('x1', x); l.setAttribute('x2', x); l.setAttribute('y1', Y0 - 40); l.setAttribute('y2', Y1 + 40);
+  axis.appendChild(l);
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', x); t.setAttribute('y', VH - 46); t.setAttribute('text-anchor', 'middle');
+  t.textContent = y;
+  axis.appendChild(t);
+}
+const tN = document.createElementNS(NS, 'text');
+tN.setAttribute('x', yearX(2028)); tN.setAttribute('y', VH - 46); tN.setAttribute('text-anchor', 'middle');
+tN.textContent = 'nebula';
+axis.appendChild(tN);
+svg.appendChild(axis);
+
+/* place stars */
+const groups = {};
+const bandH = (Y1 - Y0) / TOPICS.length;
+TOPICS.forEach((t, ti) => {
+  const g = document.createElementNS(NS, 'g');
+  g.classList.add('constellation');
+  g.dataset.key = t.key;
+  svg.appendChild(g);
+  groups[t.key] = { el: g, topic: t, stars: [], ti };
+});
+
+pubs.forEach(p => {
+  const grp = groups[p.topic.key];
+  const rng = mul32(p.idx * 7919 + 13);
+  const isNebula = p.yearNum === null;
+  const x = isNebula ? yearX(2028) + (rng() - 0.5) * 70 : yearX(p.yearNum) + (rng() - 0.5) * 46;
+  const yBase = Y0 + grp.ti * bandH + bandH / 2;
+  const y = yBase + Math.sin(x * 0.0045 + grp.ti * 1.7) * bandH * 0.24 + (rng() - 0.5) * bandH * 0.5;
+  grp.stars.push({ p, x, y, isNebula });
+});
+
+const tooltip = document.getElementById('tooltip');
+let activeKey = null, zoomed = false;
+
+Object.values(groups).forEach(grp => {
+  /* connecting line through years */
+  const pts = grp.stars.slice().sort((a, b) => a.x - b.x);
+  if (pts.length > 1) {
+    const d = pts.map((s, i) => (i === 0 ? `M ${s.x} ${s.y}` : `L ${s.x} ${s.y}`)).join(' ');
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', d);
+    path.classList.add('link');
+    grp.el.appendChild(path);
+  }
+  /* label anchored to the first star clear of the masthead zone (top-left) */
+  if (pts.length) {
+    const anchor = pts.find(s => s.x > 560 || s.y > 470) || pts[pts.length - 1];
+    const label = document.createElementNS(NS, 'text');
+    label.classList.add('clabel');
+    label.setAttribute('x', Math.min(anchor.x - 12, VW - 420));
+    label.setAttribute('y', anchor.y - 18);
+    label.textContent = grp.topic.name;
+    label.addEventListener('click', () => flyTo(grp));
+    grp.el.appendChild(label);
+  }
+  /* stars */
+  grp.stars.forEach(s => {
+    const g = document.createElementNS(NS, 'g');
+    g.classList.add('star');
+    if (String(s.p.year) === '2026') g.classList.add('is-2026');
+    if (s.isNebula) g.classList.add('nebula');
+    const r = s.isNebula ? 4.5 : 2.6 + Math.max(0, (s.p.yearNum - 2010)) * 0.22;
+    const glow = document.createElementNS(NS, 'circle');
+    glow.setAttribute('cx', s.x); glow.setAttribute('cy', s.y); glow.setAttribute('r', r * 3.1);
+    glow.classList.add('glow');
+    const core = document.createElementNS(NS, 'circle');
+    core.setAttribute('cx', s.x); core.setAttribute('cy', s.y); core.setAttribute('r', r);
+    core.classList.add('core');
+    g.appendChild(glow); g.appendChild(core);
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', s.p.title);
+    g.addEventListener('mouseenter', () => {
+      core.setAttribute('r', r * 1.9);
+      tooltip.innerHTML = `${s.p.title}<span class="tt-meta">${s.p.venue || ''} · ${s.p.year}</span>`;
+      tooltip.classList.add('show');
+    });
+    g.addEventListener('mousemove', (e) => {
+      tooltip.style.left = Math.min(innerWidth - 300, e.clientX + 14) + 'px';
+      tooltip.style.top = Math.max(8, e.clientY - tooltip.offsetHeight - 12) + 'px';
+    });
+    g.addEventListener('mouseleave', () => { core.setAttribute('r', r); tooltip.classList.remove('show'); });
+    g.addEventListener('click', () => openDossier(s.p));
+    g.addEventListener('keydown', (e) => { if (e.key === 'Enter') openDossier(s.p); });
+    grp.el.appendChild(g);
+  });
+});
+
+/* ---------- legend / filters ---------- */
+document.getElementById('pubCount').textContent = pubs.length;
+const legend = document.getElementById('legend');
+TOPICS.forEach(t => {
+  const n = groups[t.key].stars.length;
+  if (!n) return;
+  const b = document.createElement('button');
+  b.innerHTML = `${t.name} <span class="n">· ${n}</span>`;
+  b.addEventListener('click', () => {
+    activeKey = activeKey === t.key ? null : t.key;
+    legend.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+    if (activeKey) b.classList.add('active');
+    Object.values(groups).forEach(g =>
+      g.el.classList.toggle('dimmed', activeKey !== null && g.topic.key !== activeKey));
+  });
+  legend.appendChild(b);
+});
+
+/* ---------- fly-to zoom ---------- */
+const resetBtn = document.getElementById('resetView');
+function animateViewBox(to, ms = 700) {
+  const from = svg.getAttribute('viewBox').split(' ').map(Number);
+  const t0 = performance.now();
+  const ease = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  function frame(now) {
+    const k = ease(Math.min(1, (now - t0) / ms));
+    const v = from.map((f, i) => f + (to[i] - f) * k);
+    svg.setAttribute('viewBox', v.join(' '));
+    if (k < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+function flyTo(grp) {
+  const xs = grp.stars.map(s => s.x), ys = grp.stars.map(s => s.y);
+  const pad = 120;
+  let x = Math.min(...xs) - pad, y = Math.min(...ys) - pad;
+  let w = Math.max(...xs) - Math.min(...xs) + pad * 2, h = Math.max(...ys) - Math.min(...ys) + pad * 2;
+  const ratio = VW / VH;
+  if (w / h > ratio) { const nh = w / ratio; y -= (nh - h) / 2; h = nh; }
+  else { const nw = h * ratio; x -= (nw - w) / 2; w = nw; }
+  animateViewBox([x, y, w, h]);
+  zoomed = true;
+  resetBtn.classList.add('show');
+  Object.values(groups).forEach(g => g.el.classList.toggle('dimmed', g !== grp));
+}
+function resetView() {
+  animateViewBox(HOME);
+  zoomed = false;
+  resetBtn.classList.remove('show');
+  Object.values(groups).forEach(g => g.el.classList.remove('dimmed'));
+  legend.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+  activeKey = null;
+}
+resetBtn.addEventListener('click', resetView);
+
+/* ---------- dossier ---------- */
+const dossier = document.getElementById('dossier');
+function openDossier(p) {
+  const art = document.getElementById('dossierArt');
+  const slug = ART_BY_TITLE[p.title];
+  if (slug) {
+    art.innerHTML = `<img src="assets/pub-art/2026/${slug}.png" alt="Illustration for “${p.title}”">`;
+  } else {
+    art.innerHTML = `<div class="placeholder"><span class="glyph">✶</span>
+      <span>illustration arrives when<br>the full sky is charted</span></div>`;
+  }
+  document.getElementById('dossierChips').innerHTML =
+    `<span class="chip">${p.topic.name}</span><span class="chip">${p.year}</span>`;
+  document.getElementById('dossierTitle').textContent = p.title;
+  const authors = Array.isArray(p.authors) ? p.authors : [p.authors];
+  document.getElementById('dossierAuthors').innerHTML =
+    authors.map(a => /garimella/i.test(a) ? `<b>${a}</b>` : a).join(', ') +
+    (p.venue ? ` · <em>${p.venue}</em>` : '');
+  document.getElementById('dossierLinks').innerHTML =
+    (p.links || []).map(l => `<a href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('') +
+    `<a href="https://scholar.google.com/scholar?q=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">scholar ↗</a>`;
+  dossier.classList.add('open');
+}
+function closeDossier() { dossier.classList.remove('open'); }
+document.getElementById('dossierClose').addEventListener('click', closeDossier);
+addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDossier(); if (zoomed) resetView(); }
+});
+</script>
+</body>
+</html>

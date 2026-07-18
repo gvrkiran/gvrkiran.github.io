@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications · The Library — Kiran Garimella</title>
+  <meta name="description" content="All publications by Kiran Garimella as a wall of bookshelves, one shelf per year." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f7f1e3;
+      --paper-2: #efe7d2;
+      --ink: #22306b;
+      --ink-soft: rgba(34, 48, 107, 0.62);
+      --ember: #d9482b;
+      --wood: #e3d3b0;
+      --wood-edge: #c9b285;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display: 'Fraunces', Georgia, serif;
+      --mono: 'Space Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1rem 1.4rem; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft);
+      background: linear-gradient(180deg, var(--paper) 62%, transparent);
+    }
+    .topbar a:hover { color: var(--ember); }
+    .topbar .brand { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; }
+    .topbar .switcher b { color: var(--ember); font-weight: 700; }
+
+    .masthead { max-width: 980px; margin: 0 auto; text-align: center; padding: 6.4rem 1.2rem 0.6rem; }
+    .masthead .kicker { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); }
+    .masthead h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2.4rem, 6vw, 4rem); margin: 0.5rem 0 0.7rem; }
+    .masthead p { max-width: 60ch; margin: 0 auto; color: var(--ink-soft); font-size: 1rem; }
+
+    /* topic chips as catalog cards */
+    .chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; padding: 1.1rem 1rem 2rem; }
+    .chips button {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
+      border: 1.5px solid var(--ink-soft); border-radius: 3px; padding: 0.32rem 0.7rem 0.32rem 1.5rem;
+      color: var(--ink); position: relative; background: #fdfaf1;
+      box-shadow: 1.5px 1.5px 0 rgba(34,48,107,0.18);
+    }
+    .chips button::before { content: ""; position: absolute; left: 0.55rem; top: 50%; transform: translateY(-50%); width: 9px; height: 9px; border-radius: 2px; background: var(--sw, var(--ink)); }
+    .chips button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .chips button:hover:not(.active) { border-color: var(--ink); }
+
+    /* ---------- the wall ---------- */
+    .wall { max-width: 1180px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+    /* new arrivals cart (under review) */
+    .cart-row {
+      display: grid; grid-template-columns: 150px 1fr; gap: 1.6rem; align-items: center;
+      border: 1.5px dashed var(--ink-soft); border-radius: 6px;
+      padding: 1.2rem 1.4rem; margin-bottom: 2.6rem; background: rgba(253,250,241,0.6);
+    }
+    .cart-row svg { width: 100%; max-width: 150px; height: auto; margin: 0 auto; display: block; }
+    .cart-row h2 { font-family: var(--display); font-size: 1.2rem; font-weight: 900; margin-bottom: 0.2rem; }
+    .cart-row .sub { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.7rem; }
+    .cart-list { list-style: none; padding: 0; columns: 2; column-gap: 2rem; }
+    .cart-list li { break-inside: avoid; font-size: 0.85rem; padding: 0.28rem 0; border-bottom: 1px dotted rgba(34,48,107,0.3); cursor: pointer; }
+    .cart-list li:hover { color: var(--ember); }
+    @media (max-width: 800px) { .cart-row { grid-template-columns: 1fr; } .cart-list { columns: 1; } }
+
+    /* shelves */
+    .shelf { position: relative; margin: 0 0 2.4rem; }
+    .shelf .row {
+      display: flex; align-items: flex-end; flex-wrap: wrap; gap: 3px;
+      padding: 0 1.2rem; min-height: 120px;
+    }
+    .shelf .board {
+      height: 14px; border-radius: 3px;
+      background: linear-gradient(180deg, var(--wood), var(--wood-edge));
+      box-shadow: 0 3px 0 rgba(34,48,107,0.22), 0 10px 14px -8px rgba(34,48,107,0.3);
+    }
+    .shelf .plate {
+      position: absolute; right: 0.4rem; top: -0.4rem; transform: translateY(-100%);
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--ink-soft);
+    }
+    .shelf .plate b { color: var(--ink); font-weight: 700; }
+
+    .book {
+      position: relative; border-radius: 2px 2px 0 0;
+      background: var(--bc, var(--ink)); color: var(--paper);
+      width: var(--bw, 30px); height: var(--bh, 165px);
+      display: flex; align-items: stretch; justify-content: center;
+      transition: transform 170ms cubic-bezier(.2,.8,.3,1.15), box-shadow 170ms;
+      box-shadow: inset -3px 0 5px rgba(0,0,0,0.22), inset 2px 0 3px rgba(255,255,255,0.14);
+      flex: 0 0 auto;
+    }
+    .book::before, .book::after {
+      content: ""; position: absolute; left: 3px; right: 3px; height: 2px;
+      background: rgba(247,241,227,0.55); border-radius: 1px;
+    }
+    .book::before { top: 9px; } .book::after { bottom: 10px; }
+    .book .bt {
+      writing-mode: vertical-rl; font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.04em;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      padding: 16px 0 16px; max-height: 100%; opacity: 0.94;
+    }
+    .book:hover, .book:focus-visible { transform: translateY(-12px); box-shadow: inset -3px 0 5px rgba(0,0,0,0.22), 0 14px 16px -10px rgba(34,48,107,0.5); z-index: 4; }
+    .book.gap { margin-left: 16px; }
+    .book.lean { transform: rotate(-5deg) translateY(-2px); transform-origin: bottom right; margin-left: 8px; }
+    .book.lean:hover { transform: rotate(0deg) translateY(-12px); }
+    .book.mute { opacity: 0.18; filter: saturate(0.25); pointer-events: none; }
+    .book.has-art .bt { font-weight: 700; }
+
+    /* floating cover preview */
+    .peek {
+      position: fixed; z-index: 50; width: 220px; pointer-events: none;
+      background: #fdfaf1; border: 2px solid var(--ink); box-shadow: 7px 7px 0 rgba(34,48,107,0.25);
+      opacity: 0; transform: translateY(6px); transition: opacity 140ms, transform 140ms;
+    }
+    .peek.show { opacity: 1; transform: translateY(0); }
+    .peek .cover { aspect-ratio: 1; overflow: hidden; border-bottom: 2px solid var(--ink); }
+    .peek .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .peek .ph {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      background: repeating-linear-gradient(45deg, var(--pc, var(--ink)), var(--pc, var(--ink)) 7px, rgba(0,0,0,0.14) 7px, rgba(0,0,0,0.14) 14px);
+    }
+    .peek .ph span {
+      width: 74px; height: 74px; border-radius: 50%; background: var(--paper); color: var(--pc, var(--ink));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--display); font-weight: 900; font-size: 2rem;
+    }
+    .peek .pbody { padding: 0.55rem 0.7rem 0.65rem; }
+    .peek .pt { font-size: 0.8rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .peek .pm { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-top: 0.3rem; }
+
+    /* modal (same family as orchard card) */
+    .veil { position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center; background: rgba(34,48,107,0.32); backdrop-filter: blur(6px); padding: 1.2rem; }
+    .veil.open { display: flex; }
+    .card {
+      position: relative; background: var(--paper); width: min(860px, 96vw); max-height: 88vh; overflow: auto;
+      display: grid; grid-template-columns: minmax(0, 340px) 1fr;
+      border: 2px solid var(--ink); box-shadow: 10px 10px 0 rgba(34,48,107,0.28);
+    }
+    .card .art { background: var(--paper-2); border-right: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; min-height: 280px; }
+    .card .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card .art .ph { width: 100%; height: 100%; min-height: 280px; display: flex; align-items: center; justify-content: center;
+      background: repeating-linear-gradient(45deg, var(--pc, var(--ink)), var(--pc, var(--ink)) 9px, rgba(0,0,0,0.14) 9px, rgba(0,0,0,0.14) 18px); }
+    .card .art .ph span { width: 110px; height: 110px; border-radius: 50%; background: var(--paper); color: var(--pc, var(--ink)); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 900; font-size: 3rem; }
+    .card .body { padding: 1.6rem 1.7rem 1.5rem; }
+    .card .chiprow { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .card .venue-chip { display: inline-block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper); background: var(--ember); padding: 0.24rem 0.5rem; }
+    .card .topic-chip { display: inline-block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); border: 1.5px solid var(--ink); padding: 0.2rem 0.5rem; }
+    .card h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; line-height: 1.16; margin: 0.85rem 0 0.55rem; }
+    .card .authors { font-size: 0.92rem; color: var(--ink-soft); }
+    .card .authors b { color: var(--ink); font-weight: 600; }
+    .card .links { margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .card .links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border: 1.5px solid var(--ink); padding: 0.38rem 0.7rem; }
+    .card .links a:hover { background: var(--ink); color: var(--paper); }
+    .card-close { position: absolute; top: 0.8rem; right: 1rem; font-family: var(--mono); font-size: 0.8rem; color: var(--paper); background: var(--ink); padding: 0.35rem 0.6rem; z-index: 2; }
+    @media (max-width: 700px) { .card { grid-template-columns: 1fr; } .card .art { border-right: 0; border-bottom: 2px solid var(--ink); max-height: 40vh; } }
+
+    .footnote { text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft); padding: 0 1rem 4rem; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="index.html">K.G.</a>
+    <span class="switcher"><a href="index.html">← home</a> · <a href="publications.html?pub=2">orchard</a> · <a href="publications.html?pub=3">stamps</a> · <b>library</b> · <a href="publications.html?pub=1">classic</a> · <a href="publications.html?reroll=1" title="switch to a random design">↻ shuffle</a></span>
+  </div>
+
+  <header class="masthead">
+    <span class="kicker">Publications · The Library</span>
+    <h1>The Library</h1>
+    <p>The whole archive on one wall — a shelf per year, a book per paper, spine colors by topic. Pull a book (hover) to see its cover; open it (click) for the details. New work waits on the arrivals cart.</p>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="Filter by topic"></nav>
+
+  <main class="wall" id="wall">
+    <section class="cart-row" id="cartRow">
+      <svg viewBox="0 0 150 110" aria-hidden="true">
+        <g stroke="#22306b" stroke-width="2.5" fill="none">
+          <path d="M12 78 L138 78" />
+          <path d="M20 78 L20 30 L130 30 L130 78" />
+          <circle cx="42" cy="94" r="9" fill="#f7f1e3"/>
+          <circle cx="108" cy="94" r="9" fill="#f7f1e3"/>
+        </g>
+        <g transform="translate(34 18)">
+          <rect x="4" y="14" width="76" height="34" rx="1" fill="#fdfaf1" stroke="#22306b" stroke-width="2" transform="rotate(-4 42 31)"/>
+          <rect x="6" y="8" width="76" height="34" rx="1" fill="#fdfaf1" stroke="#22306b" stroke-width="2" transform="rotate(2 44 25)"/>
+          <rect x="2" y="2" width="76" height="34" rx="1" fill="#fdfaf1" stroke="#22306b" stroke-width="2"/>
+          <text x="40" y="22" text-anchor="middle" style="font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:1px" fill="#d9482b" transform="rotate(-3 40 19)">UNDER REVIEW</text>
+        </g>
+      </svg>
+      <div>
+        <h2>New arrivals</h2>
+        <p class="sub">under review · not yet shelved</p>
+        <ul class="cart-list" id="cartList"></ul>
+      </div>
+    </section>
+    <!-- shelves injected here -->
+  </main>
+
+  <p class="footnote" id="footNote"></p>
+
+  <div class="peek" id="peek">
+    <div class="cover" id="peekCover"></div>
+    <div class="pbody"><p class="pt" id="peekTitle"></p><p class="pm" id="peekMeta"></p></div>
+  </div>
+
+  <div class="veil" id="veil" role="dialog" aria-modal="true">
+    <div class="card">
+      <button class="card-close" id="cardClose">esc</button>
+      <div class="art" id="cardArt"></div>
+      <div class="body">
+        <div class="chiprow" id="cardChips"></div>
+        <h2 id="cardTitle"></h2>
+        <p class="authors" id="cardAuthors"></p>
+        <div class="links" id="cardLinks"></div>
+      </div>
+    </div>
+  </div>
+
+<script src="data.js"></script>
+<script>
+/* ---------- topics: hand-tagged in data.js (primary first); colors here ---------- */
+const TOPICS = [
+  { key: 'whatsapp',  name: 'WhatsApp',                 color: '#22306b' },
+  { key: 'misinfo',   name: 'Misinformation & Harm',    color: '#d9482b' },
+  { key: 'polar',     name: 'Politics & Polarization',  color: '#c98a1b' },
+  { key: 'ai',        name: 'AI & Society',             color: '#3e6b4f' },
+  { key: 'health',    name: 'Health',                   color: '#2f7a72' },
+  { key: 'media',     name: 'Media & Attention',        color: '#7a3e57' },
+  { key: 'methods',   name: 'Data & Methods',           color: '#3f6a80' },
+  { key: 'platforms', name: 'Platforms & Behavior',     color: '#b0703c' },
+];
+const TOPIC_BY_KEY = Object.fromEntries(TOPICS.map(t => [t.key, t]));
+const classify = (p) => TOPIC_BY_KEY[(p.topics || [])[0]] || TOPICS[TOPICS.length - 1];
+
+const ART = (slug) => `assets/pub-art/papers/${slug}.webp`;
+
+/* deterministic per-title hash for spine variety */
+function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+const pubs = (window.PUBLICATIONS || []).map((p, i) => ({ ...p, idx: i, topic: classify(p), h: hash(p.title) }));
+const byYear = {};
+pubs.forEach(p => { const y = String(p.year); (byYear[y] = byYear[y] || []).push(p); });
+const shelfYears = Object.keys(byYear).filter(y => y !== 'Unpublished')
+  .sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+
+/* ---------- cart (under review) ---------- */
+const cartList = document.getElementById('cartList');
+(byYear['Unpublished'] || []).forEach(p => {
+  const li = document.createElement('li');
+  li.textContent = p.title;
+  li.addEventListener('click', () => openCard(p));
+  cartList.appendChild(li);
+});
+if (!(byYear['Unpublished'] || []).length) document.getElementById('cartRow').remove();
+
+/* ---------- shelves ---------- */
+const wall = document.getElementById('wall');
+const peek = document.getElementById('peek');
+let peekTimer = null;
+
+shelfYears.forEach(y => {
+  const shelf = document.createElement('section');
+  shelf.className = 'shelf';
+  const row = document.createElement('div');
+  row.className = 'row';
+  byYear[y].forEach((p, j) => {
+    const b = document.createElement('button');
+    b.className = 'book';
+    const h = p.h;
+    const bh = 138 + (h % 44);
+    const bw = 25 + ((h >> 3) % 14);
+    b.style.setProperty('--bh', bh + 'px');
+    b.style.setProperty('--bw', bw + 'px');
+    b.style.setProperty('--bc', p.topic.color);
+    b.dataset.topic = p.topic.key;
+    if ((h >> 5) % 6 === 0 && j > 0) b.classList.add('gap');
+    if ((h >> 7) % 7 === 0 && j > 1) b.classList.add('lean');
+    b.innerHTML = `<span class="bt">${p.title}</span>`;
+    b.setAttribute('aria-label', p.title);
+    b.addEventListener('mouseenter', () => showPeek(p, b));
+    b.addEventListener('mouseleave', hidePeek);
+    b.addEventListener('focus', () => showPeek(p, b));
+    b.addEventListener('blur', hidePeek);
+    b.addEventListener('click', () => { hidePeek(); openCard(p); });
+    row.appendChild(b);
+  });
+  const board = document.createElement('div');
+  board.className = 'board';
+  const plate = document.createElement('div');
+  plate.className = 'plate';
+  plate.innerHTML = `<b>${y}</b> · ${byYear[y].length} ${byYear[y].length === 1 ? 'book' : 'books'}`;
+  shelf.appendChild(plate);
+  shelf.appendChild(row);
+  shelf.appendChild(board);
+  wall.appendChild(shelf);
+});
+
+document.getElementById('footNote').textContent =
+  `${pubs.length} papers shelved by year · spine color = topic (hand-tagged) · every book has a cover — pull one out`;
+
+/* ---------- topic chips ---------- */
+const chips = document.getElementById('chips');
+let activeTopic = null;
+const allBtn = document.createElement('button');
+allBtn.textContent = 'everything';
+allBtn.classList.add('active');
+allBtn.style.setProperty('--sw', 'var(--ink)');
+allBtn.addEventListener('click', () => setTopic(null, allBtn));
+chips.appendChild(allBtn);
+TOPICS.forEach(t => {
+  const n = pubs.filter(p => p.topic.key === t.key).length;
+  if (!n) return;
+  const b = document.createElement('button');
+  b.style.setProperty('--sw', t.color);
+  b.textContent = `${t.name} · ${n}`;
+  b.addEventListener('click', () => setTopic(t.key, b));
+  chips.appendChild(b);
+});
+function setTopic(key, btn) {
+  activeTopic = key;
+  chips.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.book').forEach(b =>
+    b.classList.toggle('mute', key !== null && b.dataset.topic !== key));
+}
+
+/* ---------- cover peek (art with patterned-placeholder fallback) ---------- */
+function coverHTML(p) {
+  const initial = p.title.replace(/^(A|An|The)\s+/i, '')[0].toUpperCase();
+  return `<img src="${ART(p.slug)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` +
+    `<div class="ph" style="--pc:${p.topic.color};display:none"><span>${initial}</span></div>`;
+}
+function showPeek(p, book) {
+  clearTimeout(peekTimer);
+  document.getElementById('peekCover').innerHTML = coverHTML(p);
+  document.getElementById('peekTitle').textContent = p.title;
+  document.getElementById('peekMeta').textContent = `${p.venue || ''} · ${p.year}`;
+  const r = book.getBoundingClientRect();
+  const w = 220, gap = 10;
+  let left = r.left + r.width / 2 - w / 2;
+  left = Math.max(8, Math.min(innerWidth - w - 8, left));
+  peek.style.left = left + 'px';
+  const above = r.top - gap - peek.offsetHeight;
+  peek.style.top = Math.max(8, above > 8 ? above : r.bottom + gap) + 'px';
+  peek.classList.add('show');
+  requestAnimationFrame(() => {
+    const above2 = r.top - gap - peek.offsetHeight;
+    peek.style.top = Math.max(8, above2 > 8 ? above2 : r.bottom + gap) + 'px';
+  });
+}
+function hidePeek() { peekTimer = setTimeout(() => peek.classList.remove('show'), 60); }
+
+/* ---------- modal ---------- */
+const veil = document.getElementById('veil');
+function openCard(p) {
+  const cardArt = document.getElementById('cardArt');
+  cardArt.innerHTML = coverHTML(p);
+  cardArt.style.setProperty('--pc', p.topic.color);
+  document.getElementById('cardChips').innerHTML =
+    `<span class="venue-chip">${(p.venue || p.status || '').toString()}</span><span class="topic-chip">${p.topic.name}</span><span class="topic-chip">${p.year}</span>`;
+  document.getElementById('cardTitle').textContent = p.title;
+  const authors = Array.isArray(p.authors) ? p.authors : [p.authors].filter(Boolean);
+  document.getElementById('cardAuthors').innerHTML =
+    authors.map(a => /garimella/i.test(a) ? `<b>${a}</b>` : a).join(', ');
+  document.getElementById('cardLinks').innerHTML =
+    (p.links || []).map(l => `<a href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('') +
+    `<a href="https://scholar.google.com/scholar?q=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">scholar ↗</a>`;
+  veil.classList.add('open');
+}
+document.getElementById('cardClose').addEventListener('click', () => veil.classList.remove('open'));
+veil.addEventListener('click', (e) => { if (e.target === veil) veil.classList.remove('open'); });
+addEventListener('keydown', (e) => { if (e.key === 'Escape') veil.classList.remove('open'); });
+</script>
+</body>
+</html>

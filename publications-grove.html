@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Publications · The Orchard — Kiran Garimella</title>
+  <meta name="description" content="All publications by Kiran Garimella — one tree per year, papers as fruit." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f7f1e3;
+      --paper-2: #efe7d2;
+      --ink: #22306b;
+      --ink-soft: rgba(34, 48, 107, 0.62);
+      --ember: #d9482b;
+      --leaf: #3e6b4f;
+      --pot: #b0703c;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display: 'Fraunces', Georgia, serif;
+      --mono: 'Space Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0.05; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1rem 1.4rem; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft);
+      background: linear-gradient(180deg, var(--paper) 55%, transparent);
+    }
+    .topbar a:hover { color: var(--ember); }
+    .topbar .brand { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: 0.06em; }
+    .topbar .switcher b { color: var(--ember); font-weight: 700; }
+
+    /* ---------- intro ---------- */
+    .intro { max-width: 900px; margin: 0 auto; padding: 7.5rem 1.5rem 2.5rem; text-align: center; }
+    .intro .kicker { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ember); }
+    .intro h1 { font-family: var(--display); font-weight: 900; font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 1.02; margin: 0.6rem 0 1rem; }
+    .intro p { max-width: 58ch; margin: 0 auto; font-size: 1.05rem; color: var(--ink-soft); }
+    .intro .hint { margin-top: 1.2rem; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .horizon-wrap { max-width: 1060px; margin: 1.5rem auto 0; padding: 0 1rem; }
+    .horizon-svg { width: 100%; height: auto; display: block; }
+    .horizon-note { text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft); padding: 0.4rem 0 0; }
+    .mini-tree { cursor: pointer; }
+    .mini-tree text { font-family: var(--mono); font-size: 11px; fill: var(--ink-soft); }
+    .mini-tree .count { font-size: 9px; fill: var(--ember); opacity: 0; transition: opacity 160ms; }
+    .mini-tree:hover .count { opacity: 1; }
+    .mini-tree.is-current text { fill: var(--ember); font-weight: 700; }
+
+    /* ---------- greenhouse ---------- */
+    .greenhouse { max-width: 980px; margin: 0 auto; padding: 3rem 1.4rem 4.5rem; }
+    .greenhouse .gh-head { text-align: center; margin-bottom: 2rem; }
+    .greenhouse h2 { font-family: var(--display); font-weight: 900; font-size: 2rem; }
+    .greenhouse .gh-sub { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); margin-top: 0.4rem; }
+    .gh-frame {
+      border: 2.5px solid var(--leaf); border-radius: 14px 14px 6px 6px; position: relative;
+      padding: 2.6rem 1.6rem 1.8rem;
+      background: linear-gradient(180deg, rgba(62,107,79,0.06), rgba(62,107,79,0.02));
+    }
+    .gh-frame::before { /* roof ridge */
+      content: ""; position: absolute; left: -2.5px; right: -2.5px; top: -16px; height: 16px;
+      border: 2.5px solid var(--leaf); border-bottom: none; border-radius: 14px 14px 0 0;
+      background: repeating-linear-gradient(90deg, transparent 0 26px, rgba(62,107,79,0.25) 26px 28px);
+    }
+    .gh-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem 1rem; }
+    @media (max-width: 860px) { .gh-grid { grid-template-columns: repeat(2, 1fr); } }
+    .pot { text-align: center; cursor: pointer; opacity: 0; transform: translateY(14px); transition: opacity 500ms, transform 500ms; }
+    .pot.sprout { opacity: 1; transform: none; }
+    .pot .bud {
+      width: 76px; height: 76px; border-radius: 50%; margin: 0 auto; overflow: hidden;
+      border: 2.5px solid var(--leaf); background: var(--paper-2); position: relative;
+    }
+    .pot .bud img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pot .bud .no-art { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); color: var(--leaf); font-size: 1.2rem; }
+    .pot .stemline { width: 2.5px; height: 16px; background: var(--leaf); margin: 0 auto; }
+    .pot .terracotta { width: 46px; height: 26px; margin: 0 auto; background: var(--pot); border-radius: 0 0 8px 8px; position: relative; }
+    .pot .terracotta::before { content: ""; position: absolute; left: -5px; right: -5px; top: 0; height: 8px; background: var(--pot); border-radius: 2px; }
+    .pot p { font-size: 0.78rem; line-height: 1.25; margin-top: 0.55rem; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .pot:hover .bud { border-color: var(--ember); }
+
+    /* ---------- year scenes ---------- */
+    .runway { position: relative; }
+    .scene { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+    .scene svg.tree { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .year-plate {
+      position: absolute; top: 4.4rem; left: 1.6rem; z-index: 5;
+      font-family: var(--display); font-weight: 900; font-size: clamp(3rem, 9vw, 6.2rem);
+      line-height: 0.9; color: var(--ink); opacity: 0.92;
+    }
+    .year-plate small { display: block; font-family: var(--mono); font-weight: 400; font-size: 0.78rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ember); margin-top: 0.7rem; }
+    .ripen-counter { position: absolute; left: 1.6rem; bottom: 1.4rem; z-index: 5; font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+    .scroll-cue {
+      position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); z-index: 5;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft);
+      transition: opacity 400ms;
+    }
+    .scroll-cue::after { content: "↓"; display: block; text-align: center; animation: bob 1.6s ease-in-out infinite; }
+    @keyframes bob { 50% { transform: translateY(5px); } }
+
+    .ledger {
+      position: absolute; right: 1.4rem; top: 50%; transform: translateY(-50%); z-index: 5;
+      width: min(300px, 28vw); display: flex; flex-direction: column; gap: 0.32rem; max-height: 84vh; overflow: hidden;
+    }
+    .ledger h3 { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.35rem; }
+    .ledger button {
+      text-align: left; font-family: var(--serif); font-size: 0.83rem; line-height: 1.28;
+      color: var(--ink); opacity: 0.18; transition: opacity 500ms, color 160ms;
+      display: flex; gap: 0.5rem; align-items: baseline;
+    }
+    .ledger button .dot { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ember); background: transparent; transition: background 400ms; position: relative; top: -1px; }
+    .ledger button.ripe { opacity: 1; }
+    .ledger button.ripe .dot { background: var(--ember); }
+    .ledger button.ripe:hover { color: var(--ember); }
+    @media (max-width: 900px) { .ledger { display: none; } }
+
+    .tree path.branch { fill: none; stroke: var(--ink); stroke-linecap: round; }
+    .tree .leaf { fill: var(--leaf); opacity: 0; }
+    .tree .leaf.ember { fill: var(--ember); }
+    .tree g.fruit { cursor: pointer; opacity: 0; }
+    .tree g.fruit .halo { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+    .tree g.fruit .rim { fill: none; stroke: var(--ember); stroke-width: 2.5; }
+    .tree g.fruit .stem { stroke: var(--ink); stroke-width: 2.5; fill: none; }
+    .tree g.fruit:hover .rim { stroke-width: 4; }
+    .tree g.fruit.picked .rim { stroke-dasharray: 4 6; }
+    .tree.grown .canopy { animation: sway 9s ease-in-out infinite alternate; transform-origin: var(--sway-origin, 50% 95%); }
+    @keyframes sway { from { transform: rotate(-0.35deg); } to { transform: rotate(0.5deg); } }
+
+    .tooltip {
+      position: fixed; z-index: 50; pointer-events: none; max-width: 260px;
+      background: var(--ink); color: var(--paper); padding: 0.5rem 0.7rem;
+      font-family: var(--serif); font-size: 0.82rem; line-height: 1.35;
+      border-radius: 2px; opacity: 0; transform: translateY(4px); transition: opacity 140ms, transform 140ms;
+    }
+    .tooltip.show { opacity: 1; transform: translateY(0); }
+    .tooltip .tt-venue { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: #f0b7a6; display: block; margin-top: 0.25rem; }
+
+    /* ---------- detail card ---------- */
+    .veil {
+      position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center;
+      background: rgba(34, 48, 107, 0.32); backdrop-filter: blur(6px); padding: 1.2rem;
+    }
+    .veil.open { display: flex; }
+    .card {
+      background: var(--paper); width: min(860px, 96vw); max-height: 88vh; overflow: auto;
+      display: grid; grid-template-columns: minmax(0, 340px) 1fr;
+      border: 2px solid var(--ink); box-shadow: 10px 10px 0 rgba(34,48,107,0.28);
+    }
+    .card .art { background: var(--paper-2); border-right: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; min-height: 260px; }
+    .card .art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card .art .no-art { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); text-align: center; padding: 1rem; }
+    .card .body { padding: 1.6rem 1.7rem 1.5rem; }
+    .card .venue-chip { display: inline-block; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper); background: var(--ember); padding: 0.25rem 0.55rem; margin-right: 0.4rem; }
+    .card .year-chip { display: inline-block; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); border: 1.5px solid var(--ink); padding: 0.22rem 0.5rem; }
+    .card h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1.15; margin: 0.8rem 0 0.6rem; }
+    .card .authors { font-size: 0.92rem; color: var(--ink-soft); }
+    .card .authors b { color: var(--ink); font-weight: 600; }
+    .card .blurb { margin-top: 0.9rem; font-size: 0.95rem; }
+    .card .links { margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .card .links a { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border: 1.5px solid var(--ink); padding: 0.4rem 0.7rem; }
+    .card .links a:hover { background: var(--ink); color: var(--paper); }
+    .card .nav-row { margin-top: 1.4rem; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); }
+    .card .nav-row button:hover { color: var(--ember); }
+    .card-close { position: absolute; top: 0.8rem; right: 1rem; font-family: var(--mono); font-size: 0.8rem; color: var(--paper); background: var(--ink); padding: 0.35rem 0.6rem; }
+    @media (max-width: 700px) { .card { grid-template-columns: 1fr; } .card .art { border-right: 0; border-bottom: 2px solid var(--ink); max-height: 40vh; } }
+
+    .outro { max-width: 720px; margin: 0 auto; padding: 5rem 1.5rem 7rem; text-align: center; }
+    .outro h2 { font-family: var(--display); font-weight: 900; font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .outro p { color: var(--ink-soft); }
+    .outro .mock-note { margin-top: 2rem; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em; color: var(--ember); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tree.grown .canopy, .scroll-cue::after { animation: none !important; }
+    }
+    body.static-mode .intro, body.static-mode .outro, body.static-mode .greenhouse { display: none; }
+    body.static-mode .runway { height: 100vh !important; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="index.html">K.G.</a>
+    <span class="switcher"><a href="index.html">← home</a> · <b>orchard</b> · <a href="publications.html?pub=3">stamps</a> · <a href="publications.html?pub=4">library</a> · <a href="publications.html?pub=1">classic</a> · <a href="publications.html?reroll=1" title="switch to a random design">↻ shuffle</a></span>
+  </div>
+
+  <section class="intro">
+    <span class="kicker">Publications · The Orchard</span>
+    <h1>The Orchard</h1>
+    <p>The whole archive as a walk through an orchard: one tree per year, grown from the actual papers. As you scroll, each branch grows and its paper ripens as a fruit you can pick. New work sprouts in the greenhouse first.</p>
+    <p class="hint">scroll to walk the orchard ↓ · or click a tree to jump to its year</p>
+    <div class="horizon-wrap">
+      <svg id="horizon" class="horizon-svg" viewBox="0 0 1060 150" role="img" aria-label="A row of small trees, one per year, sized by number of papers — click to jump to a year"></svg>
+      <p class="horizon-note" id="horizonNote"></p>
+    </div>
+  </section>
+
+  <section class="greenhouse" id="year-unpublished">
+    <div class="gh-head">
+      <h2>The Greenhouse</h2>
+      <p class="gh-sub" id="ghSub">under review · not yet planted</p>
+    </div>
+    <div class="gh-frame"><div class="gh-grid" id="ghGrid"></div></div>
+  </section>
+
+  <div id="orchard"><!-- year runways injected here --></div>
+
+  <section class="outro">
+    <h2>That’s the whole orchard</h2>
+    <p id="outroText"></p>
+    <p class="mock-note">every reload grows the trees a little differently · <a href="#top" onclick="scrollTo({top:0,behavior:'smooth'});return false" style="text-decoration:underline">back to the hilltop ↑</a></p>
+  </section>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <div class="veil" id="veil" role="dialog" aria-modal="true">
+    <div class="card" style="position:relative">
+      <button class="card-close" id="cardClose">esc</button>
+      <div class="art" id="cardArt"></div>
+      <div class="body">
+        <div><span class="venue-chip" id="cardVenue"></span><span class="year-chip" id="cardYear"></span></div>
+        <h2 id="cardTitle"></h2>
+        <p class="authors" id="cardAuthors"></p>
+        <p class="blurb" id="cardBlurb"></p>
+        <div class="links" id="cardLinks"></div>
+        <div class="nav-row">
+          <button id="prevFruit">← previous fruit</button>
+          <button id="nextFruit">next fruit →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="data.js"></script>
+<script>
+'use strict';
+const ART = (slug) => `assets/pub-art/papers/${slug}.webp`;
+const BLURBS = {
+  'group-rules-ai': '20 Indian group admins co-wrote rules with an AI assistant. They liked the lighter load — and drew sharp lines around trust, tone and authority.',
+  'multimodal-vlm': 'A VLM toolkit that reads text, images and video in one frame — showing that text-only pipelines systematically undercount political content on WhatsApp.',
+  'betting-apps': 'Tens of thousands of Meta ads, influencer posts and 300k Play Store reviews, linked into one map from recruitment narratives to financial harm.',
+  'peer-factcheck': 'A randomized field study on participants’ real group messages in India: peer corrections modestly outperform local journalists and national fact-checking tiplines.',
+  'tv-disagreement': '21,000 episodes and 2.13M host–guest exchanges from Fox, MSNBC and CNN: on-air debate fell by roughly a third since 2017, and pushback is partisan and asymmetric.',
+  'internet-shutdowns': '246 rural participants voluntarily went offline for 48 hours. Support for shutdowns did not drop — it ticked up, as people rediscovered family time and offline life.',
+  'harmful-cascades': '5.1 million messages across ~6,000 Indian WhatsApp groups: harmful content cascades deeper and wider than benign content, and network structure — not just modality — drives the spread.',
+};
+
+/* ---------- data ---------- */
+const PUBS = (window.PUBLICATIONS || []);
+const byYear = {};
+PUBS.forEach(p => { (byYear[String(p.year)] = byYear[String(p.year)] || []).push(p); });
+const YEARS = Object.keys(byYear).filter(y => y !== 'Unpublished').sort((a, b) => b - a);
+const UNDER_REVIEW = byYear['Unpublished'] || [];
+
+/* ---------- rng + tree growth ---------- */
+function mulberry32(a) { return function() { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const SALT = (Date.now() / 60000 | 0) % 100000;
+
+function growTree(rng, opts) {
+  const segs = [], tips = [];
+  const maxDepth = opts.maxDepth;
+  function branch(x, y, angle, len, width, depth, parentIdx) {
+    const wob = (rng() - 0.5) * 0.5;
+    const a = angle + wob * 0.35;
+    const mx = x + Math.cos(a + wob * 0.6) * len * 0.55;
+    const my = y + Math.sin(a + wob * 0.6) * len * 0.55;
+    const ex = x + Math.cos(a) * len;
+    const ey = y + Math.sin(a) * len;
+    const idx = segs.length;
+    segs.push({ x, y, mx, my, ex, ey, width, depth, len, parent: parentIdx });
+    if (depth >= maxDepth) { tips.push({ x: ex, y: ey, segIdx: idx }); return; }
+    const kids = depth === 0 ? (2 + (rng() < 0.7 ? 1 : 0)) : (rng() < 0.82 ? 2 : 1);
+    const spread = 0.42 + rng() * 0.34;
+    for (let i = 0; i < kids; i++) {
+      const t = kids === 1 ? (rng() - 0.5) : (i / (kids - 1) - 0.5);
+      const na = a + t * 2 * spread + (rng() - 0.5) * 0.22;
+      branch(ex, ey, (na * 0.78) + (-Math.PI / 2) * 0.22, len * (0.66 + rng() * 0.14), Math.max(1.6, width * 0.58), depth + 1, idx);
+    }
+  }
+  branch(opts.x, opts.y, -Math.PI / 2 + (rng() - 0.5) * 0.12, opts.trunk, opts.width, 0, -1);
+  return { segs, tips };
+}
+function pickSpreadTips(tips, n) {
+  if (tips.length <= n) return tips.slice();
+  const chosen = [tips.reduce((a, b) => (a.x < b.x ? a : b))];
+  while (chosen.length < n) {
+    let best = null, bestD = -1;
+    for (const t of tips) {
+      if (chosen.includes(t)) continue;
+      let d = Infinity;
+      for (const c of chosen) d = Math.min(d, Math.hypot(c.x - t.x, c.y - t.y));
+      if (d > bestD) { bestD = d; best = t; }
+    }
+    chosen.push(best);
+  }
+  return chosen;
+}
+
+/* ---------- shared card modal ---------- */
+const veil = document.getElementById('veil');
+let cardList = [], cardIdx = -1;
+function openCard(paper, list, idx) {
+  cardList = list || [paper]; cardIdx = idx ?? 0;
+  const art = document.getElementById('cardArt');
+  art.innerHTML = `<img src="${ART(paper.slug)}" alt="Illustration for “${paper.title}”"
+    onerror="this.outerHTML='<div class=\\'no-art\\'>illustration<br>on its way</div>'">`;
+  document.getElementById('cardVenue').textContent = paper.venue || paper.status || '—';
+  document.getElementById('cardYear').textContent = paper.year;
+  document.getElementById('cardTitle').textContent = paper.title;
+  const authors = Array.isArray(paper.authors) ? paper.authors : [paper.authors].filter(Boolean);
+  document.getElementById('cardAuthors').innerHTML = authors.map(a => /garimella/i.test(a) ? `<b>${a}</b>` : a).join(', ');
+  const blurb = BLURBS[paper.slug];
+  document.getElementById('cardBlurb').textContent = blurb || '';
+  document.getElementById('cardBlurb').style.display = blurb ? '' : 'none';
+  document.getElementById('cardLinks').innerHTML =
+    (paper.links || []).map(l => `<a href="${l.href}" target="_blank" rel="noopener">${l.label} ↗</a>`).join('') +
+    `<a href="https://scholar.google.com/scholar?q=${encodeURIComponent(paper.title)}" target="_blank" rel="noopener">scholar ↗</a>`;
+  veil.classList.add('open');
+  hideTip();
+}
+function closeCard() { veil.classList.remove('open'); }
+document.getElementById('cardClose').addEventListener('click', closeCard);
+veil.addEventListener('click', (e) => { if (e.target === veil) closeCard(); });
+document.getElementById('nextFruit').addEventListener('click', () => { if (cardList.length) { cardIdx = (cardIdx + 1) % cardList.length; openCard(cardList[cardIdx], cardList, cardIdx); } });
+document.getElementById('prevFruit').addEventListener('click', () => { if (cardList.length) { cardIdx = (cardIdx - 1 + cardList.length) % cardList.length; openCard(cardList[cardIdx], cardList, cardIdx); } });
+addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCard();
+  if (veil.classList.contains('open')) {
+    if (e.key === 'ArrowRight') document.getElementById('nextFruit').click();
+    if (e.key === 'ArrowLeft') document.getElementById('prevFruit').click();
+  }
+});
+
+/* ---------- tooltip ---------- */
+const tooltip = document.getElementById('tooltip');
+function showTip(paper, el) {
+  tooltip.innerHTML = `${paper.title}<span class="tt-venue">${paper.venue || paper.status || ''} · click to pick</span>`;
+  const r = el.getBoundingClientRect();
+  tooltip.style.left = Math.min(innerWidth - 280, Math.max(8, r.left + r.width / 2 - 130)) + 'px';
+  tooltip.style.top = (r.top - 14 - tooltip.offsetHeight) + 'px';
+  tooltip.classList.add('show');
+  requestAnimationFrame(() => { tooltip.style.top = (r.top - 10 - tooltip.offsetHeight) + 'px'; });
+}
+function hideTip() { tooltip.classList.remove('show'); }
+
+/* ---------- build one year scene ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const scenes = [];
+function buildYearScene(year, papers, container) {
+  const n = papers.length;
+  const runway = document.createElement('div');
+  runway.className = 'runway';
+  runway.id = `year-${year}`;
+  runway.style.height = `${Math.max(160, Math.min(460, 95 + n * 36))}vh`;
+  const scene = document.createElement('div');
+  scene.className = 'scene';
+  scene.innerHTML = `
+    <div class="year-plate">${year}<small></small></div>
+    <aside class="ledger"><h3>Harvest · ${year}</h3></aside>
+    <div class="ripen-counter"></div>`;
+  const svg = document.createElementNS(NS, 'svg');
+  svg.classList.add('tree');
+  svg.setAttribute('preserveAspectRatio', 'xMidYMax meet');
+  scene.insertBefore(svg, scene.firstChild);
+  runway.appendChild(scene);
+  container.appendChild(runway);
+
+  const plateNote = scene.querySelector('.year-plate small');
+  const ledger = scene.querySelector('.ledger');
+  const counter = scene.querySelector('.ripen-counter');
+
+  const W = 1200, H = 950, GROUND = 880;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  /* grow a skeleton with enough tips for every paper */
+  const maxDepth = n <= 2 ? 3 : n <= 5 ? 4 : 5;
+  let tree = null, rng = null;
+  for (let attempt = 0; attempt < 6; attempt++) {
+    rng = mulberry32(SALT * 97 + (parseInt(year, 10) - 2000) * 13 + attempt);
+    tree = growTree(rng, {
+      x: W * 0.46, y: GROUND,
+      trunk: 110 + Math.min(70, n * 8),
+      width: Math.min(20, 11 + n * 0.7),
+      maxDepth,
+    });
+    if (tree.tips.length >= n) break;
+  }
+  const { segs, tips } = tree;
+  const fruitTips = pickSpreadTips(tips, n).sort((a, b) => a.x - b.x);
+  while (fruitTips.length < n) {                        // pathological fallback: share tips
+    const t = fruitTips[fruitTips.length % tips.length];
+    fruitTips.push({ x: t.x + 26, y: t.y, segIdx: t.segIdx });
+  }
+
+  /* chapters: each paper claims the unclaimed part of its root path */
+  const chapterOf = new Map();
+  const chapters = fruitTips.map(() => []);
+  fruitTips.forEach((tip, ci) => {
+    const chain = [];
+    for (let s = tip.segIdx; s !== -1; s = segs[s].parent) chain.unshift(s);
+    chain.forEach(si => { if (!chapterOf.has(si)) { chapterOf.set(si, ci); chapters[ci].push(si); } });
+  });
+  const stubs = [];
+  segs.forEach((s, si) => {
+    if (chapterOf.has(si) || s.parent === -1) return;
+    if (chapterOf.has(s.parent) && s.depth >= 2 && rng() < 0.5) { stubs.push(si); chapterOf.set(si, chapterOf.get(s.parent)); }
+  });
+
+  const defs = document.createElementNS(NS, 'defs');
+  svg.appendChild(defs);
+  const ground = document.createElementNS(NS, 'path');
+  ground.setAttribute('d', `M ${W*0.06} ${GROUND} Q ${W*0.5} ${GROUND-14} ${W*0.94} ${GROUND}`);
+  ground.setAttribute('stroke', 'var(--ink)'); ground.setAttribute('stroke-width', '2.5');
+  ground.setAttribute('fill', 'none'); ground.setAttribute('stroke-linecap', 'round');
+  svg.appendChild(ground);
+  const canopy = document.createElementNS(NS, 'g');
+  canopy.classList.add('canopy');
+  svg.appendChild(canopy);
+  svg.style.setProperty('--sway-origin', `${W*0.46}px ${GROUND}px`);
+
+  const P0 = 0.02, P1 = 0.96;
+  const span = (P1 - P0) / n;
+  const chapStart = (i) => P0 + i * span;
+
+  const branchEls = [];
+  const segWindow = new Map();
+  function addBranchPath(si, t0, t1) {
+    const s = segs[si];
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', `M ${s.x} ${s.y} Q ${s.mx} ${s.my} ${s.ex} ${s.ey}`);
+    p.setAttribute('stroke-width', s.width);
+    p.classList.add('branch');
+    canopy.appendChild(p);
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+    branchEls.push({ el: p, len, t0, t1, si });
+  }
+  chapters.forEach((segList, ci) => {
+    const total = segList.reduce((a, si) => a + segs[si].len, 0) || 1;
+    let cursor = chapStart(ci);
+    const woodSpan = span * 0.62;
+    segList.forEach(si => {
+      const w = (segs[si].len / total) * woodSpan;
+      addBranchPath(si, cursor, cursor + w);
+      segWindow.set(si, [cursor, cursor + w]);
+      cursor += w;
+    });
+  });
+  stubs.forEach(si => {
+    const ci = chapterOf.get(si);
+    const t0 = chapStart(ci) + span * (0.45 + rng() * 0.25);
+    addBranchPath(si, t0, t0 + span * 0.22);
+    segWindow.set(si, [t0, t0 + span * 0.22]);
+  });
+
+  const leaves = [];
+  branchEls.forEach(({ el, si }) => {
+    const s = segs[si];
+    if (s.depth < 2) return;
+    const nLeaves = s.depth >= 4 ? 2 : 1;
+    for (let i = 0; i < nLeaves; i++) {
+      if (rng() < 0.3) continue;
+      const at = 0.35 + rng() * 0.6;
+      const pt = el.getPointAtLength(el.getTotalLength() * at);
+      const leaf = document.createElementNS(NS, 'ellipse');
+      const size = 6 + rng() * 9;
+      leaf.setAttribute('cx', pt.x); leaf.setAttribute('cy', pt.y);
+      leaf.setAttribute('rx', size); leaf.setAttribute('ry', size * 0.45);
+      leaf.setAttribute('transform', `rotate(${rng() * 360} ${pt.x} ${pt.y})`);
+      leaf.classList.add('leaf');
+      if (rng() < 0.14) leaf.classList.add('ember');
+      canopy.appendChild(leaf);
+      const w = segWindow.get(si);
+      leaves.push({ el: leaf, t: Math.min(0.985, w[1] + 0.015 + rng() * 0.04), o: 0.5 + rng() * 0.4 });
+    }
+  });
+
+  /* fruits with collision relaxation */
+  const FR = Math.max(30, Math.min(48, 62 - n * 2));
+  const fruitPos = fruitTips.map(tip => ({ tip, x: tip.x, y: tip.y + FR * (0.9 + rng() * 0.8) }));
+  for (let iter = 0; iter < 16; iter++) {
+    for (let a = 0; a < fruitPos.length; a++) {
+      for (let b = a + 1; b < fruitPos.length; b++) {
+        const A = fruitPos[a], B = fruitPos[b];
+        const minD = FR * 2 + 10;
+        let dx = B.x - A.x, dy = B.y - A.y;
+        let d = Math.hypot(dx, dy);
+        if (d < 0.01) { dx = 1; dy = 0; d = 1; }
+        if (d < minD) {
+          const push = (minD - d) / 2;
+          A.x -= (dx / d) * push; A.y -= (dy / d) * push;
+          B.x += (dx / d) * push; B.y += (dy / d) * push;
+        }
+      }
+    }
+    fruitPos.forEach(f => {
+      f.x = Math.max(FR + 8, Math.min(W - FR - 8, Math.max(f.tip.x - 120, Math.min(f.tip.x + 120, f.x))));
+      f.y = Math.max(f.tip.y + FR * 0.55, Math.min(f.tip.y + FR * 2.8, f.y));
+    });
+  }
+
+  const fruitEls = [];
+  const uid = `y${year}`;
+  fruitPos.forEach((fp, i) => {
+    const paper = papers[i];
+    const { tip } = fp;
+    const cx = fp.x, cy = fp.y;
+    const clip = document.createElementNS(NS, 'clipPath');
+    clip.setAttribute('id', `clip-${uid}-${i}`);
+    const cc = document.createElementNS(NS, 'circle');
+    cc.setAttribute('cx', cx); cc.setAttribute('cy', cy); cc.setAttribute('r', FR - 3);
+    clip.appendChild(cc); defs.appendChild(clip);
+
+    const g = document.createElementNS(NS, 'g');
+    g.classList.add('fruit');
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', paper.title);
+    const stem = document.createElementNS(NS, 'path');
+    stem.setAttribute('d', `M ${tip.x} ${tip.y} Q ${(tip.x + cx) / 2 + 6} ${(tip.y + cy - FR) / 2} ${cx} ${cy - FR + 2}`);
+    stem.classList.add('stem');
+    g.appendChild(stem);
+    const halo = document.createElementNS(NS, 'circle');
+    halo.setAttribute('cx', cx); halo.setAttribute('cy', cy); halo.setAttribute('r', FR);
+    halo.classList.add('halo');
+    g.appendChild(halo);
+    const num = document.createElementNS(NS, 'text');
+    num.setAttribute('x', cx); num.setAttribute('y', cy + 7);
+    num.setAttribute('text-anchor', 'middle');
+    num.setAttribute('style', 'font-family: var(--mono); font-size: 20px; fill: var(--ink-soft);');
+    num.textContent = i + 1;
+    g.appendChild(num);
+    const img = document.createElementNS(NS, 'image');
+    img.setAttribute('href', ART(paper.slug));
+    img.setAttribute('x', cx - FR); img.setAttribute('y', cy - FR);
+    img.setAttribute('width', FR * 2); img.setAttribute('height', FR * 2);
+    img.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    img.setAttribute('clip-path', `url(#clip-${uid}-${i})`);
+    img.addEventListener('error', () => img.remove());
+    g.appendChild(img);
+    const rim = document.createElementNS(NS, 'circle');
+    rim.setAttribute('cx', cx); rim.setAttribute('cy', cy); rim.setAttribute('r', FR);
+    rim.classList.add('rim');
+    g.appendChild(rim);
+    canopy.appendChild(g);
+    fruitEls.push({ g, t: chapStart(i) + span * 0.68, paper, idx: i, ripe: false });
+
+    g.addEventListener('click', () => openCard(paper, papers, i));
+    g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(paper, papers, i); } });
+    g.addEventListener('mouseenter', () => showTip(paper, g));
+    g.addEventListener('mouseleave', hideTip);
+  });
+
+  const ledgerBtns = fruitEls.map((f, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="dot"></span><span>${f.paper.title}</span>`;
+    b.addEventListener('click', () => { if (b.classList.contains('ripe')) openCard(f.paper, papers, i); });
+    b.addEventListener('mouseenter', () => f.g.querySelector('.rim').setAttribute('stroke-width', '5'));
+    b.addEventListener('mouseleave', () => f.g.querySelector('.rim').setAttribute('stroke-width', '2.5'));
+    ledger.appendChild(b);
+    return b;
+  });
+
+  const ease = (t) => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+  function setProgress(p) {
+    branchEls.forEach(b => {
+      const local = ease((p - b.t0) / Math.max(1e-4, b.t1 - b.t0));
+      b.el.style.strokeDashoffset = b.len * (1 - local);
+    });
+    leaves.forEach(l => { l.el.style.opacity = (p >= l.t ? l.o : 0); l.el.style.transition = 'opacity 600ms'; });
+    let ripe = 0;
+    fruitEls.forEach(f => {
+      const on = p >= f.t;
+      if (on) ripe++;
+      if (on !== f.ripe) {
+        f.ripe = on;
+        f.g.style.transition = 'opacity 450ms';
+        f.g.style.opacity = on ? 1 : 0;
+        if (on) f.g.animate(
+          [{ transform: 'translateY(-14px)', opacity: 0 }, { transform: 'translateY(3px)', opacity: 1, offset: 0.7 }, { transform: 'translateY(0)', opacity: 1 }],
+          { duration: 620, easing: 'cubic-bezier(.2,.8,.3,1.1)' });
+        ledgerBtns[f.idx].classList.toggle('ripe', on);
+      }
+    });
+    counter.textContent = `${ripe} / ${n} ripened`;
+    plateNote.textContent = ripe >= n ? `${n} paper${n > 1 ? 's' : ''} · pick a fruit` : `${n} paper${n > 1 ? 's' : ''} · ${ripe ? ripe + ' ripened — keep going' : 'scroll to ripen'}`;
+    svg.classList.toggle('grown', p >= 0.99);
+  }
+  scenes.push({ runway, setProgress, lastP: -1, year });
+}
+
+/* ---------- build everything ---------- */
+const orchard = document.getElementById('orchard');
+YEARS.forEach(y => buildYearScene(y, byYear[y], orchard));
+document.getElementById('outroText').textContent =
+  `${PUBS.length} papers across ${YEARS.length} years, plus ${UNDER_REVIEW.length} seedlings in the greenhouse. The stamps and the library hold the same collection, arranged differently.`;
+
+/* greenhouse pots */
+const ghGrid = document.getElementById('ghGrid');
+document.getElementById('ghSub').textContent = `${UNDER_REVIEW.length} under review · not yet planted`;
+UNDER_REVIEW.forEach((p, i) => {
+  const pot = document.createElement('div');
+  pot.className = 'pot';
+  pot.setAttribute('role', 'button');
+  pot.setAttribute('tabindex', '0');
+  pot.style.transitionDelay = `${i * 90}ms`;
+  pot.innerHTML = `
+    <div class="bud"><img src="${ART(p.slug)}" alt="" onerror="this.remove()"><span class="no-art">🌱</span></div>
+    <div class="stemline"></div><div class="terracotta"></div>
+    <p>${p.title}</p>`;
+  pot.addEventListener('click', () => openCard(p, UNDER_REVIEW, i));
+  pot.addEventListener('keydown', (e) => { if (e.key === 'Enter') openCard(p, UNDER_REVIEW, i); });
+  ghGrid.appendChild(pot);
+});
+/* reveal pots when the greenhouse scrolls into view */
+new IntersectionObserver((entries, obs) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { document.querySelectorAll('.pot').forEach(p => p.classList.add('sprout')); obs.disconnect(); }
+  });
+}, { threshold: 0.15 }).observe(document.getElementById('ghGrid'));
+
+/* ---------- scroll driver ---------- */
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const grownParam = new URLSearchParams(location.search).get('grown');
+function onScroll() {
+  let currentYear = null;
+  scenes.forEach(sc => {
+    const r = sc.runway.getBoundingClientRect();
+    if (r.bottom < -300 || r.top > innerHeight + 300) return;
+    const total = Math.max(1, r.height - innerHeight);
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    if (r.top <= innerHeight * 0.5 && r.bottom >= innerHeight * 0.5) currentYear = sc.year;
+    if (Math.abs(p - sc.lastP) < 0.0004) return;
+    sc.lastP = p;
+    sc.setProgress(p);
+  });
+  if (currentYear !== null) markHorizon(currentYear);
+}
+if (grownParam || reduced) {
+  document.body.classList.add('static-mode');
+  scenes.forEach(sc => sc.setProgress(1));
+  document.querySelectorAll('.pot').forEach(p => p.classList.add('sprout'));
+  scrollTo(0, 0);
+} else {
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+/* ---------- horizon strip (doubles as jump nav) ---------- */
+const horizonMarks = {};
+function markHorizon(year) {
+  Object.entries(horizonMarks).forEach(([y, el]) => el.classList.toggle('is-current', y === String(year)));
+}
+(function horizon() {
+  const h = document.getElementById('horizon');
+  const yearsAsc = YEARS.slice().sort((a, b) => a - b);
+  const HW = 1060, base = 118;
+  const slot = (HW - 130) / yearsAsc.length;
+  const line = document.createElementNS(NS, 'path');
+  line.setAttribute('d', `M 8 ${base} L ${HW - 8} ${base}`);
+  line.setAttribute('stroke', 'var(--ink)'); line.setAttribute('stroke-width', '1.5');
+  h.appendChild(line);
+  yearsAsc.forEach((y, i) => {
+    const cx = 40 + slot * (i + 0.5);
+    const count = byYear[y].length;
+    const scale = 0.16 + 0.055 * Math.sqrt(count);
+    const g = document.createElementNS(NS, 'g');
+    const r2 = mulberry32(parseInt(y, 10));
+    const t = growTree(r2, { x: 0, y: 0, trunk: 150, width: 10, maxDepth: 3 });
+    t.segs.forEach(s => {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', `M ${s.x} ${s.y} Q ${s.mx} ${s.my} ${s.ex} ${s.ey}`);
+      p.setAttribute('stroke', 'currentColor');
+      p.setAttribute('stroke-width', s.width);
+      p.setAttribute('fill', 'none'); p.setAttribute('stroke-linecap', 'round');
+      g.appendChild(p);
+    });
+    g.setAttribute('transform', `translate(${cx} ${base}) scale(${scale})`);
+    const wrap = document.createElementNS(NS, 'g');
+    wrap.classList.add('mini-tree');
+    wrap.style.color = 'var(--ink)';
+    wrap.appendChild(g);
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', cx); label.setAttribute('y', base + 18);
+    label.setAttribute('text-anchor', 'middle');
+    label.textContent = `’${String(y).slice(2)}`;
+    wrap.appendChild(label);
+    const countT = document.createElementNS(NS, 'text');
+    countT.setAttribute('x', cx); countT.setAttribute('y', base + 32);
+    countT.setAttribute('text-anchor', 'middle');
+    countT.classList.add('count');
+    countT.textContent = `${count} paper${count > 1 ? 's' : ''}`;
+    wrap.appendChild(countT);
+    wrap.addEventListener('click', () => document.getElementById(`year-${y}`).scrollIntoView({ behavior: 'smooth' }));
+    h.appendChild(wrap);
+    horizonMarks[y] = wrap;
+  });
+  /* greenhouse icon at the end */
+  const gx = HW - 46;
+  const gh = document.createElementNS(NS, 'g');
+  gh.classList.add('mini-tree');
+  gh.innerHTML = `
+    <path d="M ${gx-26} ${base} L ${gx-26} ${base-26} L ${gx} ${base-42} L ${gx+26} ${base-26} L ${gx+26} ${base} Z"
+          fill="none" stroke="var(--leaf)" stroke-width="2"/>
+    <path d="M ${gx-26} ${base-26} L ${gx+26} ${base-26} M ${gx} ${base-42} L ${gx} ${base}" stroke="var(--leaf)" stroke-width="1" opacity="0.6"/>
+    <circle cx="${gx-12}" cy="${base-7}" r="3" fill="var(--leaf)"/>
+    <circle cx="${gx}" cy="${base-9}" r="3" fill="var(--leaf)"/>
+    <circle cx="${gx+12}" cy="${base-7}" r="3" fill="var(--leaf)"/>
+    <text x="${gx}" y="${base+18}" text-anchor="middle">🌱</text>
+    <text class="count" x="${gx}" y="${base+32}" text-anchor="middle">${UNDER_REVIEW.length} under review</text>`;
+  gh.addEventListener('click', () => document.getElementById('year-unpublished').scrollIntoView({ behavior: 'smooth' }));
+  h.appendChild(gh);
+  document.getElementById('horizonNote').textContent =
+    `the whole orchard, ${yearsAsc[0]} → ${yearsAsc[yearsAsc.length - 1]} · tree size = papers that year · click a tree to jump to it`;
+})();
+</script>
+</body>
+</html>
