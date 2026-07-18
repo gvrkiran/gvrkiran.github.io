@@ -105,16 +105,7 @@ const PUBLICATIONS = [
       { label: "paper", href: "content/WhatsViral_virality_on_whatsapp.pdf" }
     ]
   },
-  {
-    year: "Unpublished",
-    status: "Under review",
-    title: "What Does a Neighborhood Look Like Online? Linking the Built Environment to Digital Information Diets",
-    venue: "Under review",
-    authors: ["Hemant Magwana","Kiran Garimella"],
-    links: [
-      { label: "paper", href: "content/Google_street_view_WhatsApp_data.pdf" }
-    ]
-  },
+
   {
     year: "Unpublished",
     status: "Under review",
@@ -161,6 +152,45 @@ const PUBLICATIONS = [
     venue: "Under review",
     authors: ["S M Mehedi Zaman", "Joao Couto", "Kiran Garimella"],
     links: [{ label: "paper", href: "content/Facebook_data_donation_political_content.pdf" }]
+  },
+
+  // 2027
+  {
+    year: "2027",
+    title: "Examining LLM Assisted Rule Creation in WhatsApp Groups",
+    venue: "ICWSM 2026",
+    authors: ["Sudhamshu Hosamane", "Farhana Shahid", "Aditya Vashistha", "Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/group_rules_whatsapp_icwsm.pdf" }
+    ]
+  },
+  {
+    year: "2027",
+    title: "From Retrieval to Synthesis: Repair Literacy and the Domestication of Generative AI",
+    venue: "Journal of the Association for Information Science and Technology (JASIST)",
+    authors: ["Tawfiq Ammari", "Mehedi Zaman", "Meilun Chen", "Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/chatgpt_jasist.pdf" }
+    ]
+  },
+  {
+    year: "2027",
+    title: "Source Coverage and Citation Bias in LLM-based vs. Traditional Search Engines",
+    venue: "ICWSM 2027",
+    authors: ["Peixian Zhang", "Qiming Ye", "Zifan Peng", "Kiran Garimella", "Gareth Tyson"],
+    links: [
+      { label: "paper", href: "content/llm_vs_search_engines_icwsm.pdf" }
+    ]
+  },
+
+  {
+    year: "2027",
+    title: "What Does a Neighborhood Look Like Online? Linking the Built Environment to Digital Information Diets",
+    venue: "ICWSM 2027",
+    authors: ["Hemant Magwana","Kiran Garimella"],
+    links: [
+      { label: "paper", href: "content/Google_street_view_WhatsApp_data.pdf" }
+    ]
   },
 
   // 2026
