@@ -15,6 +15,13 @@
   <script src="js/theme-engine.js"></script>
   <style>
     .pubs-page main { padding-top: 5rem; padding-bottom: 4rem; }
+    /* This page is a single reading column in every theme layout — some layouts
+       (L2/L3) turn .section into a multi-column grid, which squishes the list. */
+    .pubs-page section.section { display: block !important; max-width: 800px; margin: 0 auto; }
+    .pubs-topline {
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      align-items: baseline; gap: 0.4rem 1.2rem; margin-bottom: 2rem;
+    }
     .pub-list { list-style: none; padding: 0; }
     .pub-list li { padding: 1.1rem 0; border-bottom: 1px solid currentColor; }
     .pub-list h3 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.2rem; }
@@ -32,7 +39,6 @@
     .pubs-page .section-heading { margin-bottom: 1.4rem; }
     .pubs-back {
       display: inline-block;
-      margin-bottom: 1.2rem;
       font-size: 0.92rem;
       opacity: 0.75;
     }
@@ -50,13 +56,15 @@
 
   <main id="top" class="page-with-video">
     <section class="section">
-      <a class="pubs-back" href="index.html">← Back to home</a>
+      <p class="pubs-topline">
+        <a class="pubs-back" href="index.html">← Back to home</a>
+        <span class="pub-switcher">on rotation:
+          <a href="publications.html?pub=2">orchard</a> ·
+          <a href="publications.html?pub=3">stamps</a> ·
+          <a href="publications.html?pub=4">library</a> ·
+          <a href="publications.html?reroll=1">shuffle ↻</a></span>
+      </p>
       <h1 class="section-heading">Publications</h1>
-      <p class="pub-switcher">You got the classic list. Also on rotation:
-        <a href="publications.html?pub=2">the orchard</a> ·
-        <a href="publications.html?pub=3">the stamps</a> ·
-        <a href="publications.html?pub=4">the library</a> ·
-        <a href="publications.html?reroll=1">shuffle design ↻</a></p>
       <div id="pubsAll"></div>
     </section>
   </main>
