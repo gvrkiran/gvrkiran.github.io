@@ -7,17 +7,16 @@
   <meta name="description" content="Publications by Kiran Garimella." />
   <script>
     /* publications design router — same spirit as js/theme-engine.js:
-       - picks one of the designs below, avoiding the previous pick
-       - stays stable across in-session navigation (sessionStorage);
-         reloading a design page keeps that design
-       - the "↻ shuffle" button on each design links here with ?reroll=1
+       - picks one of the four designs below, avoiding the previous pick
+       - design pages opened here carry ?rotation=1; refreshing them rerolls
+       - the "↻ shuffle" button on each design also links here with ?reroll=1
        - ?pub=N forces a specific design */
     (function () {
       const DESIGNS = [
         { n: 1, href: 'publications-classic.html', name: 'Classic list' },
         { n: 2, href: 'publications-grove.html',   name: 'The Orchard' },
         { n: 3, href: 'publications-stamps.html',  name: 'The Stamp Collection' },
-        { n: 4, href: 'publications-library.html', name: 'The Library' },
+        { n: 4, href: 'publications-field-guide.html', name: 'The Field Guide' },
       ];
       const MAX = DESIGNS.length;
       const url = new URL(location.href);
@@ -37,7 +36,9 @@
       }
       sessionStorage.setItem('current_pub', String(pick));
       localStorage.setItem('last_pub', String(pick));
-      location.replace(DESIGNS[pick - 1].href);
+      const target = new URL(DESIGNS[pick - 1].href, location.href);
+      target.searchParams.set('rotation', '1');
+      location.replace(target.href);
     })();
   </script>
 </head>
@@ -48,7 +49,7 @@
       <a href="publications-classic.html">the classic list</a>,
       <a href="publications-grove.html">the orchard</a>,
       <a href="publications-stamps.html">the stamp collection</a>, or
-      <a href="publications-library.html">the library</a>.
+      <a href="publications-field-guide.html">the field guide</a>.
     </p>
   </noscript>
 </body>

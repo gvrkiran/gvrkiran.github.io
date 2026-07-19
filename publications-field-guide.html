@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eee5d3">
+  <title>Publications · Kiran Garimella</title>
+  <meta name="description" content="Kiran Garimella's publications organized as research fields and an expandable year index.">
+  <script src="js/publications-refresh.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper:#eee5d3; --paper2:#f7f1e5; --ink:#172126; --muted:#68706f; --red:#cf4d32;
+      --blue:#245d88; --teal:#397b79; --gold:#c4932d; --rule:rgba(23,33,38,.22);
+      --serif:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",monospace;
+    }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; background:var(--paper); color:var(--ink); }
+    body { font-family:var(--serif); -webkit-font-smoothing:antialiased; }
+    button,input,a { color:inherit; font:inherit; }
+    button { cursor:pointer; }
+    a { text-underline-offset:4px; }
+    button:focus-visible,input:focus-visible,a:focus-visible { outline:3px solid var(--red); outline-offset:3px; }
+    .shell { min-height:100vh; display:grid; grid-template-columns:clamp(300px,27vw,420px) 1fr; }
+
+    .rail {
+      position:relative; z-index:20; height:100vh; padding:25px 28px 24px; display:flex; flex-direction:column;
+      border-right:1px solid var(--ink); background:var(--paper);
+    }
+    .rail-top { display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; }
+    .home { text-decoration:none; font-weight:500; }
+    .archive-count { color:var(--muted); }
+    .archive-count b { color:var(--red); font-weight:500; }
+    .rail-copy { margin:auto 0 24px; }
+    .kicker { font-family:var(--mono); color:var(--red); font-size:.61rem; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { margin:20px 0 18px; max-width:340px; font-size:clamp(3.4rem,4.5vw,5rem); line-height:.84; letter-spacing:-.055em; font-weight:500; }
+    .lede { max-width:34ch; margin:0; color:#485150; font-size:1.02rem; line-height:1.45; }
+    .mode-switch { display:grid; grid-template-columns:1fr 1fr; margin-bottom:13px; border:1px solid var(--ink); }
+    .mode-switch button { height:45px; padding:0 12px; border:0; background:transparent; font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; }
+    .mode-switch button+button { border-left:1px solid var(--ink); }
+    .mode-switch button.active { color:var(--paper2); background:var(--ink); }
+    .searchbox { position:relative; }
+    .searchbox input { width:100%; height:43px; padding:0 42px 0 12px; border:1px solid var(--ink); border-radius:0; background:var(--paper2); font-family:var(--mono); font-size:.67rem; }
+    .searchbox input::placeholder { color:#777f7d; }
+    .searchbox span { position:absolute; right:12px; top:11px; font-family:var(--mono); font-size:.72rem; }
+    .rail-note { margin:13px 0 0; display:flex; justify-content:space-between; color:var(--muted); font-family:var(--mono); font-size:.54rem; line-height:1.45; letter-spacing:.06em; text-transform:uppercase; }
+    .rail-note button { padding:0; border:0; background:transparent; text-decoration:underline; text-underline-offset:3px; font-family:inherit; font-size:inherit; text-transform:inherit; }
+
+    .workspace { position:relative; min-width:0; height:100vh; overflow:hidden; background:var(--paper2); }
+    .workspace-head { position:absolute; z-index:15; inset:0 0 auto; height:62px; padding:0 22px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--ink); background:rgba(247,241,229,.92); backdrop-filter:blur(14px); font-family:var(--mono); font-size:.61rem; letter-spacing:.1em; text-transform:uppercase; }
+    .workspace-head strong { font-weight:500; }
+    .workspace-head span { color:var(--muted); }
+    .view { position:absolute; inset:62px 0 0; }
+
+    /* Eight research fields: the only objects in the overview. */
+    .field-stage { display:flex; height:100%; background:var(--ink); overflow:hidden; }
+    .field-card { --c:var(--blue); position:relative; flex:1 1 0; min-width:0; height:100%; padding:0; overflow:hidden; border:0; border-right:1px solid rgba(247,241,229,.7); background:#263237; text-align:left; isolation:isolate; transition:flex .42s cubic-bezier(.2,.72,.2,1); }
+    .field-card:last-child { border-right:0; }
+    .field-stage:has(.field-card:hover) .field-card { flex:.72 1 0; }
+    .field-stage .field-card:hover,.field-stage .field-card:focus-visible { flex:2.45 1 0; outline:0; }
+    .field-image { position:absolute; inset:0; background-image:url("assets/research-atlas/topic-fields-v1.png"); background-size:auto 200%; background-repeat:no-repeat; filter:saturate(.84) contrast(1.02); transform:scale(1.015); transition:filter .35s,transform .5s; }
+    .field-card:hover .field-image,.field-card:focus-visible .field-image { filter:saturate(1) contrast(1.03); transform:scale(1.04); }
+    .field-image::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,16,19,.08),rgba(10,16,19,.18) 34%,rgba(10,16,19,.9)); }
+    .field-index { position:absolute; z-index:2; top:19px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.85); font-family:var(--mono); font-size:.54rem; letter-spacing:.13em; }
+    .field-label { position:absolute; z-index:2; left:50%; bottom:114px; transform:translateX(-50%) rotate(180deg); writing-mode:vertical-rl; color:#fff; font-family:var(--mono); font-size:.6rem; line-height:1; letter-spacing:.13em; text-transform:uppercase; white-space:nowrap; transition:opacity .2s; }
+    .field-card:hover .field-label,.field-card:focus-visible .field-label { opacity:0; }
+    .field-open { position:absolute; z-index:3; left:18px; right:18px; bottom:21px; color:#fff; transform:translateY(17px); transition:transform .35s; }
+    .field-open strong { display:block; max-width:9ch; font-size:clamp(1.7rem,2.8vw,3.1rem); line-height:.88; font-weight:500; letter-spacing:-.045em; opacity:0; transition:opacity .2s; }
+    .field-card:hover .field-open strong,.field-card:focus-visible .field-open strong { opacity:1; }
+    .field-open span { display:block; margin-top:13px; font-family:var(--mono); font-size:.54rem; letter-spacing:.1em; text-transform:uppercase; }
+    .field-card:hover .field-open,.field-card:focus-visible .field-open { transform:translateY(0); }
+    .field-card::after { content:""; position:absolute; z-index:4; left:0; right:0; bottom:0; height:4px; background:var(--c); transform:scaleX(0); transform-origin:left; transition:transform .32s; }
+    .field-card:hover::after,.field-card:focus-visible::after { transform:scaleX(1); }
+
+    /* A selected field becomes a chapter, not a card grid. */
+    .field-detail { height:100%; display:grid; grid-template-columns:minmax(280px,42%) 1fr; background:var(--paper2); }
+    .field-hero { --c:var(--blue); position:relative; min-height:0; overflow:hidden; background:var(--ink); }
+    .field-hero .field-image { filter:saturate(.92) contrast(1.03); }
+    .field-hero::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(14,20,22,.06),rgba(14,20,22,.86)); }
+    .field-hero-copy { position:absolute; z-index:3; inset:auto 30px 30px; color:white; }
+    .field-hero-copy .back { margin-bottom:25px; padding:0; border:0; color:white; background:transparent; font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:underline; text-underline-offset:5px; }
+    .field-hero-copy h2 { margin:0; max-width:9ch; font-size:clamp(3.4rem,5.5vw,6.8rem); line-height:.82; letter-spacing:-.058em; font-weight:500; }
+    .field-hero-copy p { max-width:35ch; margin:18px 0 0; font-size:.95rem; line-height:1.45; }
+    .field-hero-copy .field-stat { margin-top:20px; color:var(--c); font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; }
+    .chapter-index { min-width:0; height:100%; overflow:auto; padding:28px 34px 70px; scrollbar-color:var(--red) var(--paper); }
+    .chapter-intro { display:flex; justify-content:space-between; align-items:end; gap:20px; padding-bottom:19px; border-bottom:2px solid var(--ink); }
+    .chapter-intro h3 { margin:0; font-size:1.75rem; font-weight:500; }
+    .chapter-intro p { max-width:36ch; margin:0; color:var(--muted); font-family:var(--mono); font-size:.58rem; line-height:1.45; }
+
+    /* Years and field chapters share the same expandable bibliography grammar. */
+    .year-list { margin:0; }
+    details.year-row { border-bottom:1px solid var(--ink); }
+    details.year-row>summary { min-height:76px; display:grid; grid-template-columns:104px 1fr 62px; align-items:center; gap:14px; list-style:none; cursor:pointer; }
+    details.year-row>summary::-webkit-details-marker { display:none; }
+    .year-name { font-size:2.2rem; line-height:1; letter-spacing:-.045em; }
+    .year-name.long { font-size:1.2rem; }
+    .year-composition { display:flex; height:7px; background:rgba(23,33,38,.09); }
+    .year-composition i { height:100%; }
+    .year-count { justify-self:end; font-family:var(--mono); font-size:.6rem; text-align:right; text-transform:uppercase; }
+    .year-count b { display:block; font-size:1.05rem; font-weight:500; }
+    .row-caret { display:inline-block; margin-left:7px; transition:transform .2s; }
+    details[open] .row-caret { transform:rotate(45deg); }
+    .paper-list { padding:4px 0 20px 118px; }
+    .paper-row { display:grid; grid-template-columns:1fr auto; gap:20px; padding:13px 0; border-top:1px solid var(--rule); }
+    .paper-row h4 { margin:0; font-size:1rem; line-height:1.22; font-weight:500; }
+    .paper-row h4 a { text-decoration:none; }
+    .paper-row h4 a:hover { color:var(--red); text-decoration:underline; }
+    .paper-row .meta { margin:5px 0 0; color:var(--muted); font-family:var(--mono); font-size:.54rem; line-height:1.45; }
+    .paper-topics { display:flex; align-items:start; justify-content:flex-end; flex-wrap:wrap; gap:4px; max-width:170px; }
+    .paper-topic { --c:var(--ink); padding:3px 5px; border:1px solid var(--c); background:transparent; font-family:var(--mono); font-size:.47rem; letter-spacing:.07em; text-transform:uppercase; }
+    .paper-topic:hover { color:white; background:var(--c); }
+
+    .years-view,.search-view { height:100%; overflow:auto; padding:30px clamp(24px,4vw,60px) 80px; scrollbar-color:var(--red) var(--paper); }
+    .index-title { display:grid; grid-template-columns:1fr minmax(230px,34%); gap:30px; align-items:end; padding:8px 0 26px; border-bottom:2px solid var(--ink); }
+    .index-title h2 { margin:0; font-size:clamp(3.7rem,7vw,7.2rem); line-height:.82; letter-spacing:-.06em; font-weight:500; }
+    .index-title p { margin:0; color:#59615f; font-size:.95rem; line-height:1.45; }
+    .search-view .index-title h2 { font-size:clamp(3rem,5vw,5.5rem); }
+    .year-intro { display:flex; justify-content:flex-end; padding:8px 0 22px; border-bottom:2px solid var(--ink); }
+    .year-intro p { width:min(420px,42%); margin:0; color:#59615f; font-size:.95rem; line-height:1.45; }
+    .empty { margin:50px 0; font-size:2rem; }
+
+    @media (max-width:900px) {
+      .shell { display:block; }
+      .rail { position:relative; height:auto; min-height:0; padding:20px 18px 18px; border-right:0; border-bottom:1px solid var(--ink); }
+      .rail-copy { margin:42px 0 24px; }
+      h1 { max-width:none; font-size:clamp(4.2rem,13vw,5.8rem); }
+      .lede { max-width:45ch; }
+      .workspace { height:auto; min-height:760px; overflow:visible; }
+      .workspace-head { position:sticky; top:0; }
+      .view { position:relative; inset:auto; min-height:698px; }
+      .field-stage { display:block; height:auto; background:var(--ink); }
+      .field-card,.field-stage:has(.field-card:hover) .field-card,.field-stage .field-card:hover,.field-stage .field-card:focus-visible { display:block; width:100%; height:180px; min-height:180px; border-right:0; border-bottom:1px solid var(--paper2); }
+      .field-image { background-size:400% auto; }
+      .field-index { left:18px; top:17px; transform:none; }
+      .field-label { display:none; }
+      .field-open { left:auto; right:18px; bottom:17px; text-align:right; transform:none; }
+      .field-open strong { max-width:16ch; font-size:2.4rem; opacity:1; }
+      .field-open span { margin-top:7px; }
+      .field-detail { min-height:calc(100vh - 62px); display:block; }
+      .field-hero { min-height:68vh; }
+      .field-hero-copy { inset:auto 22px 25px; }
+      .field-hero-copy h2 { font-size:clamp(4rem,17vw,7rem); }
+      .chapter-index { height:auto; overflow:visible; padding:25px 18px 60px; }
+      .years-view,.search-view { height:auto; min-height:698px; overflow:visible; padding:26px 18px 70px; }
+      .index-title { grid-template-columns:1fr; gap:15px; }
+      .index-title h2 { font-size:clamp(4.2rem,17vw,7rem); }
+      .year-intro { justify-content:flex-start; }
+      .year-intro p { width:min(100%,46ch); }
+    }
+    @media (max-width:600px) {
+      .rail-note span:last-child { display:none; }
+      .workspace-head span { display:none; }
+      .workspace-head { height:54px; padding:0 15px; }
+      .view { min-height:706px; }
+      .field-card,.field-stage:has(.field-card:hover) .field-card,.field-stage .field-card:hover { height:155px; min-height:155px; }
+      details.year-row>summary { min-height:70px; grid-template-columns:84px 1fr 48px; gap:9px; }
+      .year-name { font-size:1.8rem; }
+      .year-name.long { font-size:.9rem; }
+      .paper-list { padding-left:0; }
+      .paper-row { grid-template-columns:1fr; gap:8px; }
+      .paper-topics { justify-content:flex-start; max-width:none; }
+      .chapter-intro { display:block; }
+      .chapter-intro p { margin-top:8px; }
+    }
+    @media (prefers-reduced-motion:reduce) { * { transition-duration:.001ms!important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <aside class="rail">
+      <div class="rail-top"><a class="home" href="index.html">K.G.</a><span class="archive-count"><b id="workCount">117</b> works</span></div>
+      <div class="rail-copy">
+        <div class="kicker">2010—2027 · Complete archive</div>
+        <h1>Publications</h1>
+        <p class="lede">Browse the work at the scale that makes sense: enter a research field, open a single year, or search the complete archive.</p>
+      </div>
+      <nav class="mode-switch" aria-label="Browse publications by">
+        <button type="button" id="yearsMode" class="active" aria-pressed="true">Year index</button>
+        <button type="button" id="fieldsMode" aria-pressed="false">Research fields</button>
+      </nav>
+      <label class="searchbox"><input type="search" id="search" placeholder="Search titles, authors, venues…" autocomplete="off"><span>⌕</span></label>
+      <p class="rail-note"><span id="railStatus">8 fields · select one to enter</span><span>Esc returns</span></p>
+    </aside>
+
+    <section class="workspace" id="workspace">
+      <header class="workspace-head"><strong id="viewTitle">Research fields</strong><span id="viewMeta">Eight chapters · one growing archive</span></header>
+      <div class="view" id="view"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    const TOPICS = [
+      {key:'whatsapp',name:'Private Messaging',short:'Messaging',color:'#397b79',cell:[1,0],description:'WhatsApp and encrypted messaging as infrastructures for news, politics, community and public life.'},
+      {key:'misinfo',name:'Misinformation & Harm',short:'Misinformation',color:'#cf4d32',cell:[2,0],description:'How misleading and harmful content appears, travels, gains authority and can be corrected.'},
+      {key:'polar',name:'Politics & Polarization',short:'Politics',color:'#c4932d',cell:[3,0],description:'Political division, public disagreement, opposing viewpoints and the design of healthier discourse.'},
+      {key:'ai',name:'AI & Society',short:'AI & society',color:'#6d668d',cell:[0,0],description:'How people use AI, what it changes, and where human judgment remains essential.'},
+      {key:'media',name:'Media & Attention',short:'Media',color:'#245d88',cell:[0,1],description:'Television, news, podcasts and the social dynamics that decide what receives attention.'},
+      {key:'platforms',name:'Platforms & Behavior',short:'Platforms',color:'#9a6439',cell:[1,1],description:'How interfaces, algorithms and platform rules shape participation, movement and visibility.'},
+      {key:'health',name:'Health & Public Response',short:'Health',color:'#9d5c63',cell:[2,1],description:'Information, social norms, care and collective decision-making in public health.'},
+      {key:'methods',name:'Data & Methods',short:'Methods',color:'#245d88',cell:[3,1],description:'The datasets, measurement systems and computational methods that make the rest of the research possible.'}
+    ];
+    const TOPIC = Object.fromEntries(TOPICS.map(t=>[t.key,t]));
+    const PUBS = (window.PUBLICATIONS||[]).map((p,index)=>({...p,index,yearKey:String(p.year),topics:p.topics||['methods']}));
+    const YEAR_KEYS = ['Unpublished',...[...new Set(PUBS.filter(p=>p.year!=='Unpublished').map(p=>String(p.year)))].sort((a,b)=>Number(b)-Number(a))];
+    const view=document.querySelector('#view'),workspace=document.querySelector('#workspace'),search=document.querySelector('#search');
+    const fieldsMode=document.querySelector('#fieldsMode'),yearsMode=document.querySelector('#yearsMode');
+    const viewTitle=document.querySelector('#viewTitle'),viewMeta=document.querySelector('#viewMeta'),railStatus=document.querySelector('#railStatus');
+    let mode=new URLSearchParams(location.search).get('view')==='fields'?'fields':'years',activeField=null,query='';
+    document.querySelector('#workCount').textContent=PUBS.length;
+
+    function topicCount(key){return PUBS.filter(p=>p.topics.includes(key)).length}
+    function topicYears(key){return [...new Set(PUBS.filter(p=>p.topics.includes(key)&&p.year!=='Unpublished').map(p=>Number(p.year)))].sort((a,b)=>a-b)}
+    function imageStyle(topic){const [x,y]=topic.cell;return `background-position:${x*(100/3)}% ${y*100}%`}
+    const inRotation=new URLSearchParams(location.search).has('rotation');
+    function guideURL(next,hash=''){const params=new URLSearchParams();if(inRotation)params.set('rotation','1');if(next==='fields')params.set('view','fields');const qs=params.toString();return `${location.pathname}${qs?`?${qs}`:''}${hash}`}
+    function setMode(next){mode=next;activeField=null;query='';search.value='';fieldsMode.classList.toggle('active',mode==='fields');yearsMode.classList.toggle('active',mode==='years');fieldsMode.setAttribute('aria-pressed',String(mode==='fields'));yearsMode.setAttribute('aria-pressed',String(mode==='years'));history.replaceState(null,'',guideURL(next));render()}
+    function render(){if(query)return renderSearch();if(activeField)return renderField(activeField);mode==='fields'?renderFields():renderYears()}
+
+    function renderFields(){
+      viewTitle.textContent='Research fields';viewMeta.textContent='Eight chapters · one growing archive';railStatus.textContent='8 fields · select one to enter';
+      view.innerHTML=`<div class="field-stage">${TOPICS.map((t,i)=>`<button class="field-card" type="button" data-field="${t.key}" style="--c:${t.color}" aria-label="Open ${t.name}, ${topicCount(t.key)} publications"><span class="field-image" style="${imageStyle(t)}"></span><span class="field-index">${String(i+1).padStart(2,'0')}</span><span class="field-label">${t.name}</span><span class="field-open"><strong>${t.name}</strong><span>${topicCount(t.key)} works · enter field →</span></span></button>`).join('')}</div>`;
+      view.querySelectorAll('[data-field]').forEach(b=>b.addEventListener('click',()=>openField(b.dataset.field)));
+    }
+    function openField(key){mode='fields';activeField=key;query='';search.value='';fieldsMode.classList.add('active');yearsMode.classList.remove('active');fieldsMode.setAttribute('aria-pressed','true');yearsMode.setAttribute('aria-pressed','false');history.replaceState(null,'',guideURL('fields',`#field-${key}`));renderField(key)}
+    function renderField(key){
+      const t=TOPIC[key],items=PUBS.filter(p=>p.topics.includes(key)),years=topicYears(key),groups=groupByYear(items);
+      viewTitle.textContent=t.name;viewMeta.textContent=`${items.length} works · ${years[0]}—${years.at(-1)}`;railStatus.textContent=`Inside ${t.short} · grouped by year`;
+      view.innerHTML=`<div class="field-detail"><section class="field-hero" style="--c:${t.color}"><div class="field-image" style="${imageStyle(t)}"></div><div class="field-hero-copy"><button class="back" type="button" data-back>← all research fields</button><h2>${t.name}</h2><p>${t.description}</p><div class="field-stat">${items.length} works · ${years[0]}—${years.at(-1)}</div></div></section><section class="chapter-index"><div class="chapter-intro"><h3>Chronological index</h3><p>Years remain collapsed until you open them. The newest available year is expanded.</p></div><div class="year-list">${yearRows(groups,true,key)}</div></section></div>`;
+      view.querySelector('[data-back]').addEventListener('click',()=>{activeField=null;history.replaceState(null,'',guideURL('fields'));renderFields()});wireDetails();wireTopicButtons();
+    }
+    function renderYears(){
+      const groups=groupByYear(PUBS);viewTitle.textContent='Year index';viewMeta.textContent=`${YEAR_KEYS.length-1} years · ${PUBS.length} works`;railStatus.textContent='One expandable row per year';
+      view.innerHTML=`<section class="years-view"><div class="year-intro"><p>Every year has one row. Its color bar shows the mixture of research fields; opening it reveals only that year's publications.</p></div><div class="year-list">${yearRows(groups,false)}</div></section>`;wireDetails();wireTopicButtons();
+      const current=view.querySelector('details[data-year="2026"]');if(current){current.open=true;populateDetails(current)}
+    }
+    function groupByYear(items){const groups={};items.forEach(p=>(groups[p.yearKey]??=[]).push(p));return groups}
+    function yearRows(groups,forField=false,fieldKey=null){
+      return YEAR_KEYS.filter(y=>groups[y]?.length).map((year,index)=>{const items=groups[year],label=year==='Unpublished'?'In progress':year,open=forField&&index===0?' open':'';return `<details class="year-row" data-year="${year}"${open}><summary><span class="year-name ${year==='Unpublished'?'long':''}">${label}</span>${composition(items)}<span class="year-count"><b>${items.length}</b>${items.length===1?'work':'works'} <i class="row-caret">+</i></span></summary><div class="paper-list" data-papers data-field-scope="${fieldKey||''}">${open?paperRows(items):''}</div></details>`}).join('')
+    }
+    function composition(items){const counts=TOPICS.map(t=>({t,n:items.filter(p=>p.topics.includes(t.key)).length})).filter(x=>x.n);const total=counts.reduce((s,x)=>s+x.n,0)||1;return `<span class="year-composition" aria-label="Topic composition">${counts.map(x=>`<i title="${x.t.name}: ${x.n}" style="width:${x.n/total*100}%;background:${x.t.color}"></i>`).join('')}</span>`}
+    function paperRows(items){return items.map(p=>{const link=(p.links||[])[0];return `<article class="paper-row"><div><h4>${link?`<a href="${link.href}" target="_blank" rel="noopener">${p.title}</a>`:p.title}</h4><p class="meta">${p.venue||'Venue forthcoming'} · ${(p.authors||[]).join(' · ')}</p></div><div class="paper-topics">${p.topics.map(k=>`<button type="button" class="paper-topic" data-topic="${k}" style="--c:${TOPIC[k]?.color||'#172126'}">${TOPIC[k]?.short||k}</button>`).join('')}</div></article>`}).join('')}
+    function populateDetails(detail){const target=detail.querySelector('[data-papers]');if(!target||target.childElementCount)return;let items=PUBS.filter(p=>p.yearKey===detail.dataset.year);const scope=target.dataset.fieldScope;if(scope)items=items.filter(p=>p.topics.includes(scope));if(query)items=items.filter(p=>`${p.title} ${p.venue} ${(p.authors||[]).join(' ')}`.toLowerCase().includes(query));target.innerHTML=paperRows(items);wireTopicButtons(target)}
+    function wireDetails(){view.querySelectorAll('details.year-row').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)populateDetails(d)}))}
+    function wireTopicButtons(root=view){root.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>openField(b.dataset.topic)))}
+
+    function renderSearch(){
+      const found=PUBS.filter(p=>`${p.title} ${p.venue} ${(p.authors||[]).join(' ')}`.toLowerCase().includes(query));const groups=groupByYear(found);
+      viewTitle.textContent='Search';viewMeta.textContent=`${found.length} matching ${found.length===1?'work':'works'}`;railStatus.textContent=query?`Searching “${query}”`:'Complete archive';
+      view.innerHTML=`<section class="search-view"><div class="index-title"><h2>${found.length} ${found.length===1?'result':'results'}</h2><p>Results stay grouped by year, so a search still preserves the shape of the archive.</p></div>${found.length?`<div class="year-list">${yearRows(groups,false)}</div>`:`<p class="empty">No work matches “${escapeHTML(query)}”.</p>`}</section>`;wireDetails();view.querySelectorAll('details').forEach(d=>{d.open=true;populateDetails(d)});wireTopicButtons();
+    }
+    function escapeHTML(value){return value.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+
+    fieldsMode.addEventListener('click',()=>setMode('fields'));yearsMode.addEventListener('click',()=>setMode('years'));
+    search.addEventListener('input',()=>{query=search.value.trim().toLowerCase();activeField=null;render()});
+    addEventListener('keydown',event=>{if(event.key==='Escape'){if(query){query='';search.value='';render()}else if(activeField){activeField=null;history.replaceState(null,'',guideURL('fields'));renderFields()}else setMode('fields')}});
+    if(mode==='years'){fieldsMode.classList.remove('active');yearsMode.classList.add('active');fieldsMode.setAttribute('aria-pressed','false');yearsMode.setAttribute('aria-pressed','true');if(location.hash)history.replaceState(null,'',guideURL('years'))}
+    const hash=location.hash.slice(1);if(mode==='fields'&&hash.startsWith('field-')&&TOPIC[hash.slice(6)]){activeField=hash.slice(6)}render();
+  </script>
+</body>
+</html>
