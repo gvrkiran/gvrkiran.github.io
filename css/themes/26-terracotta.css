@@ -56,8 +56,15 @@ html[data-theme="26"][data-mode="light"] {
   --t26-hairline: rgba(33, 24, 20, 0.10);
 }
 
-/* Warm ambient wash behind everything */
+/* Warm ambient wash behind everything.
+   The solid background-color must live on the ROOT element: base.css sets
+   `html,body{height:100%}`, so the <body> background only covers a single
+   viewport. The root element's background, however, paints the whole canvas
+   (the full scrollable page). Without a root color, long pages (publications,
+   the homepage below the hero) show the white canvas beneath the first screen.
+   Body is kept transparent so the fixed top-glow gradient on the root shows. */
 html[data-theme="26"] {
+  background-color: var(--color-bg);
   background-image: radial-gradient(ellipse 1000px 620px at 50% -8%, rgba(201, 100, 66, 0.12), transparent 62%);
   background-attachment: fixed;
 }
@@ -65,7 +72,7 @@ html[data-theme="26"][data-mode="light"] {
   background-image: radial-gradient(ellipse 1000px 620px at 50% -8%, rgba(176, 74, 40, 0.07), transparent 62%);
   background-attachment: fixed;
 }
-html[data-theme="26"] body { background: var(--color-bg); }
+html[data-theme="26"] body { background: transparent; }
 
 /* ================= NAV ================= */
 html[data-theme="26"] .nav-brand {
