@@ -36,11 +36,19 @@
     { n: 24, slug: 'research-ramble',  name: 'Research Ramble', layout: 'L4', js: 'js/theme-24-research-ramble.js' },
     { n: 25, slug: 'idea-archipelago', name: 'The Living Research Kingdom', layout: 'L4', js: 'js/theme-25-idea-archipelago.js' },
     { n: 26, slug: 'terracotta',       name: 'Terracotta',      layout: 'L4', js: 'js/theme-26-terracotta.js' },
+    { n: 27, slug: 'scroll-observatory', name: '3D Observatory', layout: 'WORLD', page: 'observatory.html' },
   ];
   const MAX = THEMES.length;
 
   const url = new URL(location.href);
+  const pageName = url.pathname.split('/').pop();
+  const isHomePage = pageName === '' || pageName === 'index.html';
   const urlTheme = parseInt(url.searchParams.get('theme'), 10);
+  const reroll = url.searchParams.has('reroll');
+  if (reroll) {
+    localStorage.removeItem('forced_theme');
+    sessionStorage.removeItem('current_theme');
+  }
   const forcedTheme = parseInt(localStorage.getItem('forced_theme') || '', 10);
   const last = parseInt(localStorage.getItem('last_theme') || '', 10);
   // Theme persists across in-session navigations (sessionStorage) but rerolls on reload / new tab.
@@ -55,20 +63,28 @@
   let pick;
   if (urlTheme >= 1 && urlTheme <= MAX) {
     pick = urlTheme;
-  } else if (forcedTheme >= 1 && forcedTheme <= MAX) {
+  } else if (!reroll && forcedTheme >= 1 && forcedTheme <= MAX) {
     pick = forcedTheme;
-  } else if (navType !== 'reload' && sessionTheme >= 1 && sessionTheme <= MAX) {
+  } else if (!reroll && navType !== 'reload' && sessionTheme >= 1 && sessionTheme <= MAX &&
+             (isHomePage || !THEMES.find(t => t.n === sessionTheme).page)) {
     // In-session navigation (link click or back/forward) — keep the same theme.
     pick = sessionTheme;
   } else {
     // Fresh reload, fresh tab, or no session — pick a new random theme (≠ last).
-    const candidates = THEMES.filter(t => t.n !== last).map(t => t.n);
+    const candidates = THEMES.filter(t => t.n !== last && (isHomePage || !t.page)).map(t => t.n);
     pick = candidates[Math.floor(Math.random() * candidates.length)];
   }
   localStorage.setItem('last_theme', String(pick));
   sessionStorage.setItem('current_theme', String(pick));
 
   const theme = THEMES.find(t => t.n === pick);
+
+  if (theme.page) {
+    const destination = new URL(theme.page, location.href);
+    destination.searchParams.set('rotation', '1');
+    location.replace(destination.href);
+    return;
+  }
   const padded = String(theme.n).padStart(2, '0');
   const cssHref = `css/themes/${padded}-${theme.slug}.css`;
 

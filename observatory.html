@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Kiran Garimella — 3D academic website</title>
+  <meta name="description" content="A scroll-through version of Kiran Garimella's academic website: About, Projects, Publications, Teaching, and Other." />
+  <meta name="theme-color" content="#070d18" />
+  <meta property="og:title" content="Kiran Garimella — 3D academic website" />
+  <meta property="og:description" content="Fly through five rooms of research on information ecosystems, misinformation, and AI for the public good." />
+  <meta property="og:image" content="assets/observatory/stills/01-orrery-atrium.png" />
+
+  <script>
+    (function () {
+      const url = new URL(location.href);
+      if (!url.searchParams.has('rotation')) return;
+      const navigation = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      if (navigation && navigation.type === 'reload') location.replace('index.html?reroll=1');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/observatory-world.css" />
+</head>
+<body>
+  <a class="skip-link" href="index.html">Skip the journey and enter the standard site</a>
+  <div id="top" aria-hidden="true"></div>
+  <main id="world" aria-label="Kiran Garimella's scroll-driven academic website"></main>
+  <div class="observatory-vignette" aria-hidden="true"></div>
+
+  <noscript>
+    <p class="no-js-note">This journey needs JavaScript. <a href="index.html">Enter the standard website instead.</a></p>
+  </noscript>
+
+  <script src="js/observatory/scrub-engine.js"></script>
+  <script src="js/observatory/world.js"></script>
+</body>
+</html>

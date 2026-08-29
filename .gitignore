@@ -1,3 +1,9 @@
 
 # AI illustration source PNGs (large); the site serves assets/pub-art/papers/*.webp
 assets/pub-art/originals/
+
+# Observatory source renders and seam-QA files; the site serves WebP posters
+# and the scrub-optimized MP4 encodes.
+assets/observatory/stills/*.png
+assets/observatory/video/raw/
+assets/observatory/video/frames/
