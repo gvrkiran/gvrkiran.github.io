@@ -170,22 +170,22 @@
 <body>
   <main class="shell">
     <aside class="rail">
-      <div class="rail-top"><a class="home" href="index.html">K.G.</a><span class="archive-count"><b id="workCount">117</b> works</span></div>
+      <div class="rail-top"><a class="home" href="index.html">K.G.</a><span class="archive-count"><b id="workCount">117</b> papers</span></div>
       <div class="rail-copy">
-        <div class="kicker">2010—2027 · Complete archive</div>
+        <div class="kicker">2010—2027</div>
         <h1>Publications</h1>
-        <p class="lede">Browse the work at the scale that makes sense: enter a research field, open a single year, or search the complete archive.</p>
+        <p class="lede">Browse by year, by research field, or search the archive.</p>
       </div>
       <nav class="mode-switch" aria-label="Browse publications by">
         <button type="button" id="yearsMode" class="active" aria-pressed="true">Year index</button>
         <button type="button" id="fieldsMode" aria-pressed="false">Research fields</button>
       </nav>
       <label class="searchbox"><input type="search" id="search" placeholder="Search titles, authors, venues…" autocomplete="off"><span>⌕</span></label>
-      <p class="rail-note"><span id="railStatus">8 fields · select one to enter</span><span>Esc returns</span></p>
+      <p class="rail-note"><span id="railStatus">8 fields</span><span>Esc returns</span></p>
     </aside>
 
     <section class="workspace" id="workspace">
-      <header class="workspace-head"><strong id="viewTitle">Research fields</strong><span id="viewMeta">Eight chapters · one growing archive</span></header>
+      <header class="workspace-head"><strong id="viewTitle">Research fields</strong><span id="viewMeta">8 research fields</span></header>
       <div class="view" id="view"></div>
     </section>
   </main>
@@ -195,12 +195,12 @@
     const TOPICS = [
       {key:'whatsapp',name:'Private Messaging',short:'Messaging',color:'#397b79',cell:[1,0],description:'WhatsApp and encrypted messaging as infrastructures for news, politics, community and public life.'},
       {key:'misinfo',name:'Misinformation & Harm',short:'Misinformation',color:'#cf4d32',cell:[2,0],description:'How misleading and harmful content appears, travels, gains authority and can be corrected.'},
-      {key:'polar',name:'Politics & Polarization',short:'Politics',color:'#c4932d',cell:[3,0],description:'Political division, public disagreement, opposing viewpoints and the design of healthier discourse.'},
-      {key:'ai',name:'AI & Society',short:'AI & society',color:'#6d668d',cell:[0,0],description:'How people use AI, what it changes, and where human judgment remains essential.'},
+      {key:'polar',name:'Politics & Polarization',short:'Politics',color:'#c4932d',cell:[3,0],description:'Political polarization, disagreement, and methods to reduce it.'},
+      {key:'ai',name:'AI & Society',short:'AI & society',color:'#6d668d',cell:[0,0],description:'How people use AI, and what it changes.'},
       {key:'media',name:'Media & Attention',short:'Media',color:'#245d88',cell:[0,1],description:'Television, news, podcasts and the social dynamics that decide what receives attention.'},
       {key:'platforms',name:'Platforms & Behavior',short:'Platforms',color:'#9a6439',cell:[1,1],description:'How interfaces, algorithms and platform rules shape participation, movement and visibility.'},
       {key:'health',name:'Health & Public Response',short:'Health',color:'#9d5c63',cell:[2,1],description:'Information, social norms, care and collective decision-making in public health.'},
-      {key:'methods',name:'Data & Methods',short:'Methods',color:'#245d88',cell:[3,1],description:'The datasets, measurement systems and computational methods that make the rest of the research possible.'}
+      {key:'methods',name:'Data & Methods',short:'Methods',color:'#245d88',cell:[3,1],description:'Datasets, measurement systems and computational methods used across this research.'}
     ];
     const TOPIC = Object.fromEntries(TOPICS.map(t=>[t.key,t]));
     const PUBS = (window.PUBLICATIONS||[]).map((p,index)=>({...p,index,yearKey:String(p.year),topics:p.topics||['methods']}));
@@ -220,36 +220,36 @@
     function render(){if(query)return renderSearch();if(activeField)return renderField(activeField);mode==='fields'?renderFields():renderYears()}
 
     function renderFields(){
-      viewTitle.textContent='Research fields';viewMeta.textContent='Eight chapters · one growing archive';railStatus.textContent='8 fields · select one to enter';
-      view.innerHTML=`<div class="field-stage">${TOPICS.map((t,i)=>`<button class="field-card" type="button" data-field="${t.key}" style="--c:${t.color}" aria-label="Open ${t.name}, ${topicCount(t.key)} publications"><span class="field-image" style="${imageStyle(t)}"></span><span class="field-index">${String(i+1).padStart(2,'0')}</span><span class="field-label">${t.name}</span><span class="field-open"><strong>${t.name}</strong><span>${topicCount(t.key)} works · enter field →</span></span></button>`).join('')}</div>`;
+      viewTitle.textContent='Research fields';viewMeta.textContent='8 research fields';railStatus.textContent='8 fields';
+      view.innerHTML=`<div class="field-stage">${TOPICS.map((t,i)=>`<button class="field-card" type="button" data-field="${t.key}" style="--c:${t.color}" aria-label="Open ${t.name}, ${topicCount(t.key)} publications"><span class="field-image" style="${imageStyle(t)}"></span><span class="field-index">${String(i+1).padStart(2,'0')}</span><span class="field-label">${t.name}</span><span class="field-open"><strong>${t.name}</strong><span>${topicCount(t.key)} papers →</span></span></button>`).join('')}</div>`;
       view.querySelectorAll('[data-field]').forEach(b=>b.addEventListener('click',()=>openField(b.dataset.field)));
     }
     function openField(key){mode='fields';activeField=key;query='';search.value='';fieldsMode.classList.add('active');yearsMode.classList.remove('active');fieldsMode.setAttribute('aria-pressed','true');yearsMode.setAttribute('aria-pressed','false');history.replaceState(null,'',guideURL('fields',`#field-${key}`));renderField(key)}
     function renderField(key){
       const t=TOPIC[key],items=PUBS.filter(p=>p.topics.includes(key)),years=topicYears(key),groups=groupByYear(items);
-      viewTitle.textContent=t.name;viewMeta.textContent=`${items.length} works · ${years[0]}—${years.at(-1)}`;railStatus.textContent=`Inside ${t.short} · grouped by year`;
-      view.innerHTML=`<div class="field-detail"><section class="field-hero" style="--c:${t.color}"><div class="field-image" style="${imageStyle(t)}"></div><div class="field-hero-copy"><button class="back" type="button" data-back>← all research fields</button><h2>${t.name}</h2><p>${t.description}</p><div class="field-stat">${items.length} works · ${years[0]}—${years.at(-1)}</div></div></section><section class="chapter-index"><div class="chapter-intro"><h3>Chronological index</h3><p>Years remain collapsed until you open them. The newest available year is expanded.</p></div><div class="year-list">${yearRows(groups,true,key)}</div></section></div>`;
+      viewTitle.textContent=t.name;viewMeta.textContent=`${items.length} papers · ${years[0]}—${years.at(-1)}`;railStatus.textContent=`${t.short} · grouped by year`;
+      view.innerHTML=`<div class="field-detail"><section class="field-hero" style="--c:${t.color}"><div class="field-image" style="${imageStyle(t)}"></div><div class="field-hero-copy"><button class="back" type="button" data-back>← all research fields</button><h2>${t.name}</h2><p>${t.description}</p><div class="field-stat">${items.length} papers · ${years[0]}—${years.at(-1)}</div></div></section><section class="chapter-index"><div class="chapter-intro"><h3>Chronological index</h3><p>Click a year to expand it.</p></div><div class="year-list">${yearRows(groups,true,key)}</div></section></div>`;
       view.querySelector('[data-back]').addEventListener('click',()=>{activeField=null;history.replaceState(null,'',guideURL('fields'));renderFields()});wireDetails();wireTopicButtons();
     }
     function renderYears(){
-      const groups=groupByYear(PUBS);viewTitle.textContent='Year index';viewMeta.textContent=`${YEAR_KEYS.length-1} years · ${PUBS.length} works`;railStatus.textContent='One expandable row per year';
-      view.innerHTML=`<section class="years-view"><div class="year-intro"><p>Every year has one row. Its color bar shows the mixture of research fields; opening it reveals only that year's publications.</p></div><div class="year-list">${yearRows(groups,false)}</div></section>`;wireDetails();wireTopicButtons();
+      const groups=groupByYear(PUBS);viewTitle.textContent='Year index';viewMeta.textContent=`${YEAR_KEYS.length-1} years · ${PUBS.length} papers`;railStatus.textContent='Grouped by year';
+      view.innerHTML=`<section class="years-view"><div class="year-intro"><p>Click a year to see its papers.</p></div><div class="year-list">${yearRows(groups,false)}</div></section>`;wireDetails();wireTopicButtons();
       const current=view.querySelector('details[data-year="2026"]');if(current){current.open=true;populateDetails(current)}
     }
     function groupByYear(items){const groups={};items.forEach(p=>(groups[p.yearKey]??=[]).push(p));return groups}
     function yearRows(groups,forField=false,fieldKey=null){
-      return YEAR_KEYS.filter(y=>groups[y]?.length).map((year,index)=>{const items=groups[year],label=year==='Unpublished'?'In progress':year,open=forField&&index===0?' open':'';return `<details class="year-row" data-year="${year}"${open}><summary><span class="year-name ${year==='Unpublished'?'long':''}">${label}</span>${composition(items)}<span class="year-count"><b>${items.length}</b>${items.length===1?'work':'works'} <i class="row-caret">+</i></span></summary><div class="paper-list" data-papers data-field-scope="${fieldKey||''}">${open?paperRows(items):''}</div></details>`}).join('')
+      return YEAR_KEYS.filter(y=>groups[y]?.length).map((year,index)=>{const items=groups[year],label=year==='Unpublished'?'Under review':year,open=forField&&index===0?' open':'';return `<details class="year-row" data-year="${year}"${open}><summary><span class="year-name ${year==='Unpublished'?'long':''}">${label}</span>${composition(items)}<span class="year-count"><b>${items.length}</b>${items.length===1?'paper':'papers'} <i class="row-caret">+</i></span></summary><div class="paper-list" data-papers data-field-scope="${fieldKey||''}">${open?paperRows(items):''}</div></details>`}).join('')
     }
     function composition(items){const counts=TOPICS.map(t=>({t,n:items.filter(p=>p.topics.includes(t.key)).length})).filter(x=>x.n);const total=counts.reduce((s,x)=>s+x.n,0)||1;return `<span class="year-composition" aria-label="Topic composition">${counts.map(x=>`<i title="${x.t.name}: ${x.n}" style="width:${x.n/total*100}%;background:${x.t.color}"></i>`).join('')}</span>`}
-    function paperRows(items){return items.map(p=>{const link=(p.links||[])[0];return `<article class="paper-row"><div><h4>${link?`<a href="${link.href}" target="_blank" rel="noopener">${p.title}</a>`:p.title}</h4><p class="meta">${p.venue||'Venue forthcoming'} · ${(p.authors||[]).join(' · ')}</p></div><div class="paper-topics">${p.topics.map(k=>`<button type="button" class="paper-topic" data-topic="${k}" style="--c:${TOPIC[k]?.color||'#172126'}">${TOPIC[k]?.short||k}</button>`).join('')}</div></article>`}).join('')}
+    function paperRows(items){return items.map(p=>{const link=(p.links||[])[0];return `<article class="paper-row"><div><h4>${link?`<a href="${link.href}" target="_blank" rel="noopener">${p.title}</a>`:p.title}</h4><p class="meta">${p.venue||p.status||''} · ${(p.authors||[]).join(' · ')}</p></div><div class="paper-topics">${p.topics.map(k=>`<button type="button" class="paper-topic" data-topic="${k}" style="--c:${TOPIC[k]?.color||'#172126'}">${TOPIC[k]?.short||k}</button>`).join('')}</div></article>`}).join('')}
     function populateDetails(detail){const target=detail.querySelector('[data-papers]');if(!target||target.childElementCount)return;let items=PUBS.filter(p=>p.yearKey===detail.dataset.year);const scope=target.dataset.fieldScope;if(scope)items=items.filter(p=>p.topics.includes(scope));if(query)items=items.filter(p=>`${p.title} ${p.venue} ${(p.authors||[]).join(' ')}`.toLowerCase().includes(query));target.innerHTML=paperRows(items);wireTopicButtons(target)}
     function wireDetails(){view.querySelectorAll('details.year-row').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)populateDetails(d)}))}
     function wireTopicButtons(root=view){root.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>openField(b.dataset.topic)))}
 
     function renderSearch(){
       const found=PUBS.filter(p=>`${p.title} ${p.venue} ${(p.authors||[]).join(' ')}`.toLowerCase().includes(query));const groups=groupByYear(found);
-      viewTitle.textContent='Search';viewMeta.textContent=`${found.length} matching ${found.length===1?'work':'works'}`;railStatus.textContent=query?`Searching “${query}”`:'Complete archive';
-      view.innerHTML=`<section class="search-view"><div class="index-title"><h2>${found.length} ${found.length===1?'result':'results'}</h2><p>Results stay grouped by year, so a search still preserves the shape of the archive.</p></div>${found.length?`<div class="year-list">${yearRows(groups,false)}</div>`:`<p class="empty">No work matches “${escapeHTML(query)}”.</p>`}</section>`;wireDetails();view.querySelectorAll('details').forEach(d=>{d.open=true;populateDetails(d)});wireTopicButtons();
+      viewTitle.textContent='Search';viewMeta.textContent=`${found.length} matching ${found.length===1?'paper':'papers'}`;railStatus.textContent=query?`Searching “${query}”`:'Complete archive';
+      view.innerHTML=`<section class="search-view"><div class="index-title"><h2>${found.length} ${found.length===1?'result':'results'}</h2><p>Grouped by year.</p></div>${found.length?`<div class="year-list">${yearRows(groups,false)}</div>`:`<p class="empty">No results for “${escapeHTML(query)}”.</p>`}</section>`;wireDetails();view.querySelectorAll('details').forEach(d=>{d.open=true;populateDetails(d)});wireTopicButtons();
     }
     function escapeHTML(value){return value.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 

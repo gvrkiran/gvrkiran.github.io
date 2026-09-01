@@ -175,9 +175,7 @@
   </div>
 
   <header class="masthead">
-    <span class="kicker">Publications · The Stamp Collection</span>
-    <h1>The Stamp Collection</h1>
-    <p id="mastheadNote">Every paper issued as a stamp: the illustration is the artwork, the venue is the postmark — cancelled in the city where the work was done. One plate per year; proofs up front.</p>
+    <h1>Publications</h1>
   </header>
 
   <nav class="chips" id="chips" aria-label="Filter by topic"></nav>
@@ -281,8 +279,6 @@ let catalog = new Map();
 
 /* ---------- build spreads ---------- */
 const albums = document.getElementById('albums');
-const plateCount = YEARS_DESC.length + 1;
-let plateIdx = 0;
 
 function stampMount(p) {
   const cat = catalog.get(p);
@@ -297,9 +293,8 @@ function stampMount(p) {
         <span class="denom">№ ${cat}</span>
         <img src="${ART(p.slug)}" alt="" loading="lazy"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="fallback">art<br>drying</div>
-        <div class="caption"><span>${venueShort(p)}</span><span>${isProof ? 'PROOF' : p.year}</span></div>
-        ${isProof ? '' : `<span class="proofless"></span>`}
+        <div class="fallback">image unavailable</div>
+        <div class="caption"><span>${venueShort(p)}</span><span>${isProof ? 'REVIEW' : p.year}</span></div>
       </div>
       ${isProof ? '<span class="proof-mark">PROOF</span>' : postmark(venueShort(p), p.year, postCity(p), p.slug)}
     </div>
@@ -311,17 +306,14 @@ function stampMount(p) {
 }
 
 function buildSpread(label, papers, opts = {}) {
-  plateIdx++;
   const album = document.createElement('section');
   album.className = 'album' + (opts.proofs ? ' proofs' : '');
   album.id = opts.proofs ? 'series-proofs' : `series-${label}`;
   const left = document.createElement('section');
   left.className = 'page left';
   left.innerHTML = `
-    <span class="year-tab">${opts.proofs ? 'PROOFS' : 'SERIES ' + label}</span>
-    <span class="page-label">plate ${plateIdx} of ${plateCount}</span>
-    <h2>${opts.proofs ? 'Not yet issued' : (papers.length + ' issue' + (papers.length > 1 ? 's' : ''))}</h2>
-    <p class="sub">${opts.proofs ? 'under review · printed without postmarks' : 'click a stamp for the loupe'}</p>`;
+    <span class="year-tab">${opts.proofs ? 'Under review' : label}</span>
+    <h2>${papers.length} paper${papers.length === 1 ? '' : 's'}</h2>`;
   const sheet = document.createElement('div');
   sheet.className = 'sheet';
   papers.forEach(p => sheet.appendChild(stampMount(p)));
@@ -329,10 +321,7 @@ function buildSpread(label, papers, opts = {}) {
 
   const right = document.createElement('section');
   right.className = 'page right';
-  right.innerHTML = `
-    <span class="page-label">collector’s index</span>
-    <h2>Index of plates</h2>
-    <p class="sub">${opts.proofs ? 'proofs' : 'series ' + label} · ${papers.length} stamp${papers.length > 1 ? 's' : ''}</p>`;
+  right.innerHTML = `<h2>Papers</h2>`;
   const ul = document.createElement('ul');
   ul.className = 'index-list';
   papers.forEach(p => {
@@ -342,24 +331,16 @@ function buildSpread(label, papers, opts = {}) {
     ul.appendChild(li);
   });
   right.appendChild(ul);
-  if (opts.colophon) {
-    const c = document.createElement('div');
-    c.className = 'colophon';
-    c.innerHTML = opts.colophon;
-    right.appendChild(c);
-  }
   album.appendChild(left);
   album.appendChild(right);
   albums.appendChild(album);
 }
 
 buildSpread('PROOFS', PROOFS, { proofs: true });
-YEARS_DESC.forEach((y, i) => buildSpread(y, byYear[y], i === YEARS_DESC.length - 1 ? {
-  colophon: `<b>colophon</b> ${PUBS.length} stamps · illustrations drawn per paper in a risograph duotone, generated from hand-written visual briefs · postmark cities follow the desk where the work was done: Hyderabad, Doha, Helsinki, Cambridge, New Brunswick.`,
-} : {}));
+YEARS_DESC.forEach(y => buildSpread(y, byYear[y]));
 
 document.getElementById('footNote').textContent =
-  `${PUBS.length} stamps across ${plateCount} plates · reload publications.html for a different design`;
+  `${PUBS.length} papers · ${YEARS_DESC[YEARS_DESC.length - 1]}–${YEARS_DESC[0]}`;
 
 /* ---------- chips + yearnav ---------- */
 const chips = document.getElementById('chips');
@@ -383,7 +364,7 @@ function setTopic(key, btn) {
     m.classList.toggle('mute', key !== null && !m.dataset.topics.split(' ').includes(key)));
 }
 const yearnav = document.getElementById('yearnav');
-yearnav.innerHTML = `<a href="#series-proofs">proofs</a> · ` +
+yearnav.innerHTML = `<a href="#series-proofs">under review</a> · ` +
   YEARS_DESC.map(y => `<a href="#series-${y}">${String(y).slice(2)}</a>`).join(' · ');
 
 /* ---------- loupe ---------- */
@@ -394,7 +375,7 @@ function openLoupe(p) {
   img.src = ART(p.slug);
   img.alt = `Illustration for “${p.title}”`;
   document.getElementById('loupeCapVenue').textContent = venueShort(p);
-  document.getElementById('loupeCapYear').textContent = String(p.year) === 'Unpublished' ? 'PROOF' : p.year;
+  document.getElementById('loupeCapYear').textContent = String(p.year) === 'Unpublished' ? 'Under review' : p.year;
   document.getElementById('loupeVenue').textContent = p.venue || p.status || '—';
   document.getElementById('loupeCat').textContent = '№ ' + catalog.get(p);
   document.getElementById('loupeTitle').textContent = p.title;

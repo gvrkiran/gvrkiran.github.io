@@ -192,10 +192,8 @@
   </div>
 
   <section class="intro">
-    <span class="kicker">Publications · The Orchard</span>
-    <h1>The Orchard</h1>
-    <p>The whole archive as a walk through an orchard: one tree per year, grown from the actual papers. As you scroll, each branch grows and its paper ripens as a fruit you can pick. New work sprouts in the greenhouse first.</p>
-    <p class="hint">scroll to walk the orchard ↓ · or click a tree to jump to its year</p>
+    <h1>Publications</h1>
+    <p class="hint">scroll for more · click a year below to jump ↓</p>
     <div class="horizon-wrap">
       <svg id="horizon" class="horizon-svg" viewBox="0 0 1060 150" role="img" aria-label="A row of small trees, one per year, sized by number of papers — click to jump to a year"></svg>
       <p class="horizon-note" id="horizonNote"></p>
@@ -204,8 +202,8 @@
 
   <section class="greenhouse" id="year-unpublished">
     <div class="gh-head">
-      <h2>The Greenhouse</h2>
-      <p class="gh-sub" id="ghSub">under review · not yet planted</p>
+      <h2>Under review</h2>
+      <p class="gh-sub" id="ghSub"></p>
     </div>
     <div class="gh-frame"><div class="gh-grid" id="ghGrid"></div></div>
   </section>
@@ -213,9 +211,8 @@
   <div id="orchard"><!-- year runways injected here --></div>
 
   <section class="outro">
-    <h2>That’s the whole orchard</h2>
     <p id="outroText"></p>
-    <p class="mock-note">every reload grows the trees a little differently · <a href="#top" onclick="scrollTo({top:0,behavior:'smooth'});return false" style="text-decoration:underline">back to the hilltop ↑</a></p>
+    <p class="mock-note"><a href="#top" onclick="scrollTo({top:0,behavior:'smooth'});return false" style="text-decoration:underline">back to top ↑</a></p>
   </section>
 
   <div class="tooltip" id="tooltip"></div>
@@ -231,8 +228,8 @@
         <p class="blurb" id="cardBlurb"></p>
         <div class="links" id="cardLinks"></div>
         <div class="nav-row">
-          <button id="prevFruit">← previous fruit</button>
-          <button id="nextFruit">next fruit →</button>
+          <button id="prevFruit">← previous</button>
+          <button id="nextFruit">next →</button>
         </div>
       </div>
     </div>
@@ -310,7 +307,7 @@ function openCard(paper, list, idx) {
   cardList = list || [paper]; cardIdx = idx ?? 0;
   const art = document.getElementById('cardArt');
   art.innerHTML = `<img src="${ART(paper.slug)}" alt="Illustration for “${paper.title}”"
-    onerror="this.outerHTML='<div class=\\'no-art\\'>illustration<br>on its way</div>'">`;
+    onerror="this.outerHTML='<div class=\\'no-art\\'>image unavailable</div>'">`;
   document.getElementById('cardVenue').textContent = paper.venue || paper.status || '—';
   document.getElementById('cardYear').textContent = paper.year;
   document.getElementById('cardTitle').textContent = paper.title;
@@ -341,7 +338,7 @@ addEventListener('keydown', (e) => {
 /* ---------- tooltip ---------- */
 const tooltip = document.getElementById('tooltip');
 function showTip(paper, el) {
-  tooltip.innerHTML = `${paper.title}<span class="tt-venue">${paper.venue || paper.status || ''} · click to pick</span>`;
+  tooltip.innerHTML = `${paper.title}<span class="tt-venue">${paper.venue || paper.status || ''} · click to open</span>`;
   const r = el.getBoundingClientRect();
   tooltip.style.left = Math.min(innerWidth - 280, Math.max(8, r.left + r.width / 2 - 130)) + 'px';
   tooltip.style.top = (r.top - 14 - tooltip.offsetHeight) + 'px';
@@ -363,7 +360,7 @@ function buildYearScene(year, papers, container) {
   scene.className = 'scene';
   scene.innerHTML = `
     <div class="year-plate">${year}<small></small></div>
-    <aside class="ledger"><h3>Harvest · ${year}</h3></aside>
+    <aside class="ledger"><h3>Papers</h3></aside>
     <div class="ripen-counter"></div>`;
   const svg = document.createElementNS(NS, 'svg');
   svg.classList.add('tree');
@@ -590,8 +587,8 @@ function buildYearScene(year, papers, container) {
         ledgerBtns[f.idx].classList.toggle('ripe', on);
       }
     });
-    counter.textContent = `${ripe} / ${n} ripened`;
-    plateNote.textContent = ripe >= n ? `${n} paper${n > 1 ? 's' : ''} · pick a fruit` : `${n} paper${n > 1 ? 's' : ''} · ${ripe ? ripe + ' ripened — keep going' : 'scroll to ripen'}`;
+    counter.textContent = `${ripe} / ${n} shown`;
+    plateNote.textContent = ripe >= n ? `${n} paper${n > 1 ? 's' : ''}` : `${n} paper${n > 1 ? 's' : ''} · ${ripe ? ripe + ' shown — keep scrolling' : 'scroll to reveal'}`;
     svg.classList.toggle('grown', p >= 0.99);
   }
   scenes.push({ runway, setProgress, lastP: -1, year });
@@ -601,11 +598,11 @@ function buildYearScene(year, papers, container) {
 const orchard = document.getElementById('orchard');
 YEARS.forEach(y => buildYearScene(y, byYear[y], orchard));
 document.getElementById('outroText').textContent =
-  `${PUBS.length} papers across ${YEARS.length} years, plus ${UNDER_REVIEW.length} seedlings in the greenhouse. The stamps and the field guide hold the same collection, arranged differently.`;
+  `${PUBS.length} papers · ${YEARS.length} years · ${UNDER_REVIEW.length} under review`;
 
 /* greenhouse pots */
 const ghGrid = document.getElementById('ghGrid');
-document.getElementById('ghSub').textContent = `${UNDER_REVIEW.length} under review · not yet planted`;
+document.getElementById('ghSub').textContent = `${UNDER_REVIEW.length} paper${UNDER_REVIEW.length === 1 ? '' : 's'}`;
 UNDER_REVIEW.forEach((p, i) => {
   const pot = document.createElement('div');
   pot.className = 'pot';
@@ -719,7 +716,7 @@ function markHorizon(year) {
   gh.addEventListener('click', () => document.getElementById('year-unpublished').scrollIntoView({ behavior: 'smooth' }));
   h.appendChild(gh);
   document.getElementById('horizonNote').textContent =
-    `the whole orchard, ${yearsAsc[0]} → ${yearsAsc[yearsAsc.length - 1]} · tree size = papers that year · click a tree to jump to it`;
+    `${yearsAsc[0]}–${yearsAsc[yearsAsc.length - 1]} · size = papers that year · click to jump`;
 })();
 </script>
 </body>
