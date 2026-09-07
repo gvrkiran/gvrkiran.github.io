@@ -1,5 +1,5 @@
 /* When a design was opened by publications.html, refreshing it deals another
-   design from the four-page rotation. Direct prototype URLs remain stable. */
+   design from the five-page rotation. Direct prototype URLs remain stable. */
 (function () {
   const params = new URLSearchParams(location.search);
   if (!params.has('rotation')) return;
