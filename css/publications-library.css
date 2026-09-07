@@ -135,6 +135,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .shelf-cavity { min-height: 238px; padding: 33px 26px 0; position: relative; background: radial-gradient(ellipse at 50% 100%, rgba(139, 87, 52, .3), transparent 50%), linear-gradient(180deg, #241b17, var(--cavity) 28%, #50382b 100%); box-shadow: inset 0 18px 28px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(21, 12, 8, .85); }
 .shelf-cavity::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .22; background: repeating-linear-gradient(92deg, transparent 0 54px, rgba(255, 255, 255, .03) 55px, transparent 57px); }
 .row { min-height: 186px; display: flex; align-items: flex-end; gap: 2px; position: relative; z-index: 4; perspective: 1250px; transform-style: preserve-3d; }
+.row.single-book { justify-content: center; }
 .shelf-board { height: 20px; position: relative; z-index: 10; margin: 0 -5px -1px; background: linear-gradient(180deg, rgba(255, 255, 255, .24), transparent 18%), linear-gradient(90deg, var(--wood-light), #8f5936 42%, #724327 73%, var(--wood-light)); border-top: 1px solid #c58a5c; border-bottom: 4px solid var(--wood-dark); box-shadow: 0 7px 10px rgba(28, 15, 9, .38); }
 
 .book { --slot: 31px; --bh: 176px; --lean: 0deg; width: var(--slot); height: var(--bh); flex: 0 0 var(--slot); position: relative; z-index: 1; padding: 0; border: 0; background: transparent; cursor: pointer; transform-style: preserve-3d; }
@@ -164,6 +165,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .book:hover .book-volume, .book:focus-visible .book-volume, .book.is-open .book-volume { transform: translateX(-50%) translateY(-22px) translateZ(90px) rotateY(-7deg) rotateX(1deg) scale(1.055); filter: drop-shadow(16px 19px 13px rgba(0, 0, 0, .42)); }
 .book.edge-left:hover .book-volume, .book.edge-left:focus-visible .book-volume { transform: translateX(5%) translateY(-22px) translateZ(90px) rotateY(-7deg) scale(1.055); }
 .book.edge-right:hover .book-volume, .book.edge-right:focus-visible .book-volume { transform: translateX(-72%) translateY(-22px) translateZ(90px) rotateY(-7deg) scale(1.055); }
+.row.single-book .book:hover .book-volume, .row.single-book .book:focus-visible .book-volume { transform: translateX(-50%) translateY(-22px) translateZ(90px) rotateY(-7deg) rotateX(1deg) scale(1.055); }
 .book:hover::after, .book:focus-visible::after { width: 54px; opacity: .65; transform: translateX(-50%) translateY(6px); }
 .veil { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: clamp(.55rem, 3vw, 2rem); background: rgba(28, 30, 27, .68); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 220ms ease, visibility 220ms ease; }
 .veil.open { opacity: 1; visibility: visible; pointer-events: auto; }

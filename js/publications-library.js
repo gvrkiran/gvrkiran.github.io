@@ -128,6 +128,7 @@ shelfYears.forEach(year => {
   cavity.className = 'shelf-cavity';
   const row = document.createElement('div');
   row.className = 'row';
+  row.classList.toggle('single-book', byYear[year].length === 1);
 
   byYear[year].forEach((publication, position) => {
     const book = document.createElement('button');
@@ -226,6 +227,7 @@ function applyFilters() {
     const shelf = document.querySelector(`.shelf[data-year="${year}"]`);
     shelf.classList.toggle('filtered-out', visibleCount === 0);
     shelf.querySelector('.shelf-count').textContent = `${visibleCount} ${visibleCount === 1 ? 'publication' : 'publications'}`;
+    shelf.querySelector('.row').classList.toggle('single-book', visibleCount === 1);
   });
   if (cartRow.isConnected) {
     const arrivalsVisible = (byYear.Unpublished || []).some(matchesFilters);
