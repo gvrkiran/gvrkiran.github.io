@@ -90,11 +90,12 @@
   const artifactLink = $("artifactLink");
 
   game.dataset.graph = "true";
-  game.dataset.runtimeVersion = "notes-4";
+  game.dataset.runtimeVersion = "notes-5";
 
   const media = new Map();
   const loadedKeys = new Set();
   const heldKeys = new Set();
+  const MAX_RETAINED_MEDIA = 8;
   const selections = [2024, 2023, 2019, 2015, 2011];
   let regions = {};
   let activeKey = null;
@@ -108,6 +109,7 @@
   let entryPromise = null;
   let seekRaf = 0;
   let seekWaitVideo = null;
+  let settleTimer = 0;
   let previousFocus = null;
   let scannerTimer = 0;
   let lastSignal = "";
@@ -144,6 +146,8 @@
 
   function latchNavigationInput() {
     manualInputReady = false;
+    clearTimeout(settleTimer);
+    settleTimer = 0;
     pendingDelta = 0;
     hubWheel = 0;
     heldKeys.clear();
@@ -192,7 +196,9 @@
       const video = document.createElement("video");
       video.muted = true;
       video.playsInline = true;
-      video.preload = "auto";
+      // Speculative clips only need metadata and their first decodable frame.
+      // Random-access range requests fetch the rest when the visitor enters.
+      video.preload = "metadata";
       video.disablePictureInPicture = true;
       video.setAttribute("muted", "");
       video.setAttribute("playsinline", "");
@@ -222,7 +228,27 @@
 
   function preload(key) { if (CLIPS[key]) loadClip(key).catch(() => {}); }
 
-  function waitForDecodedFrame(video, milliseconds = 700) {
+  function releaseMedia(key, promise) {
+    media.delete(key);
+    loadedKeys.delete(key);
+    Promise.resolve(promise).then(video => {
+      if (video === activeVideo) return;
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+      video.remove();
+    }).catch(() => {});
+  }
+
+  function pruneMedia() {
+    while (media.size > MAX_RETAINED_MEDIA) {
+      const candidate = [...media.entries()].find(([key]) => key !== activeKey);
+      if (!candidate) return;
+      releaseMedia(candidate[0], candidate[1]);
+    }
+  }
+
+  function waitForDecodedFrame(video, milliseconds = 160) {
     if (typeof video.requestVideoFrameCallback !== "function") return wait(40);
     return new Promise(resolve => {
       let finished = false;
@@ -239,27 +265,24 @@
   async function seekExact(video, time) {
     const target = clamp(time, 0, frameEnd(video));
     if (!video.seeking && Math.abs(video.currentTime - target) <= 0.022) return;
-    // Random-access scrubbing can leave several decoder seeks in flight. A
-    // single `seeked` event may belong to an older request, so confirm both the
-    // final timestamp and a presented decoded frame before changing scenes.
-    for (let attempt = 0; attempt < 5; attempt += 1) {
-      if (Math.abs(video.currentTime - target) > 0.022 || video.seeking) {
-        const complete = once(video, "seeked");
-        video.currentTime = target;
-        await Promise.race([complete, wait(700)]);
-      }
-      await waitForDecodedFrame(video);
-      if (!video.seeking && Math.abs(video.currentTime - target) <= 0.05) return;
-    }
-    // Keep the latest request authoritative even on an unusually slow
-    // decoder. The next coalesced navigation batch will verify it again.
+    // Exact confirmation is reserved for scene boundaries. One corrective
+    // seek is enough; repeating decoder callbacks made ordinary scrolling
+    // wait hundreds of milliseconds between visible updates.
+    const complete = once(video, "seeked");
     video.currentTime = target;
-    await Promise.race([once(video, "seeked"), wait(900)]);
+    await Promise.race([complete, wait(320)]);
+    if (!video.seeking && Math.abs(video.currentTime - target) > 0.06) {
+      const correction = once(video, "seeked");
+      video.currentTime = target;
+      await Promise.race([correction, wait(220)]);
+    }
     await waitForDecodedFrame(video);
   }
 
   async function commitActiveFrame(time) {
     if (!activeVideo) return;
+    clearTimeout(settleTimer);
+    settleTimer = 0;
     if (seekRaf) cancelAnimationFrame(seekRaf);
     seekRaf = 0;
     seekWaitVideo = null;
@@ -270,6 +293,8 @@
   async function showClip(key, time, announce = false) {
     const next = await loadClip(key, announce);
     next.pause();
+    clearTimeout(settleTimer);
+    settleTimer = 0;
     await seekExact(next, time);
     const previous = activeVideo;
     if (seekRaf) cancelAnimationFrame(seekRaf);
@@ -286,6 +311,7 @@
       previous.classList.remove("is-active", "is-dimmed", "is-seam-outgoing");
       previous.pause();
     }
+    pruneMedia();
     return next;
   }
 
@@ -320,6 +346,23 @@
       }
       seekRaf = requestAnimationFrame(paintDesiredFrame);
     }
+    scheduleFrameSettlement();
+  }
+
+  function scheduleFrameSettlement(milliseconds = 130) {
+    clearTimeout(settleTimer);
+    const video = activeVideo;
+    const key = activeKey;
+    const target = desiredTime;
+    settleTimer = setTimeout(async () => {
+      settleTimer = 0;
+      if (activeVideo !== video || activeKey !== key || Math.abs(desiredTime - target) > .001) return;
+      if (video.seeking) await Promise.race([once(video, "seeked"), wait(180)]);
+      if (activeVideo !== video || activeKey !== key || Math.abs(desiredTime - target) > .001) return;
+      if (Math.abs(video.currentTime - target) > .04) {
+        try { video.currentTime = target; } catch (_error) { /* next input retries */ }
+      }
+    }, milliseconds);
   }
 
   function spinePosition(key, progress) {
@@ -845,13 +888,6 @@
         const amount = pendingDelta;
         pendingDelta = 0;
         await moveDelta(amount);
-        // A burst of wheel/key events can update desiredTime again while the
-        // browser is still resolving the previous random-access seek.  Commit
-        // the decoded frame at the end of each coalesced batch so the film and
-        // its tracked SVG geometry can never drift apart.
-        if (activeVideo && !["landing", "artifact", "hub"].includes(game.dataset.mode)) {
-          await commitActiveFrame(desiredTime);
-        }
       }
       navigationRunning = false;
     })().catch(error => {
@@ -1117,7 +1153,7 @@
     game.style.setProperty("--look-y", `${((event.clientY / innerHeight) - .5) * -7}px`);
   }, { passive: true });
 
-  regionsReady = fetch("assets/archive-below/segmentation/artifact-regions-graph.json?v=notes-4", { cache: "no-store" })
+  regionsReady = fetch("assets/archive-below/segmentation/artifact-regions-graph.json?v=notes-5", { cache: "no-store" })
     .then(response => response.ok ? response.json() : Promise.reject(new Error("Segmentation map unavailable")))
     .then(data => { regions = data; })
     .catch(() => { regions = {}; });
@@ -1130,7 +1166,8 @@
         mode: game.dataset.mode, key: activeKey, era: currentEra, year: activeYear, desiredTime,
         currentTime: activeVideo?.currentTime ?? null, duration: activeVideo?.duration ?? null,
         tracks: artifactRegions.querySelectorAll(".artifact-target").length,
-        visibleRegions: visibleArtifacts.length, inputReady: manualInputReady, loaded: [...loadedKeys]
+        visibleRegions: visibleArtifacts.length, inputReady: manualInputReady,
+        mediaCount: media.size, loaded: [...loadedKeys]
       };
     },
     moveBy: navigateBy,
