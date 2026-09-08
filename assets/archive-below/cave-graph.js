@@ -90,14 +90,14 @@
   const artifactLink = $("artifactLink");
 
   game.dataset.graph = "true";
-  game.dataset.runtimeVersion = "notes-5";
+  game.dataset.runtimeVersion = "notes-10";
 
   const media = new Map();
   const loadedKeys = new Set();
   const heldKeys = new Set();
   const MAX_RETAINED_MEDIA = 8;
   const selections = [2024, 2023, 2019, 2015, 2011];
-  let regions = {};
+  let regions = window.ARCHIVE_REGIONS || {};
   let activeKey = null;
   let activeVideo = null;
   let activeYear = null;
@@ -155,6 +155,11 @@
     pointerY = null;
     pointerStartX = pointerStartY = pointerCurrentX = pointerCurrentY = null;
     armInputAfterQuiet(650);
+  }
+
+  function releaseNavigationInput() {
+    clearTimeout(inputArmTimer);
+    manualInputReady = true;
   }
 
   function holdInputUntilQuiet() {
@@ -474,12 +479,14 @@
         await showClip(`trunk-${currentEra + 1}`, 0, true);
         updateSpine(0);
         transitioning = false;
+        releaseNavigationInput();
         navigateBy(.36);
       } else {
         const trunk = await loadClip(`trunk-${currentEra}`, true);
         await showClip(`trunk-${currentEra}`, frameEnd(trunk));
         updateSpine(1);
         transitioning = false;
+        releaseNavigationInput();
         navigateBy(-.36);
       }
     } catch (error) {
@@ -557,28 +564,42 @@
     };
   }
 
-  function mergePublicationTracks(tracks, papers) {
+  function mergePublicationTracks(tracks, papers, year) {
     const grouped = new Map();
     tracks.filter(track => papers[track.paper]).forEach(track => {
       if (!grouped.has(track.paper)) grouped.set(track.paper, []);
       grouped.get(track.paper).push(track);
     });
-    return [...grouped.entries()].sort((a, b) => a[0] - b[0]).map(([paper, fragments]) => {
+    return [...grouped.entries()].sort((a, b) => a[0] - b[0]).flatMap(([paper, fragments]) => {
       const ordered = fragments.sort((a, b) => a.start - b.start);
-      const byProgress = new Map();
-      ordered.forEach(fragment => fragment.keyframes.forEach(keyframe => {
-        const key = Number(keyframe.progress).toFixed(6);
-        const previous = byProgress.get(key);
-        if (!previous || (keyframe.confidence || 0) > (previous.confidence || 0)) byProgress.set(key, keyframe);
-      }));
-      return {
-        id: `paper-${paper}`,
-        paper,
-        start: Math.min(...ordered.map(fragment => fragment.start)),
-        end: Math.max(...ordered.map(fragment => fragment.end)),
-        anchor: ordered.reduce((sum, fragment) => sum + fragment.anchor, 0) / ordered.length,
-        keyframes: [...byProgress.values()].sort((a, b) => a.progress - b.progress)
-      };
+      // The 2027 film changes object typology mid-shot. Preserve genuinely
+      // separated lens/monolith fragments so an outline cannot glide across
+      // empty cave between two unrelated pieces of geometry.
+      const clusters = year === 2027
+        ? ordered.reduce((result, fragment) => {
+            const latest = result[result.length - 1];
+            const latestEnd = latest ? Math.max(...latest.map(item => item.end)) : -1;
+            if (!latest || fragment.start > latestEnd + .13) result.push([fragment]);
+            else latest.push(fragment);
+            return result;
+          }, [])
+        : [ordered];
+      return clusters.map((cluster, clusterIndex) => {
+        const byProgress = new Map();
+        cluster.forEach(fragment => fragment.keyframes.forEach(keyframe => {
+          const key = Number(keyframe.progress).toFixed(6);
+          const previous = byProgress.get(key);
+          if (!previous || (keyframe.confidence || 0) > (previous.confidence || 0)) byProgress.set(key, keyframe);
+        }));
+        return {
+          id: `paper-${paper}-${clusterIndex}`,
+          paper,
+          start: Math.min(...cluster.map(fragment => fragment.start)),
+          end: Math.max(...cluster.map(fragment => fragment.end)),
+          anchor: cluster.reduce((sum, fragment) => sum + fragment.anchor, 0) / cluster.length,
+          keyframes: [...byProgress.values()].sort((a, b) => a.progress - b.progress)
+        };
+      });
     });
   }
 
@@ -607,7 +628,7 @@
     // A detector may lose an object for several sampled frames and recover it as
     // a new fragment. Render one continuous target per publication and bridge
     // those gaps so a visible stone never stops being clickable mid-scroll.
-    currentTracks = mergePublicationTracks(data.tracks, papers);
+    currentTracks = mergePublicationTracks(data.tracks, papers, Number(year));
     artifactRegions.innerHTML = currentTracks.map(track => {
       const index = track.paper;
       const paper = papers[index];
@@ -706,11 +727,18 @@
 
   function updateGallery(progress) {
     if (!activeYear) return;
-    updateExploration(progress);
-    updatePathNav(.5 + clamp(progress, 0, 1) * .5, "gallery");
+    const clamped = clamp(progress, 0, 1);
+    updateExploration(clamped);
+    updatePathNav(.5 + clamped * .5, "gallery");
     routeText.textContent = `Publications / ${activeYear}`;
     locationText.textContent = YEARS[activeYear].name;
-    controlHint.textContent = `${visibleArtifacts.length || "No"} publication${visibleArtifacts.length === 1 ? "" : "s"} visible · click any outline`;
+    const firstTarget = Math.min(...currentTracks.map(track => Math.max(0, track.start - .055)), 1);
+    if (!visibleArtifacts.length && clamped < firstTarget) {
+      const count = papersByYear[activeYear]?.length || 0;
+      controlHint.textContent = `${count} publications ahead · continue forward or use the timeline`;
+    } else {
+      controlHint.textContent = `${visibleArtifacts.length || "No"} publication${visibleArtifacts.length === 1 ? "" : "s"} visible · click any outline`;
+    }
   }
 
   async function showChamber(year) {
@@ -744,6 +772,7 @@
         setMode("spine");
         updateSpine(0);
         preload("trunk-0");
+        releaseNavigationInput();
       } catch (error) {
         displayLoadError("The descent could not be opened", error);
         enterButton.disabled = false;
@@ -775,6 +804,7 @@
       setMode("route");
       updateBranch(0);
       preload(YEARS[year].gallery);
+      releaseNavigationInput();
     } catch (error) {
       displayLoadError(`The ${year} passage could not be opened`, error);
       const trunk = await loadClip(`trunk-${currentEra}`);
@@ -835,14 +865,18 @@
 
     if (activeKey === config.branch) {
       if (target >= end) {
+        const remainder = target - end;
         await commitActiveFrame(end);
         updateBranch(1);
         transitioning = true;
-        latchNavigationInput();
         try {
           await showClip(config.gallery, 0, true);
           await showChamber(activeYear);
         } finally { transitioning = false; }
+        // Branch and gallery are one continuous route, not a choice boundary.
+        // Preserve the tail of the gesture instead of pinning the gallery to
+        // its first frame and forcing a second scroll.
+        if (remainder > .001) await moveDelta(remainder, depth + 1);
       } else if (target < 0) {
         await commitActiveFrame(0);
         transitioning = true;
@@ -861,15 +895,16 @@
 
     if (activeKey === config.gallery) {
       if (target < 0) {
+        const remainder = target;
         await commitActiveFrame(0);
         hideChamberForRoute();
         transitioning = true;
-        latchNavigationInput();
         try {
           const branch = await loadClip(config.branch, true);
           await showClip(config.branch, frameEnd(branch));
           updateBranch(1);
         } finally { transitioning = false; }
+        if (remainder < -.001) await moveDelta(remainder, depth + 1);
       } else {
         const next = clamp(target, 0, end);
         requestFrame(next);
@@ -1153,10 +1188,12 @@
     game.style.setProperty("--look-y", `${((event.clientY / innerHeight) - .5) * -7}px`);
   }, { passive: true });
 
-  regionsReady = fetch("assets/archive-below/segmentation/artifact-regions-graph.json?v=notes-5", { cache: "no-store" })
-    .then(response => response.ok ? response.json() : Promise.reject(new Error("Segmentation map unavailable")))
-    .then(data => { regions = data; })
-    .catch(() => { regions = {}; });
+  regionsReady = window.ARCHIVE_REGIONS
+    ? Promise.resolve()
+    : fetch("assets/archive-below/segmentation/artifact-regions-graph.json?v=notes-10", { cache: "no-store" })
+      .then(response => response.ok ? response.json() : Promise.reject(new Error("Segmentation map unavailable")))
+      .then(data => { regions = data; })
+      .catch(() => { regions = {}; });
   preload("approach");
   setLoading("Mapping the archive", false);
 
