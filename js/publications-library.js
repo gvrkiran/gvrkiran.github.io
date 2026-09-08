@@ -110,6 +110,22 @@ const cartList = document.getElementById('cartList');
 });
 if (!(byYear.Unpublished || []).length) cartRow.remove();
 
+function updateRowBookPositions(row) {
+  const books = [...row.querySelectorAll('.book')];
+  const visibleBooks = books.filter(book => !book.classList.contains('filtered-out'));
+  const edgeCount = Math.min(2, Math.floor(visibleBooks.length / 2));
+
+  books.forEach(book => book.classList.remove('edge-left', 'edge-right', 'visible-first'));
+  row.classList.toggle('single-book', visibleBooks.length === 1);
+  if (!visibleBooks.length) return;
+
+  visibleBooks[0].classList.add('visible-first');
+  visibleBooks.forEach((book, position) => {
+    if (position < edgeCount) book.classList.add('edge-left');
+    else if (position >= visibleBooks.length - edgeCount) book.classList.add('edge-right');
+  });
+}
+
 const shelves = document.getElementById('shelves');
 shelfYears.forEach(year => {
   const shelf = document.createElement('section');
@@ -128,7 +144,6 @@ shelfYears.forEach(year => {
   cavity.className = 'shelf-cavity';
   const row = document.createElement('div');
   row.className = 'row';
-  row.classList.toggle('single-book', byYear[year].length === 1);
 
   byYear[year].forEach((publication, position) => {
     const book = document.createElement('button');
@@ -144,8 +159,6 @@ shelfYears.forEach(year => {
     book.style.setProperty('--bc', publication.topic.color);
     book.style.setProperty('--lean', ((publication.hash >> 7) % 9 === 0 && position > 0) ? '-3deg' : '0deg');
     if ((publication.hash >> 5) % 7 === 0 && position > 0) book.classList.add('gap');
-    if (position < 2) book.classList.add('edge-left');
-    if (position > byYear[year].length - 3) book.classList.add('edge-right');
 
     const volume = document.createElement('span');
     volume.className = 'book-volume';
@@ -167,6 +180,7 @@ shelfYears.forEach(year => {
     book.addEventListener('click', () => openCard(publication, book));
     row.appendChild(book);
   });
+  updateRowBookPositions(row);
 
   const board = document.createElement('div');
   board.className = 'shelf-board';
@@ -227,7 +241,7 @@ function applyFilters() {
     const shelf = document.querySelector(`.shelf[data-year="${year}"]`);
     shelf.classList.toggle('filtered-out', visibleCount === 0);
     shelf.querySelector('.shelf-count').textContent = `${visibleCount} ${visibleCount === 1 ? 'publication' : 'publications'}`;
-    shelf.querySelector('.row').classList.toggle('single-book', visibleCount === 1);
+    updateRowBookPositions(shelf.querySelector('.row'));
   });
   if (cartRow.isConnected) {
     const arrivalsVisible = (byYear.Unpublished || []).some(matchesFilters);

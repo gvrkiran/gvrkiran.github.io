@@ -140,6 +140,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 
 .book { --slot: 31px; --bh: 176px; --lean: 0deg; width: var(--slot); height: var(--bh); flex: 0 0 var(--slot); position: relative; z-index: 1; padding: 0; border: 0; background: transparent; cursor: pointer; transform-style: preserve-3d; }
 .book.gap { margin-left: 13px; }
+.book.visible-first { margin-left: 0; }
 .book.filtered-out { display: none; }
 .book::after { content: ""; width: 23px; height: 8px; position: absolute; left: 50%; bottom: -1px; transform: translateX(-50%); border-radius: 50%; background: rgba(0, 0, 0, .47); filter: blur(4px); transition: width 350ms ease, transform 350ms ease, opacity 350ms ease; }
 .book-volume { width: var(--cover-w); height: var(--bh); position: absolute; left: 50%; bottom: 0; transform-style: preserve-3d; transform: translateX(-50%) rotateZ(var(--lean)) rotateY(82deg); transform-origin: 50% 50%; transition: transform 430ms cubic-bezier(.2, .76, .22, 1), filter 430ms ease; will-change: transform; pointer-events: none; }
