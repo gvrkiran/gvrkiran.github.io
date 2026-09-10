@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#030609">
-  <title>The Archive Below · Kiran Garimella</title>
-  <meta name="description" content="Explore Kiran Garimella's research as a branching journey through a living underground archive.">
+  <title>Publications · Kiran Garimella</title>
+  <meta name="description" content="Browse Kiran Garimella's publications by year, or explore the cave map.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23030609'/%3E%3Cpath d='M12 39c8-19 32-19 40 0' fill='none' stroke='%23ffb45a' stroke-width='4'/%3E%3Ccircle cx='32' cy='34' r='4' fill='%2354d6c6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Saira+Condensed:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/archive-below/stills/cave-entrance-v1.png">
-  <link rel="stylesheet" href="assets/archive-below/cave.css?v=notes-1">
+  <link rel="stylesheet" href="assets/archive-astra/astra.css?v=2">
 </head>
-<body>
+<body class="astra">
   <main class="game" id="game" data-mode="landing" aria-label="Interactive publication archive">
     <div class="world" id="world" aria-hidden="true">
       <img class="world__poster" id="worldPoster" src="assets/archive-below/stills/cave-entrance-v1.png" alt="">
@@ -29,29 +29,29 @@
     <header class="hud hud--top">
       <a class="brand" href="index.html" aria-label="Back to Kiran Garimella home">
         <span class="brand__sigil" aria-hidden="true"><i></i></span>
-        <span>Kiran Garimella</span>
+        <span>Kiran Garimella<small>Publications</small></span>
       </a>
       <div class="location" id="location" aria-live="polite">
         <span class="location__signal"></span>
-        <span id="locationText">Surface threshold</span>
+        <span id="locationText">Cave entrance</span>
       </div>
       <div class="hud__actions">
-        <button class="hud-button" id="fullscreenButton" type="button">Fullscreen</button>
-        <a class="hud-button" href="publications-field-guide.html">See all publications</a>
+        <button class="hud-button" id="atlasButton" type="button">Map &amp; navigation <span aria-hidden="true">↗</span></button><button class="hud-button" id="fullscreenButton" type="button">Fullscreen</button>
+        <button class="hud-button" id="indexButton" type="button">Publications <span aria-hidden="true">≡</span></button>
       </div>
     </header>
 
-    <div class="reticle" aria-hidden="true"><i></i></div>
+    <canvas id="motes" aria-hidden="true"></canvas><div class="frame-corners" aria-hidden="true"></div><div class="reticle" aria-hidden="true"><i></i></div>
 
     <section class="landing" id="landing" aria-labelledby="gameTitle">
-      <p class="landing__eyebrow">An interactive research archive</p>
-      <h1 id="gameTitle">The Archive<br><em>Below</em></h1>
-      <p class="landing__lede">Follow one continuous path through the publication archive. Choose a year at each junction, or keep going to browse earlier work.</p>
-      <button class="enter-button" id="enterButton" type="button">
-        <span>Enter the archive</span>
+      <p class="landing__eyebrow"><span></span> Research papers <span></span></p>
+      <h1 id="gameTitle">PUBLICATIONS</h1>
+      <p class="landing__lede">Browse papers by year, or use the map to choose a junction.</p>
+      <div class="landing-actions"><button class="map-entry" id="landingMap" type="button">Open map <span aria-hidden="true">↗</span></button><button class="enter-button" id="enterButton" type="button">
+        <span>Enter cave</span>
         <i aria-hidden="true">↓</i>
       </button>
-      <p class="landing__controls">Scroll or use ↑ ↓ / W S · you control every frame</p>
+      </div><p class="landing__controls">Scroll to move · ↑ ↓ / W S · M to open the map</p>
     </section>
 
     <section class="fork" id="fork" aria-labelledby="forkTitle" hidden>
@@ -81,7 +81,7 @@
 
     <nav class="path-nav" id="pathNav" aria-label="Current cave route" hidden>
       <div class="path-nav__status"><i aria-hidden="true"></i><span id="pathStatus">Exploring selected year</span></div>
-      <div class="path-nav__trail" aria-label="Main descent, era junction, selected year">
+      <div class="path-nav__trail" aria-label="Main path, junction, selected year">
         <span>All years</span><b aria-hidden="true">›</b><span id="pathEra">Year group</span><b aria-hidden="true">›</b><strong id="pathYear">2024</strong>
       </div>
       <div class="path-nav__depth" aria-hidden="true"><i id="pathDepth"></i><b></b><b></b><b></b></div>
@@ -94,9 +94,10 @@
       <div class="chamber__head">
         <span id="chamberKicker">7 publications</span>
         <h2 id="chamberTitle">2024 publications</h2>
-        <p>Scroll to explore. Every outlined object opens a publication and remains clickable while it is visible.</p>
+        <p>Select a numbered button or a paper to open it.</p>
       </div>
       <svg class="artifact-regions" id="artifactRegions" viewBox="0 0 1344 768" preserveAspectRatio="xMidYMid slice" aria-label="Publications visible in this scene"></svg>
+      <div id="paperMarkers" class="paper-markers" aria-label="Papers visible in this scene"></div>
       <div class="chamber__controls">
         <button class="return-button" id="returnButton" type="button"><i aria-hidden="true">↰</i> Back to year selection</button>
         <div class="signal-map" id="signalMap" aria-label="Publication positions through this scene"></div>
@@ -109,10 +110,10 @@
       <div class="artifact-view__beam" aria-hidden="true"></div>
       <article class="relic">
         <span class="relic__index" id="artifactIndex">Publication 01 / 07</span>
-        <div class="relic__glyph" aria-hidden="true"><i></i><b></b></div>
+        <div class="relic__glyph" aria-hidden="true"><i></i><b></b></div><span class="relic__label">Publication</span>
         <h2 id="artifactTitle"></h2>
         <p class="relic__venue" id="artifactVenue"></p>
-        <p class="relic__authors" id="artifactAuthors"></p>
+        <p class="relic__authors" id="artifactAuthors"></p><div id="artifactTopics" class="paper-topics"></div>
         <a class="relic__link" id="artifactLink" href="#" target="_blank" rel="noopener">Open publication <span>↗</span></a>
       </article>
       <p class="artifact-view__hint">Press <kbd>Esc</kbd> to return to the chamber</p>
@@ -128,15 +129,27 @@
       <span class="control-hint" id="controlHint">Press Enter to begin</span>
     </footer>
 
+    <div class="landing-meta" id="landingMeta"><span><b id="totalPapers">—</b> publications</span><span><b id="totalYears">—</b> years</span><span>Browse by year</span></div>
+    <aside class="depth-rail" id="depthRail" aria-label="Junction navigation"></aside>
+    <div class="transport" id="transport" hidden><button id="guideButton" type="button" aria-pressed="false"><span aria-hidden="true">▷</span> Continue for me</button><span>or scroll to explore</span></div>
+    <div class="paper-shelf" id="paperShelf" hidden><button id="shelfToggle" type="button" aria-expanded="false"><span id="shelfLabel">Inside this chamber</span><span id="shelfCount"></span><i aria-hidden="true">↑</i></button><div id="paperNumbers" class="paper-numbers" aria-label="Open a paper by number"></div><div id="shelfPapers" class="shelf-papers" hidden></div></div>
+    <div class="arrival-note" id="arrivalNote" aria-live="polite"></div>
     <div class="loading" id="loading" aria-live="polite" hidden>
       <span class="loading__mark"></span>
       <span id="loadingText">Loading the archive</span>
     </div>
   </main>
+  <dialog id="atlas" class="atlas" aria-labelledby="atlasTitle">
+    <div class="atlas-head"><div><p class="eyebrow">Navigation</p><h2 id="atlasTitle">Cave map</h2><p>Select a junction to choose between years, or go directly to a year.</p></div><button class="close-overlay" id="atlasClose" aria-label="Close map">×</button></div>
+    <nav class="junction-shortcuts" id="junctionShortcuts" aria-label="Select a junction"></nav><div class="atlas-body"><div class="atlas-map" id="atlasMap"></div><aside class="atlas-preview"><span class="eyebrow" id="atlasDepth">Select a year</span><div class="atlas-window"><img id="atlasImage" src="assets/archive-below/stills/graph/year-2024-gallery-rest.png" alt="The 2024 publication chamber"></div><h3 id="atlasYear">2024</h3><p id="atlasCount"></p><div id="atlasSample"></div><div id="atlasYears" class="atlas-years"></div><button id="atlasTravel" class="primary-action">Go to year <span>↗</span></button><small>The camera follows the connected passages.<br>You can take control at any time.</small></aside></div>
+  </dialog>
+  <dialog id="publicationIndex" class="publication-index" aria-labelledby="indexTitle"><div class="index-head"><p class="eyebrow">Search</p><h2 id="indexTitle">Publications</h2><button class="close-overlay" id="indexClose" aria-label="Close publications">×</button></div><label class="search-box"><span aria-hidden="true">⌕</span><input id="paperSearch" type="search" placeholder="Search a title, author, year, or topic…" autocomplete="off" aria-label="Search publications"><span id="searchCount"></span></label><div id="indexResults" class="index-results"></div></dialog>
 
   <noscript><p class="no-script">This archive needs JavaScript. <a href="publications-field-guide.html">Open the publication index.</a></p></noscript>
   <script src="data.js"></script>
   <script src="assets/archive-below/segmentation/artifact-regions-graph.js?v=notes-10"></script>
-  <script src="assets/archive-below/cave-graph.js?v=notes-10"></script>
+  <script src="assets/archive-astra/tracking.js?v=2"></script>
+  <script src="assets/archive-astra/engine.js?v=2"></script>
+  <script src="assets/archive-astra/astra.js?v=2"></script>
 </body>
 </html>
