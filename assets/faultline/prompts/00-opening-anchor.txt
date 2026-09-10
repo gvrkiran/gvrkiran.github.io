@@ -1,0 +1,9 @@
+Use case: stylized-concept
+Asset type: first frame of a scroll-scrubbed cinematic academic website
+Primary request: An ultra-photoreal Rutgers-inspired observatory interior at night, seconds before a catastrophe. A straight central stone path leads through a sequence of aligned limestone arches toward a distant open doorway. Above it hangs an enormous aged-brass orrery under a glass dome. Beyond the dome, one small incandescent meteor crosses the navy sky toward the horizon; it is an omen, not yet an impact.
+Style/medium: cinematic architectural photography with restrained surrealism, coherent real-world geometry
+Composition/framing: wide 16:9, centered one-point perspective, 24mm lens, camera at walking height, generous clear path through the center, visual weight away from the lower-left copy area
+Lighting/mood: warm brass and amber practical lights against midnight navy, electric-cyan instrument glints, tense stillness, volumetric dust
+Color palette: Rutgers red brick, ivory limestone, aged brass, walnut, midnight navy, restrained scarlet and cyan
+Constraints: uninhabited; no text, letters, numbers, logos, signage, watermark, explosions, visible damage, fire, fantasy castle, or science-fiction spaceship
+

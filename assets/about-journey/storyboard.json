@@ -1,0 +1,152 @@
+{
+  "project": "The Long Way Here",
+  "phase": "creative-video-treatment",
+  "imageGenerator": "GPT Image via Codex built-in image generation",
+  "videoStudio": "http://100.90.163.26:3000/",
+  "videoModel": "MiniMax H3 via H3 Remote Studio",
+  "aspectRatio": "16:9",
+  "webOutput": {
+    "directory": "assets/about-journey/video",
+    "format": "MP4, H.264, no audio, faststart",
+    "interaction": "scroll-controlled frame scrubbing patterned after publications-cave.html"
+  },
+  "continuity": [
+    "Use the supplied Kiran portrait as the identity reference in every human scene.",
+    "Start each film from its corresponding approved GPT Image keyframe.",
+    "A small red field notebook travels with Kiran through every city; it is the subtle continuity object, never a product shot.",
+    "Every city has a distinct physical action and its own motivated visual handoff to the flight map.",
+    "Keep text, dates, logos, and route graphics out of generated media; the webpage renders them as HTML and SVG.",
+    "Do not recreate a handoff frame from text after video generation; extract the actual final frame when continuity is required."
+  ],
+  "creativeDirection": {
+    "principle": "The captions state only city, dates, role, and institution. Personality and narrative live in the films.",
+    "recurringObject": "A worn red field notebook that becomes fuller and more annotated as the journey advances.",
+    "transitionLanguage": "Each city film ends on a stable elevated composition with a strong geographic line. The webpage contracts that real scene into the exact city node, then launches an SVG aircraft along a distance-scaled route tangent.",
+    "tone": "Photorealistic, playful in observation rather than comedic, candid rather than posed, one continuous remembered journey."
+  },
+  "scenes": [
+    {
+      "id": "01-hyderabad",
+      "years": "2006-2011",
+      "role": "Bachelors and Masters in Computer Science, IIIT Hyderabad",
+      "startFrame": "stills/01-hyderabad.png",
+      "output": "video/01-hyderabad.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "09163e67-92a0-41fa-adf5-b32fcb4a8dbf",
+        "sourceFilename": "H3_1789057409550_00001_.mp4",
+        "status": "accepted",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 60112006, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "A college-age Kiran gives one last over-the-shoulder glance, then walks into the IIIT Hyderabad campus while the camera rises above its granite boulders and long central walkway.",
+      "mapHandoff": "The elevated campus walkway contracts into the Hyderabad node before the Hyderabad-to-Barcelona flight begins.",
+      "motionPromptFile": "prompts/01-hyderabad-native.txt"
+    },
+    {
+      "id": "02-barcelona",
+      "years": "2011-2012",
+      "role": "Research Engineer, Yahoo! Research Barcelona",
+      "startFrame": "stills/02-barcelona-sagrada-v4.png",
+      "output": "video/02-barcelona.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "2bdf01ad-fabb-4de3-8c90-ac6bd9fc914c",
+        "sourceFilename": "H3_1789053389323_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 294731806, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "Kiran drives a dark navy vintage roadster beside the Sagrada Familia as the stabilized camera keeps pace, then rises above the car and the Barcelona street grid in one continuous move.",
+      "mapHandoff": "The film ends on a near-top-down Eixample avenue. The webpage continues the same pullback, shrinks the city into the Barcelona node, and launches the Barcelona-to-Doha flight along that road's diagonal direction.",
+      "motionPrompt": "IMAGE-TO-VIDEO. Create one continuous premium photorealistic commercial-documentary camera shot, with no cuts and no hidden transitions. Begin exactly from the supplied frame beside the Sagrada Familia in Barcelona and preserve the opening composition, Kiran, the dark navy open-top roadster, the secured brick-red notebook, the avenue, the basilica, the 2011 construction cranes, lens, exposure, and golden-hour light. From 0-4 seconds, a stabilized camera car travels parallel at exactly the same calm road speed in a medium-wide front-left three-quarter view. Kiran drives naturally and looks at the road; his face stays crisp and recognizable with only tiny realistic head motion. From 4-7 seconds, without cutting, the camera begins a very slow crane upward and backward while keeping the roadster in the lower-right third, revealing more of the basilica, Eixample blocks, treetops, and the long avenue. From 7-12 seconds, continue the same uninterrupted crane into a high, stable aerial view. The roadster becomes gradually smaller but remains visible and drives straight along the same avenue. Finish on a clean near-top-down city composition where the avenue forms one strong continuous diagonal line toward the edge of frame, holding the final aerial geometry for the last half-second. Preserve the exact face, eyes, nose, lips, hairline, curly hair, mustache, skin tone, age, body proportions, hands, clothing, car structure, notebook, architecture, and crane placement. Natural 24 fps, restrained motion blur, physically correct reflections and parallax, HDR 35mm cinema-camera look, refined film grain, luxury automotive campaign finish. No face drift, morphing, lip movement, extra passenger, extra limbs, warped hands, changing clothes, steering-wheel deformation, melting car, bent windshield, wheel distortion, camera shake, zoom jump, cut, dissolve, map graphic, airplane, title, caption, readable sign, logo, watermark, or fantasy effect."
+    },
+    {
+      "id": "03-doha",
+      "years": "2012-2013",
+      "role": "Research Associate, Qatar Computing Research Institute",
+      "startFrame": "stills/03-doha.png",
+      "output": "video/03-doha.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "7de6e03d-cc60-471c-90bb-fda466d9e6fc",
+        "status": "queued",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 77312012, 1344x768 at 24 fps",
+        "rejectedAttempts": [
+          {
+            "promptId": "a7a1e2cc-56f7-42b9-8831-e3f44efbf83a",
+            "sourceFilename": "H3_1789057410244_00001_.mp4",
+            "reason": "Rejected: final four seconds hallucinated a colored floor map, red marker, and pseudo-text."
+          }
+        ]
+      },
+      "creativeBeat": "Kiran crosses the Doha research campus through a moving field of mashrabiya light as the camera rises above the geometric plaza.",
+      "mapHandoff": "A circular pool of real sunlight contracts into the Doha node before the Doha-to-Helsinki flight begins.",
+      "motionPromptFile": "prompts/03-doha-native.txt"
+    },
+    {
+      "id": "04-helsinki",
+      "years": "2014-2018",
+      "role": "PhD in Computer Science, Aalto University",
+      "startFrame": "stills/04-helsinki.png",
+      "output": "video/04-helsinki.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "40ede054-f350-40b6-ba9d-e1f0d86f5793",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789057411061_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 60142014, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "Kiran walks his bicycle through the snowy Aalto campus while a tram passes behind and the camera climbs into a Nordic aerial.",
+      "mapHandoff": "The snowy path and tram line contract into the Helsinki node before the Helsinki-to-Lausanne flight begins.",
+      "motionPromptFile": "prompts/04-helsinki-native.txt"
+    },
+    {
+      "id": "05-lausanne",
+      "years": "2018-2019",
+      "role": "Postdoc, EPFL Data Science Lab",
+      "startFrame": "stills/05-lausanne.png",
+      "output": "video/05-lausanne.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "1ae7805f-bd19-439b-a6b0-2a79b6be71f5",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789057411752_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 46192018, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "Kiran looks from his EPFL terrace toward a passing metro as the camera rises across Lake Geneva toward the Alps.",
+      "mapHandoff": "The metro line and lakeshore contract into the Lausanne node before the Lausanne-to-Cambridge flight begins.",
+      "motionPromptFile": "prompts/05-lausanne-native.txt"
+    },
+    {
+      "id": "06-cambridge",
+      "years": "2019-2021",
+      "role": "Michael Hammer Postdoctoral Fellow, MIT IDSS",
+      "startFrame": "stills/06-cambridge.png",
+      "output": "video/06-cambridge.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "e4719d9e-b25e-4e72-9b22-23a7476df769",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789057412565_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 42192019, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "Kiran walks beside the Charles as one maple leaf crosses the foreground and the camera rises above the river and skyline.",
+      "mapHandoff": "The Charles River diagonal contracts into the Cambridge node before the short Cambridge-to-New-Brunswick flight begins.",
+      "motionPromptFile": "prompts/06-cambridge-native.txt"
+    },
+    {
+      "id": "07-rutgers",
+      "years": "2021-present",
+      "role": "Assistant Professor, Rutgers University",
+      "startFrame": "stills/07-rutgers.png",
+      "output": "video/07-rutgers.mp4",
+      "render": {
+        "service": "H3 Remote Studio /api/generate",
+        "promptId": "adcba909-0d87-49f3-b6e4-be02f3cc3876",
+        "status": "queued",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 40212021, 1344x768 at 24 fps"
+      },
+      "creativeBeat": "Kiran finishes one restrained classroom gesture, recognizes a student's raised hand, and the camera advances toward the research-network visualization.",
+      "mapHandoff": "No return to the map; the final camera move enters one stable network node and reveals links to current work.",
+      "motionPromptFile": "prompts/07-rutgers-native.txt"
+    }
+  ]
+}
