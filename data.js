@@ -110,16 +110,6 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
-    title: "The Hype vs. the Reality of Generative AI in Elections: The Case of the 2024 Indian Elections",
-    venue: "Under review",
-    authors: ["Kiran Garimella", "Simon Chauchard"],
-    slug: "genai-elections-hype",
-    topics: ["ai", "polar"],
-    links: [{ label: "paper", href: "content/Generative_AI_content_WhatsApp.pdf" }]
-  },
-  {
-    year: "Unpublished",
-    status: "Under review",
     title: "Designing and Evaluating a Community Fact-Checking System for WhatsApp",
     venue: "Under review",
     authors: ["Juan Jose Rojas Constain", "Kiran Garimella"],
@@ -197,6 +187,16 @@ const PUBLICATIONS = [
   },
 
   // 2026
+  {
+    year: "2026",
+    title: "The Hype vs. the Reality of Generative AI in Elections: The Case of the 2024 Indian Elections",
+    venue: "International Journal of Press and Politics",
+    authors: ["Kiran Garimella", "Simon Chauchard"],
+    slug: "genai-elections-hype",
+    topics: ["ai", "polar"],
+    links: [{ label: "paper", href: "content/Generative_AI_content_WhatsApp.pdf" }]
+  },
+
   {
     year: "2026",
     title: "Creating Group Rules with AI: Human-AI Collaboration in WhatsApp Moderation",
