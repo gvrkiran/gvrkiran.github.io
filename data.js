@@ -6,6 +6,7 @@ const PROFILE = {
   location: "New Brunswick, NJ",
   email: "kg766@comminfo.rutgers.edu",
   cvUrl: "https://rutgers.box.com/s/ajtifcnfiumx7ofozr82wj0h7jcv6pkt",
+  journeyUrl: "about-journey.html",
   photo: "kiran_img.png",   // ← NEW: set to your headshot path or URL
   blog: "https://gvrkiran.substack.com",
   socials: {

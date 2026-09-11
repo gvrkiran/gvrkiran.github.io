@@ -35,6 +35,9 @@
       <p class="about-para">${P.tagline || ''}</p>
       <p class="about-meta">${P.role || ''}${P.location ? ' · ' + P.location : ''}</p>
       <div class="kw-list">${tags}</div>
+      <div class="quick-links journey-cta-wrap">
+        <a class="journey-cta" href="${P.journeyUrl || 'about-journey.html'}">See my journey →</a>
+      </div>
     `;
   }
 

@@ -257,6 +257,11 @@
     ];
   }
 
+  function journeyBubbles() {
+    return ['From Hyderabad to Barcelona, Doha, Helsinki, Lausanne, Cambridge, and New Brunswick: ' +
+      link(P.journeyUrl || 'about-journey.html', 'See my journey →', false)];
+  }
+
   /* ---- Fallbacks (rotated) — never pretend to be a real LLM. ---- */
   var fallbacks = [
     "I’m a static website doing my best AI impression 😅 — try one of the buttons below.",
@@ -275,6 +280,7 @@
     fun: function () { botSequence(funBubbles()); },
     contact: function () { botSequence(contactBubbles()); },
     about: function () { botSequence(aboutBubbles()); },
+    journey: function () { botSequence(journeyBubbles()); },
     greeting: function () { botSay('Hey! 👋 Good to see you. What would you like to know — research, papers, teaching, or how to reach me?'); },
     fullsite: function () { botSay('Sure — switching you back to the classic site…', function () { later(teardown, 250); }); }
   };
@@ -283,6 +289,7 @@
   function route(text) {
     var q = text.toLowerCase();
     if (/\b(hi|hello|hey|yo|namaste)\b/.test(q)) { HANDLERS.greeting(); return; }
+    if (/(journey|life story|career path|where.*lived)/.test(q)) { HANDLERS.journey(); return; }
     if (/(who|about|yourself|bio|kiran)/.test(q)) { HANDLERS.about(); return; }
     if (/(paper|publi|research|work|study|studies)/.test(q)) {
       // "research" leans to projects; "paper/publication" leans to the paper list.
@@ -302,6 +309,7 @@
     { label: 'Recent papers', send: 'Show me recent papers', run: HANDLERS.papers },
     { label: 'Teaching', send: 'What do you teach?', run: HANDLERS.teaching },
     { label: 'Fun stuff', send: 'Show me the fun stuff', run: HANDLERS.fun },
+    { label: 'See my journey', send: 'Show me your journey', run: HANDLERS.journey },
     { label: 'Contact', send: 'How can I contact you?', run: HANDLERS.contact },
     { label: 'Full site', send: 'Take me to the full site', run: HANDLERS.fullsite }
   ];
@@ -427,7 +435,8 @@
       'Hey! 👋 I’m Kiran — or at least, my website is.',
       escapeHtml(P.tagline || 'I study information ecosystems, misinformation, and AI for the public good.') +
         (P.role ? '<span class="t21-meta">' + escapeHtml(P.role) + '</span>' : '') +
-        '<p style="margin-top:.35rem">Ask me anything, or tap a suggestion below 👇</p>'
+        '<p style="margin-top:.35rem">Ask me anything, tap a suggestion below, or ' +
+          link(P.journeyUrl || 'about-journey.html', 'see my journey →', false) + '</p>'
     ];
     botSequence(openers);
   }

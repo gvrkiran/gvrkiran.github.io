@@ -38,6 +38,7 @@
       <div class="hud__actions">
         <button class="hud-button" id="atlasButton" type="button">Map &amp; navigation <span aria-hidden="true">↗</span></button><button class="hud-button" id="fullscreenButton" type="button">Fullscreen</button>
         <button class="hud-button" id="indexButton" type="button">Publications <span aria-hidden="true">≡</span></button>
+        <a class="hud-button" href="publications.html?reroll=1" title="Switch to a random publications design">Shuffle <span aria-hidden="true">↻</span></a>
       </div>
     </header>
 
@@ -146,6 +147,7 @@
   <dialog id="publicationIndex" class="publication-index" aria-labelledby="indexTitle"><div class="index-head"><p class="eyebrow">Search</p><h2 id="indexTitle">Publications</h2><button class="close-overlay" id="indexClose" aria-label="Close publications">×</button></div><label class="search-box"><span aria-hidden="true">⌕</span><input id="paperSearch" type="search" placeholder="Search a title, author, year, or topic…" autocomplete="off" aria-label="Search publications"><span id="searchCount"></span></label><div id="indexResults" class="index-results"></div></dialog>
 
   <noscript><p class="no-script">This archive needs JavaScript. <a href="publications-field-guide.html">Open the publication index.</a></p></noscript>
+  <script src="js/publications-refresh.js"></script>
   <script src="data.js"></script>
   <script src="assets/archive-below/segmentation/artifact-regions-graph.js?v=notes-10"></script>
   <script src="assets/archive-astra/tracking.js?v=2"></script>

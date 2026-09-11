@@ -7,7 +7,7 @@
   <meta name="description" content="Publications by Kiran Garimella." />
   <script>
     /* publications design router — same spirit as js/theme-engine.js:
-       - picks one of the five designs below, avoiding the previous pick
+       - picks one of the six designs below, avoiding the previous pick
        - design pages opened here carry ?rotation=1; refreshing them rerolls
        - the "↻ shuffle" button on each design also links here with ?reroll=1
        - ?pub=N forces a specific design */
@@ -18,6 +18,7 @@
         { n: 3, href: 'publications-stamps.html',  name: 'The Stamp Collection' },
         { n: 4, href: 'publications-field-guide.html', name: 'The Field Guide' },
         { n: 5, href: 'publications-library.html', name: 'Book view' },
+        { n: 6, href: 'publications-cave.html',    name: 'The Cave' },
       ];
       const MAX = DESIGNS.length;
       const url = new URL(location.href);
@@ -46,12 +47,13 @@
 <body>
   <noscript>
     <p style="font-family: Georgia, serif; max-width: 60ch; margin: 4rem auto; padding: 0 1rem;">
-      Publications come in five designs:
+      Publications come in six designs:
       <a href="publications-classic.html">the classic list</a>,
       <a href="publications-grove.html">the orchard</a>,
       <a href="publications-stamps.html">the stamp collection</a>,
-      <a href="publications-field-guide.html">the field guide</a>, or
-      <a href="publications-library.html">the book view</a>.
+      <a href="publications-field-guide.html">the field guide</a>,
+      <a href="publications-library.html">the book view</a>, or
+      <a href="publications-cave.html">the cave</a>.
     </p>
   </noscript>
 </body>

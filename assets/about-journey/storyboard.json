@@ -29,34 +29,49 @@
       "id": "01-hyderabad",
       "years": "2006-2011",
       "role": "Bachelors and Masters in Computer Science, IIIT Hyderabad",
-      "startFrame": "stills/01-hyderabad.png",
+      "startFrame": "stills/01-hyderabad-face-v2.png",
       "output": "video/01-hyderabad.mp4",
       "render": {
         "service": "H3 Remote Studio /api/generate",
-        "promptId": "09163e67-92a0-41fa-adf5-b32fcb4a8dbf",
-        "sourceFilename": "H3_1789057409550_00001_.mp4",
-        "status": "accepted",
-        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 60112006, 1344x768 at 24 fps"
+        "promptId": "6ea66054-874b-4164-a40c-f11b037ebfde",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789135253492_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 51220006, 1344x768 at 24 fps",
+        "supersededAttempts": [
+          {
+            "promptId": "09163e67-92a0-41fa-adf5-b32fcb4a8dbf",
+            "sourceFilename": "H3_1789057409550_00001_.mp4",
+            "reason": "Superseded: the over-the-shoulder action showed Kiran's face clearly for only about one second."
+          }
+        ]
       },
-      "creativeBeat": "A college-age Kiran gives one last over-the-shoulder glance, then walks into the IIIT Hyderabad campus while the camera rises above its granite boulders and long central walkway.",
+      "creativeBeat": "A college-age Kiran walks face-forward through the IIIT Hyderabad campus for five identity-held seconds before the camera rises above its granite boulders and central walkway.",
       "mapHandoff": "The elevated campus walkway contracts into the Hyderabad node before the Hyderabad-to-Barcelona flight begins.",
-      "motionPromptFile": "prompts/01-hyderabad-native.txt"
+      "motionPromptFile": "prompts/01-hyderabad-face-v2-native.txt"
     },
     {
       "id": "02-barcelona",
       "years": "2011-2012",
       "role": "Research Engineer, Yahoo! Research Barcelona",
-      "startFrame": "stills/02-barcelona-sagrada-v4.png",
+      "startFrame": "stills/02-barcelona-metro-v5.png",
       "output": "video/02-barcelona.mp4",
       "render": {
         "service": "H3 Remote Studio /api/generate",
-        "promptId": "2bdf01ad-fabb-4de3-8c90-ac6bd9fc914c",
-        "sourceFilename": "H3_1789053389323_00001_.mp4",
-        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 294731806, 1344x768 at 24 fps"
+        "promptId": "73c71647-611f-4676-b5cb-37cbe67ac3a3",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789135265066_00001_.mp4",
+        "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 51222011, 1344x768 at 24 fps",
+        "supersededAttempts": [
+          {
+            "promptId": "2bdf01ad-fabb-4de3-8c90-ac6bd9fc914c",
+            "sourceFilename": "H3_1789053389323_00001_.mp4",
+            "reason": "Superseded: the vintage roadster was not grounded in the Barcelona/Yahoo chapter."
+          }
+        ]
       },
-      "creativeBeat": "Kiran drives a dark navy vintage roadster beside the Sagrada Familia as the stabilized camera keeps pace, then rises above the car and the Barcelona street grid in one continuous move.",
-      "mapHandoff": "The film ends on a near-top-down Eixample avenue. The webpage continues the same pullback, shrinks the city into the Barcelona node, and launches the Barcelona-to-Doha flight along that road's diagonal direction.",
-      "motionPrompt": "IMAGE-TO-VIDEO. Create one continuous premium photorealistic commercial-documentary camera shot, with no cuts and no hidden transitions. Begin exactly from the supplied frame beside the Sagrada Familia in Barcelona and preserve the opening composition, Kiran, the dark navy open-top roadster, the secured brick-red notebook, the avenue, the basilica, the 2011 construction cranes, lens, exposure, and golden-hour light. From 0-4 seconds, a stabilized camera car travels parallel at exactly the same calm road speed in a medium-wide front-left three-quarter view. Kiran drives naturally and looks at the road; his face stays crisp and recognizable with only tiny realistic head motion. From 4-7 seconds, without cutting, the camera begins a very slow crane upward and backward while keeping the roadster in the lower-right third, revealing more of the basilica, Eixample blocks, treetops, and the long avenue. From 7-12 seconds, continue the same uninterrupted crane into a high, stable aerial view. The roadster becomes gradually smaller but remains visible and drives straight along the same avenue. Finish on a clean near-top-down city composition where the avenue forms one strong continuous diagonal line toward the edge of frame, holding the final aerial geometry for the last half-second. Preserve the exact face, eyes, nose, lips, hairline, curly hair, mustache, skin tone, age, body proportions, hands, clothing, car structure, notebook, architecture, and crane placement. Natural 24 fps, restrained motion blur, physically correct reflections and parallax, HDR 35mm cinema-camera look, refined film grain, luxury automotive campaign finish. No face drift, morphing, lip movement, extra passenger, extra limbs, warped hands, changing clothes, steering-wheel deformation, melting car, bent windshield, wheel distortion, camera shake, zoom jump, cut, dissolve, map graphic, airplane, title, caption, readable sign, logo, watermark, or fantasy effect."
+      "creativeBeat": "Kiran emerges from the metro into his first Barcelona work chapter, walks face-forward into the morning city, and the camera rises above the Eixample grid and Sagrada Familia.",
+      "mapHandoff": "The elevated Eixample avenue contracts into the Barcelona node before the Barcelona-to-Doha flight begins.",
+      "motionPromptFile": "prompts/02-barcelona-metro-v5-native.txt"
     },
     {
       "id": "03-doha",
@@ -67,7 +82,8 @@
       "render": {
         "service": "H3 Remote Studio /api/generate",
         "promptId": "7de6e03d-cc60-471c-90bb-fda466d9e6fc",
-        "status": "queued",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789061930283_00001_.mp4",
         "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 77312012, 1344x768 at 24 fps",
         "rejectedAttempts": [
           {
@@ -141,7 +157,8 @@
       "render": {
         "service": "H3 Remote Studio /api/generate",
         "promptId": "adcba909-0d87-49f3-b6e4-be02f3cc3876",
-        "status": "queued",
+        "status": "accepted and integrated",
+        "sourceFilename": "H3_1789057413256_00001_.mp4",
         "settings": "image-to-video, 16:9, native maximum 0.98, 11.5 seconds, 28 steps, seed 40212021, 1344x768 at 24 fps"
       },
       "creativeBeat": "Kiran finishes one restrained classroom gesture, recognizes a student's raised hand, and the camera advances toward the research-network visualization.",

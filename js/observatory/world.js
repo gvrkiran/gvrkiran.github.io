@@ -4,6 +4,7 @@
   window.mountScrollWorld(document.getElementById('world'), {
     brand: { name: 'Kiran Garimella', href: '#top' },
     hint: 'scroll to enter',
+    cta: { label: 'See my journey', href: 'about-journey.html' },
     nav: true,
     atmosphere: true,
     diveScroll: 1.72,
