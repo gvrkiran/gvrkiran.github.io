@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05080d">
+  <title>Journey · Kiran Garimella</title>
+  <meta name="description" content="A scroll-controlled cinematic journey from Hyderabad to Barcelona, Doha, Helsinki, Lausanne, Cambridge, and New Brunswick.">
+  <meta property="og:title" content="Journey · Kiran Garimella">
+  <meta property="og:description" content="Kiran Garimella's academic and research journey, from Hyderabad to New Brunswick.">
+  <meta property="og:image" content="assets/about-journey/stills/01-hyderabad.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2305080d'/%3E%3Cpath d='M17 38c7-17 23-17 30 0' fill='none' stroke='%23f2b45f' stroke-width='3'/%3E%3Ccircle cx='32' cy='33' r='4' fill='%23f2b45f'/%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/about-journey/stills/00-earth-hyderabad.webp">
+  <link rel="preload" as="image" href="assets/about-journey/stills/01-hyderabad.webp">
+  <link rel="stylesheet" href="assets/about-journey/about-journey.css?v=4">
+</head>
+<body>
+  <main class="journey" id="journey" data-videos="true" aria-label="Kiran Garimella's life journey">
+    <div class="journey__track" id="journeyTrack" aria-hidden="true"></div>
+
+    <section class="journey__stage" id="journeyStage">
+      <div class="media-stack" id="mediaStack" aria-hidden="true">
+        <figure class="scene" data-scene="origin" data-shade="left">
+          <img src="assets/about-journey/stills/00-earth-hyderabad.webp" alt="" fetchpriority="high">
+        </figure>
+
+        <figure class="scene" data-scene="hyderabad" data-shade="right">
+          <img src="assets/about-journey/stills/01-hyderabad-face-v2.webp" alt="" fetchpriority="high">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/01-hyderabad-face-v2.webp" data-src="assets/about-journey/video/01-hyderabad.mp4?v=3" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="barcelona" data-shade="left">
+          <img src="assets/about-journey/stills/02-barcelona-metro-v5.webp" alt="" loading="eager">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/02-barcelona-metro-v5.webp" data-src="assets/about-journey/video/02-barcelona.mp4?v=5" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="doha" data-shade="right">
+          <img src="assets/about-journey/stills/03-doha.webp" alt="" loading="lazy">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/03-doha.webp" data-src="assets/about-journey/video/03-doha.mp4?v=2" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="helsinki" data-shade="left">
+          <img src="assets/about-journey/stills/04-helsinki.webp" alt="" loading="lazy">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/04-helsinki.webp" data-src="assets/about-journey/video/04-helsinki.mp4?v=1" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="lausanne" data-shade="left">
+          <img src="assets/about-journey/stills/05-lausanne.webp" alt="" loading="lazy">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/05-lausanne.webp" data-src="assets/about-journey/video/05-lausanne.mp4?v=1" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="cambridge" data-shade="right">
+          <img src="assets/about-journey/stills/06-cambridge.webp" alt="" loading="lazy">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/06-cambridge.webp" data-src="assets/about-journey/video/06-cambridge.mp4?v=1" data-ready="true"></video>
+        </figure>
+
+        <figure class="scene" data-scene="rutgers" data-shade="left">
+          <img src="assets/about-journey/stills/07-rutgers.webp" alt="" loading="lazy">
+          <video muted playsinline preload="auto" poster="assets/about-journey/stills/07-rutgers.webp" data-src="assets/about-journey/video/07-rutgers.mp4?v=1" data-ready="true"></video>
+        </figure>
+
+        <figure class="route-map" id="routeMap">
+          <img src="assets/about-journey/stills/00-world-route.webp" alt="">
+          <svg class="route-map__drawing" id="routeDrawing" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="routeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
+                <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+              </filter>
+            </defs>
+            <g class="route-map__history" id="routeHistory"></g>
+            <path class="route-map__underlay" id="flightUnderlay" pathLength="1"></path>
+            <path class="route-map__trail" id="flightTrail" pathLength="1"></path>
+            <g class="route-map__nodes" id="routeNodes"></g>
+            <g class="route-map__plane" id="flightPlane">
+              <circle r="16"></circle>
+              <path d="M22 0 C17 -2 10 -3 5 -4 L-3 -17 L-7 -17 L-5 -4 L-16 -4 L-21 -10 L-24 -10 L-21 0 L-24 10 L-21 10 L-16 4 L-5 4 L-7 17 L-3 17 L5 4 C10 3 17 2 22 0 Z"></path>
+            </g>
+          </svg>
+        </figure>
+      </div>
+
+      <div class="grade" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+
+      <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+      <header class="hud hud--top">
+        <a class="brand" href="index.html" aria-label="Kiran Garimella home">
+          <span class="brand__mark">KG</span>
+          <span class="brand__label">Kiran Garimella<br><small>About / Journey</small></span>
+        </a>
+        <div class="hud__chapter" aria-live="polite">
+          <span id="chapterNumber">00 / 07</span>
+          <strong id="chapterPlace">Hyderabad, India</strong>
+        </div>
+      </header>
+
+      <nav class="timeline" id="timeline" aria-label="Journey chapters">
+        <span class="timeline__line"><i id="timelineProgress"></i></span>
+        <button class="is-active" type="button" data-index="0" aria-label="Opening: Hyderabad"><i></i><span>Origin</span></button>
+        <button type="button" data-index="1" aria-label="Hyderabad, 2006 to 2011"><i></i><span>Hyderabad</span></button>
+        <button type="button" data-index="2" aria-label="Barcelona, 2011 to 2012"><i></i><span>Barcelona</span></button>
+        <button type="button" data-index="3" aria-label="Doha, 2012 to 2013"><i></i><span>Doha</span></button>
+        <button type="button" data-index="4" aria-label="Helsinki, 2014 to 2018"><i></i><span>Helsinki</span></button>
+        <button type="button" data-index="5" aria-label="Lausanne, 2018 to 2019"><i></i><span>Lausanne</span></button>
+        <button type="button" data-index="6" aria-label="Cambridge, 2019 to 2021"><i></i><span>Cambridge</span></button>
+        <button type="button" data-index="7" aria-label="New Brunswick, 2021 to present"><i></i><span>New Brunswick</span></button>
+      </nav>
+
+      <div class="copy-stack" id="copyStack">
+        <article class="chapter-copy chapter-copy--left" data-copy="origin">
+          <p class="chapter-copy__eyebrow">2006—present</p>
+          <h1>Kiran<br>Garimella</h1>
+          <p class="chapter-copy__route">Hyderabad · Barcelona · Doha · Helsinki · Lausanne · Cambridge · New Brunswick</p>
+        </article>
+
+        <article class="chapter-copy chapter-copy--right" data-copy="hyderabad" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">01 · India</p>
+          <h2>Hyderabad</h2>
+          <div class="chapter-copy__facts">
+            <p>Bachelors &amp; Masters in Computer Science</p>
+            <strong>IIIT Hyderabad</strong>
+            <time>2006—2011</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--left" data-copy="barcelona" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">02 · Spain</p>
+          <h2>Barcelona</h2>
+          <div class="chapter-copy__facts">
+            <p>Research Engineer</p>
+            <strong>Yahoo! Research</strong>
+            <time>2011—2012</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--right" data-copy="doha" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">03 · Qatar</p>
+          <h2>Doha</h2>
+          <div class="chapter-copy__facts">
+            <p>Research Associate</p>
+            <strong>Qatar Computing Research Institute</strong>
+            <time>2012—2013</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--left" data-copy="helsinki" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">04 · Finland</p>
+          <h2>Helsinki</h2>
+          <div class="chapter-copy__facts">
+            <p>PhD in Computer Science</p>
+            <strong>Aalto University</strong>
+            <time>2014—2018</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--left" data-copy="lausanne" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">05 · Switzerland</p>
+          <h2>Lausanne</h2>
+          <div class="chapter-copy__facts">
+            <p>Postdoctoral Researcher</p>
+            <strong>EPFL · Data Science Lab</strong>
+            <time>2018—2019</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--right" data-copy="cambridge" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">06 · United States</p>
+          <h2>Cambridge</h2>
+          <div class="chapter-copy__facts">
+            <p>Michael Hammer Postdoctoral Fellow</p>
+            <strong>MIT · Institute for Data, Systems, and Society</strong>
+            <time>2019—2021</time>
+          </div>
+        </article>
+
+        <article class="chapter-copy chapter-copy--left chapter-copy--final" data-copy="rutgers" aria-hidden="true">
+          <p class="chapter-copy__eyebrow">07 · United States</p>
+          <h2>New Brunswick</h2>
+          <div class="chapter-copy__facts">
+            <p>Assistant Professor</p>
+            <strong>Rutgers University</strong>
+            <time>2021—present</time>
+          </div>
+          <div class="chapter-copy__links">
+            <a href="projects.html">Explore the work <span>↗</span></a>
+            <a href="publications-cave.html">Enter the archive <span>↘</span></a>
+          </div>
+        </article>
+      </div>
+
+      <div class="flight-readout" id="flightReadout" aria-hidden="true">
+        <span id="flightFrom">Hyderabad</span>
+        <i><b></b></i>
+        <span id="flightTo">Barcelona</span>
+        <small id="flightYear">2011</small>
+      </div>
+
+      <footer class="hud hud--bottom">
+        <span class="hud__coordinates" id="coordinates">17.3850° N · 78.4867° E</span>
+        <span class="scroll-cue" id="scrollCue"><i></i> Scroll to travel</span>
+      </footer>
+    </section>
+  </main>
+
+  <noscript>
+    <p class="no-script">This journey needs JavaScript. <a href="about.html">Read the text version.</a></p>
+  </noscript>
+  <script src="assets/about-journey/about-journey.js?v=14"></script>
+</body>
+</html>

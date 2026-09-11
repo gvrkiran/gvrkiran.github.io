@@ -34,8 +34,6 @@
   const chapterPlace = document.getElementById("chapterPlace");
   const coordinates = document.getElementById("coordinates");
   const scrollCue = document.getElementById("scrollCue");
-  const skipButton = document.getElementById("skipButton");
-  const mediaStatus = document.getElementById("mediaStatus");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const journey = document.getElementById("journey");
 
@@ -85,7 +83,7 @@
   }
 
   function layout() {
-    track.style.height = `${100 + transitions * (reducedMotion ? 105 : 180)}vh`;
+    track.style.height = `${100 + transitions * (reducedMotion ? 105 : 280)}vh`;
     maxScroll = Math.max(1, track.offsetHeight - innerHeight);
     update();
   }
@@ -152,7 +150,7 @@
       const fullySeekable = video.seekable.length > 0
         && video.seekable.end(video.seekable.length - 1) >= video.duration - .1;
       if (!fullySeekable) return;
-      const sceneProgress = clamp((floatPosition - (index - .36)) / .72);
+      const sceneProgress = clamp((floatPosition - (index - .30)) / .88);
       const target = sceneProgress * Math.max(0, video.duration - 1 / 24);
       if (!video.seeking && Math.abs(video.currentTime - target) > .035) {
         try {
@@ -203,27 +201,27 @@
       setCopy(1, smoothstep(.73, .96, local));
       setActive(local < .58 ? 0 : 1);
     } else {
-      const outgoing = 1 - smoothstep(.18, .39, local);
-      const mapOpacity = smoothstep(.16, .35, local) * (1 - smoothstep(.66, .84, local));
-      const incoming = smoothstep(.66, .92, local);
+      const outgoing = 1 - smoothstep(.36, .58, local);
+      const mapOpacity = smoothstep(.31, .48, local) * (1 - smoothstep(.72, .86, local));
+      const incoming = smoothstep(.70, .94, local);
       sceneEls[leg].style.opacity = outgoing.toFixed(3);
       sceneEls[leg + 1].style.opacity = incoming.toFixed(3);
       routeMap.style.opacity = mapOpacity.toFixed(3);
       sceneEls[leg].style.setProperty("--scene-scale", String(1.025 + local * .045));
       sceneEls[leg + 1].style.setProperty("--scene-scale", String(1.1 - incoming * .075));
       if (leg > 0) {
-        const pullback = smoothstep(.14, .39, local);
+        const pullback = smoothstep(.31, .58, local);
         const origin = mapOrigin(SCENES[leg]);
         sceneEls[leg].style.setProperty("--scene-origin", origin);
         sceneEls[leg].style.setProperty("--scene-scale", String(1.025 - pullback * .06));
         sceneEls[leg].style.setProperty("--scene-blur", `${(pullback * 2.2).toFixed(2)}px`);
         sceneEls[leg].style.setProperty("--scene-clip", `circle(${(150 - pullback * 148.2).toFixed(2)}% at ${origin})`);
       }
-      setCopy(leg, 1 - smoothstep(.07, .22, local));
+      setCopy(leg, 1 - smoothstep(.16, .34, local));
       setCopy(leg + 1, smoothstep(.82, .97, local));
-      const flightProgress = smoothstep(.27, .72, local);
+      const flightProgress = smoothstep(.43, .78, local);
       setFlight(leg, flightProgress);
-      const readoutOpacity = smoothstep(.24, .38, local) * (1 - smoothstep(.62, .78, local));
+      const readoutOpacity = smoothstep(.40, .52, local) * (1 - smoothstep(.72, .84, local));
       flightReadout.style.opacity = readoutOpacity.toFixed(3);
       flightReadout.style.transform = `translate(-50%, ${(1 - readoutOpacity) * 18}px)`;
       flightReadout.querySelector("b").style.width = `${flightProgress * 100}%`;
@@ -252,13 +250,9 @@
   async function activateAvailableVideos() {
     if (journey.dataset.videos !== "true") return;
     const videos = [...document.querySelectorAll(".scene video[data-src][data-ready='true']")];
-    const totalFilms = document.querySelectorAll(".scene video[data-src]").length;
-    let readyCount = 0;
     videos.forEach(video => {
       video.addEventListener("loadeddata", () => {
         video.parentElement.classList.add("has-video");
-        readyCount += 1;
-        mediaStatus.textContent = `${readyCount} / ${totalFilms} films`;
         update();
       }, { once: true });
       video.src = video.dataset.src;
@@ -268,7 +262,6 @@
 
   buildRoute();
   navButtons.forEach(button => button.addEventListener("click", () => scrollToScene(Number(button.dataset.index))));
-  skipButton.addEventListener("click", () => scrollToScene(SCENES.length - 1));
   addEventListener("scroll", update, { passive: true });
   addEventListener("resize", layout, { passive: true });
   addEventListener("keydown", event => {
