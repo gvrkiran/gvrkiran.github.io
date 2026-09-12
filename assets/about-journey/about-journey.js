@@ -85,6 +85,7 @@
   function layout() {
     track.style.height = `${100 + transitions * (reducedMotion ? 105 : 280)}vh`;
     maxScroll = Math.max(1, track.offsetHeight - innerHeight);
+    primeVideos(activeIndex < 0 ? 0 : activeIndex);
     update();
   }
 
@@ -113,6 +114,7 @@
     chapterNumber.textContent = `${String(index).padStart(2, "0")} / 07`;
     chapterPlace.textContent = scene.place;
     coordinates.textContent = scene.coordinates;
+    primeVideos(index);
   }
 
   function setFlight(leg, progress) {
@@ -247,17 +249,26 @@
     scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
   }
 
-  async function activateAvailableVideos() {
+  function prepareVideo(video) {
+    if (!video || video.dataset.prepared === "true") return;
+    video.dataset.prepared = "true";
+    video.preload = "auto";
+    video.addEventListener("loadeddata", () => {
+      video.parentElement.classList.add("has-video");
+      update();
+    }, { once: true });
+    video.src = video.dataset.src;
+    video.load();
+  }
+
+  function primeVideos(index) {
     if (journey.dataset.videos !== "true") return;
     const videos = [...document.querySelectorAll(".scene video[data-src][data-ready='true']")];
-    videos.forEach(video => {
-      video.addEventListener("loadeddata", () => {
-        video.parentElement.classList.add("has-video");
-        update();
-      }, { once: true });
-      video.src = video.dataset.src;
-      video.load();
-    });
+    if (innerWidth > 820) {
+      videos.forEach(prepareVideo);
+      return;
+    }
+    [index, index + 1].forEach(sceneIndex => prepareVideo(sceneEls[sceneIndex]?.querySelector("video")));
   }
 
   buildRoute();
@@ -271,5 +282,5 @@
   });
 
   layout();
-  activateAvailableVideos();
+  primeVideos(0);
 })();
