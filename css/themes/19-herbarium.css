@@ -1,6 +1,6 @@
 /* Theme 19 — Herbarium. Layout: L2.
    A pressed-botany archive: content mounted on specimen sheets with washi
-   tape and taxonomic labels; generative vines grow up the margins on scroll.
+   tape; generative vines grow up the margins on scroll.
    Light = archive cream. Dark = cyanotype photogram (Prussian blue / white).
    Fonts: EB Garamond (display/headings/binomials), Source Serif 4 (body) —
    both already loaded by the page; no @import needed. */
@@ -182,24 +182,6 @@ html[data-theme="19"] .hero-tagline {
   max-width: 46ch;
   margin-top: 1rem;
 }
-/* Latin sub-label beneath the name, injected by JS. */
-html[data-theme="19"] .t19-hero-binomial {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--color-muted);
-  margin-top: 0.35rem;
-  letter-spacing: 0.01em;
-}
-html[data-theme="19"] .t19-hero-binomial .t19-auth {
-  font-style: normal;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.75;
-  margin-left: 0.4rem;
-}
 
 html[data-theme="19"] .quick-links { margin-top: 1.5rem; }
 html[data-theme="19"] .quick-links a {
@@ -266,7 +248,7 @@ html[data-theme="19"] .section-heading::after {
 }
 
 /* ======================= SPECIMEN SHEETS (cards + panels) ======================= */
-/* Give sheets room for the washi tape overhang and the corner label. */
+/* Give sheets room for the washi tape overhang. */
 html[data-theme="19"] .card,
 html[data-theme="19"] .other-card {
   position: relative;
@@ -352,52 +334,7 @@ html[data-theme="19"] .other-feature-meta { font-family: var(--font-body); color
 html[data-theme="19"] .section-cta a { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent); }
 html[data-theme="19"] .about-meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-muted); margin-top: 0.4rem; }
 
-/* ======================= TAXONOMIC LABEL ======================= */
-/* Ruled specimen label. JS fills the binomial + accession no. It flows below the
-   sheet's content (as the card's last child) and hugs the right edge — a real
-   herbarium label sits at the bottom of the mounting sheet. Static flow means it
-   can never overlap the text above it. */
-html[data-theme="19"] .t19-label {
-  position: static;
-  margin: 1.15rem 0 0 auto;
-  width: -moz-fit-content;
-  width: fit-content;
-  max-width: 100%;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  color: var(--color-muted);
-  text-align: left;
-  border: 1px solid var(--t19-rule);
-  border-radius: 1px;
-  padding: 0.3rem 0.55rem;
-  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
-  pointer-events: none;
-}
-/* color-mix fallback for older engines */
-@supports not (background: color-mix(in srgb, red, blue)) {
-  html[data-theme="19"] .t19-label { background: rgba(247,242,231,0.55); }
-  html[data-theme="19"][data-mode="dark"] .t19-label { background: rgba(15,45,82,0.55); }
-}
-html[data-theme="19"] .t19-label .t19-binom {
-  display: block;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.84rem;
-  color: var(--color-heading);
-  letter-spacing: 0.01em;
-  margin-bottom: 0.12rem;
-}
-html[data-theme="19"] .t19-label .t19-auth { font-style: normal; text-transform: uppercase; letter-spacing: 0.06em; }
-
 @media (max-width: 760px) {
-  html[data-theme="19"] .t19-label {
-    position: static;
-    max-width: none;
-    text-align: left;
-    margin-top: 1.1rem;
-  }
   html[data-theme="19"] .card,
   html[data-theme="19"] .other-card { padding-bottom: 1.5rem; }
 }
@@ -419,6 +356,6 @@ html[data-theme="19"] .pubs-back,
 html[data-theme="19"] .subpage main a[href="index.html"] { font-family: var(--font-mono); font-size: 0.78rem; color: var(--color-accent); }
 
 /* ======================= NO-JS / REVEAL SAFETY ======================= */
-/* Sheets, tape and labels are pure CSS and always visible. The vine SVG is
+/* Sheets and tape are pure CSS and always visible. The vine SVG is
    the only JS-added element; if JS never runs, the margins simply stay empty
    and the page is fully readable. No content is hidden behind a JS reveal. */

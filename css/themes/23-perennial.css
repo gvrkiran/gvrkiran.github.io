@@ -185,19 +185,6 @@ html[data-theme="23"] .hero-name {
   line-height: 0.99;
   letter-spacing: -0.02em;
   color: var(--color-heading);
-  padding-top: 1.15rem;
-}
-html[data-theme="23"] .hero-name::before {
-  content: "Perennial Press · Garimella Studio · algorithmic scholarship, one of one";
-  position: absolute;
-  top: -0.35rem;
-  left: 0;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  white-space: nowrap;
 }
 html[data-theme="23"] .hero-role {
   font-family: 'Space Mono', monospace;
@@ -252,22 +239,8 @@ html[data-theme="23"][data-mode="dark"] .face-frame img {
   /* cyanotype duotone */
   filter: grayscale(1) sepia(1) hue-rotate(170deg) saturate(2) brightness(0.92);
 }
-html[data-theme="23"] .face-frame::after {
-  content: "artist's proof";
-  position: absolute;
-  left: 0;
-  bottom: -1.45rem;
-  width: 100%;
-  text-align: center;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  white-space: nowrap;
-}
 
-/* The serial plate (JS): certificate label glued to the sheet, bottom-left. */
+/* The control plate (JS): stroke count + regenerate button, bottom-left. */
 html[data-theme="23"] .t23-plate {
   position: absolute;
   left: 20px;
@@ -284,10 +257,6 @@ html[data-theme="23"] .t23-plate {
   padding: 0.55rem 0.75rem;
   box-shadow: 0 8px 18px -12px rgba(18, 16, 11, 0.5);
   line-height: 1.75;
-}
-html[data-theme="23"] .t23-plate .t23-serial b {
-  color: var(--color-accent);
-  font-weight: 700;
 }
 html[data-theme="23"] .t23-plate .t23-count { color: var(--color-muted); }
 html[data-theme="23"] .t23-regen {
@@ -312,28 +281,15 @@ html[data-theme="23"] .t23-plate kbd {
 }
 
 /* ---- Sections: the catalogue ------------------------------------------------ */
-html[data-theme="23"] main { counter-reset: t23plate; }
 html[data-theme="23"] section.section:not(.hero-section) {
   border-top: 1px solid var(--t23-hair-strong);
   padding-top: 2.5rem;
 }
 html[data-theme="23"] section.section:not(.hero-section) .section-heading {
-  counter-increment: t23plate;
   font-family: 'Fraunces', serif;
   font-weight: 900;
   font-size: clamp(1.8rem, 3.2vw, 2.5rem);
   color: var(--color-heading);
-}
-html[data-theme="23"] section.section:not(.hero-section) .section-heading::before {
-  content: "plate 0" counter(t23plate) " · edition 1/1";
-  display: block;
-  font-family: 'Space Mono', monospace;
-  font-weight: 400;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 0.5rem;
 }
 
 /* Cards: print plates with registration ticks. */
@@ -466,8 +422,6 @@ html[data-theme="23"] .pub-list li:first-child { border-top: 0; }
   html[data-theme="23"] .hero-section { min-height: 88vh; }
   html[data-theme="23"] .hero-inner { flex-direction: column; align-items: flex-start; justify-content: flex-end; }
   html[data-theme="23"] .hero-portrait { order: -1; align-self: flex-end; margin-bottom: 0; }
-  html[data-theme="23"] .face-frame::after { display: none; }
-  html[data-theme="23"] .hero-name::before { white-space: normal; letter-spacing: 0.12em; font-size: 0.56rem; }
   html[data-theme="23"] .t23-plate { left: 12px; bottom: 12px; right: 12px; font-size: 0.6rem; }
   html[data-theme="23"] .t23-plate kbd { display: none; }
 }

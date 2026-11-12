@@ -6,15 +6,13 @@
  * never overlap text). Vines are seeded fresh each reload (mulberry32 from
  * Date.now()) — one "species" per window.PROJECTS entry, rooted at section
  * positions. Growth is tied to scroll and is MONOTONIC (never retracts).
- * Also injects a Latinized binomial under the hero name, and a taxonomic
- * label + generated binomial onto every specimen sheet (.card / .other-card).
  *
- * Subpages (no [data-section]): only a small static pre-grown corner sprig +
- * sheet labels. No scroll-growth.
+ * Subpages (no [data-section]): only a small static pre-grown corner sprig.
+ * No scroll-growth.
  *
  * Dark mode = cyanotype: vines render white (read live via getComputedStyle).
  * Reduced motion: the garden is drawn fully grown on load, no loop.
- * No-JS: nothing here runs; CSS sheets/tape/labels remain fully readable.
+ * No-JS: nothing here runs; CSS sheets/tape remain fully readable.
  */
 (function () {
   'use strict';
@@ -63,86 +61,6 @@
     palette.alpha = parseFloat(g('--t19-vine-alpha', '0.9')) || 0.9;
   }
   readColors();
-
-  /* ================================================================
-   *  BINOMIAL / LABEL generation (tasteful Latinization)
-   * ================================================================ */
-  const GENERA = ['Misinformatio', 'Rumoria', 'Viralis', 'Datastilla', 'Nodus',
-    'Rhizonet', 'Cryptogramma', 'Polaritas', 'Algorithma', 'Signalia',
-    'Fabula', 'Chatteria', 'Memetica', 'Retiaria'];
-  const EPITHET_SUFFIX = ['ii', 'ensis', 'ana', 'oides', 'ata', 'ifolia'];
-  const STOP = { the: 1, a: 1, an: 1, of: 1, on: 1, in: 1, and: 1, for: 1, to: 1, with: 1 };
-
-  function latinize(word) {
-    let w = word.toLowerCase().replace(/[^a-z]/g, '');
-    if (!w) return '';
-    // trim trailing vowel cluster so a suffix reads cleanly, then attach.
-    w = w.replace(/(?:[aeiou]+)$/, '');
-    if (w.length < 3) w = word.toLowerCase().replace(/[^a-z]/g, '').slice(0, 4);
-    return w;
-  }
-  function firstMeaningfulWord(title) {
-    const parts = String(title).split(/[\s\-—:]+/).filter(Boolean);
-    for (const p of parts) {
-      const clean = p.toLowerCase().replace(/[^a-z]/g, '');
-      if (clean && !STOP[clean]) return p;
-    }
-    return parts[0] || 'species';
-  }
-  function makeBinomial(title) {
-    const h = hash(String(title));
-    const genus = GENERA[h % GENERA.length];
-    let stem = latinize(firstMeaningfulWord(title));
-    if (!stem) stem = 'herba';
-    const suf = EPITHET_SUFFIX[(h >>> 5) % EPITHET_SUFFIX.length];
-    const epithet = (stem + suf).replace(/(.)\1{2,}$/, '$1$1');
-    return { genus, epithet, auth: 'GARIMELLA, 20' + (10 + (h % 16)) };
-  }
-
-  /* ================================================================
-   *  SHEET LABELS  (bottom-right taxonomic label on every card)
-   * ================================================================ */
-  function labelCards() {
-    const cards = document.querySelectorAll(
-      'html[data-theme="19"] .card, html[data-theme="19"] .other-card'
-    );
-    cards.forEach((card) => {
-      if (card.querySelector('.t19-label')) return;
-      const titleEl = card.querySelector('h3, .other-feature-title');
-      const title = titleEl ? titleEl.textContent : (card.textContent || 'specimen').slice(0, 40);
-      const b = makeBinomial(title);
-      const accH = hash(title + '·acc');
-      const acc = String(1000 + (accH % 8999));
-      const label = document.createElement('div');
-      label.className = 't19-label';
-      label.setAttribute('aria-hidden', 'true');
-      label.innerHTML =
-        '<span class="t19-binom">' + b.genus + ' ' + b.epithet +
-        ' <span class="t19-auth">' + b.auth + '</span></span>' +
-        'COLL. K. GARIMELLA · DET. 2026<br>' +
-        'LOC. NEW BRUNSWICK · No. ' + acc;
-      card.appendChild(label);
-    });
-  }
-
-  /* Hero binomial (derived from the site owner's name / role). */
-  function labelHero() {
-    const nameEl = document.getElementById('heroName');
-    const holder = document.querySelector('.hero-text');
-    if (!nameEl || !holder || document.querySelector('.t19-hero-binomial')) return;
-    const b = makeBinomial((nameEl.textContent || 'Garimella') + ' academicus');
-    const p = document.createElement('p');
-    p.className = 't19-hero-binomial';
-    p.setAttribute('aria-hidden', 'true');
-    p.innerHTML = b.genus + ' ' + b.epithet +
-      '<span class="t19-auth">DET. 2026</span>';
-    const role = document.getElementById('heroRole');
-    if (role && role.parentNode === holder) holder.insertBefore(p, role.nextSibling);
-    else nameEl.insertAdjacentElement('afterend', p);
-  }
-
-  labelHero();
-  labelCards();
 
   /* ================================================================
    *  Is this the growing homepage, or a static subpage?

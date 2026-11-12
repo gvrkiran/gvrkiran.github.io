@@ -318,7 +318,7 @@ html[data-theme="15"] .face-frame {
 }
 html[data-theme="15"][data-mode="dark"] .face-frame { border-color: rgba(255,255,255,0.65); }
 
-/* set-symbol + card number, echoing the theme counter (15/20) */
+/* set-symbol ornament (no text) */
 html[data-theme="15"] .t15-card-meta {
   position: absolute;
   top: 1.1rem;

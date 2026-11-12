@@ -198,18 +198,6 @@ html[data-theme="12"] .hero-tagline {
   font-style: italic;
 }
 
-/* A small coordinate readout under the tagline, echoing a chart's grid ticks. */
-html[data-theme="12"] .hero-text::after {
-  content: 'RA 00h 00m · DEC +40° 26′ · epoch J2026';
-  display: block;
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  color: var(--color-muted);
-  opacity: 0.85;
-}
-
 html[data-theme="12"] .quick-links { margin-top: 1.5rem; gap: 0.5rem; }
 html[data-theme="12"] .quick-links a {
   font-family: var(--font-mono);
@@ -291,7 +279,7 @@ html[data-theme="12"] .section-heading {
   font-weight: 700;
   color: var(--color-heading);
   position: relative;
-  margin-bottom: 0.35rem;
+  margin-bottom: 1.25rem;
 }
 /* small ✦ before each heading */
 html[data-theme="12"] .section-heading::before {
@@ -302,24 +290,6 @@ html[data-theme="12"] .section-heading::before {
   vertical-align: 0.12em;
 }
 html[data-theme="12"][data-mode="light"] .section-heading::before { color: var(--color-accent-2); }
-
-/* Decorative coordinate-style metadata line under each heading (static CSS content).
-   Distinct per section so it reads like a real chart index rather than a repeat. */
-html[data-theme="12"] .section-body::before,
-html[data-theme="12"] #publications .section-body::before {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  color: var(--color-muted);
-  margin-bottom: 1.3rem;
-  opacity: 0.85;
-}
-html[data-theme="12"] #about     .section-body::before { content: 'RA 02h 18m · DEC +12° 44′ · mag 3.1'; }
-html[data-theme="12"] #projects  .section-body::before { content: 'RA 06h 45m · DEC −16° 42′ · mag 1.4'; }
-html[data-theme="12"] #publications .section-body::before { content: 'RA 12h 34m · DEC +05° 12′ · 114 catalogued'; }
-html[data-theme="12"] #teaching  .section-body::before { content: 'RA 18h 36m · DEC +38° 47′ · mag 0.0'; }
-html[data-theme="12"] #other     .section-body::before { content: 'RA 22h 57m · DEC −29° 37′ · mag 1.2'; }
 
 /* ============================================================
    CARDS

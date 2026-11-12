@@ -125,7 +125,7 @@
 
   const meta = document.createElement('div');
   meta.className = 't15-card-meta';
-  meta.innerHTML = '<span class="t15-set-symbol" aria-hidden="true"></span><span>№ 001/020</span>';
+  meta.innerHTML = '<span class="t15-set-symbol" aria-hidden="true"></span>';
 
   const face = document.createElement('div');
   face.className = 't15-card-face';

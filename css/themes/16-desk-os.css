@@ -263,7 +263,7 @@ body[data-t16="on"] > a.visually-hidden { display: none !important; }
   pointer-events: none;
 }
 .t16-seal::after {
-  content: "KIRANOS · RUTGERS · COMPUTATIONAL SOCIAL SCIENCE · ";
+  content: "";
   position: absolute; inset: 6%;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.10);

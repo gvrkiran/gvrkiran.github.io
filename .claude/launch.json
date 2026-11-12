@@ -4,8 +4,21 @@
     {
       "name": "site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8391"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8391"
+      ],
       "port": 8391
+    },
+    {
+      "name": "site-nocache",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-c",
+        "import http.server as h\nclass H(h.SimpleHTTPRequestHandler):\n    def end_headers(self):\n        self.send_header('Cache-Control','no-store')\n        super().end_headers()\nh.ThreadingHTTPServer(('',8397),H).serve_forever()"
+      ],
+      "port": 8397
     }
   ]
 }

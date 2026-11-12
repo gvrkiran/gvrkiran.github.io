@@ -594,6 +594,7 @@
     var resize = el('div', 't16-resize'); win.appendChild(resize);
 
     var PROMPT = 'kiran@rutgers ~ %';
+    var NT = (window.__theme && window.__theme.THEMES && window.__theme.THEMES.length) || 27;
 
     function print(text, cls) {
       var line = el('div', 't16-term-line' + (cls ? ' ' + cls : ''));
@@ -643,7 +644,7 @@
         print('  ls                   list desktop sections');
         print('  open <name>          open a window or subpage (about, projects,');
         print('                       publications, teaching, other, comics, advice, tools)');
-        print('  theme <n>            switch to theme n (1–20)');
+        print('  theme <n>            switch to theme n (1–' + NT + ')');
         print('  mode dark|light      set colour mode');
         print('  whoami               print the tagline');
         print('  clear                clear the screen');
@@ -663,7 +664,7 @@
       },
       theme: function (args) {
         var n = parseInt(args[0], 10);
-        if (!(n >= 1 && n <= 20)) { print('usage: theme <1-20>'); return; }
+        if (!(n >= 1 && n <= NT)) { print('usage: theme <1-' + NT + '>'); return; }
         if (!window.__theme || !window.__theme.forceTheme) { print('theme engine unavailable.'); return; }
         print('switching to theme ' + n + '… (reloading)', 't16-term-dim');
         var to = setTimeout(function () { window.__theme.forceTheme(n); }, 350);
@@ -808,7 +809,7 @@
     logo.appendChild(doc.createTextNode('Kiran'));
     logo.appendChild(el('span', null, 'OS'));
     boot.appendChild(logo);
-    boot.appendChild(el('div', 't16-boot-sub', 'KiranOS 2.0 — 20 themes installed'));
+    boot.appendChild(el('div', 't16-boot-sub', 'KiranOS 2.0'));
     var barWrap = el('div', 't16-boot-bar');
     barWrap.appendChild(el('i'));
     boot.appendChild(barWrap);

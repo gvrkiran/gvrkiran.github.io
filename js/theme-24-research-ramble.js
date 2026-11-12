@@ -22,47 +22,12 @@
   const sections = Array.from(document.querySelectorAll('section.section[data-section]'));
   if (!sections.length) return;
 
-  const COPY = {
-    hero: {
-      label: 'Trailhead',
-      title: 'Hello from tiny Kiran',
-      copy: 'I am your extremely qualified field guide. Click me—or use the arrows—to tour the research.'
-    },
-    about: {
-      label: 'Stop 01 · Base camp',
-      title: 'About the expedition',
-      copy: 'The short version: people, platforms, misinformation, and AI for the public good.'
-    },
-    projects: {
-      label: 'Stop 02 · Field work',
-      title: 'Projects in the wild',
-      copy: 'Here are the questions currently causing too many browser tabs.'
-    },
-    publications: {
-      label: 'Stop 03 · Paper mountain',
-      title: 'Mind the citations',
-      copy: 'A few recent papers live here. The full bibliography is one click away.'
-    },
-    teaching: {
-      label: 'Stop 04 · Classroom',
-      title: 'No surprise quiz',
-      copy: 'Courses, materials, and the part where research gets explained to actual humans.'
-    },
-    other: {
-      label: 'Stop 05 · Side quests',
-      title: 'The fun drawer',
-      copy: 'Comics, tools, advice, and writing. Academic productivity has many disguises.'
-    }
-  };
-
+  /* Each stop is named after its real section heading; the hero is "Home". */
   const stopFor = (section, index) => {
     const key = section.dataset.section || section.id || (index === 0 ? 'hero' : 'stop-' + index);
-    const info = COPY[key] || {
-      label: 'Stop ' + String(index).padStart(2, '0'),
-      title: section.querySelector('.section-heading')?.textContent || 'Field note',
-      copy: 'A useful stop on the research ramble.'
-    };
-    return { section, key, ...info };
+    const heading = section.querySelector('.section-heading');
+    const title = key === 'hero' ? 'Home' : ((heading && heading.textContent.trim()) || 'Section ' + index);
+    return { section, key, title };
   };
   const stops = sections.map(stopFor);
 
@@ -257,7 +222,7 @@
 
   const person = el('button', 't24-person');
   person.type = 'button';
-  person.setAttribute('aria-label', 'Continue the guided tour');
+  person.setAttribute('aria-label', 'Go to the next section');
 
   const shadow = el('span', 't24-shadow');
   const pack = el('span', 't24-pack');
@@ -293,7 +258,7 @@
 
   const passport = el('div', 't24-passport');
   passport.setAttribute('aria-hidden', 'true');
-  const passSmall = el('small', '', 'Research passport');
+  const passSmall = el('small', '', 'Progress');
   const passStrong = el('strong');
   const track = el('span', 't24-progress-track');
   const fill = el('span', 't24-progress-fill');
@@ -393,13 +358,15 @@
   function narrate(index) {
     const stop = stops[index];
     if (!stop) return;
-    kicker.textContent = stop.label;
-    copy.textContent = stop.copy;
+    const nextIndex = index === stops.length - 1 ? 0 : index + 1;
+    kicker.textContent = stop.title;
+    copy.textContent = index === 0
+      ? 'Click me or use the arrows to move between sections.'
+      : 'Next: ' + stops[nextIndex].title;
     passStrong.textContent = stop.title;
     fill.style.width = ((index / Math.max(1, stops.length - 1)) * 100).toFixed(1) + '%';
     prev.disabled = index === 0;
-    prev.setAttribute('aria-label', index === 0 ? 'Already at the trailhead' : 'Go to ' + stops[index - 1].title);
-    const nextIndex = index === stops.length - 1 ? 0 : index + 1;
+    prev.setAttribute('aria-label', index === 0 ? 'Already at the top' : 'Go to ' + stops[index - 1].title);
     next.textContent = index === stops.length - 1 ? 'Home ↟' : 'Next →';
     next.setAttribute('aria-label', 'Go to ' + stops[nextIndex].title);
     person.setAttribute('aria-label', 'Continue to ' + stops[nextIndex].title);
@@ -428,7 +395,7 @@
   function goTo(index) {
     if (index < 0 || index >= stops.length) return;
     guide.classList.add('t24-running', 't24-walking');
-    speakTemporarily('En route · please hold', 'Tiny legs, enormous intellectual journey. On my way to ' + stops[index].title + '.');
+    speakTemporarily('Scrolling', 'Going to ' + stops[index].title + '.');
     stops[index].section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   }
 
@@ -444,17 +411,9 @@
       const index = stops.findIndex(stop => (id === 'top' && stop.key === 'hero') || stop.section.id === id);
       if (index >= 0) {
         guide.classList.add('t24-running', 't24-walking');
-        speakTemporarily('Shortcut spotted', 'Good choice. Taking the scenic route to ' + stops[index].title + '.');
+        speakTemporarily('Scrolling', 'Going to ' + stops[index].title + '.');
       }
     });
-  });
-
-  document.querySelectorAll('.card, .other-card').forEach(card => {
-    const title = card.querySelector('h3, .other-feature-title');
-    if (!title) return;
-    const inspect = () => speakTemporarily('Field specimen', 'Now inspecting: “' + title.textContent.trim() + '”. Excellent clicking material.');
-    card.addEventListener('pointerenter', inspect, { passive: true });
-    card.addEventListener('focusin', inspect);
   });
 
   function burst() {
@@ -532,10 +491,6 @@
   });
   window.addEventListener('load', measure, { once: true });
 
-  const themeName = document.getElementById('themeName');
-  if (themeName) themeName.textContent = 'Research Ramble · theme 24/24 · click tiny Kiran for the next stop';
-
   measure();
   narrate(0);
-  setTimeout(() => speakTemporarily('Tiny guide, big itinerary', 'I follow the trail as you scroll. Click me whenever you want the next stop.'), 650);
 })();

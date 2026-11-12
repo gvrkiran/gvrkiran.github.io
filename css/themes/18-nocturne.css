@@ -172,26 +172,8 @@ html[data-theme="18"] .section-heading {
   text-shadow: 0 1px 0 rgba(255,255,255,0.35);
   border-radius: 1px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25);
-  margin-bottom: 0.4rem;
+  margin-bottom: 1.4rem;
 }
-html[data-theme="18"] .section-heading::after {
-  display: block;
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-variant: normal;
-  font-style: italic;
-  font-weight: 400;
-  font-size: 0.68rem;
-  letter-spacing: 0.02em;
-  color: var(--color-muted);
-  margin-top: 0.65rem;
-  margin-bottom: 1.1rem;
-  opacity: 0.85;
-}
-html[data-theme="18"] [data-section="about"] .section-heading::after { content: 'EXHIBIT · biography · ongoing'; }
-html[data-theme="18"] [data-section="projects"] .section-heading::after { content: 'EXHIBIT · research works · mixed media'; }
-html[data-theme="18"] [data-section="publications"] .section-heading::after { content: 'EXHIBIT · printed matter · 114 items'; }
-html[data-theme="18"] [data-section="teaching"] .section-heading::after { content: 'EXHIBIT · pedagogy · rotating'; }
-html[data-theme="18"] [data-section="other"] .section-heading::after { content: 'EXHIBIT · miscellany · assorted'; }
 
 html[data-theme="18"][data-mode="light"] .section-heading {
   font-family: 'Inter', system-ui, sans-serif;
@@ -207,14 +189,6 @@ html[data-theme="18"][data-mode="light"] .section-heading {
   box-shadow: none;
   border-bottom: 2px solid var(--color-accent);
   padding-bottom: 0.5rem;
-}
-html[data-theme="18"][data-mode="light"] .section-heading::after {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-style: normal;
-  text-transform: none;
-  letter-spacing: 0.02em;
-  font-size: 0.78rem;
-  color: var(--color-muted);
 }
 
 /* ================= HERO ================= */

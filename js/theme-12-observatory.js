@@ -212,13 +212,7 @@
   })();
 
   /* ---------------- Optional: constellation of the day ---------------- */
-  // Pick a connected-ish clump of 5–7 stars and give it a playful fake name.
-  const FAKE_NAMES = [
-    'The Forwarded Message', "The Tipline's Bell", 'Corona Encrypta',
-    'The Data Donor', 'Ursa Viralis', 'The Polarizer', 'Nova Whatsappia',
-    'The Retracted Claim', 'Fornax Fact-Check',
-  ];
-  let constellationLabel = null; // { text, x, y } in normalized coords
+  // Pick a connected-ish clump of 5–7 stars and ring them (no label).
   (function constellationOfTheDay() {
     if (!stars.length) return;
     const day = Math.floor(Date.now() / 86400000);
@@ -246,14 +240,7 @@
         .sort((a, b) => a.d - b.d);
       for (const n of near) { if (pickedSet.size >= 6) break; pickedSet.add(n.i); }
     }
-    let cx = 0, cy = 0;
-    pickedSet.forEach((i) => { stars[i].inConstellation = true; cx += stars[i].nx; cy += stars[i].ny; });
-    const n = pickedSet.size || 1;
-    constellationLabel = {
-      text: FAKE_NAMES[day % FAKE_NAMES.length],
-      nx: cx / n,
-      ny: cy / n,
-    };
+    pickedSet.forEach((i) => { stars[i].inConstellation = true; });
   })();
 
   /* ---------------- Spatial hash grid for O(1)-ish hit-testing ---------------- */
@@ -513,18 +500,7 @@
       }
     }
 
-    // 3) Constellation-of-the-day label.
-    if (constellationLabel) {
-      ctx.globalAlpha = PAL.hatch ? 0.85 : 0.7;
-      ctx.fillStyle = PAL.glow;
-      ctx.font = "italic 13px 'Fraunces', Georgia, serif";
-      ctx.textAlign = 'center';
-      ctx.fillText(constellationLabel.text, constellationLabel.nx * w, constellationLabel.ny * h - 16);
-      ctx.globalAlpha = 1;
-      ctx.textAlign = 'start';
-    }
-
-    // 4) Meteor (dark mode only; a bright streak reads oddly on paper).
+    // 3) Meteor (dark mode only; a bright streak reads oddly on paper).
     if (!reduced && !PAL.hatch) {
       if (!meteor && now >= nextMeteorAt) { spawnMeteor(); }
       if (meteor) {

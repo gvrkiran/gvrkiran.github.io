@@ -41,7 +41,7 @@
   const caption = document.createElement('div');
   caption.className = 't22-caption';
   caption.setAttribute('aria-hidden', 'true');
-  caption.innerHTML = 'now casting <b>K</b>' + (reduced ? '' : ' — click to recast');
+  caption.innerHTML = 'letter <b>K</b>' + (reduced ? '' : ' · click to change');
   bg.appendChild(caption);
   const capLetter = caption.querySelector('b');
 

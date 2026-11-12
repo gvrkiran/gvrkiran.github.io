@@ -419,7 +419,7 @@
       portal.setAttribute("tabindex", selected ? "0" : "-1");
     });
     const papers = papersByYear[year] || [];
-    yearPosition.textContent = `${String(index + 1).padStart(2, "0")} / ${String(era.years.length).padStart(2, "0")} · DEPTH ${roman(currentEra)}`;
+    yearPosition.textContent = `${String(index + 1).padStart(2, "0")} / ${String(era.years.length).padStart(2, "0")} · Junction ${currentEra + 1}`;
     selectedYearLabel.textContent = String(year);
     selectedYearName.textContent = YEARS[year].name;
     selectedYearCount.textContent = `${papers.length} publication${papers.length === 1 ? "" : "s"}`;
@@ -1156,7 +1156,7 @@
       .then(data => { regions = data; })
       .catch(() => { regions = {}; });
   if (!reduceMotion) preload("approach");
-  setLoading("Mapping the archive", false);
+  setLoading("Loading the archive", false);
 
   window.__ARCHIVE_DEBUG__ = {
     get state() {

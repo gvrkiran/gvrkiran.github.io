@@ -34,7 +34,7 @@
     { n: 22, slug: 'foundry',          name: 'Foundry',         layout: 'L4', js: 'js/theme-22-foundry.js' },
     { n: 23, slug: 'perennial',        name: 'Perennial',       layout: 'L4', js: 'js/theme-23-perennial.js' },
     { n: 24, slug: 'research-ramble',  name: 'Research Ramble', layout: 'L4', js: 'js/theme-24-research-ramble.js' },
-    { n: 25, slug: 'idea-archipelago', name: 'The Living Research Kingdom', layout: 'L4', js: 'js/theme-25-idea-archipelago.js' },
+    { n: 25, slug: 'idea-archipelago', name: 'Archipelago',     layout: 'L4', js: 'js/theme-25-idea-archipelago.js' },
     { n: 26, slug: 'terracotta',       name: 'Terracotta',      layout: 'L4', js: 'js/theme-26-terracotta.js' },
     { n: 27, slug: 'scroll-observatory', name: '3D Observatory', layout: 'WORLD', page: 'observatory.html' },
   ];

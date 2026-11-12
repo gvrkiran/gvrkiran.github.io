@@ -4,11 +4,11 @@
  * noise field steers particles that draw single low-alpha segments per step
  * onto a parchment canvas that NEVER clears — convergence zones accumulate to
  * deep ink. The print "sets" after a fixed iteration cap, then the rAF stops.
- *   - serial plate (bottom-left): print №, seed, field, live stroke counter
+ *   - control plate (bottom-left): live stroke counter + regenerate button
  *   - space / ↻ button: new seed, new print (registration marks pulse)
  *   - mode toggle: SAME seed re-inked — light = Meridian/Oxide, dark = Cyanotype
  * No Math.random() in drawing logic: everything derives from the seed, so a
- * given serial always reconstructs the same print. Homepage only.
+ * given seed always reconstructs the same print. Homepage only.
  */
 (function () {
   'use strict';
@@ -97,12 +97,10 @@
   const plate = document.createElement('div');
   plate.className = 't23-plate';
   plate.innerHTML =
-    '<span class="t23-serial">print <b>№KG-0000</b> · seed 000000 · field meridian · edition 1/1</span><br>' +
     '<span class="t23-count">0 strokes</span>' +
-    '<button class="t23-regen" type="button" aria-label="Draw a new print">↻ regenerate</button>' +
+    '<button class="t23-regen" type="button" aria-label="Redraw the pattern">↻ regenerate</button>' +
     '<kbd>space</kbd>';
   bg.appendChild(plate);
-  const serialEl = plate.querySelector('.t23-serial');
   const countEl = plate.querySelector('.t23-count');
   const regenBtn = plate.querySelector('.t23-regen');
 
@@ -145,14 +143,8 @@
     inkIdx[i] = r < 0.055 ? 3 : (r * 3) | 0;
   }
 
-  function serialText() {
-    const hex = ('000000' + seed.toString(16)).slice(-6).toUpperCase();
-    return 'print <b>№KG-' + hex.slice(0, 4) + '</b> · seed ' + hex +
-      ' · field ' + field.label + ' · edition 1/1';
-  }
-
   function updateCount(final) {
-    countEl.textContent = strokes.toLocaleString('en-US') + ' strokes' + (final ? ' · set' : '');
+    countEl.textContent = strokes.toLocaleString('en-US') + ' strokes' + (final ? ' · done' : '');
   }
 
   /* One iteration: every particle draws one segment. Batched into 4 paths
@@ -230,7 +222,6 @@
     ctx.fillRect(0, 0, W, H);
     for (let i = 0; i < COUNT; i++) spawn(i);
     iter = 0; strokes = 0;
-    serialEl.innerHTML = serialText();
     updateCount(false);
 
     // registration marks pulse

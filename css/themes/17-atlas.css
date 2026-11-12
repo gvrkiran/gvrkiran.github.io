@@ -214,20 +214,7 @@ html[data-theme="17"] .hero-tagline {
   line-height: 1.6;
 }
 
-/* A "surveyed by" coordinates strip under the hero (JS may enrich; CSS-safe) */
 html[data-theme="17"] .hero-text { position: relative; }
-html[data-theme="17"] .hero-name::after {
-  content: 'Field survey · research territory of K. Garimella';
-  display: block;
-  font-family: var(--font-mono);
-  font-variant: normal;
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-top: 0.7rem;
-  font-weight: 400;
-}
 
 html[data-theme="17"] .quick-links { margin-top: 1.5rem; gap: 0.5rem; }
 html[data-theme="17"] .quick-links a {
@@ -289,12 +276,8 @@ html[data-theme="17"] .face-frame::after {
 }
 
 /* =====================================================================
-   SECTION HEADINGS + COORDINATE LINES
-   Headings in Fraunces small-caps, letterspaced. A JetBrains-Mono
-   coordinates line renders under each heading via ::after, keyed by
-   [data-section]. Plausible coords per section (Rutgers / Delhi / Geneva…).
-   The heading is a direct grid child in L2 (column 1) — the ::after sits
-   inside it, so it stays with the heading.
+   SECTION HEADINGS
+   Headings in Fraunces small-caps, letterspaced, with a neatline rule.
    ===================================================================== */
 html[data-theme="17"] .section-heading {
   font-family: var(--font-display);
@@ -314,24 +297,6 @@ html[data-theme="17"] .section-heading::before {
   width: 100%; height: 1px;
   background: linear-gradient(90deg, var(--t17-rule-2) 0 40%, var(--t17-rule) 40% 100%);
 }
-/* coordinates line */
-html[data-theme="17"] [data-section] .section-heading::after {
-  display: block;
-  font-family: var(--font-mono);
-  font-variant: normal;
-  font-weight: 400;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: none;
-  color: var(--color-muted);
-  margin-top: 0.5rem;
-  content: '';
-}
-html[data-theme="17"] [data-section="about"]        .section-heading::after { content: '40.4990° N, 74.4474° W — New Brunswick sheet'; }
-html[data-theme="17"] [data-section="projects"]     .section-heading::after { content: '28.6139° N, 77.2090° E — Delhi field station'; }
-html[data-theme="17"] [data-section="publications"] .section-heading::after { content: '46.2044° N, 6.1432° E — Geneva survey depot'; }
-html[data-theme="17"] [data-section="teaching"]     .section-heading::after { content: '40.5008° N, 74.4474° W — Rutgers teaching hall'; }
-html[data-theme="17"] [data-section="other"]        .section-heading::after { content: '13.0827° N, 80.2707° E — Chennai outpost'; }
 
 /* =====================================================================
    CARDS — map-inset style: double-rule border, corner ticks, label patch
@@ -494,10 +459,6 @@ html[data-theme="17"] .site-footer::before {
    Ensure pub-list rows read as neat inset ledger lines.
    No terrain / no route (JS guards on [data-section]).
    ===================================================================== */
-html[data-theme="17"] .pubs-page .section-heading,
-html[data-theme="17"] main .section-heading {
-  /* on subpages the heading has no data-section ancestor → no coords ::after */
-}
 html[data-theme="17"] .pub-list li { border-bottom: 1px solid var(--t17-rule); }
 html[data-theme="17"] .pub-list h3 { font-family: var(--font-display); font-variant: small-caps; letter-spacing: 0.03em; }
 html[data-theme="17"] .pub-year-heading {
@@ -561,7 +522,6 @@ html[data-theme="17"] .t17-pin-num {
       repeating-linear-gradient(90deg, var(--t17-grid) 0 1px, transparent 1px 88px);
     background-attachment: fixed, fixed;
   }
-  html[data-theme="17"] .hero-name::after { content: 'Field survey — K. Garimella'; }
   html[data-theme="17"] .card,
   html[data-theme="17"] .other-card { outline-offset: -5px; }
 }

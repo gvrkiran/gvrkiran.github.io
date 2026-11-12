@@ -1,5 +1,5 @@
 /* js/theme-25-idea-archipelago.js
- * Theme 25 — The Living Research Kingdom.
+ * Theme 25 — Archipelago.
  *
  * This is one world and one road. Scroll moves a single camera through one
  * master kingdom image; the explorer's feet stay mathematically locked to the
@@ -20,12 +20,12 @@
 
   /* Chapter positions refer to progress along one continuous physical road. */
   const CHAPTERS = [
-    { id: 'hero',         name: 'The Arrival Gate',       short: 'Arrival',      t: 0.00, anchorX: .486, anchorY: .905, zoom: 1.00, avatarScale: .72 },
-    { id: 'about',        name: 'The Orrery Quarter',     short: 'About',        t: 0.17, anchorX: .34, anchorY: .76, zoom: 1.55, avatarScale: .90 },
-    { id: 'projects',     name: 'The Signal Jungle',      short: 'Projects',     t: 0.34, anchorX: .70, anchorY: .74, zoom: 1.85, avatarScale: .94 },
-    { id: 'publications', name: 'The Paper Mountains',    short: 'Publications', t: 0.53, anchorX: .33, anchorY: .70, zoom: 1.88, avatarScale: .91 },
-    { id: 'teaching',     name: 'The Question Foundry',   short: 'Teaching',     t: 0.69, anchorX: .70, anchorY: .49, zoom: 1.82, avatarScale: .86 },
-    { id: 'other',        name: 'The Side-Quest Gardens', short: 'Other',        t: 0.77, anchorX: .35, anchorY: .39, zoom: 1.72, avatarScale: .78 }
+    { id: 'hero',         short: 'Home',         t: 0.00, anchorX: .486, anchorY: .905, zoom: 1.00, avatarScale: .72 },
+    { id: 'about',        short: 'About',        t: 0.17, anchorX: .34, anchorY: .76, zoom: 1.55, avatarScale: .90 },
+    { id: 'projects',     short: 'Projects',     t: 0.34, anchorX: .70, anchorY: .74, zoom: 1.85, avatarScale: .94 },
+    { id: 'publications', short: 'Publications', t: 0.53, anchorX: .33, anchorY: .70, zoom: 1.88, avatarScale: .91 },
+    { id: 'teaching',     short: 'Teaching',     t: 0.69, anchorX: .70, anchorY: .49, zoom: 1.82, avatarScale: .86 },
+    { id: 'other',        short: 'Other',        t: 0.77, anchorX: .35, anchorY: .39, zoom: 1.72, avatarScale: .78 }
   ];
   const END = { t: .83, anchorX: .52, anchorY: .30, zoom: 1.58, avatarScale: .66 };
 
@@ -86,24 +86,15 @@
   body.insertBefore(machine, body.firstChild);
 
   const sections = CHAPTERS.map(chapter => chapter.id === 'hero' ? hero : document.getElementById(chapter.id)).filter(Boolean);
-  const kickers = {
-    about: 'Quest 01 · enter through the orrery quarter',
-    projects: 'Quest 02 · follow the road into the signal jungle',
-    publications: 'Quest 03 · climb through the paper mountains',
-    teaching: 'Quest 04 · cross the question foundry',
-    other: 'Quest 05 · reach the gardens below the citadel'
-  };
-
   sections.slice(1).forEach(section => {
     const panel = el('div', 't25-chapter-panel');
-    panel.appendChild(el('p', 't25-chapter-kicker', kickers[section.id] || 'Kingdom quest'));
     Array.from(section.children).forEach(child => panel.appendChild(child));
     section.appendChild(panel);
   });
 
   const enter = el('button', 't25-enter-world');
   enter.type = 'button';
-  enter.innerHTML = '<span>Walk the golden road</span><b aria-hidden="true">↓</b>';
+  enter.innerHTML = '<span>Go to About</span><b aria-hidden="true">↓</b>';
   enter.addEventListener('click', () => {
     document.getElementById('about')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   });
@@ -177,13 +168,13 @@
     requestAnimationFrame(renderGaze);
   });
 
-  /* Direct quest navigation remains fully clickable above the world. */
+  /* Direct section navigation remains fully clickable above the world. */
   const route = el('nav', 't25-route-map');
-  route.setAttribute('aria-label', 'Stops along the golden road');
+  route.setAttribute('aria-label', 'Sections');
   const routeButtons = CHAPTERS.map((chapter, index) => {
     const button = el('button');
     button.type = 'button';
-    button.setAttribute('aria-label', 'Walk to ' + chapter.name);
+    button.setAttribute('aria-label', 'Go to ' + chapter.short);
     button.innerHTML = '<span>' + String(index).padStart(2, '0') + '</span><b>' + chapter.short + '</b>';
     button.addEventListener('click', () => {
       const target = chapter.id === 'hero' ? hero : document.getElementById(chapter.id);
@@ -195,11 +186,6 @@
   const routeProgress = el('i', 't25-route-progress');
   route.appendChild(routeProgress);
   body.appendChild(route);
-
-  const readout = el('div', 't25-scene-readout');
-  readout.innerHTML = '<span>Current waypoint</span><strong></strong><small>One kingdom · one road · scroll to walk</small>';
-  const readoutName = readout.querySelector('strong');
-  body.appendChild(readout);
 
   let sectionTops = [];
   let activeChapter = -1;
@@ -267,7 +253,6 @@
     if (active !== activeChapter) {
       activeChapter = active;
       root.dataset.t25District = CHAPTERS[active].id;
-      readoutName.textContent = CHAPTERS[active].name;
       routeButtons.forEach((button, index) => {
         if (index === active) button.setAttribute('aria-current', 'location');
         else button.removeAttribute('aria-current');
@@ -306,13 +291,11 @@
     if (!modeButton) return;
     const dark = root.getAttribute('data-mode') === 'dark';
     modeButton.setAttribute('aria-pressed', String(dark));
-    modeButton.setAttribute('aria-label', dark ? 'Switch the kingdom to daylight' : 'Switch the kingdom to night');
-    modeButton.title = dark ? 'Daylight mode' : 'Night mode';
+    modeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    modeButton.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
   }
   updateModeButton();
   window.addEventListener('modechange', updateModeButton);
 
-  const themeName = document.getElementById('themeName');
-  if (themeName) themeName.textContent = 'The Living Research Kingdom · one unbroken quest · theme 25/25';
   measure();
 })();

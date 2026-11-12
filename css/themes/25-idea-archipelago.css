@@ -1,4 +1,4 @@
-/* Theme 25 — The Living Research Kingdom. Layout: L4.
+/* Theme 25 — Archipelago. Layout: L4.
  * One master kingdom and one physical road become a continuous camera journey.
  * Content stays semantic and clickable above the world; the real gaze portrait
  * rides inside a persistent generated explorer shell whose feet lock to the road.
@@ -273,17 +273,6 @@ html[data-theme="25"] .hero-text {
   pointer-events: auto;
 }
 
-html[data-theme="25"] .hero-text::before {
-  content: "EXPEDITION 25  /  ONE KINGDOM  /  ONE GOLDEN ROAD";
-  display: block;
-  margin-bottom: 1.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.61rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--t25-gold);
-}
-
 html[data-theme="25"] .hero-name {
   max-width: 8ch;
   color: #fff;
@@ -408,17 +397,6 @@ html[data-theme="25"] .t25-chapter-panel::before {
   border-radius: 50%;
   background: var(--t25-cyan);
   box-shadow: 0 0 0 5px rgba(94, 208, 237, 0.13), 0 0 20px var(--t25-cyan);
-}
-
-html[data-theme="25"] .t25-chapter-kicker {
-  margin-bottom: 0.75rem;
-  padding-right: 2rem;
-  color: var(--color-accent-2);
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.105em;
-  text-transform: uppercase;
 }
 
 html[data-theme="25"] .section-heading {
@@ -662,7 +640,7 @@ html[data-theme="25"] .t25-avatar.is-walking .t25-foot-glow {
 }
 
 /* --------------------------------------------------------------------------
-   Route map and live district readout
+   Route map
    -------------------------------------------------------------------------- */
 html[data-theme="25"] .t25-route-map {
   position: fixed;
@@ -748,40 +726,6 @@ html[data-theme="25"] .t25-route-progress::after {
   transform-origin: left center;
 }
 
-html[data-theme="25"] .t25-scene-readout {
-  position: fixed;
-  z-index: 20;
-  top: 92px;
-  right: 26px;
-  display: grid;
-  max-width: 260px;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 14px;
-  background: rgba(3, 13, 30, 0.55);
-  color: #f8faff;
-  box-shadow: 0 20px 55px -30px rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(15px);
-  pointer-events: none;
-}
-
-html[data-theme="25"] .t25-scene-readout span,
-html[data-theme="25"] .t25-scene-readout small {
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.66;
-}
-
-html[data-theme="25"] .t25-scene-readout strong {
-  margin: 0.08rem 0 0.22rem;
-  color: var(--t25-gold);
-  font-family: var(--font-display);
-  font-size: 0.93rem;
-  line-height: 1.15;
-}
-
 /* Footer and CSS-only subpages */
 html[data-theme="25"] .site-footer {
   position: relative;
@@ -847,7 +791,6 @@ html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important;
   html[data-theme="25"] #about .t25-chapter-panel,
   html[data-theme="25"] #publications .t25-chapter-panel,
   html[data-theme="25"] #other .t25-chapter-panel { grid-column: 7 / -1; }
-  html[data-theme="25"] .t25-scene-readout { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -870,7 +813,6 @@ html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important;
     border-radius: 22px;
     background: linear-gradient(145deg, rgba(3, 12, 29, 0.88), rgba(5, 20, 41, 0.75));
   }
-  html[data-theme="25"] .hero-text::before { margin-bottom: 0.85rem; font-size: 0.49rem; }
   html[data-theme="25"] .hero-name { max-width: none; font-size: clamp(3.6rem, 18vw, 5.5rem); }
   html[data-theme="25"] .hero-role { margin-top: 1rem; }
   html[data-theme="25"] .hero-tagline { font-size: 0.88rem; }
@@ -892,6 +834,9 @@ html[data-theme="25"] .pub-year-heading { color: var(--color-accent) !important;
     padding: 1.1rem;
     border-radius: 22px;
   }
+
+  /* Tuck the corner dot above long headings such as "Publications". */
+  html[data-theme="25"] .t25-chapter-panel::before { top: 0.5rem; right: 0.6rem; width: 8px; height: 8px; }
 
   html[data-theme="25"] .section-heading { font-size: clamp(3.25rem, 16vw, 5rem); }
   html[data-theme="25"] .other-grid { grid-template-columns: 1fr 1fr; }
