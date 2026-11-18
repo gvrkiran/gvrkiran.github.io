@@ -90,16 +90,6 @@ const PUBLICATIONS = [
   {
     year: "Unpublished",
     status: "Under review",
-    title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
-    venue: "Under review",
-    authors: ["Shreyasi Roy Chowdhuri", "Kiran Garimella"],
-    slug: "how-people-use-chatgpt",
-    topics: ["ai", "platforms"],
-    links: [{ label: "paper", href: "content/How_people_use_ChatGPT.pdf" }]
-  },
-  {
-    year: "Unpublished",
-    status: "Under review",
     title: "WhatsViral: A Privacy-Preserving System for Studying Viral Content on WhatsApp",
     venue: "Under review",
     authors: ["Kiran Garimella"],
@@ -149,6 +139,15 @@ const PUBLICATIONS = [
   },
 
   // 2027
+  {
+    year: "2027",
+    title: "How People Use ChatGPT: Conversation-Level Evidence from India, Nigeria, Brazil and Pakistan",
+    venue: "ICWSM 2027",
+    authors: ["Shreyasi Roy Chowdhuri", "Kiran Garimella"],
+    slug: "how-people-use-chatgpt",
+    topics: ["ai", "platforms"],
+    links: [{ label: "paper", href: "content/How_people_use_ChatGPT.pdf" }]
+  },
   {
     year: "2027",
     title: "Examining LLM Assisted Rule Creation in WhatsApp Groups",
